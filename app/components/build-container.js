@@ -1,6 +1,7 @@
 import {or} from '@ember/object/computed';
 import Component from '@ember/component';
 import PollingMixin from 'percy-web/mixins/polling';
+import {inject as service} from '@ember/service';
 
 export default Component.extend(PollingMixin, {
   build: null,
@@ -10,8 +11,9 @@ export default Component.extend(PollingMixin, {
     'isShowingModal:BuildContainer--snapshotModalOpen:BuildContainer--snapshotModalClosed',
   ],
 
+  snapshotQuery: service(),
   snapshotsChanged: null,
-  snapshotsUnchanged: null,
+  numSnapshotsUnchanged: null,
 
   shouldPollForUpdates: or('build.isPending', 'build.isProcessing'),
 
@@ -20,8 +22,8 @@ export default Component.extend(PollingMixin, {
       .reload()
       .then(build => {
         if (build.get('isFinished')) {
-          let snapshotsPromise = build.get('snapshots').reload();
-          snapshotsPromise.then(snapshots => {
+          const changedSnapshots = this.get('snapshotQuery').getChangedSnapshots(build);
+          changedSnapshots.then(snapshots => {
             this.get('initializeSnapshotOrdering')(snapshots);
           });
         }

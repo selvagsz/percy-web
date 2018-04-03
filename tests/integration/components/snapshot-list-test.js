@@ -10,34 +10,50 @@ import {percySnapshot} from 'ember-percy';
 import SnapshotList from 'percy-web/tests/pages/components/snapshot-list';
 import wait from 'ember-test-helpers/wait';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import Service from '@ember/service';
+import {resolve, defer} from 'rsvp';
 
 describe('Integration: SnapshotList', function() {
   setupComponentTest('snapshot-list', {
     integration: true,
   });
 
+  let snapshotQueryServiceStub;
+
   beforeEach(function() {
     setupFactoryGuy(this.container);
     SnapshotList.setContext(this);
   });
 
-  it('expands batched hidden snapshots', function() {
+  function _mockSessionQueryFetches(context, snapshotsUnchanged, snapshotsChanged) {
+    snapshotQueryServiceStub = Service.extend({
+      getUnchangedSnapshots: sinon.stub().returns(resolve(snapshotsUnchanged)),
+      getChangedSnapshots: sinon.stub().returns(resolve(snapshotsChanged)),
+    });
+    context.register('service:snapshotQuery', snapshotQueryServiceStub);
+    context.inject.service('snapshotQuery', {as: 'snapshotQueryService'});
+  }
+
+  it('gets snapshots with no diffs after expanding no diffs section', function() {
     const stub = sinon.stub();
     const build = make('build', 'finished');
 
-    const numSnapshots = 3;
-    const snapshotsUnchanged = makeList('snapshot', numSnapshots, 'withNoDiffs');
-    this.set('snapshotsUnchanged', snapshotsUnchanged);
+    const numSnapshotsUnchanged = 3;
+    const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs');
+    const snapshotsChanged = [];
+    _mockSessionQueryFetches(this, snapshotsUnchanged);
 
     this.setProperties({
-      snapshotsUnchanged,
+      snapshotsChanged,
+      numSnapshotsUnchanged,
       build,
       stub,
     });
 
     this.render(hbs`{{snapshot-list
-      snapshotsUnchanged=snapshotsUnchanged
       build=build
+      snapshotsChanged=snapshotsChanged
+      numSnapshotsUnchanged=numSnapshotsUnchanged
       createReview=stub
       showSnapshotFullModalTriggered=stub
     }}`);
@@ -47,25 +63,35 @@ describe('Integration: SnapshotList', function() {
     SnapshotList.clickToggleNoDiffsSection();
 
     expect(SnapshotList.isNoDiffsBatchVisible).to.equal(false);
-    expect(SnapshotList.snapshots().count).to.equal(numSnapshots);
+    expect(SnapshotList.snapshots().count).to.equal(numSnapshotsUnchanged);
   });
 
-  it('does not display unchanged snapshots batch when there are no unchanged snapshots', function() { // eslint-disable-line
-    this.setProperties({
-      stub: sinon.stub(),
-      snapshotsChanged: makeList('snapshot', 2, 'withComparisons'),
-      snapshotsUnchanged: [],
-    });
-    this.render(hbs`{{snapshot-list
-        snapshotsChanged=snapshotsChanged
-        snapshotsUnchanged=snapshotsUnchanged
-        build=build
-        createReview=stub
-        updateActiveSnapshotId=stub
-        showSnapshotFullModalTriggered=stub
-      }}`);
+  it('shows loading indicator while fetching unchanged diffs', function() {
+    const stub = sinon.stub();
+    const build = make('build', 'finished');
 
-    expect(SnapshotList.isNoDiffsBatchVisible).to.equal(false);
+    const numSnapshotsUnchanged = 3;
+    const snapshotsChanged = [];
+    _mockSessionQueryFetches(this, defer().promise);
+
+    this.setProperties({
+      snapshotsChanged,
+      numSnapshotsUnchanged,
+      build,
+      stub,
+    });
+
+    this.render(hbs`{{snapshot-list
+      build=build
+      snapshotsChanged=snapshotsChanged
+      numSnapshotsUnchanged=numSnapshotsUnchanged
+      createReview=stub
+      showSnapshotFullModalTriggered=stub
+    }}`);
+
+    SnapshotList.clickToggleNoDiffsSection();
+
+    percySnapshot(this.test);
   });
 
   describe('when there are more than 150 snapshots with diffs', function() {
@@ -131,13 +157,24 @@ describe('Integration: SnapshotList', function() {
       const stub = sinon.stub();
       const build = make('build', 'finished');
 
+      const numSnapshotsUnchanged = 3;
       const snapshotsChanged = makeList('snapshot', numSnapshots, 'withComparisons', {build});
-      const snapshotsUnchanged = makeList('snapshot', 3, 'withNoDiffs', {build});
-      this.setProperties({build, snapshotsChanged, snapshotsUnchanged, stub});
+      const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs', {
+        build,
+      });
+      _mockSessionQueryFetches(this, snapshotsUnchanged);
+
+      this.setProperties({
+        build,
+        snapshotsChanged,
+        snapshotsUnchanged,
+        numSnapshotsUnchanged,
+        stub,
+      });
 
       this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
-        snapshotsUnchanged=snapshotsUnchanged
+        numSnapshotsUnchanged=numSnapshotsUnchanged
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub

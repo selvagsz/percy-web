@@ -101,6 +101,7 @@ describe('Integration: BuildContainer', function() {
     this.setProperties({
       build,
       stub,
+      numSnapshotsUnchanged: 1,
       snapshotsChanged: [diffSnapshot],
       snapshotsUnchanged: [sameSnapshot],
     });
@@ -109,6 +110,7 @@ describe('Integration: BuildContainer', function() {
     // but we can't have the component make requests in this integration test
     this.render(hbs`{{build-container
       build=build
+      numSnapshotsUnchanged=numSnapshotsUnchanged
       snapshotsChanged=snapshotsChanged
       snapshotsUnchanged=snapshotsUnchanged
       createReview=stub

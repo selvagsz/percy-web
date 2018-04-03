@@ -16,27 +16,34 @@
     updateActiveSnapshotId=(action "updateActiveSnapshotId")
   }}
 {{/each}}
-{{#if (and (not isUnchangedSnapshotsVisible) snapshotsUnchanged.length)}}
-  <div class="SnapshotViewer SnapshotViewer--actionable">
-    <div class="SnapshotViewer-header flex align-center justify-center text-weight-bold p-2 mx-2 mb-2 bg-gray-000 rounded border border-gray-100 c-pointer" data-test-toggle-unchanged {{action "toggleUnchangedSnapshotsVisible"}}>
-      <figure class="svg-container">
-        {{inline-svg "no-comparison-group-icon" class="mr-1"}}
-      </figure>
-      <div class="text-blue mr-sm">
-        {{pluralize snapshotsUnchanged.length "unchanged snapshot"}} for all widths.
+
+{{#if numSnapshotsUnchanged}}
+  {{#if (not isUnchangedSnapshotsVisible)}}
+    <div class="SnapshotViewer SnapshotViewer--actionable">
+      <div class="SnapshotViewer-header flex align-center justify-center text-weight-bold p-2 mx-2 mb-2 bg-gray-000 rounded border border-gray-100 c-pointer" data-test-toggle-unchanged {{action "toggleUnchangedSnapshotsVisible"}}>
+        {{#if isUnchangedSnapshotsLoading}}
+          {{inline-svg "loader-icon" class='mx-2'}} Loading unchanged snapshots
+        {{else}}
+          <figure class="svg-container">
+            {{inline-svg "no-comparison-group-icon" class="mr-1"}}
+          </figure>
+           <div class="text-blue mr-sm">
+            {{pluralize numSnapshotsUnchanged "unchanged snapshot"}} for all widths.
+          </div>
+        {{/if}}
       </div>
     </div>
-  </div>
-{{else}}
-  {{#each snapshotsUnchanged as |snapshot|}}
-    {{snapshot-viewer
-      build=build
-      snapshot=snapshot
-      activeSnapshotId=activeSnapshotId
-      isDefaultExpanded=isDefaultExpanded
-      showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
-      createReview=createReview
-      updateActiveSnapshotId=(action "updateActiveSnapshotId")
-    }}
-  {{/each}}
+  {{else}}
+    {{#each snapshotsUnchanged as |snapshot|}}
+      {{snapshot-viewer
+        build=build
+        snapshot=snapshot
+        activeSnapshotId=activeSnapshotId
+        isDefaultExpanded=isDefaultExpanded
+        showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
+        createReview=createReview
+        updateActiveSnapshotId=(action "updateActiveSnapshotId")
+      }}
+    {{/each}}
+  {{/if}}
 {{/if}}

@@ -7,108 +7,12 @@ import {TEST_IMAGE_URLS} from 'percy-web/mirage/factories/screenshot';
 import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_REVIEW_STATE_REASONS} from 'percy-web/models/snapshot';
 import {BUILD_STATES} from 'percy-web/models/build';
 
-describe('Acceptance: Pending Build', function() {
-  freezeMoment('2018-05-22');
-  setupAcceptance();
-  let urlParams;
-
-  setupSession(function(server) {
-    let organization = server.create('organization', 'withUser');
-    let project = server.create('project', {name: 'pending build', organization});
-    let build = server.create('build', {
-      project,
-      createdAt: moment().subtract(2, 'minutes'),
-      state: 'pending',
-    });
-
-    urlParams = {
-      orgSlug: organization.slug,
-      projectSlug: project.slug,
-      buildId: build.id,
-    };
-  });
-
-  it('shows as pending', async function() {
-    await BuildPage.visitBuild(urlParams);
-    expect(currentPath()).to.equal('organization.project.builds.build.index');
-
-    await percySnapshot(this.test.fullTitle() + ' on the build page');
-    await BuildPage.toggleBuildInfoDropdown();
-    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
-  });
-});
-
-describe('Acceptance: Processing Build', function() {
-  freezeMoment('2018-05-22');
-  setupAcceptance();
-  let urlParams;
-
-  setupSession(function(server) {
-    let organization = server.create('organization', 'withUser');
-    let project = server.create('project', {name: 'project-with-processing-build', organization});
-    let build = server.create('build', 'processing', {
-      project,
-      createdAt: moment().subtract(2, 'minutes'),
-    });
-
-    urlParams = {
-      orgSlug: organization.slug,
-      projectSlug: project.slug,
-      buildId: build.id,
-    };
-  });
-
-  it('shows as processing', async function() {
-    await BuildPage.visitBuild(urlParams);
-    expect(currentPath()).to.equal('organization.project.builds.build.index');
-
-    await percySnapshot(this.test.fullTitle() + ' on the build page');
-    await BuildPage.toggleBuildInfoDropdown();
-    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
-  });
-});
-
-describe('Acceptance: Failed Build', function() {
-  freezeMoment('2018-05-22');
-  setupAcceptance();
-  let urlParams;
-
-  setupSession(function(server) {
-    let organization = server.create('organization', 'withUser');
-    let project = server.create('project', {name: 'project-with-failed-build', organization});
-    let build = server.create('build', {
-      project,
-      createdAt: moment().subtract(2, 'minutes'),
-      state: 'failed',
-      failureReason: 'render_timeout',
-      failureDetails: {failed_snapshots: ['Home page that pops open a dialog']},
-    });
-
-    urlParams = {
-      orgSlug: organization.slug,
-      projectSlug: project.slug,
-      buildId: build.id,
-    };
-  });
-
-  it('shows as failed', async function() {
-    await BuildPage.visitBuild(urlParams);
-    window.Intercom = sinon.stub();
-    expect(currentPath()).to.equal('organization.project.builds.build.index');
-
-    await percySnapshot(this.test.fullTitle() + ' on the build page');
-    await BuildPage.toggleBuildInfoDropdown();
-    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
-    await BuildPage.clickShowSupportLink();
-    expect(window.Intercom).to.have.been.calledWith('show');
-  });
-});
-
 describe('Acceptance: Build', function() {
   freezeMoment('2018-05-22');
   setupAcceptance();
 
   let project;
+  let build;
   let defaultSnapshot;
   let noDiffsSnapshot;
   let twoWidthsSnapshot;
@@ -117,12 +21,12 @@ describe('Acceptance: Build', function() {
   setupSession(function(server) {
     const organization = server.create('organization', 'withUser');
     project = server.create('project', {name: 'project-with-finished-build', organization});
-    const build = server.create('build', {
+    build = server.create('build', {
       project,
       createdAt: moment().subtract(2, 'minutes'),
       finishedAt: moment().subtract(5, 'seconds'),
-      totalSnapshotsUnreviewed: 8,
-      totalSnapshots: 12,
+      totalSnapshotsUnreviewed: 3,
+      totalSnapshots: 4,
     });
 
     defaultSnapshot = server.create('snapshot', 'withComparison', {build});
@@ -145,6 +49,22 @@ describe('Acceptance: Build', function() {
       projectSlug: project.slug,
       buildId: build.id,
     };
+  });
+
+  it('fetches only snapshots with diffs on initial load', async function() {
+    // add some snapshots (to the four above) to cover every review state reason.
+    server.create('snapshot', 'withComparison', 'userApproved', {build});
+    server.create('snapshot', 'withComparison', 'userApprovedPreviously', {build});
+
+    await BuildPage.visitBuild(urlParams);
+    const store = this.application.__container__.lookup('service:store');
+    expect(BuildPage.snapshots().count).to.equal(5);
+    expect(BuildPage.isUnchangedPanelVisible).to.equal(true);
+    expect(store.peekAll('snapshot').get('length')).to.equal(5);
+
+    await BuildPage.snapshotList.clickToggleNoDiffsSection();
+    expect(BuildPage.snapshots().count).to.equal(6);
+    expect(store.peekAll('snapshot').get('length')).to.equal(6);
   });
 
   describe('snapshot order/caching', function() {
@@ -356,5 +276,102 @@ describe('Acceptance: Fullscreen Snapshot', function() {
     BuildPage.snapshotFullscreen.header.clickDropdownToggle();
 
     await percySnapshot(this.test);
+  });
+});
+
+describe('Acceptance: Pending Build', function() {
+  freezeMoment('2018-05-22');
+  setupAcceptance();
+  let urlParams;
+
+  setupSession(function(server) {
+    let organization = server.create('organization', 'withUser');
+    let project = server.create('project', {name: 'pending build', organization});
+    let build = server.create('build', {
+      project,
+      createdAt: moment().subtract(2, 'minutes'),
+      state: 'pending',
+    });
+
+    urlParams = {
+      orgSlug: organization.slug,
+      projectSlug: project.slug,
+      buildId: build.id,
+    };
+  });
+
+  it('shows as pending', async function() {
+    await BuildPage.visitBuild(urlParams);
+    expect(currentPath()).to.equal('organization.project.builds.build.index');
+
+    await percySnapshot(this.test.fullTitle() + ' on the build page');
+    await BuildPage.toggleBuildInfoDropdown();
+    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
+  });
+});
+
+describe('Acceptance: Processing Build', function() {
+  freezeMoment('2018-05-22');
+  setupAcceptance();
+  let urlParams;
+
+  setupSession(function(server) {
+    let organization = server.create('organization', 'withUser');
+    let project = server.create('project', {name: 'project-with-processing-build', organization});
+    let build = server.create('build', 'processing', {
+      project,
+      createdAt: moment().subtract(2, 'minutes'),
+    });
+
+    urlParams = {
+      orgSlug: organization.slug,
+      projectSlug: project.slug,
+      buildId: build.id,
+    };
+  });
+
+  it('shows as processing', async function() {
+    await BuildPage.visitBuild(urlParams);
+    expect(currentPath()).to.equal('organization.project.builds.build.index');
+
+    await percySnapshot(this.test.fullTitle() + ' on the build page');
+    await BuildPage.toggleBuildInfoDropdown();
+    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
+  });
+});
+
+describe('Acceptance: Failed Build', function() {
+  freezeMoment('2018-05-22');
+  setupAcceptance();
+  let urlParams;
+
+  setupSession(function(server) {
+    let organization = server.create('organization', 'withUser');
+    let project = server.create('project', {name: 'project-with-failed-build', organization});
+    let build = server.create('build', {
+      project,
+      createdAt: moment().subtract(2, 'minutes'),
+      state: 'failed',
+      failureReason: 'render_timeout',
+      failureDetails: {failed_snapshots: ['Home page that pops open a dialog']},
+    });
+
+    urlParams = {
+      orgSlug: organization.slug,
+      projectSlug: project.slug,
+      buildId: build.id,
+    };
+  });
+
+  it('shows as failed', async function() {
+    await BuildPage.visitBuild(urlParams);
+    window.Intercom = sinon.stub();
+    expect(currentPath()).to.equal('organization.project.builds.build.index');
+
+    await percySnapshot(this.test.fullTitle() + ' on the build page');
+    await BuildPage.toggleBuildInfoDropdown();
+    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
+    await BuildPage.clickShowSupportLink();
+    expect(window.Intercom).to.have.been.calledWith('show');
   });
 });

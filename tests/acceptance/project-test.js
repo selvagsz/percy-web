@@ -120,74 +120,27 @@ describe('Acceptance: Project', function() {
         projectSlug: project.slug,
       };
 
-      server.create('build', {
+      function _timeAgo(quantity, timeUnit) {
+        return moment().subtract(quantity, timeUnit);
+      }
+
+      server.create('build', 'withSnapshots', {project, createdAt: _timeAgo(60, 'days')});
+      server.create('build', 'expired', {project, createdAt: _timeAgo(30, 'hours')});
+      server.create('build', 'failed', {project, createdAt: _timeAgo(3, 'hours')});
+      server.create('build', 'failedWithTimeout', {project, createdAt: _timeAgo(25, 'minutes')});
+      server.create('build', 'failedWithNoSnapshots', {
         project,
-        createdAt: moment().subtract(60, 'days'),
-        totalSnapshotsUnreviewed: 8,
-        totalSnapshots: 12,
+        createdAt: _timeAgo(25, 'minutes'),
       });
-      server.create('build', {
+      server.create('build', 'failedWithMissingResources', {
         project,
-        createdAt: moment().subtract(30, 'hours'),
-        state: 'expired',
-        totalSnapshots: 12,
+        createdAt: _timeAgo(15, 'minutes'),
       });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(3, 'hours'),
-        state: 'failed',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(25, 'minutes'),
-        state: 'failed',
-        failureReason: 'render_timeout',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(25, 'minutes'),
-        state: 'failed',
-        failureReason: 'no_snapshots',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(15, 'minutes'),
-        state: 'failed',
-        failureReason: 'missing_resources',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(10, 'minutes'),
-        state: 'pending',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(5, 'minutes'),
-        state: 'finished',
-        review_state: 'approved',
-        review_state_reason: 'all_snapshots_approved',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(4, 'minutes'),
-        state: 'finished',
-        review_state: 'approved',
-        review_state_reason: 'all_snapshots_approved_previously',
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(2, 'minutes'),
-        state: 'finished',
-        review_state: 'approved',
-        review_state_reason: 'no_diffs',
-        totalComparisonsDiff: 0,
-        totalComparisonsFinished: 1588,
-      });
-      server.create('build', {
-        project,
-        createdAt: moment().subtract(10, 'seconds'),
-        state: 'processing',
-      });
+      server.create('build', 'pending', {project, createdAt: _timeAgo(10, 'minutes')});
+      server.create('build', 'approved', {project, createdAt: _timeAgo(5, 'minutes')});
+      server.create('build', 'approvedPreviously', {project, createdAt: _timeAgo(4, 'minutes')});
+      server.create('build', 'approvedWithNoDiffs', {project, createdAt: _timeAgo(2, 'minutes')});
+      server.create('build', 'processing', {project, createdAt: _timeAgo(10, 'seconds')});
       this.project = project;
     });
 

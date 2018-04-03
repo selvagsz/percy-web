@@ -2,12 +2,17 @@ import $ from 'jquery';
 import {alias, lt, mapBy} from '@ember/object/computed';
 import {computed} from '@ember/object';
 import Component from '@ember/component';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
   classNames: ['SnapshotList'],
   attributeBindings: ['data-test-snapshot-list'],
   'data-test-snapshot-list': true,
+  store: service(),
+  snapshotQuery: service(),
   isUnchangedSnapshotsVisible: false,
+  isUnchangedSnapshotsLoading: false,
+  numSnapshotsUnchanged: 0,
 
   snapshotsChanged: null,
   snapshotsUnchanged: null,
@@ -21,7 +26,16 @@ export default Component.extend({
       this.set('activeSnapshotId', newSnapshotId);
     },
     toggleUnchangedSnapshotsVisible() {
-      this.toggleProperty('isUnchangedSnapshotsVisible');
+      this.set('isUnchangedSnapshotsLoading', true);
+      this.get('snapshotQuery')
+        .getUnchangedSnapshots(this.get('build'))
+        .then(snapshots => {
+          this.set('snapshotsUnchanged', snapshots);
+          this.toggleProperty('isUnchangedSnapshotsVisible');
+        })
+        .finally(() => {
+          this.set('isUnchangedSnapshotsLoading', false);
+        });
     },
   },
 

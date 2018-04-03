@@ -13,6 +13,13 @@ export const SNAPSHOT_REVIEW_STATE_REASONS = {
   NO_DIFFS: 'no_diffs',
 };
 
+// These are the possible reviewStateReasons for snapshots that have diffs
+export const DIFF_REVIEW_STATE_REASONS = [
+  SNAPSHOT_REVIEW_STATE_REASONS.UNREVIEWED,
+  SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED,
+  SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED_PREVIOUSLY,
+];
+
 export default DS.Model.extend({
   comparisons: DS.hasMany('comparisons', {
     async: false,

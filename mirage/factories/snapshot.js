@@ -5,6 +5,24 @@ import {
   SNAPSHOT_REVIEW_STATE_REASONS,
 } from 'percy-web/models/snapshot';
 
+const _unreviewedProps = {
+  reviewState: SNAPSHOT_UNAPPROVED_STATE,
+  reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.UNREVIEWED,
+};
+const _userApprovedProps = {
+  reviewState: SNAPSHOT_APPROVED_STATE,
+  reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED,
+};
+const _userApprovedPreviouslyProps = {
+  reviewState: SNAPSHOT_APPROVED_STATE,
+  reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED_PREVIOUSLY,
+};
+
+const _noDiffProps = {
+  reviewState: SNAPSHOT_APPROVED_STATE,
+  reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.NO_DIFFS,
+};
+
 export default Factory.extend({
   id(i) {
     return `snapshot-${i}`;
@@ -13,32 +31,36 @@ export default Factory.extend({
     return `Exemplifying Test Snapshot That Shows Things ${i}`;
   },
 
-  withComparison: trait({
-    reviewState: SNAPSHOT_UNAPPROVED_STATE,
-    reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.UNREVIEWED,
-    afterCreate(snapshot, server) {
-      const comparison = server.create('comparison', 'default');
-      _addComparisonIds(comparison, snapshot);
-    },
-  }),
+  unreviewed: trait(_unreviewedProps),
+  userApproved: trait(_userApprovedProps),
+  userApprovedPreviously: trait(_userApprovedPreviouslyProps),
 
-  noDiffs: trait({
-    reviewState: SNAPSHOT_APPROVED_STATE,
-    reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.NO_DIFFS,
-    afterCreate(snapshot, server) {
-      const comparison = server.create('comparison', 'same');
-      _addComparisonIds(comparison, snapshot);
-    },
-  }),
+  withComparison: trait(
+    Object.assign({}, _unreviewedProps, {
+      afterCreate(snapshot, server) {
+        const comparison = server.create('comparison', 'default');
+        _addComparisonIds(comparison, snapshot);
+      },
+    }),
+  ),
 
-  withMobile: trait({
-    reviewState: SNAPSHOT_UNAPPROVED_STATE,
-    reviewStateReason: 'unreviewed_comparisons',
-    afterCreate(snapshot, server) {
-      const comparison = server.create('comparison', 'mobile');
-      _addComparisonIds(comparison, snapshot);
-    },
-  }),
+  noDiffs: trait(
+    Object.assign({}, _noDiffProps, {
+      afterCreate(snapshot, server) {
+        const comparison = server.create('comparison', 'same');
+        _addComparisonIds(comparison, snapshot);
+      },
+    }),
+  ),
+
+  withMobile: trait(
+    Object.assign({}, _unreviewedProps, {
+      afterCreate(snapshot, server) {
+        const comparison = server.create('comparison', 'mobile');
+        _addComparisonIds(comparison, snapshot);
+      },
+    }),
+  ),
 });
 
 function _addComparisonIds(comparison, snapshot) {
