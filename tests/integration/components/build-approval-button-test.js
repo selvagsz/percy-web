@@ -47,11 +47,15 @@ describe('Integration: BuildApprovalButton', function() {
     // This stub needs to return a promise AND we need to stub the `then` block
     // because the `then` block makes a server call that we don't want to happen in tests.
     let createReviewStub = sinon.stub().returns(resolve({then: sinon.stub()}));
-    this.set('createReviewStub', createReviewStub);
+    this.setProperties({
+      createReviewStub,
+      approvableSnapshots: build.get('snapshots'),
+    });
 
     this.render(hbs`{{build-approval-button
       build=build
       createReview=createReviewStub
+      approvableSnapshots=approvableSnapshots
     }}`);
     BuildApprovalButton.clickButton();
 

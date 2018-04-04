@@ -13,6 +13,10 @@
   </div>
   {{trial-bar organization=organization}}
   <div class="flex align-center">
-    {{approval-section build=build createReview=createReview}}
+    {{approval-section
+      build=build
+      createReview=createReview
+      approvableSnapshots=approvableSnapshots
+    }}
   </div>
 </header>

@@ -1,3 +1,7 @@
 {{#if build.isFinished}}
-  {{build-approval-button build=build createReview=createReview}}
+  {{build-approval-button
+    build=build
+    createReview=createReview
+    approvableSnapshots=approvableSnapshots
+  }}
 {{/if}}

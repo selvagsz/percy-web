@@ -1,7 +1,9 @@
 import {alias} from '@ember/object/computed';
 import Component from '@ember/component';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
+  flashMessages: service(),
   build: null,
   approve: null,
   isApproved: alias('build.isApproved'),
@@ -13,10 +15,17 @@ export default Component.extend({
   'data-test-build-approval-button': true,
 
   click() {
-    this.set('isLoading', true);
-    const snapshots = this.get('build.snapshots');
+    if (this.get('build.isApproved')) {
+      this.get('flashMessages').info('This build was already approved');
+      return;
+    }
 
-    this.createReview('approve', this.get('build'), snapshots)
+    if (this.get('approvableSnapshots.length') === 0) {
+      return;
+    }
+
+    this.set('isLoading', true);
+    this.createReview('approve', this.get('build'), this.get('approvableSnapshots'))
       .then(() => {
         return this.get('build').reloadAll();
       })
