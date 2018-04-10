@@ -4,21 +4,22 @@ import Component from '@ember/component';
 
 export default Component.extend({
   classNames: ['SnapshotViewerFull'],
-  build: null,
-  comparisonMode: null,
-  snapshotId: null,
-  snapshotSelectedWidth: null,
-
-  galleryMap: ['base', 'diff', 'head'],
   attributeBindings: ['data-test-snapshot-viewer-full'],
   'data-test-snapshot-viewer-full': true,
 
+  // Required params
+  snapshot: null,
+  snapshotSelectedWidth: null,
+  comparisonMode: null,
+  updateComparisonMode: null,
+  transitionRouteToWidth: null,
+  closeSnapshotFullModal: null,
+  createReview: null,
+
+  galleryMap: ['base', 'diff', 'head'],
+
   galleryIndex: computed('comparisonMode', function() {
     return this.get('galleryMap').indexOf(this.get('comparisonMode'));
-  }),
-
-  snapshot: computed('build.snapshots.[]', 'snapshotId', function() {
-    return this.get('build.snapshots').findBy('id', this.get('snapshotId'));
   }),
 
   comparisons: alias('snapshot.comparisons'),
@@ -40,7 +41,7 @@ export default Component.extend({
 
   actions: {
     updateSelectedWidth(value) {
-      let comparison = this.get('snapshot').comparisonForWidth(value);
+      const comparison = this.get('snapshot').comparisonForWidth(value);
 
       this.set('selectedComparison', comparison);
       this.set('snapshotSelectedWidth', value);
@@ -64,10 +65,8 @@ export default Component.extend({
   },
 
   keyDown(event) {
-    let buildId = this.get('build.id');
-
     if (event.keyCode === 27) {
-      this.sendAction('closeSnapshotFullModal', buildId);
+      this.get('closeSnapshotFullModal')();
     }
 
     if (event.keyCode === 39 || event.keyCode === 37) {

@@ -10,6 +10,7 @@ import sinon from 'sinon';
 import {resolve, defer} from 'rsvp';
 import BuildApprovalButton from 'percy-web/tests/pages/components/build-approval-button';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import {getOwner} from '@ember/application';
 
 describe('Integration: BuildApprovalButton', function() {
   setupComponentTest('build-approval-button', {
@@ -59,7 +60,48 @@ describe('Integration: BuildApprovalButton', function() {
     }}`);
     BuildApprovalButton.clickButton();
 
-    expect(createReviewStub).to.have.been.calledWith('approve', build, build.get('snapshots'));
+    expect(createReviewStub).to.have.been.calledWith(build.get('snapshots'));
+  });
+
+  it('does not call createReview if build is already approved', function() {
+    const flashMessageService = getOwner(this)
+      .lookup('service:flash-messages')
+      .registerTypes(['info']);
+    sinon.stub(flashMessageService, 'info');
+
+    this.set('build.isApproved', true);
+    let createReviewStub = sinon.stub().returns(resolve({then: sinon.stub()}));
+    this.setProperties({
+      createReviewStub,
+      approvableSnapshots: build.get('snapshots'),
+    });
+
+    this.render(hbs`{{build-approval-button
+      build=build
+      createReview=createReviewStub
+      approvableSnapshots=approvableSnapshots
+    }}`);
+
+    BuildApprovalButton.clickButton();
+    expect(createReviewStub).to.not.have.been.called;
+    expect(flashMessageService.info).to.have.been.calledWith('This build was already approved');
+  });
+
+  it('does not call createReview if there are no approvable snapshots', function() {
+    let createReviewStub = sinon.stub().returns(resolve({then: sinon.stub()}));
+    this.setProperties({
+      createReviewStub,
+      approvableSnapshots: [],
+    });
+
+    this.render(hbs`{{build-approval-button
+      build=build
+      createReview=createReviewStub
+      approvableSnapshots=approvableSnapshots
+    }}`);
+
+    BuildApprovalButton.clickButton();
+    expect(createReviewStub).to.not.have.been.called;
   });
 
   it('displays correctly when in loading state ', function() {

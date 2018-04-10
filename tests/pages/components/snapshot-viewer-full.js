@@ -43,6 +43,10 @@ export const SnapshotViewerFull = {
 
   isComparisonModeSwitcherVisible: alias('header.isComparisonModeSwitcherVisible'),
   isNewComparisonModeButtonVisible: alias('header.isNewComparisonModeButtonVisible'),
+
+  clickToggleFullScreen: alias('header.clickToggleFullscreen'),
+
+  clickApprove: alias('header.clickApprove'),
 };
 
 export default create(SnapshotViewerFull);

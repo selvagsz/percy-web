@@ -4,13 +4,11 @@ import PollingMixin from 'percy-web/mixins/polling';
 import {inject as service} from '@ember/service';
 
 export default Component.extend(PollingMixin, {
-  build: null,
   classNames: ['BuildContainer'],
-  classNameBindings: [
-    'classes',
-    'isShowingModal:BuildContainer--snapshotModalOpen:BuildContainer--snapshotModalClosed',
-  ],
+  classNameBindings: ['isHidingBuildContainer:BuildContainer--snapshotModalOpen'],
 
+  build: null,
+  isHidingBuildContainer: false,
   snapshotQuery: service(),
   snapshotsChanged: null,
   numSnapshotsUnchanged: null,

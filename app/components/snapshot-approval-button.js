@@ -9,7 +9,7 @@ export default Component.extend({
   actions: {
     approveSnapshot() {
       this.set('isLoading', true);
-      this.createReview([this.get('snapshot')])
+      this.get('createReview')([this.get('snapshot')])
         .then(() => {
           // The time between when we get the response back from the server and the time
           // it takes Ember to process and render the returned data is actually quite long (~1s)

@@ -6,6 +6,7 @@ export default Component.extend({
   flashMessages: service(),
   build: null,
   approve: null,
+  approvableSnapshots: null,
   isApproved: alias('build.isApproved'),
   isLoading: false,
   tagName: 'button',
@@ -25,12 +26,8 @@ export default Component.extend({
     }
 
     this.set('isLoading', true);
-    this.createReview('approve', this.get('build'), this.get('approvableSnapshots'))
-      .then(() => {
-        return this.get('build').reloadAll();
-      })
-      .finally(() => {
-        this.set('isLoading', false);
-      });
+    this.get('createReview')(this.get('approvableSnapshots')).finally(() => {
+      this.set('isLoading', false);
+    });
   },
 });

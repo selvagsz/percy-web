@@ -16,6 +16,7 @@ describe('Acceptance: Build', function() {
   let defaultSnapshot;
   let noDiffsSnapshot;
   let twoWidthsSnapshot;
+  let mobileSnapshot;
   let urlParams;
 
   setupSession(function(server) {
@@ -38,8 +39,7 @@ describe('Acceptance: Build', function() {
       build,
       name: 'Two widths snapshot',
     });
-    // not used yet, but assign to variable when it's important
-    server.create('snapshot', 'withMobile', {
+    mobileSnapshot = server.create('snapshot', 'withMobile', {
       build,
       name: 'Mobile only snapshot',
     });
@@ -213,6 +213,47 @@ describe('Acceptance: Build', function() {
     expect(currentPath()).to.equal('organization.project.builds.build.index');
     expect(BuildPage.snapshotFullscreen.isVisible).to.equal(false);
   });
+
+  it('creates a review object when clicking "Approve"', async function() {
+    await BuildPage.visitBuild(urlParams);
+    expect(server.db.reviews.length).to.equal(0);
+
+    await BuildPage.snapshots(0).clickApprove();
+    expect(server.db.reviews.length).to.equal(1);
+
+    const snapshotReview = server.db.reviews.find(1);
+    expect(snapshotReview.action).to.equal('approve');
+    expect(snapshotReview.buildId).to.equal(build.id);
+    expect(snapshotReview.snapshotIds).to.eql([defaultSnapshot.id]);
+
+    await BuildPage.buildApprovalButton.clickButton();
+    expect(server.db.reviews.length).to.equal(2);
+
+    const buildReview = server.db.reviews.find(2);
+    expect(buildReview.action).to.equal('approve');
+    expect(buildReview.buildId).to.equal(build.id);
+    // It should only send the snapshots with diffs
+    expect(buildReview.snapshotIds).to.eql([
+      defaultSnapshot.id,
+      twoWidthsSnapshot.id,
+      mobileSnapshot.id,
+    ]);
+  });
+
+  it('reloads snapshots after build approval', async function() {
+    const stub = sinon.stub();
+
+    await BuildPage.visitBuild(urlParams);
+    server.get('/builds/:build_id/snapshots', function(schema, request) {
+      const build = server.schema.builds.findBy({id: request.params.build_id});
+      const snapshots = server.schema.snapshots.where({buildId: build.id});
+
+      stub(build.id, snapshots.models.mapBy('id'));
+      return snapshots;
+    });
+    await BuildPage.buildApprovalButton.clickButton();
+    expect(stub).to.have.been.calledWith(build.id, build.snapshots.models.mapBy('id'));
+  });
 });
 
 describe('Acceptance: Fullscreen Snapshot', function() {
@@ -222,16 +263,23 @@ describe('Acceptance: Fullscreen Snapshot', function() {
   let project;
   let snapshot;
   let urlParams;
+  let noDiffSnapshot;
+  let build;
 
   setupSession(function(server) {
     const organization = server.create('organization', 'withUser');
     project = server.create('project', {name: 'project-with-finished-build', organization});
-    const build = server.create('build', {
+    build = server.create('build', {
+      totalSnapshots: 3,
+      totalSnapshotsUnreviewed: 2,
       project,
       createdAt: moment().subtract(2, 'minutes'),
       finishedAt: moment().subtract(5, 'seconds'),
     });
     snapshot = server.create('snapshot', 'withComparison', {build});
+    // Make some other snapshots for the build that should appear when closing the fullscreen view.
+    noDiffSnapshot = server.create('snapshot', 'noDiffs', {build});
+    server.create('snapshot', 'withComparison', {build});
 
     urlParams = {
       orgSlug: organization.slug,
@@ -276,6 +324,32 @@ describe('Acceptance: Fullscreen Snapshot', function() {
     BuildPage.snapshotFullscreen.header.clickDropdownToggle();
 
     await percySnapshot(this.test);
+  });
+
+  it("fetches the build's snapshots when the fullscreen view of snapshot with diff is closed", async function() { // eslint-disable-line
+    await BuildPage.visitFullPageSnapshot(urlParams);
+    await BuildPage.snapshotFullscreen.clickToggleFullScreen();
+    await percySnapshot(this.test);
+  });
+
+  it("fetches the build's snapshots when the fullscreen view of snapshot with no diff is closed", async function() { // eslint-disable-line
+    urlParams.snapshotId = noDiffSnapshot.id;
+    await BuildPage.visitFullPageSnapshot(urlParams);
+    await BuildPage.snapshotFullscreen.clickToggleFullScreen();
+    await percySnapshot(this.test);
+  });
+
+  it('creates a review object when clicking "Approve"', async function() {
+    await BuildPage.visitFullPageSnapshot(urlParams);
+    expect(server.db.reviews.length).to.equal(0);
+
+    await BuildPage.snapshotFullscreen.clickApprove();
+    expect(server.db.reviews.length).to.equal(1);
+
+    const snapshotReview = server.db.reviews.find(1);
+    expect(snapshotReview.action).to.equal('approve');
+    expect(snapshotReview.buildId).to.equal(build.id);
+    expect(snapshotReview.snapshotIds).to.eql([snapshot.id]);
   });
 });
 

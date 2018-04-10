@@ -108,7 +108,7 @@
         </button>
       </div>
 
-      {{#if isBuildFinished}}
+      {{#if snapshot.build.isFinished}}
         <div class="btn-group" data-test-snapshot-approval-button>
           {{snapshot-approval-button
             snapshot=snapshot

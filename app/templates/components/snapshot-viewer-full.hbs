@@ -1,15 +1,14 @@
 {{snapshot-viewer-header
   fullscreen=true
   snapshot=snapshot
-  isBuildFinished=build.isFinished
   selectedWidth=snapshotSelectedWidth
   selectedComparison=selectedComparison
-  toggleViewMode=(action closeSnapshotFullModal build.id)
+  toggleViewMode=(action closeSnapshotFullModal)
   updateSelectedWidth=(action "updateSelectedWidth")
 
   updateComparisonMode=updateComparisonMode
   comparisonMode=comparisonMode
-  createReview=(action createReview 'approve' build)
+  createReview=(action createReview)
 }}
 
 <div class="SnapshotViewerFull-body">

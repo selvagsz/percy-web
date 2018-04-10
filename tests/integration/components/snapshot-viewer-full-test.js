@@ -19,14 +19,16 @@ describe('Integration: SnapshotViewerFull', function() {
   let updateComparisonModeStub;
   let createReviewStub;
   let addedSnapshot;
+  let snapshot;
+  let build;
   const snapshotTitle = 'Awesome snapshot title';
 
   beforeEach(function() {
     setupFactoryGuy(this.container);
     FullSnapshotPage.setContext(this);
 
-    const build = make('build', 'finished');
-    const snapshot = make('snapshot', 'withComparisons', {
+    build = make('build', 'finished');
+    snapshot = make('snapshot', 'withComparisons', {
       build,
       name: snapshotTitle,
     });
@@ -44,9 +46,8 @@ describe('Integration: SnapshotViewerFull', function() {
       .get('width');
 
     this.setProperties({
-      build,
       snapshotSelectedWidth,
-      snapshotId: snapshot.get('id'),
+      snapshot: snapshot,
       comparisonMode: 'diff',
       closeSnapshotFullModal: closeSnapshotFullModalStub,
       updateComparisonMode: updateComparisonModeStub,
@@ -55,8 +56,7 @@ describe('Integration: SnapshotViewerFull', function() {
     });
 
     this.render(hbs`{{snapshot-viewer-full
-      snapshotId=snapshotId
-      build=build
+      snapshot=snapshot
       snapshotSelectedWidth=snapshotSelectedWidth
       comparisonMode=comparisonMode
       transitionRouteToWidth=stub
@@ -94,7 +94,7 @@ describe('Integration: SnapshotViewerFull', function() {
     });
 
     it('shows "New" button when snapshot is new', function() {
-      this.set('snapshotId', addedSnapshot.get('id'));
+      this.set('snapshot', addedSnapshot);
 
       expect(FullSnapshotPage.isNewComparisonModeButtonVisible).to.equal(true);
       percySnapshot(this.test);
@@ -144,20 +144,18 @@ describe('Integration: SnapshotViewerFull', function() {
 
     it('sends closeSnapshotFullModal when toggle fullscreen button is clicked', function() {
       FullSnapshotPage.header.clickToggleFullscreen();
-      expect(closeSnapshotFullModalStub).to.have.been.calledWith(this.get('build.id'));
+      expect(closeSnapshotFullModalStub).to.have.been.called;
     });
   });
 
   describe('approve snapshot button', function() {
     it('sends createReview with correct arguments when approve button is clicked', function() {
       FullSnapshotPage.header.clickApprove();
-      expect(createReviewStub).to.have.been.calledWith('approve', this.get('build'), [
-        this.get('build.snapshots.firstObject'),
-      ]);
+      expect(createReviewStub).to.have.been.calledWith([snapshot]);
     });
 
     it('does not display when build is not finished', function() {
-      this.set('build.state', 'pending');
+      this.set('snapshot.build.isFinished', false);
       expect(FullSnapshotPage.header.snapshotApprovalButton.isVisible).to.equal(false);
     });
   });

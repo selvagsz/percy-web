@@ -4,6 +4,8 @@ import {filterBy, alias} from '@ember/object/computed';
 import {computed} from '@ember/object';
 
 export default Controller.extend({
+  isHidingBuildContainer: false,
+
   // set by initializeSnapshotOrdering
   snapshots: null,
   sortedSnapshots: computed('snapshots.[]', function() {
@@ -33,7 +35,7 @@ export default Controller.extend({
     );
     this.set('snapshotsChanged', orderedSnapshots);
 
-    const numSnapshotsMissing = this.get('model.totalSnapshots') - snapshots.get('length');
+    const numSnapshotsMissing = this.get('build.totalSnapshots') - snapshots.get('length');
     this.set('numSnapshotsMissing', numSnapshotsMissing);
 
     this.set('isSnapshotsLoading', false);

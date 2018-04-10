@@ -254,6 +254,7 @@ export default function() {
     }
   });
 
+  this.get('/snapshots/:id');
   this.get('/builds/:id');
   this.get('/builds/:build_id/comparisons');
   this.get('/repos/:id');

@@ -9,22 +9,17 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   },
   model(params /*transition*/) {
     this.set('params', params);
-    let buildId = this.modelFor('organization.project.builds.build').get('id');
-    return this.store.findRecord('build', buildId);
+    return this.store.findRecord('snapshot', params.snapshot_id);
   },
-  afterModel(resolvedModel) {
-    // Avoids race condition to get snapshots on build in components. Because the underlying
-    // lookup is an async relationship, the get triggers a promise which allows route cycle
-    // blocking behavior.
-    return resolvedModel.get('snapshots');
-  },
-  setupController(controller, model) {
+
+  setupController(controller) {
     this._super(...arguments);
 
     let params = this.get('params');
+    let build = this.modelFor('organization.project.builds.build');
 
     controller.setProperties({
-      build: model,
+      build,
       snapshotId: params.snapshot_id,
       snapshotSelectedWidth: params.width,
       comparisonMode: params.comparisonMode,
@@ -33,9 +28,10 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   actions: {
     didTransition() {
       this._super(...arguments);
-      this.send('updateModalState', true);
 
-      let build = this.modelFor(this.routeName);
+      this.send('updateIsHidingBuildContainer', true);
+
+      let build = this.modelFor('organization.project.builds.build');
       let organization = build.get('project.organization');
       let eventProperties = {
         project_id: build.get('project.id'),

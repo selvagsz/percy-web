@@ -265,9 +265,7 @@ describe('Integration: SnapshotViewer', function() {
 
     it('sends createReview with correct arguments when approve button is clicked', function() {
       SnapshotViewerPO.header.clickApprove();
-      expect(createReviewStub).to.have.been.calledWith('approve', this.get('build'), [
-        this.get('build.snapshots.firstObject'),
-      ]);
+      expect(createReviewStub).to.have.been.calledWith([this.get('build.snapshots.firstObject')]);
     });
 
     it('does not display when build is not finished', function() {

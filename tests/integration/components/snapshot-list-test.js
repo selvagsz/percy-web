@@ -108,6 +108,7 @@ describe('Integration: SnapshotList', function() {
         snapshotsChanged,
         build,
         stub,
+        isKeyboardNavEnabled: true,
       });
 
       this.render(hbs`{{snapshot-list
@@ -115,6 +116,7 @@ describe('Integration: SnapshotList', function() {
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub
+        isKeyboardNavEnabled=isKeyboardNavEnabled
       }}`);
     });
 
@@ -170,6 +172,7 @@ describe('Integration: SnapshotList', function() {
         snapshotsUnchanged,
         numSnapshotsUnchanged,
         stub,
+        isKeyboardNavEnabled: true,
       });
 
       this.render(hbs`{{snapshot-list
@@ -178,6 +181,7 @@ describe('Integration: SnapshotList', function() {
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub
+        isKeyboardNavEnabled=isKeyboardNavEnabled
       }}`);
     });
 
@@ -256,6 +260,16 @@ describe('Integration: SnapshotList', function() {
       SnapshotList.typeDownArrow();
       wait();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
+      expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
+      expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
+    });
+
+    it('does not send keyboard actions when isKeyboardNavEnabled is false', function() {
+      const numRenderedSnapshots = SnapshotList.snapshots().count;
+      this.set('isKeyboardNavEnabled', false);
+      SnapshotList.typeDownArrow();
+      wait();
+      expect(SnapshotList.snapshots(0).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
     });

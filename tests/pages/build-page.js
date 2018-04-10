@@ -2,6 +2,7 @@ import {visitable, create, clickable, isVisible} from 'ember-cli-page-object';
 import {SnapshotViewerFull} from 'percy-web/tests/pages/components/snapshot-viewer-full';
 import {SnapshotList} from 'percy-web/tests/pages/components/snapshot-list';
 import {alias} from 'ember-cli-page-object/macros';
+import {BuildApprovalButton} from 'percy-web/tests/pages/components/build-approval-button';
 
 const SELECTORS = {
   BUILD_LIST: '[data-test-project-container-build-list]',
@@ -16,6 +17,8 @@ const BuildPage = {
   visitFullPageSnapshot: visitable(
     '/:orgSlug/:projectSlug/builds/:buildId/view/:snapshotId/:width',
   ),
+
+  buildApprovalButton: BuildApprovalButton,
 
   toggleBuildInfoDropdown: clickable(SELECTORS.BUILD_INFO_DROPDOWN_TOGGLE),
 

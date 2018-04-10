@@ -4,12 +4,16 @@ import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   snapshotQuery: service(),
+  reviews: service(),
+
   model(params) {
     return this.store.findRecord('build', params.build_id);
   },
   afterModel(model) {
-    if (model.get('isFinished')) {
-      let controller = this.controllerFor('organization.project.builds.build');
+    const controller = this.controllerFor(this.routeName);
+    controller.set('build', model);
+
+    if (model && model.get('isFinished')) {
       controller.set('isSnapshotsLoading', true);
 
       this.get('snapshotQuery')
@@ -27,14 +31,21 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   actions: {
+    updateIsHidingBuildContainer(isHidingBuildContainer) {
+      const controller = this.controllerFor(this.routeName);
+      controller.set('isHidingBuildContainer', isHidingBuildContainer);
+    },
+
     initializeSnapshotOrdering(snapshots) {
       this._initializeSnapshotOrdering(snapshots);
     },
+
     didTransition() {
       this._super.apply(this, arguments);
 
-      let build = this.modelFor(this.routeName);
+      this.send('updateIsHidingBuildContainer', false);
 
+      const build = this._getBuild();
       let organization = build.get('project.organization');
       let eventProperties = {
         project_id: build.get('project.id'),
@@ -45,11 +56,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       this.analytics.track('Build Viewed', organization, eventProperties);
     },
 
-    updateModalState(state) {
-      this.get('currentModel').set('isShowingModal', state);
-    },
     openSnapshotFullModal(snapshotId, snapshotSelectedWidth) {
-      let build = this.modelFor(this.routeName);
+      this.send('updateIsHidingBuildContainer', true);
+      const build = this._getBuild();
+
       let organization = build.get('project.organization');
       let eventProperties = {
         project_id: build.get('project.id'),
@@ -59,7 +69,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
       };
       this.analytics.track('Snapshot Fullscreen Selected', organization, eventProperties);
 
-      this.send('updateModalState', true);
       this.transitionTo(
         'organization.project.builds.build.snapshot',
         snapshotId,
@@ -69,21 +78,22 @@ export default Route.extend(AuthenticatedRouteMixin, {
         },
       );
     },
-    closeSnapshotFullModal(buildId) {
-      this.send('updateModalState', false);
-      this.transitionTo('organization.project.builds.build', buildId);
+    closeSnapshotFullModal() {
+      const build = this._getBuild();
+      this.send('updateIsHidingBuildContainer', false);
+      this.transitionTo('organization.project.builds.build', build.get('id'));
     },
 
-    createReview(action, build, snapshots) {
-      const review = this.get('store').createRecord('review', {
-        build: build,
-        snapshots: snapshots,
-      });
-      return review.save().then(() => {
-        const build = this.modelFor(this.routeName);
-        build.get('snapshots').reload();
-        build.reload();
-      });
+    createReview(snapshots) {
+      const build = this._getBuild();
+      return this.get('reviews').createApprovalReview(build, snapshots);
     },
+  },
+
+  // Use this instead of `modelFor(this.routeName)` because it returns a resolved build object
+  // rather than a PromiseObject.
+  _getBuild() {
+    const controller = this.controllerFor(this.routeName);
+    return controller.get('build');
   },
 });

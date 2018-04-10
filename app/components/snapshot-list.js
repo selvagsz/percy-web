@@ -10,13 +10,19 @@ export default Component.extend({
   'data-test-snapshot-list': true,
   store: service(),
   snapshotQuery: service(),
+
+  // Required params
+  snapshotsChanged: null,
+  build: null,
+  numSnapshotsUnchanged: 0,
+  isKeyboardNavEnabled: null,
+  showSnapshotFullModalTriggered: null,
+  createReview: null,
+
+  // Set internally by actions
   isUnchangedSnapshotsVisible: false,
   isUnchangedSnapshotsLoading: false,
-  numSnapshotsUnchanged: 0,
-
-  snapshotsChanged: null,
   snapshotsUnchanged: null,
-
   activeSnapshotId: null,
 
   isDefaultExpanded: lt('snapshotsChanged.length', 150),
@@ -43,7 +49,7 @@ export default Component.extend({
     $(document).bind(
       'keydown.snapshots',
       function(e) {
-        if (!this.get('isShowingModal')) {
+        if (this.get('isKeyboardNavEnabled')) {
           if (e.keyCode === 40) {
             // down arrow
             this.set('activeSnapshotId', this._calculateNewActiveSnapshotId({isNext: true}));

@@ -12,5 +12,8 @@ export default JSONAPISerializer.extend({
     'comparisons.baseSnapshot',
     'comparisons.headSnapshot',
     'comparisons.diffImage',
+    // Builds are not fully included by API, but it does send the resource linkage info,
+    // and this is the best way to mimick that in Mirage for now.
+    'build',
   ],
 });
