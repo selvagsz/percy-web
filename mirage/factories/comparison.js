@@ -1,4 +1,4 @@
-import {Factory, trait} from 'ember-cli-mirage';
+import {Factory, trait, association} from 'ember-cli-mirage';
 import moment from 'moment';
 import {TEST_IMAGE_DIMS, TEST_IMAGE_URLS} from 'percy-web/mirage/factories/screenshot';
 
@@ -16,6 +16,10 @@ export default Factory.extend({
   finishedProcessingAt() {
     return moment().subtract(23, 'seconds');
   },
+
+  headBuild: association(),
+  // baseSnapshot: association(),
+  // headSnapshot: association(),
 
   width: TEST_IMAGE_DIMS.DEFAULT_WIDTH,
   diffRatio: HIGH_DIFF_RATIO,

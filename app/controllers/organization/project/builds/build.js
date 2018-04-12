@@ -3,6 +3,9 @@ import snapshotSort from 'percy-web/lib/snapshot-sort';
 import {filterBy, alias} from '@ember/object/computed';
 import {computed} from '@ember/object';
 
+// NOTE: before adding something here, consider adding it to BuildContainer instead.
+// This controller should only be used to maintain the state of which snapshots have been loaded.
+
 export default Controller.extend({
   isHidingBuildContainer: false,
 

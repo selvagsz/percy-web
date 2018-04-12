@@ -3,6 +3,7 @@ import {SnapshotViewer} from 'percy-web/tests/pages/components/snapshot-viewer';
 
 const DOWN_ARROW_KEY = 40;
 const UP_ARROW_KEY = 38;
+const D_KEY = 68;
 
 const SELECTORS = {
   SNAPSHOT_LIST: '[data-test-snapshot-list]',
@@ -59,11 +60,25 @@ export const SnapshotList = {
   isNoDiffsBatchVisible: isVisible(SELECTORS.NO_DIFFS_TOGGLE),
   clickToggleNoDiffsSection: clickable(SELECTORS.NO_DIFFS_TOGGLE),
 
+  isDiffsVisibleForAllSnapshots: {
+    isDescriptor: true,
+    get() {
+      return this.snapshots()
+        .toArray()
+        .every(snapshot => {
+          return snapshot.isDiffImageVisible;
+        });
+    },
+  },
+
   typeDownArrow: triggerable('keydown', '', {
     eventProperties: {keyCode: DOWN_ARROW_KEY},
   }),
   typeUpArrow: triggerable('keydown', '', {
     eventProperties: {keyCode: UP_ARROW_KEY},
+  }),
+  typeDiffToggleKey: triggerable('keydown', '', {
+    eventProperties: {keyCode: D_KEY},
   }),
 };
 

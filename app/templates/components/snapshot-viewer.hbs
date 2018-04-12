@@ -13,9 +13,10 @@
   {{#if selectedComparison}}
     {{comparison-viewer
       comparison=selectedComparison
+      allDiffsShown=allDiffsShown
       snapshotSelectedWidth=snapshotSelectedWidth
       isDefaultExpanded=isDefaultExpanded
-      showNoDiffSnapshot=showNoDiffSnapshot
+      isUnchangedSnapshotExpanded=isUnchangedSnapshotExpanded
       data-test-SnapshotViewer-comparison=true
     }}
   {{else}}

@@ -4,6 +4,12 @@ import {computed} from '@ember/object';
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
 
+const KEYS = {
+  DOWN_ARROW: 40,
+  UP_ARROW: 38,
+  D: 68,
+};
+
 export default Component.extend({
   classNames: ['SnapshotList'],
   attributeBindings: ['data-test-snapshot-list'],
@@ -18,6 +24,8 @@ export default Component.extend({
   isKeyboardNavEnabled: null,
   showSnapshotFullModalTriggered: null,
   createReview: null,
+  allDiffsShown: null,
+  toggleAllDiffs: null,
 
   // Set internally by actions
   isUnchangedSnapshotsVisible: false,
@@ -50,12 +58,13 @@ export default Component.extend({
       'keydown.snapshots',
       function(e) {
         if (this.get('isKeyboardNavEnabled')) {
-          if (e.keyCode === 40) {
-            // down arrow
+          if (e.keyCode === KEYS.DOWN_ARROW) {
             this.set('activeSnapshotId', this._calculateNewActiveSnapshotId({isNext: true}));
-          } else if (e.keyCode === 38) {
-            // up arrow
+          } else if (e.keyCode === KEYS.UP_ARROW) {
             this.set('activeSnapshotId', this._calculateNewActiveSnapshotId({isNext: false}));
+          } else if (e.keyCode === KEYS.D) {
+            e.preventDefault();
+            this.get('toggleAllDiffs')({trackSource: 'keypress'});
           }
         }
       }.bind(this),

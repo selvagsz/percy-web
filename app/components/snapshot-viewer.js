@@ -7,6 +7,7 @@ import {next} from '@ember/runloop';
 export default Component.extend({
   snapshot: null,
   activeSnapshotId: null,
+  allDiffsShown: null,
 
   classNames: ['SnapshotViewer mb-2'],
   classNameBindings: [
@@ -41,7 +42,7 @@ export default Component.extend({
       if (this.get('snapshot.isUnchanged')) {
         this.setProperties({
           isExpanded: true,
-          showNoDiffSnapshot: true,
+          isUnchangedSnapshotExpanded: true,
         });
       }
       // Wait a tick for the above properties to be set on unchanged snapshots, so the snapshot will
@@ -76,7 +77,7 @@ export default Component.extend({
   ),
   isNotExpanded: not('isExpanded'),
   isActionable: alias('isNotExpanded'),
-  showNoDiffSnapshot: or('isFocus', 'isExpanded'),
+  isUnchangedSnapshotExpanded: or('isFocus', 'isExpanded'),
 
   click() {
     this.set('_shouldScroll', false);

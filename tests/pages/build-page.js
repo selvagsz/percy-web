@@ -10,6 +10,8 @@ const SELECTORS = {
   SNAPSHOT_LIST: '[data-test-snapshot-list]',
   BUILD_INFO_DROPDOWN_TOGGLE: '[data-test-build-info-dropdown-toggle]',
   SHOW_SUPPORT_LINK: '[data-test-build-overview-show-support]',
+  TOGGLE_DIFFS_BUTTON: '[data-test-toggle-diffs-button]',
+  PROJECT_LINK: '[data-test-build-toolbar-project-link]',
 };
 
 const BuildPage = {
@@ -51,13 +53,19 @@ const BuildPage = {
     return `/${build.project.fullSlug}/builds/${build.id}?snapshot=${snapshot.id}`;
   },
 
+  clickProject: clickable(SELECTORS.PROJECT_LINK),
+
   typeDownArrow: alias('snapshotList.typeDownArrow'),
   typeUpArrow: alias('snapshotList.typeUpArrow'),
+  typeDiffToggleKey: alias('snapshotList.typeDiffToggleKey'),
 
   snapshotFullscreen: SnapshotViewerFull,
   isFullscreenModalVisible: isVisible(SELECTORS.SNAPSHOT_FULL_MODAL),
 
   clickShowSupportLink: clickable(SELECTORS.SHOW_SUPPORT_LINK),
+
+  clickToggleDiffsButton: clickable(SELECTORS.TOGGLE_DIFFS_BUTTON),
+  isDiffsVisibleForAllSnapshots: alias('snapshotList.isDiffsVisibleForAllSnapshots'),
 };
 
 export default create(BuildPage);

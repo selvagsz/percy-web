@@ -156,14 +156,13 @@ button,
   background: var(--white);
   border: 1px solid transparent;
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(#333, 0.08);
-  transition: color 250ms, background 250ms, transform 250ms;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 1px 0 rgba(0, 0, 0, 0.06);
+  transition: color 250ms, background 250ms;
 
   &:hover {
     color: var(--blue);
     background: lighten($blue, 49%);
     border: 1px solid transparent;
-    transform: translate3d(0, -2px, 0);
   }
 
   &:active {
@@ -251,6 +250,22 @@ button,
     background-image: linear-gradient(-45deg, var(--purple-700) 25%, var(--purple-800) 25%, var(--purple-800) 50%, var(--purple-700) 50%, var(--purple-700) 75%, var(--purple-800) 75%, var(--purple-800));
     background-size: 20px 20px;
     animation: loading 4s linear infinite;
+  }
+}
+
+.build-toolbar {
+  .btn:not(.build-approval-button) {
+    height: 42px;
+
+    &:hover,
+    &:focus,
+    &:focus:active {
+      background: var(--white);
+    }
+  }
+
+  .btn-square {
+    width: 42px;
   }
 }
 
@@ -453,8 +468,4 @@ button,
   display: grid;
   grid-auto-flow: column;
   grid-gap: var(--spacing-1);
-
-  .btn {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 1px 0 rgba(0, 0, 0, 0.06);
-  }
 }

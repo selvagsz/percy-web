@@ -8,11 +8,22 @@
     <div class=" flex align-center bg-purple-300 f6 rounded px-1 py-sm hide-on-mobile">
       {{#link-to "organization" organization class="text-mono text-purple truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
       <span class="text-weight-semibold mx-sm hide-on-tablet">/</span>
-      {{#link-to "organization.project" organization project class="text-mono text-purple truncate truncate-target"}}{{project.name}}{{/link-to}}
+      {{#link-to "organization.project" organization project class="text-mono text-purple truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
     </div>
   </div>
   {{trial-bar organization=organization}}
   <div class="flex align-center">
+    {{#if build.isFinished}}
+      <button type="button" class="btn btn-square hint--bottom hint--rounded hint--bounce" aria-label="Toggle all diffs (d)" {{action 'toggleOverlay'}} data-test-toggle-diffs-button>
+        <figure class="svg-container">
+          {{#if allDiffsShown}}
+            {{inline-svg "diff-toggle-on"}}
+          {{else}}
+            {{inline-svg "diff-toggle-off"}}
+          {{/if}}
+        </figure>
+      </button>
+    {{/if}}
     {{approval-section
       build=build
       createReview=createReview

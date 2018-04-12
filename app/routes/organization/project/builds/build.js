@@ -24,6 +24,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
     }
   },
 
+  setupController(controller, model) {
+    this._super(...arguments);
+    controller.set('build', model);
+  },
+
   _initializeSnapshotOrdering(snapshots) {
     // this route path needs to be explicit so it will work with fullscreen snapshots.
     let controller = this.controllerFor('organization.project.builds.build');

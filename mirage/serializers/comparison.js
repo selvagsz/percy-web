@@ -1,5 +1,12 @@
 import {JSONAPISerializer} from 'ember-cli-mirage';
 
 export default JSONAPISerializer.extend({
-  include: ['baseScreenshot', 'headScreenshot', 'baseSnapshot', 'headSnapshot', 'diffImage'],
+  include: [
+    'headBuild',
+    'baseScreenshot',
+    'headScreenshot',
+    'baseSnapshot',
+    'headSnapshot',
+    'diffImage',
+  ],
 });

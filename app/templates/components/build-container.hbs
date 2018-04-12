@@ -2,6 +2,8 @@
   build=build
   project=build.project
   organization=build.project.organization
+  allDiffsShown=allDiffsShown
+  toggleAllDiffs=(action "toggleAllDiffs")
   createReview=createReview
   approvableSnapshots=snapshotsChanged
 }}
@@ -17,6 +19,8 @@
     {{snapshot-list
       snapshotsChanged=snapshotsChanged
       build=build
+      allDiffsShown=allDiffsShown
+      toggleAllDiffs=(action "toggleAllDiffs")
       numSnapshotsUnchanged=numSnapshotsUnchanged
       isKeyboardNavEnabled=(not isHidingBuildContainer)
       showSnapshotFullModalTriggered=(action 'showSnapshotFullModalTriggered')

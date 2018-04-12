@@ -112,7 +112,6 @@ describe('Integration: BuildContainer', function() {
       build=build
       numSnapshotsUnchanged=numSnapshotsUnchanged
       snapshotsChanged=snapshotsChanged
-      snapshotsUnchanged=snapshotsUnchanged
       createReview=stub
       pollRefresh=stub
     }}`);
