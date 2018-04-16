@@ -3189,7 +3189,7 @@ ember-cli-autoprefixer@^0.8.1:
     broccoli-autoprefixer "^5.0.0"
     lodash "^4.0.0"
 
-ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
+ember-cli-babel@^5.1.6:
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.8.tgz#0356b03cc3fdff5d0f2ecaa46a0e1cfaebffd876"
   dependencies:
@@ -4062,11 +4062,11 @@ ember-test-selectors@^0.3.8:
     ember-cli-babel "^6.8.2"
     ember-cli-version-checker "^2.0.0"
 
-ember-tether@^1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0-beta.0.tgz#fd9f46427e3ed138110b1c21e4be815338c02aa8"
+ember-tether@^1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/ember-tether/-/ember-tether-1.0.0-beta.2.tgz#9cce5874e8c0779273db11379f04aff4ad983e44"
   dependencies:
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.0.0"
     ember-cli-node-assets "^0.2.2"
     tether "^1.4.0"
 
