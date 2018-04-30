@@ -96,7 +96,7 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
 
   _redirectToDefaultOrganization() {
     if (!this.get('currentUser')) {
-      return this.transitionTo('/');
+      return this.transitionTo('/login');
     }
 
     let lastOrganizationSlug = localStorageProxy.get('lastOrganizationSlug');

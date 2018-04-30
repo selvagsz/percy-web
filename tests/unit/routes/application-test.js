@@ -4,6 +4,8 @@ import {it, describe, beforeEach, afterEach} from 'mocha';
 import {AUTH_CALLBACK_ROUTE} from 'percy-web/router';
 import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/routes/application';
 import {setupTest} from 'ember-mocha';
+import sinon from 'sinon';
+import {resolve} from 'rsvp';
 
 describe('ApplicationRoute', function() {
   let subject;
@@ -36,6 +38,17 @@ describe('ApplicationRoute', function() {
           `"${fakeRedirectTarget}"`,
         );
       });
+    });
+  });
+
+  describe('_redirectToDefaultOrganization', function() {
+    it('redirects to /login if there is no user', function() {
+      const transitionStub = sinon.stub(subject, 'transitionTo').returns(resolve());
+
+      subject.set('currentUser', null);
+      subject._redirectToDefaultOrganization();
+
+      expect(transitionStub).to.have.been.calledWith('/login');
     });
   });
 });
