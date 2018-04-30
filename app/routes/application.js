@@ -56,6 +56,7 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
     },
 
     logout() {
+      this.get('session')._clearThirdPartyUserContext();
       this.get('session').invalidateAndLogout();
     },
 
