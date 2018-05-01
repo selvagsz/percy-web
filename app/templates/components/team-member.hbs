@@ -21,6 +21,11 @@
         {{inline-svg "linkedin-icon"}}
       </a>
     {{/if}}
+    {{#if social-website}}
+      <a href="http://www.{{social-website}}" class="social-toolbar-item">
+        {{inline-svg "website-icon"}}
+      </a>
+    {{/if}}
     {{#if social-photos}}
       <a href="{{social-photos}}" class="social-toolbar-item">
         {{inline-svg "photos-icon"}}
