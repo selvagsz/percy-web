@@ -1,0 +1,20 @@
+{{#if (is-admin)}}
+<div data-test-gitlab-settings class="mt-4">
+<hr>
+<h4>GitLab Integration {{fa-icon "gitlab"}}</h4>
+{{#if isGitlabIntegrated}}
+  <p data-test-gitlab-settings-status>
+    The GitLab integration is installed. Please contact support to change any settings.
+  </p>
+{{else}}
+  <p data-test-gitlab-settings-status>
+    The GitLab integration is not installed.
+  </p>
+  <button data-test-gitlab-settings-connect-button
+    class="Button--primary"
+    {{action "redirectToGitlabAuthorization" organization}}>
+    Connect to GitLab
+  </button>
+{{/if}}
+</div>
+{{/if}}

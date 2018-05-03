@@ -13,5 +13,9 @@ FactoryGuy.define('version-control-integration', {
       githubEnterpriseIntegrationId: () => faker.random.number(),
       integrationType: 'github_enterprise',
     },
+    gitlab: {
+      gitlabIntegrationId: () => faker.random.number(),
+      integrationType: 'gitlab',
+    },
   },
 });

@@ -5,6 +5,7 @@ import {makeList} from 'ember-data-factory-guy';
 FactoryGuy.define('organization', {
   default: {
     name: () => faker.company.companyName(),
+    slug: f => faker.helpers.slugify(f.name),
 
     projects: FactoryGuy.hasMany('project'),
     versionControlIntegrations: FactoryGuy.hasMany('version-control-integration'),
@@ -25,6 +26,14 @@ FactoryGuy.define('organization', {
       },
       repos: () => {
         return makeList('repo', 2, 'githubEnterprise');
+      },
+    },
+    withGitlabIntegration: {
+      versionControlIntegrations: () => {
+        return makeList('version-control-integration', ['gitlab']);
+      },
+      repos: () => {
+        return makeList('repo', 2, 'gitlab');
       },
     },
     withMultipleIntegrations: {

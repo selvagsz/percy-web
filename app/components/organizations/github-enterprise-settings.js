@@ -13,6 +13,5 @@ export default Component.extend({
   showWhenIntegrationEnabled: computed('isGithubEnterpriseIntegrated', function() {
     return htmlSafe(!this.get('isGithubEnterpriseIntegrated') ? '' : 'display: none');
   }),
-  githubEnterpriseIntegration: alias('organization.githubEnterpriseIntegration'),
   isGithubEnterpriseIntegrated: alias('organization.isGithubEnterpriseIntegrated'),
 });

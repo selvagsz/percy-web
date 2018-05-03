@@ -25,6 +25,10 @@ export default DS.Model.extend({
     },
   ),
 
+  gitlabIntegration: computed('versionControlIntegrations.@each.gitlabIntegrationId', function() {
+    return this.get('versionControlIntegrations').findBy('gitlabIntegrationId');
+  }),
+
   githubIntegrationRequest: DS.belongsTo('github-integration-request', {
     async: false,
   }),
@@ -46,12 +50,13 @@ export default DS.Model.extend({
   isGithubIntegrated: computed('githubAuthMechanism', function() {
     return this.get('githubAuthMechanism') !== 'no-access';
   }),
-
   isGithubEnterpriseIntegrated: bool('githubEnterpriseIntegration'),
-
-  isGithubEnterpriseIntegration: bool('githubEnterpriseIntegration'),
-  isGithubIntegration: bool('githubIntegration'),
-  isVersionControlIntegrated: or('isGithubEnterpriseIntegration', 'isGithubIntegration'),
+  isGitlabIntegrated: bool('gitlabIntegration'),
+  isVersionControlIntegrated: or(
+    'isGithubEnterpriseIntegrated',
+    'isGithubIntegrated',
+    'isGitlabIntegrated',
+  ),
 
   githubAuthMechanism: computed('githubIntegration', function() {
     if (this.get('githubIntegration')) {

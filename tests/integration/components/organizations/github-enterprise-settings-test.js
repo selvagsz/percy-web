@@ -46,6 +46,8 @@ describe('Integration: Github Enterprise Settings', function() {
     });
 
     it('shows nothing', function() {
+      const isIntegrated = this.get('organization.isGithubEnterpriseIntegrated');
+      expect(isIntegrated).to.equal(false);
       this.render(hbs`{{
         organizations/github-enterprise-settings
         currentUser=user

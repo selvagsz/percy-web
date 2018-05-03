@@ -12,18 +12,16 @@ FactoryGuy.define('repo', {
   },
   traits: {
     github: {
-      name: () => faker.lorem.slug(20),
-      htmlUrl: () => faker.internet.url(),
-      slug: () => faker.lorem.slug(),
       source: 'github',
       hostname: 'github.com',
     },
     githubEnterprise: {
-      name: () => faker.lorem.slug(20),
-      htmlUrl: () => faker.internet.url(),
-      slug: () => faker.lorem.slug(),
       source: 'github_enterprise',
-      hostname: () => 'enterprise-host.com',
+      hostname: 'enterprise-host.com',
+    },
+    gitlab: {
+      source: 'gitlab',
+      hostname: 'gitlab.com',
     },
   },
 });
