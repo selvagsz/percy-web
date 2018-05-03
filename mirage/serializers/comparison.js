@@ -8,5 +8,6 @@ export default JSONAPISerializer.extend({
     'baseSnapshot',
     'headSnapshot',
     'diffImage',
+    'browser',
   ],
 });

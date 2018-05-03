@@ -29,6 +29,8 @@ export default DS.Model.extend({
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
 
+  browser: DS.belongsTo('browser', {async: false, inverse: false}),
+
   wasAdded: computed('headScreenshot', 'baseScreenshot', function() {
     return !!this.get('headScreenshot') && !this.get('baseScreenshot');
   }),

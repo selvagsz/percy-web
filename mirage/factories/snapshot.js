@@ -38,7 +38,7 @@ export default Factory.extend({
   withComparison: trait(
     Object.assign({}, _unreviewedProps, {
       afterCreate(snapshot, server) {
-        const comparison = server.create('comparison', 'default');
+        const comparison = server.create('comparison');
         _addComparisonIds(comparison, snapshot);
       },
     }),

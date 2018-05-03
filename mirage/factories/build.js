@@ -18,6 +18,11 @@ export default Factory.extend({
     return i + 1;
   },
 
+  afterCreate(build, server) {
+    const browser = server.create('browser');
+    build.update('browsers', [browser]);
+  },
+
   approved: trait({
     state: BUILD_STATES.FINISHED,
     reviewState: 'approved',

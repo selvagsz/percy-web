@@ -7,4 +7,5 @@ export default Model.extend({
   headScreenshot: belongsTo('screenshot', {inverse: null}),
   baseScreenshot: belongsTo('screenshot', {inverse: null}),
   diffImage: belongsTo('image', {inverse: null}),
+  browser: belongsTo('browser'),
 });

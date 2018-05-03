@@ -8,6 +8,9 @@ FactoryGuy.define('comparison', {
     startedProcessingAt: () => moment().subtract(65, 'seconds'),
     finishedProcessingAt: () => moment().subtract(23, 'seconds'),
     diffRatio: 0.23,
+    browser: () => {
+      return FactoryGuy.make('browser');
+    },
 
     headScreenshot: f => {
       // TODO: make the screenshot and image a real FactoryGuy model instead of POJO
