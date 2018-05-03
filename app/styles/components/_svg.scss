@@ -9,3 +9,9 @@
     }
   }
 }
+
+@media only percy {
+  .loader path {
+    transform: none;
+  }
+}
