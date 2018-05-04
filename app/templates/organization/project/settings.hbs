@@ -1,37 +1,37 @@
 {{fixed-top-header currentOrganization=model.organization}}
+
 {{#organizations/settings-nav-wrapper organization=model.organization project=model.project projects=model.projects}}
-  {{#link-to "organization.project.index" model.organization.slug model.project.slug classNames="Button u-pull-right"}}
-    Back to project
-  {{/link-to}}
-  <h3>Project Settings</h3>
+  <section class="p-2">
+    {{#link-to "organization.project.index" model.organization.slug model.project.slug classNames="Button u-pull-right"}}
+      Back to project
+    {{/link-to}}
+    <h3>Project Settings</h3>
 
-  {{#unless model.project.isEnabled}}
-    <div class="Alert Alert--warning">
-      <strong>This project is disabled.</strong>
-    </div>
-  {{/unless}}
+    {{#unless model.project.isEnabled}}
+      <div class="Alert Alert--warning">
+        <strong>This project is disabled.</strong>
+      </div>
+    {{/unless}}
 
-  {{#if model.project.isEnabled}}
-    {{forms/project-edit project=model.project saveSuccess="projectUpdated"}}
-    <hr>
-    <h4>Environment variables for CI</h4>
-    <p>
-      See the {{#link-to "docs"}}docs{{/link-to}} for how to set up client authentication for your app.
-    </p>
+    {{#if model.project.isEnabled}}
+      {{forms/project-edit project=model.project saveSuccess="projectUpdated"}}
+      <hr>
+      <h4>Environment variables for CI</h4>
+      <p>See the {{#link-to "docs"}}docs{{/link-to}} for how to set up client authentication for your app.</p>
+      {{projects/env-vars project=model.project}}
+      <p>PERCY_TOKEN is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
+      <hr>
+      <h4>Link GitHub repository</h4>
+      {{projects/github-integrator project=model.project}}
+      <hr>
+      <h4>Diff base config</h4>
+      {{projects/diff-base-settings project=model.project}}
+    {{/if}}
 
-    {{projects/env-vars project=model.project}}
-    <p>
-      PERCY_TOKEN is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.
-    </p>
     <hr>
-    <h4>Link GitHub repository</h4>
-    {{projects/github-integrator project=model.project}}
-    <hr>
-    <h4>Diff base config</h4>
-    {{projects/diff-base-settings project=model.project}}
-  {{/if}}
-  <hr>
-  <h4>Actions</h4>
-  {{projects/enabled-toggle project=model.project}}
+    <h4>Actions</h4>
+    {{projects/enabled-toggle project=model.project}}
+  </section>
 {{/organizations/settings-nav-wrapper}}
+
 {{main-footer}}

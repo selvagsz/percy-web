@@ -1,38 +1,34 @@
-<div class="container container--fixedWidth container--forContent">
-  <div class="row">
-    <div class="three columns">
-      <aside class="sidenav" data-test-sidenav>
-        <section class="sidenav-group">
-          <header class="sidenav-header">{{organization.name}}</header>
-          <ul class="sidenav-list">
-            <li class="sidenav-list-item">
-              {{#link-to "organizations.organization.settings" organization.slug classNames="sidenav-list-item-link"}}Settings{{/link-to}}
-            </li>
-            <li class="sidenav-list-item">
-              {{#link-to "organizations.organization.users" organization.slug classNames="sidenav-list-item-link"}}Users{{/link-to}}
-            </li>
-            <li class="sidenav-list-item">
-              {{#link-to "organizations.organization.billing" organization.slug classNames="sidenav-list-item-link"}}Billing{{/link-to}}
-            </li>
-          </ul>
-        </section>
-        <section class="sidenav-group">
-          <header class="sidenav-header">Project Settings</header>
-          <ul class="sidenav-list" data-test-sidenav-list-projects>
-            {{#each organization.projects as |project|}}
-              <li class="sidenav-list-item">
-                {{#link-to "organization.project.settings" organization.slug project.slug classNames="sidenav-list-item-link truncate"}}{{project.name}}{{/link-to}}
-              </li>
-            {{/each}}
-            <li class="sidenav-list-item">
-              {{#link-to "organizations.organization.projects.new" organization.slug classNames="sidenav-list-item-link text-weight-semibold"}}Start new project{{/link-to}}
-            </li>
-          </ul>
-        </section>
-      </aside>
-    </div>
-    <div class="nine columns">
-      {{yield}}
-    </div>
-  </div>
+<div class="settings-nav-wrapper flex position-relative">
+  <aside class="settings-sidebar vh-full overflow-y-scroll shrink-0 sticky pt-4 border-right border-gray-100" data-test-sidenav>
+    <section class="border-bottom border-gray-000 mb-3">
+      <ul class="list-reset mb-3">
+        <li>
+          {{#link-to "organizations.organization.settings" organization.slug class="d-block mb-2 px-4 link-gray text-weight-semibold"}}Settings{{/link-to}}
+        </li>
+        <li>
+          {{#link-to "organizations.organization.users" organization.slug class="d-block mb-2 px-4 link-gray text-weight-semibold"}}Users{{/link-to}}
+        </li>
+        <li>
+          {{#link-to "organizations.organization.billing" organization.slug class="d-block px-4 link-gray text-weight-semibold"}}Billing{{/link-to}}
+        </li>
+      </ul>
+    </section>
+    <section>
+      <ul class="pb-4 list-reset" data-test-sidenav-list-projects>
+        {{#each organization.projects as |project|}}
+        <li>
+          {{#link-to "organization.project.settings" organization.slug project.slug classNames="d-block mb-2 px-4 link-gray text-weight-semibold
+          truncate"}}{{project.name}}{{/link-to}}
+        </li>
+        {{/each}}
+        <li class="px-4">
+          {{#link-to "organizations.organization.projects.new" organization.slug classNames="text-weight-semibold"}}Create new project{{/link-to}}
+        </li>
+      </ul>
+    </section>
+  </aside>
+
+  <main class="flex-1 bg-gray-000">
+    {{yield}}
+  </main>
 </div>

@@ -56,3 +56,19 @@
     background: var(--lightest-gray);
   }
 }
+
+.settings-sidebar {
+  width: 36vw;
+  max-width: 280px;
+
+  .active {
+    box-shadow: inset 4px 0 0 var(--purple-600);
+  }
+
+  @media screen and (max-width: $width-sm) {
+    position: static !important;
+    width: 100vw;
+    max-width: none;
+    height: auto !important;
+  }
+}

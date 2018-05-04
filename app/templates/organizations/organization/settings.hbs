@@ -1,14 +1,16 @@
 {{title "Settings"}}
 {{#organizations/settings-nav-wrapper organization=model}}
-  <h3>Settings</h3>
+  <section class="p-2">
+    <h3>Settings</h3>
 
-  {{#organizations/require-role role="admin" organization=model}}
-    {{forms/organization-edit organization=model saveSuccess="organizationUpdated"}}
+    {{#organizations/require-role role="admin" organization=model}}
+      {{forms/organization-edit organization=model saveSuccess="organizationUpdated"}}
 
-    {{organizations/github-settings organization=model showSupport="showSupport"}}
+      {{organizations/github-settings organization=model showSupport="showSupport"}}
 
-    {{organizations/github-enterprise-settings organization=model showSupport="showSupport"}}
+      {{organizations/github-enterprise-settings organization=model showSupport="showSupport"}}
 
-    {{organizations/gitlab-settings organization=model showSupport="showSupport"}}
-  {{/organizations/require-role}}
+      {{organizations/gitlab-settings organization=model showSupport="showSupport"}}
+    {{/organizations/require-role}}
+  </section>
 {{/organizations/settings-nav-wrapper}}

@@ -71,7 +71,7 @@ describe('Acceptance: Project', function() {
       );
       expect(find('[data-test-sidenav-list-projects] li:eq(1)').text()).to.match(/Enabled Project/);
       expect(find('[data-test-sidenav-list-projects] li:eq(2)').text()).to.match(
-        /Start new project/,
+        /Create new project/,
       );
 
       await percySnapshot(this.test);
@@ -85,7 +85,7 @@ describe('Acceptance: Project', function() {
       );
       expect(find('[data-test-sidenav-list-projects] li:eq(1)').text()).to.match(/Enabled Project/);
       expect(find('[data-test-sidenav-list-projects] li:eq(2)').text()).to.match(
-        /Start new project/,
+        /Create new project/,
       );
 
       await percySnapshot(this.test);

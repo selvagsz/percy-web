@@ -6,3 +6,9 @@
     margin-bottom: 3rem;
   }
 }
+
+.settings-nav-wrapper {
+  @media screen and (max-width: $width-sm) {
+    flex-direction: column;
+  }
+}
