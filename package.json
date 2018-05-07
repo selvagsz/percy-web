@@ -92,7 +92,7 @@
     "glob": "^7.1.2",
     "http-proxy": "^1.17.0",
     "husky": "^0.14.3",
-    "lint-staged": "^7.0.4",
+    "lint-staged": "^7.1.0",
     "loader.js": "^4.7.0",
     "morgan": "^1.9.0",
     "percy-docs": "git+https://github.com/percy/percy-docs.git#eba14df25ac24c0f14aeb973e731a0d530a0a07a",
