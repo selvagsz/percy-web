@@ -1,20 +1,30 @@
 /* jshint expr:true */
 import {setupComponentTest} from 'ember-mocha';
-import {beforeEach, it, describe} from 'mocha';
+import {beforeEach, afterEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
 import seedFaker from '../../helpers/seed-faker';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import BuildInfoDropdown from 'percy-web/tests/pages/components/build-info-dropdown';
+import AdminMode from 'percy-web/lib/admin-mode';
 
 describe('Integration: BuildInfoDropdownComponent', function() {
+  let isAdminModeEnabled;
   setupComponentTest('build-info-dropdown', {
     integration: true,
   });
 
   beforeEach(function() {
+    isAdminModeEnabled = this.get('isAdminEnabled');
     seedFaker();
     setupFactoryGuy(this.container);
+    BuildInfoDropdown.setContext(this);
+    AdminMode.clear();
+  });
+
+  afterEach(function() {
+    this.set('isAdminEnabled', isAdminModeEnabled);
   });
 
   let states = [
@@ -44,5 +54,37 @@ describe('Integration: BuildInfoDropdownComponent', function() {
 
       percySnapshot(this.test);
     });
+  });
+
+  it('hides admin info if user is not admin', function() {
+    const build = make('build', 'finished');
+    this.set('build', build);
+
+    this.render(hbs`{{build-info-dropdown
+      build=build
+      isShowingModal=true
+      renderInPlace=true
+    }}`);
+
+    expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(false);
+
+    percySnapshot(this.test);
+  });
+
+  it('shows admin info if user is an admin', function() {
+    const build = make('build', 'finished');
+    this.set('build', build);
+
+    AdminMode.setAdminMode();
+
+    this.render(hbs`{{build-info-dropdown
+       build=build
+       isShowingModal=true
+       renderInPlace=true
+     }}`);
+
+    expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(true);
+
+    percySnapshot(this.test);
   });
 });

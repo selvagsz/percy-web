@@ -72,5 +72,20 @@
       <h4>Base commit</h4>
       {{commit-table build=build.baseBuild commit=build.baseBuild.commit}}
     {{/if}}
+
+    {{#if (is-admin)}}
+      <div data-test-build-info-admin-details>
+        <hr/>
+        <h4>Admin Info</h4>
+        <table>
+          {{#each build.browsers as |browser|}}
+            <tr>
+              <td>{{browser.name}} Version</td>
+              <td><pre>{{browser.version}}</pre></td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    {{/if}}
   {{/modal-dialog}}
 {{/if}}

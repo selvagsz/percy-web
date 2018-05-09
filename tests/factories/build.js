@@ -15,7 +15,9 @@ FactoryGuy.define('build', {
     updatedAt: () => new Date(),
     commit: FactoryGuy.belongsTo('commit'),
     snapshots: FactoryGuy.hasMany('snapshot'),
-    browsers: FactoryGuy.hasMany('browser'),
+    browsers: () => {
+      return [FactoryGuy.make('browser')];
+    },
   },
   traits: {
     withLongBranch: {branch: () => faker.lorem.slug(20)},
