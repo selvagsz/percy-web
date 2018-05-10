@@ -39,11 +39,9 @@ module.exports = function(defaults) {
   app.import('node_modules/highlightjs/highlight.pack.js');
   app.import('node_modules/hint.css/hint.css');
   app.import('node_modules/raven-js/dist/ember/raven.js', {
-    exports: {
-      Raven: ['default'],
-    },
+    using: [{transformation: 'amd', as: 'raven-js'}],
   });
-  app.import('node_modules/raven-js/plugins/ember.js');
+  // app.import('node_modules/raven-js/plugins/ember.js');
   app.import('node_modules/sinon-chai/lib/sinon-chai.js', {type: 'test'});
   app.import('node_modules/seedrandom/seedrandom.js');
 
