@@ -9,7 +9,7 @@ const SELECTORS = {
   POWER_SELECT_GROUP_NAME: '.ember-power-select-group-name',
 };
 
-export const GithubIntegrator = {
+export const RepoIntegrator = {
   scope: SELECTORS.POWER_SELECT_DROPDOWN,
   isSelectorOpen: isVisible(SELECTORS.POWER_SELECT_GROUPS, {multiple: true}),
 
@@ -26,4 +26,4 @@ export const GithubIntegrator = {
   },
 };
 
-export default create(GithubIntegrator);
+export default create(RepoIntegrator);

@@ -38,14 +38,15 @@ FactoryGuy.define('organization', {
     },
     withMultipleIntegrations: {
       versionControlIntegrations: () => {
-        return makeList('version-control-integration', 'github', 'githubEnterprise');
+        return makeList('version-control-integration', 'github', 'githubEnterprise', 'gitlab');
       },
       repos: () => {
-        return makeList('repo', 'github', ['githubEnterprise', {hostname: 'foo.com'}]);
+        return makeList('repo', 'github', 'gitlab', ['githubEnterprise', {hostname: 'foo.com'}]);
       },
     },
     withRepos: {repos: () => makeList('repo', 3)},
     withGithubRepos: {repos: () => makeList('repo', 3, 'github')},
+    withGitlabRepos: {repos: () => makeList('repo', 3, 'gitlab')},
     withGithubEnterpriseRepos: {repos: () => makeList('repo', 3, 'githubEnterprise')},
     withProjects: {projects: () => makeList('project', 5)},
   },

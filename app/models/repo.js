@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  githubId: DS.attr('number'),
+  externalRepoId: DS.attr('number'),
   name: DS.attr(),
   slug: DS.attr(),
   hostname: DS.attr(),

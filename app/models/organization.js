@@ -5,6 +5,7 @@ import DS from 'ember-data';
 const DISPLAY_NAMES = {
   github: 'GitHub',
   githubEnterprise: 'GitHub Enterprise',
+  gitlab: 'GitLab',
 };
 
 export default DS.Model.extend({
@@ -77,6 +78,7 @@ export default DS.Model.extend({
 
   githubRepos: filterBy('repos', 'source', 'github'),
   githubEnterpriseRepos: filterBy('repos', 'source', 'github_enterprise'),
+  gitlabRepos: filterBy('repos', 'source', 'gitlab'),
   repoSources: mapBy('repos', 'source'),
   uniqueRepoSources: uniq('repoSources'),
 
@@ -88,6 +90,7 @@ export default DS.Model.extend({
   groupedRepos: computed(
     'githubRepos.[]',
     'githubEnterpriseRepos.[]',
+    'gitlabRepos.[]',
     'uniqueRepoSources.[]',
     function() {
       const groups = [];

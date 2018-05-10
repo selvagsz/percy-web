@@ -26,7 +26,7 @@ export default Component.extend({
     );
   },
 
-  classNames: ['ProjectsGithubIntegrator'],
+  classNames: ['ProjectsRepoIntegrator'],
   classNameBindings: ['classes'],
   actions: {
     chooseRepo(repo) {
