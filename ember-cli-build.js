@@ -34,14 +34,13 @@ module.exports = function(defaults) {
     },
   });
 
-  app.import('bower_components/accounting.js/accounting.js');
-  app.import('bower_components/highlightjs/styles/github.css');
-  app.import('bower_components/highlightjs/highlight.pack.js');
-  app.import('bower_components/hint.css/hint.css');
-  app.import('bower_components/raven-js/dist/ember/raven.js');
-  app.import('bower_components/raven-js/dist/plugins/ember.js');
-  app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'});
-  app.import('bower_components/seedrandom/seedrandom.js');
+  app.import('node_modules/accounting/accounting.js');
+  app.import('node_modules/highlightjs/styles/github.css');
+  app.import('node_modules/highlightjs/highlight.pack.js');
+  app.import('node_modules/hint.css/hint.css');
+  app.import('node_modules/raven-js/dist/ember/raven.js');
+  app.import('node_modules/sinon-chai/lib/sinon-chai.js', {type: 'test'});
+  app.import('node_modules/seedrandom/seedrandom.js');
 
   var extraAssets;
   if (app.env === 'development' || app.env === 'test') {

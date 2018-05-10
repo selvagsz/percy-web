@@ -13,7 +13,6 @@
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js . --fix",
     "precommit": "lint-staged",
-    "postinstall": "bower install --allow-root",
     "start": "ember server",
     "start-production-for-testing": "ember server --environment=production",
     "test": "ember test",
@@ -98,6 +97,8 @@
     "percy-docs": "git+https://github.com/percy/percy-docs.git#eba14df25ac24c0f14aeb973e731a0d530a0a07a",
     "prettier": "^1.12.1",
     "prettier-eslint-cli": "^4.7.0",
+    "seedrandom": "^2.4.3",
+    "sinon-chai": "^2.14.0",
     "stylelint": "^9.2.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^0.8.0",
@@ -107,5 +108,14 @@
     "node": ">= 6.9.1"
   },
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "accounting": "0.4.1",
+    "highlightjs": "^9.10.0",
+    "hint.css": "^2.5.0",
+    "moment": "2.13.0",
+    "moment-timezone": "0.5.4",
+    "remarkable": "^1.7.1",
+    "faker": "^4.1.0",
+    "raven-js": "^3.19.1"
+  }
 }
