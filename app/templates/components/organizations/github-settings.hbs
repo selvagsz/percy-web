@@ -24,7 +24,7 @@
       <p>Shows visual change status in GitHub pull requests. Has customizable access control.</p>
     </label>
     {{#if (eq changeset.githubAuthMechanism "github-integration")}}
-      {{organizations/repo-integrator organization=organization showSupport="showSupport"}}
+      {{organizations/github-integrator organization=organization showSupport="showSupport"}}
     {{/if}}
 
     {{#if changeset.errors}}
