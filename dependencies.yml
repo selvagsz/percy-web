@@ -1,4 +1,5 @@
-collectors:
+version: 2
+dependencies:
 
 - type: js-npm
   path: /
@@ -16,6 +17,7 @@ collectors:
       - dependencies
       github_assignees:  # list of usernames
       - cadeparade
+      - maprules1000
 
   # create issues for new major versions
   - type: repo-issue
@@ -24,6 +26,7 @@ collectors:
     settings:
       github_assignees:
         - cadeparade
+        - maprules1000
 
   - type: slack
     versions: "L.Y.Y"
