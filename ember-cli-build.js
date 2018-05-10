@@ -41,7 +41,6 @@ module.exports = function(defaults) {
   app.import('node_modules/raven-js/dist/ember/raven.js', {
     using: [{transformation: 'amd', as: 'raven-js'}],
   });
-  // app.import('node_modules/raven-js/plugins/ember.js');
   app.import('node_modules/sinon-chai/lib/sinon-chai.js', {type: 'test'});
   app.import('node_modules/seedrandom/seedrandom.js');
 

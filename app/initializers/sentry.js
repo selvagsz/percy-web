@@ -6,7 +6,7 @@ export function initialize(/* application */) {
     release: config.APP.VERSION,
     ignoreErrors: ['TransitionAborted'],
   })
-    .addPlugin(Raven.Plugins.Ember)
+    .addPlugin(Plugin)
     .install();
 }
 
