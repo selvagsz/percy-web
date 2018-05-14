@@ -22,7 +22,7 @@ export default Component.extend({
   classes: null,
   attributeBindings: ['href'],
   tagName: 'button',
-  classNames: ['StripeCheckout', 'Button'],
+  classNames: ['StripeCheckout', 'btn btn-primary btn-shadow-purple mb-0'],
   classNameBindings: ['classes'],
 
   loadStripeCheckout: on('willInsertElement', function() {

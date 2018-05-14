@@ -67,6 +67,7 @@ Router.map(function() {
         this.route('invite');
       });
       this.route('billing');
+      this.route('integrations');
     });
   });
   this.route('organization', {path: '/:organization_id'}, function() {

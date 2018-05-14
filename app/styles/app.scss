@@ -65,7 +65,6 @@
   "components/snapshot_viewer",
   "components/snapshot_viewer_full",
   "components/svg",
-  "components/forms/billing_edit",
   "components/forms/organization_user_edit",
   "components/icons",
   "components/image_spacer",
@@ -75,13 +74,10 @@
   "components/menu_icon",
   "components/mock_approval_flow",
   "components/note",
-  "components/organizations/billing_section",
-  "components/organizations/github_integration",
   "components/organizations/github_settings",
   "components/organizations/jump_to_billing",
   "components/organizations/settings_nav_wrapper",
   "components/organizations/switcher_nav",
-  "components/organizations/user_card",
   "components/pricing_section",
   "components/progress_bar",
   "components/project_list_sidebar",
@@ -97,5 +93,7 @@
   "components/user_menu";
 
 // Page specific styles.
-@import "pages/team";
-@import "pages/home";
+@import
+  "pages/team",
+  "pages/home",
+  "pages/settings";

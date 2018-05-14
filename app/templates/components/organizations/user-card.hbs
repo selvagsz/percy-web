@@ -1,24 +1,30 @@
-<div class="Card Card--linkable" {{action "toggleExpanded"}}>
-  {{user-avatar user=organizationUser.user linked=true class="mr-1"}}
-  <div>
-    {{organizationUser.user.name}}
-    <br>
-    <span class="OrganizationsUserCard-role">{{organizationUser.roleTitle}}</span>
-  </div>
-</div>
-{{#if isExpanded}}
-  <div class="Card Card--expando">
-    {{!-- TODO: #billingadmins --}}
-    {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}}
-      {{!-- Allow admin to do everything. --}}
-      {{forms/organization-user-edit organizationUser=organizationUser}}
-    {{else if (eq organizationUser.user.id currentUser.id)}}
-      {{!-- Allow member to view their own record. --}}
-      {{forms/organization-user-edit organizationUser=organizationUser}}
-    {{else}}
-      <div class="Alert Alert--error">
-        <strong>Editing users requires organization admin permissions.</strong>
+<div data-test-user-card class="user-card border-bottom c-pointer">
+  <div class="p-2 flex align-center" {{action "toggleExpanded"}}>
+    {{user-avatar user=organizationUser.user linked=true class="mr-1"}}
+    <div>
+      <div class="lh-1 mb-sm text-weight-semibold">
+        {{organizationUser.user.name}}
       </div>
-    {{/if}}
+      <div class="lh-1 text-light f6">
+        {{organizationUser.roleTitle}}
+      </div>
+    </div>
   </div>
-{{/if}}
+
+  {{#if isExpanded}}
+    <div class="px-2 pb-2">
+      {{!-- TODO: #billingadmins --}}
+      {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}}
+        {{!-- Allow admin to do everything. --}}
+        {{forms/organization-user-edit organizationUser=organizationUser}}
+      {{else if (eq organizationUser.user.id currentUser.id)}}
+        {{!-- Allow member to view their own record. --}}
+        {{forms/organization-user-edit organizationUser=organizationUser}}
+      {{else}}
+        <div class="Alert Alert--error">
+          <strong>Editing users requires organization admin permissions.</strong>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

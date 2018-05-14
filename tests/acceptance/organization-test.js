@@ -65,7 +65,7 @@ describe('Acceptance: Organization', function() {
       expect(currentPath()).to.equal('organizations.organization.users.index');
 
       await percySnapshot(this.test.fullTitle() + ' | Users settings');
-      await click('.OrganizationsUserCard .Card.Card--linkable');
+      await click('[data-test-user-card]');
       expect(currentPath()).to.equal('organizations.organization.users.index');
 
       await percySnapshot(this.test.fullTitle() + ' | Users settings expanded');

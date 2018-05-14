@@ -1,15 +1,18 @@
 <div class="settings-nav-wrapper flex position-relative">
-  <aside class="settings-sidebar vh-full overflow-y-scroll shrink-0 sticky pt-4 border-right border-gray-100" data-test-sidenav>
+  <aside class="settings-sidebar vh-full overflow-y-scroll shrink-0 sticky pt-3 border-right border-gray-100" data-test-sidenav>
     <section class="border-bottom border-gray-000 mb-3">
-      <ul class="list-reset mb-3">
+      <ul class="list-reset mb-2">
         <li>
-          {{#link-to "organizations.organization.settings" organization.slug class="d-block mb-2 px-4 link-gray text-weight-semibold"}}Settings{{/link-to}}
+          {{#link-to "organizations.organization.settings" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Settings{{/link-to}}
         </li>
         <li>
-          {{#link-to "organizations.organization.users" organization.slug class="d-block mb-2 px-4 link-gray text-weight-semibold"}}Users{{/link-to}}
+          {{#link-to "organizations.organization.billing" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Billing{{/link-to}}
         </li>
         <li>
-          {{#link-to "organizations.organization.billing" organization.slug class="d-block px-4 link-gray text-weight-semibold"}}Billing{{/link-to}}
+          {{#link-to "organizations.organization.integrations" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Integrations{{/link-to}}
+        </li>
+        <li>
+          {{#link-to "organizations.organization.users" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Users{{/link-to}}
         </li>
       </ul>
     </section>

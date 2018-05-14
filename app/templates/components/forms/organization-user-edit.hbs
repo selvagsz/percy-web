@@ -8,7 +8,7 @@
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "role")
     }}
-    <p>
+    <p style="margin-top: calc(var(--spacing-1) * -1)" class="mb-2 text-light">
       Allow this user to edit organization details, billing information, and invite new members.
     </p>
   {{/unless}}
@@ -16,7 +16,7 @@
     {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful classes="u-pull-left"}}
     {{form-fields/submit
       value=deleteText
-      classes="Button"
+      classes="btn text-light mb-0"
       showSavingIndicator=false
       confirmationMessage="Are you sure? This user will lose all access to the organization."
       submit=(action "delete")
@@ -24,7 +24,7 @@
     {{#unless isCurrentUser}}
       {{form-fields/submit
         value="Save"
-        classes="Button Button--primary"
+        classes="btn btn-primary btn-shadow-purple mb-0 ml-1"
         showSavingIndicator=false
         submit=(action "save")
       }}

@@ -225,20 +225,26 @@ button,
 }
 
 .btn-primary {
+  padding: 5px var(--spacing-3);
+  font-weight: var(--keratin-font-weight-bold);
   color: var(--white);
-  background: var(--purple-gradient);
-  box-shadow: 0 2px 8px 0 rgba(46, 0, 62, 0.26), 0 8px 20px 0 rgba(39, 0, 52, 0.08);
+  text-shadow: 0 1px 2px rgba(63, 58, 64, 0.2);
+  cursor: pointer;
+  background: var(--purple-600);
+  transition: transform 250ms;
+  backface-visibility: hidden;
 
   &:hover {
     color: var(--white);
-    background: var(--purple-gradient);
+    background: var(--purple-600);
+    transform: scale(1.05) translate3d(0, 0, 0);
   }
 
   &:focus,
   &:focus:active {
     color: var(--white);
-    background: var(--purple-gradient);
-    transform: translate3d(0, -2px, 0);
+    background: var(--purple-600);
+    transform: scale(1) translate3d(0, 0, 0);
   }
 
   &.shadow-on-light {
@@ -251,6 +257,10 @@ button,
     background-size: 20px 20px;
     animation: loading 4s linear infinite;
   }
+}
+
+.btn-shadow-purple {
+  box-shadow: 0 4px 12px rgba(158, 102, 191, 0.4);
 }
 
 .build-toolbar {

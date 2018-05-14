@@ -1,16 +1,16 @@
 {{title "Settings"}}
 {{#organizations/settings-nav-wrapper organization=model}}
-  <section class="p-2">
-    <h3>Settings</h3>
+  <section class="px-2 pt-3">
+    <h1 class="f3 text-weight-semibold mb-sm">Configure {{capitalize model.name}}</h1>
+    <p class="text-light w-75">
+      These are the settings for the whole Percy organization. If you want to update settings for individual projects, select that project on the left. Not seeing the setting you were looking for? <strong><a href="#" {{action "showSupport"}}>Reach out</a></strong> and let us know!
+    </p>
 
     {{#organizations/require-role role="admin" organization=model}}
-      {{forms/organization-edit organization=model saveSuccess="organizationUpdated"}}
-
-      {{organizations/github-settings organization=model showSupport="showSupport"}}
-
-      {{organizations/github-enterprise-settings organization=model showSupport="showSupport"}}
-
-      {{organizations/gitlab-settings organization=model showSupport="showSupport"}}
+      <div class="bg-white rounded shadow-1 p-2">
+        <h2 class="f3 text-weight-semibold mb-1">Organization Settings</h2>
+        {{forms/organization-edit organization=model saveSuccess="organizationUpdated"}}
+      </div>
     {{/organizations/require-role}}
   </section>
 {{/organizations/settings-nav-wrapper}}

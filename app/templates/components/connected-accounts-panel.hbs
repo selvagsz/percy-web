@@ -39,20 +39,25 @@
   <hr class="alt-hr mb-3">
 {{/if}}
 
-{{#if (not emailPasswordIdentity)}}
-  <button type="button" class="btn btn-md btn-primary w-full mb-1"
-    {{action addIdentity "auth0"}}
-    data-test-connected-accounts-panel-add-ep-identity>
-    Add email/password account
-  </button>
-{{/if}}
+<div class="flex align-center mb-2">
+  {{#if (not emailPasswordIdentity)}}
+    <button type="button" class="btn btn-primary btn-shadow-purple flex-1 mx-1"
+      {{action addIdentity "auth0"}}
+      data-test-connected-accounts-panel-add-ep-identity>
+      Add email/password account
+    </button>
+  {{/if}}
+  
+  {{#if (not githubIdentity)}}
+    <button type="button" class="btn btn-github flex-1 mx-1"
+      {{action addIdentity "github"}}
+      data-test-connected-accounts-panel-add-github-identity>
+      Connect your GitHub account
+    </button>
+  {{/if}}
+</div>
 
 {{#if (not githubIdentity)}}
-  <button type="button" class="btn btn-md btn-github w-full mb-3"
-    {{action addIdentity "github"}}
-    data-test-connected-accounts-panel-add-github-identity>
-    Connect your GitHub account
-  </button>
   <div class="note">
     Connecting your GitHub account allows you to sign in with GitHub and manage your GitHub integration with Percy.
   </div>

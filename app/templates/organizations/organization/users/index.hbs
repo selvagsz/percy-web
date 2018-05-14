@@ -1,9 +1,17 @@
-<section class="p-2">
-  {{#link-to "organizations.organization.users.invite" model.slug classNames="Button Button--primary u-pull-right"}}
-    Invite New Users
-  {{/link-to}}
-
-  <h3>Users</h3>
-
-  {{organizations/users-list organization=model}}
+<section class="px-2 pt-3">
+  <h1 class="f3 text-weight-semibold mb-sm">Users</h1>
+  <p class="text-light w-75">
+    These are the settings for the whole Percy organization. If you want to update settings for individual projects, select that
+    project on the left. Not seeing the setting you were looking for?
+    <a class="text-weight-semibold" href="#" {{action "showSupport"}}>Reach out</a> and let us know!
+  </p>
+  <div class="bg-white rounded shadow-1 p-2 mb-2">
+    <div class="flex justify-between align-center mb-2">
+      <h2 class="f3 text-weight-semibold mb-0">{{capitalize model.name}} users</h2>
+      {{#link-to "organizations.organization.users.invite" model.slug classNames="btn btn-primary btn-shadow-purple mb-0"}}
+        Invite New Users
+      {{/link-to}}
+    </div>
+    {{organizations/users-list organization=model}}
+  </div>
 </section>

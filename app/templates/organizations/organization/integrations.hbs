@@ -1,0 +1,17 @@
+{{#organizations/settings-nav-wrapper organization=model}}
+
+  <section class="px-2 pt-3">
+    <div class="w-75 pb-3">
+      <h1 class="f3 text-weight-semibold mb-sm">Percy Integrations</h1>
+      <p class="text-light">Integrations will let you get Percy running on various platforms with ease. Some integrations might require more configuration
+      than other’s based on the service’s needs, but if you get hung up, feel free to check out our integration docs for some help.
+      As always, if your’re stuck with something, feel free to reach out and we’d love to help you out.</p>
+    </div>
+  </section>
+
+  {{#organizations/require-role role="admin" organization=model}}
+    {{organizations/github-settings organization=model showSupport="showSupport"}}
+    {{organizations/github-enterprise-settings organization=model showSupport="showSupport"}}
+    {{organizations/gitlab-settings organization=model showSupport="showSupport"}}
+  {{/organizations/require-role}}
+{{/organizations/settings-nav-wrapper}}

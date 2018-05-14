@@ -1,7 +1,7 @@
 import {create, text, isHidden} from 'ember-cli-page-object';
 
 const SELECTORS = {
-  GITHUB_ENTERPRISE_INTEGRATION: '.github-enterprise-settings',
+  GITHUB_ENTERPRISE_INTEGRATION: '[data-test-github-enterprise-settings]',
   INTEGRATION_STATUS_MESSAGE: '[data-test-github-enterprise-settings-status]',
 };
 

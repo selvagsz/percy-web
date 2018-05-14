@@ -1,24 +1,25 @@
-<form action="javascript:;">
-  {{form-fields/input
-      property="name"
-      title="Organization name"
-      changeset=changeset
-      validateProperty=(action "validateProperty" changeset "name")
-  }}
-  {{form-fields/input
-      property="slug"
-      title="Slug"
-      changeset=changeset
-      validateProperty=(action "validateProperty" changeset "slug")
-  }}
-  <p>
-    The slug is used to identify this organization in URLs and the Percy API. If changed, you must update the <code>PERCY_PROJECT</code> environment variable in your CI service. Note, old build URLs will break if the slug is changed and a new organization can claim the old slug.
-  </p>
-  {{form-fields/submit
-    value="Save"
-    classes="Button Button--primary"
-    isSaving=isSaving
-    isSaveSuccessful=isSaveSuccessful
-    submit=(action "save")
-  }}
+<form action="javascript:;" class="mb-0">
+  <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
+        property="name"
+        title="Organization name"
+        changeset=changeset
+        validateProperty=(action "validateProperty" changeset "name")
+    }}
+
+    {{form-fields/input
+        property="slug"
+        title="Slug"
+        changeset=changeset
+        validateProperty=(action "validateProperty" changeset "slug")
+    }}
+
+    <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+      <strong>Reminder:</strong> The slug is used to identify this organization in URLs and the Percy API. If changed, you must update the <code>PERCY_PROJECT</code> environment variable in your CI service. Keep in mind, old build URLs will break if the slug is changed and a new organization can claim the old slug.
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <input type="submit" class="btn btn-primary btn-shadow-purple mb-0" value="Save Settings" disabled={{disabled}} onclick={{action "save"}}>
+  </div>
 </form>

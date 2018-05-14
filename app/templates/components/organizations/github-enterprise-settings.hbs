@@ -1,10 +1,11 @@
-<div class="github-enterprise-settings mt-4" style="showWhenIntegrationEnabled">
 {{#if isGithubEnterpriseIntegrated}}
-<hr>
-<h4>GitHub Enterprise Integration {{fa-icon "github"}}</h4>
+  <section class="px-2" data-test-github-enterprise-settings>
+    <div class="bg-white rounded shadow-1 p-2 mb-2">
+      <h2 class="f3 text-weight-semibold mb-2">GitHub Enterprise Integration {{fa-icon "github"}}</h2>
 
-  <span data-test-github-enterprise-settings-status>
-    The GitHub Enterprise integration is installed. Please contact support to change any settings.
-  </span>
+      <div class="p-2 rounded border text-light github-enterprise-settings" data-test-github-enterprise-settings-status>
+        The GitHub Enterprise integration is installed. Please contact support to change any settings.
+      </div>
+    </div>
+  </section>
 {{/if}}
-</div>

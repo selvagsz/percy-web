@@ -1,50 +1,64 @@
-<hr>
-<h4>GitHub Integration {{fa-icon "github"}}</h4>
+<section class="px-2">
+  <div class="bg-white rounded shadow-1 p-2 mb-2">
+    <h2 class="f3 text-weight-semibold mb-2">GitHub Integration {{fa-icon "github"}}</h2>
 
-{{#if (not (await isEligibleForGithubIntegration))}}
-  <label class="mt-4">
-    To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}}connect your GitHub account{{/link-to}}.
-  </label>
-{{else}}
-  <form action="javascript:;" class="Form">
-    <label>
-      <input type="radio" name="github-integration-setting" value="no-access"
-        checked={{if (eq changeset.githubAuthMechanism "no-access") "checked"}}
-        {{action "changeSelection" preventDefault=false}}
-      >
-      <span class="label-body">No access</span>
-      <p>Some Percy features will not be available.</p>
-    </label>
-    <label>
-      <input type="radio" name="github-integration-setting" value="github-integration"
-        checked={{if (eq changeset.githubAuthMechanism "github-integration") "checked"}}
-        {{action "changeSelection" preventDefault=false}}
-      >
-      <span class="label-body">GitHub App</span>
-      <p>Shows visual change status in GitHub pull requests. Has customizable access control.</p>
-    </label>
-    {{#if (eq changeset.githubAuthMechanism "github-integration")}}
-      {{organizations/github-integrator organization=organization showSupport="showSupport"}}
+    {{#if (not (await isEligibleForGithubIntegration))}}
+      <div>
+        To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}}connect your GitHub account{{/link-to}}.
+      </div>
+    {{else}}
+      <form action="javascript:;" class="Form">
+        <div class="p-2 bg-gray-000 rounded border mb-2">
+          <label>
+            <input
+              type="radio"
+              name="github-integration-setting"
+              value="no-access"
+              checked={{if (eq changeset.githubAuthMechanism "no-access") "checked"}}
+              {{action "changeSelection" preventDefault=false}}
+            >
+            <span class="label-body">No access</span>
+            <p>Some Percy features will not be available.</p>
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="github-integration-setting"
+              value="github-integration"
+              checked={{if (eq changeset.githubAuthMechanism "github-integration") "checked"}}
+              {{action "changeSelection" preventDefault=false}}
+            >
+            <span class="label-body">GitHub App</span>
+            <p>Shows visual change status in GitHub pull requests. Has customizable access control.</p>
+          </label>
+
+          {{#if (eq changeset.githubAuthMechanism "github-integration")}}
+            {{organizations/github-integrator organization=organization showSupport="showSupport"}}
+          {{/if}}
+
+          {{#if changeset.errors}}
+            <ul class="Form-errors">
+              {{#each changeset.errors as |error|}}
+                {{#each error.validation as |validation|}}
+                  <li>{{validation}}</li>
+                {{/each}}
+              {{/each}}
+            </ul>
+          {{/if}}
+        </div>
+        <div class="flex justify-end">
+          {{form-fields/submit
+            isSaving=isSaving
+            isSaveSuccessful=isSaveSuccessful
+            value="Save"
+            disabled=disableSave
+            showSavingIndicator=false
+            classes="btn btn-primary btn-shadow-purple m-0"
+            submit=(action "saveSelection")
+          }}
+        </div>
+      </form>
     {{/if}}
-
-    {{#if changeset.errors}}
-      <ul class="Form-errors">
-        {{#each changeset.errors as |error|}}
-          {{#each error.validation as |validation|}}
-            <li>{{validation}}</li>
-          {{/each}}
-        {{/each}}
-      </ul>
-    {{/if}}
-
-    {{form-fields/submit
-      isSaving=isSaving
-      isSaveSuccessful=isSaveSuccessful
-      value="Save"
-      disabled=disableSave
-      classes="Button Button--primary"
-      submit=(action "saveSelection")
-    }}
-
-  </form>
-{{/if}}
+  </div>
+</section>

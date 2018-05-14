@@ -1,5 +1,12 @@
-<h3>Users - Invite</h3>
-
-{{#organizations/require-role role="admin" organization=model}}
-  {{forms/organization-invite organization=model}}
-{{/organizations/require-role}}
+<section class="px-2 pt-3">
+  <h1 class="f3 text-weight-semibold mb-sm">Invite users to {{capitalize model.name}}</h1>
+  <p class="text-light w-75">
+     Separate each email with a space or a new line. Invitations expire after one week.
+  </p>
+  <div class="bg-white rounded shadow-1 p-2 mb-2">
+    <h2 class="f3 text-weight-semibold mb-1">New user info</h2>
+    {{#organizations/require-role role="admin" organization=model}}
+      {{forms/organization-invite organization=model}}
+    {{/organizations/require-role}}
+  </div>
+</section>
