@@ -80,7 +80,7 @@
     "ember-resolver": "^4.5.0",
     "ember-route-action-helper": "^2.0.6",
     "ember-simple-auth": "^1.6.0",
-    "ember-simple-auth-auth0": "git+https://github.com/auth0-community/ember-simple-auth-auth0.git#813fb5b85bba79240621dbf38fe95f33c028ec3d",
+    "ember-simple-auth-auth0": "^4.0.2",
     "ember-sinon": "^2.0.0",
     "ember-source": "^3.0.0",
     "ember-test-selectors": "^1.0.0",
