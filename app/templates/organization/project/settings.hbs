@@ -19,7 +19,7 @@
       <h4>Environment variables for CI</h4>
       <p>See the {{#link-to "docs"}}docs{{/link-to}} for how to set up client authentication for your app.</p>
       {{projects/env-vars project=model.project}}
-      <p>PERCY_TOKEN is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
+      <p><code>PERCY_TOKEN</code> is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
       <hr>
       <h4>Link GitHub repository</h4>
       {{projects/repo-integrator project=model.project}}
