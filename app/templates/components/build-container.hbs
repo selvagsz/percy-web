@@ -6,6 +6,7 @@
   toggleAllDiffs=(action "toggleAllDiffs")
   createReview=createReview
   approvableSnapshots=snapshotsChanged
+  activeBrowser=activeBrowser
 }}
 <div class="BuildContainer-body w-full">
   {{build-header
@@ -25,6 +26,7 @@
       isKeyboardNavEnabled=(not isHidingBuildContainer)
       showSnapshotFullModalTriggered=(action 'showSnapshotFullModalTriggered')
       createReview=createReview
+      activeBrowser=activeBrowser
     }}
   {{/if}}
 </div>

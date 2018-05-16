@@ -9,6 +9,11 @@ import {computed} from '@ember/object';
 export default Controller.extend({
   isHidingBuildContainer: false,
 
+  _browsers: alias('build.browsers'),
+  // TODO: make this always chrome if availble
+  defaultBrowser: alias('_browsers.firstObject'),
+  activeBrowser: alias('defaultBrowser'),
+
   // set by initializeSnapshotOrdering
   snapshots: null,
   sortedSnapshots: computed('snapshots.[]', function() {

@@ -1,11 +1,14 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
+import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
+  store: service(),
   params: {},
   queryParams: {
     comparisonMode: {as: 'mode'},
+    activeBrowserFamilySlug: {as: 'browser'},
   },
   model(params /*transition*/) {
     this.set('params', params);
@@ -17,9 +20,12 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
 
     let params = this.get('params');
     let build = this.modelFor('organization.project.builds.build');
-
+    let activeBrowser = this.get('store')
+      .peekAll('browser')
+      .findBy('familySlug', params.activeBrowserFamilySlug);
     controller.setProperties({
       build,
+      activeBrowser,
       snapshotId: params.snapshot_id,
       snapshotSelectedWidth: params.width,
       comparisonMode: params.comparisonMode,
@@ -42,12 +48,34 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
       this.analytics.track('Snapshot Fullscreen Viewed', organization, eventProperties);
     },
     updateComparisonMode(value) {
-      this.controllerFor(this.routeName).set('comparisonMode', value.toString());
+      const snapshot = this.modelFor(this.routeName);
+      this.transitionTo(
+        'organization.project.builds.build.snapshot',
+        snapshot.get('build.id'),
+        snapshot.get('id'),
+        this.get('params.width'),
+        {
+          queryParams: {
+            mode: value,
+            activeBrowserFamilySlug: this.get('params.activeBrowserFamilySlug'),
+          },
+        },
+      );
     },
-    transitionRouteToWidth(snapshot, width, comparisonMode) {
-      this.transitionTo('organization.project.builds.build.snapshot', snapshot.id, width, {
-        queryParams: {mode: comparisonMode},
-      });
+    transitionRouteToWidth(width) {
+      const snapshot = this.modelFor(this.routeName);
+      this.transitionTo(
+        'organization.project.builds.build.snapshot',
+        snapshot.get('build.id'),
+        snapshot.get('id'),
+        width,
+        {
+          queryParams: {
+            mode: this.get('params.comparisonMode'),
+            activeBrowserFamilySlug: this.get('params.activeBrowserFamilySlug'),
+          },
+        },
+      );
     },
   },
 });

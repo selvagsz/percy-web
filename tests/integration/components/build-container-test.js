@@ -25,9 +25,10 @@ describe('Integration: BuildContainer', function() {
       const build = make('build', {buildNumber: 1});
       const snapshotsChanged = [make('snapshot', 'withComparisons', {build})];
       const snapshotsUnchanged = [make('snapshot', 'withNoDiffs', {build})];
+      const browser = make('browser');
       const stub = sinon.stub();
 
-      this.setProperties({build, snapshotsChanged, snapshotsUnchanged, stub});
+      this.setProperties({build, snapshotsChanged, snapshotsUnchanged, stub, browser});
 
       // Override the pollRefresh method for the test. This does not happen IRL,
       // but we can't have the component make requests in this integration test
@@ -38,6 +39,7 @@ describe('Integration: BuildContainer', function() {
         createReview=stub
         pollRefresh=stub
         showSupport=stub
+        activeBrowser=browser
       }}`);
     });
 
@@ -97,10 +99,12 @@ describe('Integration: BuildContainer', function() {
     const build = make('build', 'finished');
     const diffSnapshot = make('snapshot', 'withComparisons', {build});
     const sameSnapshot = make('snapshot', 'withNoDiffs', {build});
+    const browser = make('browser');
     const stub = sinon.stub();
     this.setProperties({
       build,
       stub,
+      browser,
       numSnapshotsUnchanged: 1,
       snapshotsChanged: [diffSnapshot],
       snapshotsUnchanged: [sameSnapshot],
@@ -114,6 +118,7 @@ describe('Integration: BuildContainer', function() {
       snapshotsChanged=snapshotsChanged
       createReview=stub
       pollRefresh=stub
+      activeBrowser=browser
     }}`);
     percySnapshot(this.test.fullTitle());
 

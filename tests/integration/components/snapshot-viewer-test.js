@@ -32,6 +32,7 @@ describe('Integration: SnapshotViewer', function() {
     snapshotTitle = 'Awesome snapshot title';
     snapshot = make('snapshot', 'withComparisons', {name: snapshotTitle});
     const build = make('build', 'finished');
+    const browser = make('browser');
     build.set('snapshots', [snapshot]);
     const stub = sinon.stub();
 
@@ -39,6 +40,7 @@ describe('Integration: SnapshotViewer', function() {
       stub,
       snapshot,
       build,
+      browser,
       userSelectedWidth: null,
       showSnapshotFullModalTriggered: showSnapshotFullModalTriggeredStub,
       createReview: createReviewStub,
@@ -54,6 +56,7 @@ describe('Integration: SnapshotViewer', function() {
       showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
       userSelectedWidth=userSelectedWidth
       createReview=createReview
+      activeBrowser=browser
     }}`);
 
     expect(SnapshotViewerPO.header.isTitleVisible, 'title should be visible').to.equal(true);
@@ -69,6 +72,7 @@ describe('Integration: SnapshotViewer', function() {
       build=build
       showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
       userSelectedWidth=userSelectedWidth
+      activeBrowser=browser
       createReview=createReview
     }}`);
 
@@ -82,6 +86,7 @@ describe('Integration: SnapshotViewer', function() {
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         userSelectedWidth=userSelectedWidth
+        activeBrowser=browser
         createReview=createReview
       }}`);
     });
@@ -109,6 +114,7 @@ describe('Integration: SnapshotViewer', function() {
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         userSelectedWidth=userSelectedWidth
+        activeBrowser=browser
         createReview=createReview
       }}`);
 
@@ -125,6 +131,7 @@ describe('Integration: SnapshotViewer', function() {
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         userSelectedWidth=userSelectedWidth
+        activeBrowser=browser
         createReview=createReview
       }}`);
 
@@ -140,6 +147,7 @@ describe('Integration: SnapshotViewer', function() {
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         userSelectedWidth=userSelectedWidth
         createReview=createReview
+        activeBrowser=browser
         updateActiveSnapshotId=stub
       }}`);
 
@@ -170,6 +178,7 @@ describe('Integration: SnapshotViewer', function() {
         userSelectedWidth=userSelectedWidth
         createReview=createReview
         updateActiveSnapshotId=stub
+        activeBrowser=browser
       }}`);
     });
 
@@ -201,6 +210,7 @@ describe('Integration: SnapshotViewer', function() {
         createReview=createReview
         activeSnapshotId=activeSnapshotId
         updateActiveSnapshotId=stub
+        activeBrowser=browser
       }}`);
     });
 
@@ -260,6 +270,7 @@ describe('Integration: SnapshotViewer', function() {
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         createReview=createReview
         updateActiveSnapshotId=stub
+        activeBrowser=browser
       }}`);
     });
 

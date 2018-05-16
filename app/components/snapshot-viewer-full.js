@@ -1,6 +1,7 @@
-import {alias} from '@ember/object/computed';
 import {computed} from '@ember/object';
+import {alias} from '@ember/object/computed';
 import Component from '@ember/component';
+import filteredComparisons from 'percy-web/lib/filtered-comparisons';
 
 export default Component.extend({
   classNames: ['SnapshotViewerFull'],
@@ -8,27 +9,28 @@ export default Component.extend({
   'data-test-snapshot-viewer-full': true,
 
   // Required params
-  snapshot: null,
-  snapshotSelectedWidth: null,
   comparisonMode: null,
   updateComparisonMode: null,
   transitionRouteToWidth: null,
   closeSnapshotFullModal: null,
   createReview: null,
+  snapshot: null,
+  snapshotSelectedWidth: null,
+  activeBrowser: null,
+
+  filteredComparisons: computed('snapshot', 'activeBrowser', 'snapshotSelectedWidth', function() {
+    return filteredComparisons.create({
+      snapshot: this.get('snapshot'),
+      activeBrowser: this.get('activeBrowser'),
+      snapshotSelectedWidth: this.get('snapshotSelectedWidth'),
+    });
+  }),
+  selectedComparison: alias('filteredComparisons.selectedComparison'),
 
   galleryMap: ['base', 'diff', 'head'],
 
   galleryIndex: computed('comparisonMode', function() {
     return this.get('galleryMap').indexOf(this.get('comparisonMode'));
-  }),
-
-  comparisons: alias('snapshot.comparisons'),
-
-  selectedComparison: computed('snapshot.widestComparison', 'snapshotSelectedWidth', function() {
-    return (
-      this.get('snapshot').comparisonForWidth(this.get('snapshotSelectedWidth')) ||
-      this.get('snapshot.widestComparison')
-    );
   }),
 
   didRender() {
@@ -40,18 +42,9 @@ export default Component.extend({
   },
 
   actions: {
-    updateSelectedWidth(value) {
-      const comparison = this.get('snapshot').comparisonForWidth(value);
-
-      this.set('selectedComparison', comparison);
-      this.set('snapshotSelectedWidth', value);
-
-      this.sendAction(
-        'transitionRouteToWidth',
-        this.get('snapshot'),
-        value,
-        this.get('comparisonMode'),
-      );
+    updateSelectedWidth(newWidth) {
+      this.set('snapshotSelectedWidth', newWidth);
+      this.sendAction('transitionRouteToWidth', newWidth);
     },
 
     cycleComparisonMode(keyCode) {

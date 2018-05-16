@@ -1,15 +1,18 @@
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
 import {computed} from '@ember/object';
-import {alias, equal, filterBy, not, or} from '@ember/object/computed';
+import {equal, not, or} from '@ember/object/computed';
 import utils from 'percy-web/lib/utils';
+import filteredComparisons from 'percy-web/lib/filtered-comparisons';
 
 export default Component.extend({
   // required params
-  snapshot: null,
   flashMessages: service(),
   selectedWidth: null,
   selectedComparison: null,
+  snapshot: null,
+  snapshotSelectedWidth: null,
+  activeBrowser: null,
 
   // optional params
   fullscreen: false,
@@ -25,15 +28,28 @@ export default Component.extend({
   registerChild() {},
   updateComparisonMode() {},
 
+  filteredComparisons: computed('snapshot', 'activeBrowser', 'snapshotSelectedWidth', function() {
+    return filteredComparisons.create({
+      snapshot: this.get('snapshot'),
+      activeBrowser: this.get('activeBrowser'),
+      snapshotSelectedWidth: this.get('snapshotSelectedWidth'),
+    });
+  }),
+
   isShowingFilteredComparisons: true,
   isNotShowingFilteredComparisons: not('isShowingFilteredComparisons'),
-  comparisons: alias('snapshot.comparisons'),
-  comparisonsWithDiffs: filterBy('snapshot.comparisons', 'isDifferent'),
   isShowingAllComparisons: or('noComparisonsHaveDiffs', 'isNotShowingFilteredComparisons'),
-  noComparisonsHaveDiffs: equal('comparisonsWithDiffs.length', 0),
-  allComparisonsHaveDiffs: computed('comparisons.[]', 'comparisonsWithDiffs.[]', function() {
-    return this.get('comparisons.length') === this.get('comparisonsWithDiffs.length');
-  }),
+  noComparisonsHaveDiffs: equal('filteredComparisons.comparisonsWithDiffs.length', 0),
+  allComparisonsHaveDiffs: computed(
+    'filteredComparisons.comparisons.[]',
+    'filteredComparisons.comparisonsWithDiffs.[]',
+    function() {
+      return (
+        this.get('filteredComparisons.comparisons.length') ===
+        this.get('filteredComparisons.comparisonsWithDiffs.length')
+      );
+    },
+  ),
 
   actions: {
     onCopySnapshotUrlToClipboard() {

@@ -1,12 +1,14 @@
 {{snapshot-viewer-header
   fullscreen=false
   snapshot=snapshot
-  selectedWidth=snapshotSelectedWidth
+  snapshotSelectedWidth=snapshotSelectedWidth
   selectedComparison=selectedComparison
-  toggleViewMode=(action showSnapshotFullModalTriggered snapshot.id snapshotSelectedWidth)
+  toggleViewMode=(action showSnapshotFullModalTriggered snapshot.id snapshotSelectedWidth activeBrowser)
   updateSelectedWidth=(action "updateSelectedWidth")
   createReview=createReview
   expandSnapshot=(action "expandSnapshot")
+  activeBrowser=activeBrowser
+
 }}
 
 {{#if isExpanded}}
@@ -18,6 +20,7 @@
       isDefaultExpanded=isDefaultExpanded
       isUnchangedSnapshotExpanded=isUnchangedSnapshotExpanded
       data-test-SnapshotViewer-comparison=true
+      activeBrowser=activeBrowser
     }}
   {{else}}
     <div class="p-2 text-center bg-gray-000 border-bottom border-gray-100" data-test-SnapshotViewer-noComparison>

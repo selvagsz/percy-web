@@ -16,18 +16,22 @@ describe('Integration: SnapshotViewerHeader', function() {
   beforeEach(function() {
     setupFactoryGuy(this.container);
     SnapshotViewerHeaderPO.setContext(this);
+    this.set('browser', make('browser'));
   });
 
   describe('dropdown', function() {
     beforeEach(function() {
       this.set('stub', sinon.stub());
+      this.set('snapshot', make('snapshot'));
     });
 
     it('shows dropdown toggle', function() {
       this.render(hbs`{{snapshot-viewer-header
+        snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
         expandSnapshot=stub
+        activeBrowser=browser
       }}`);
 
       expect(SnapshotViewerHeaderPO.isDropdownToggleVisible).to.equal(true);
@@ -35,8 +39,10 @@ describe('Integration: SnapshotViewerHeader', function() {
 
     it('toggles dropdown pane when dropdown toggle is clicked', function() {
       this.render(hbs`{{snapshot-viewer-header
+        snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
+        activeBrowser=browser
       }}`);
 
       expect(SnapshotViewerHeaderPO.isDropdownPaneVisible).to.equal(false);
@@ -48,8 +54,10 @@ describe('Integration: SnapshotViewerHeader', function() {
 
     it('shows copy url option', function() {
       this.render(hbs`{{snapshot-viewer-header
+        snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
+        activeBrowser=browser
       }}`);
 
       SnapshotViewerHeaderPO.clickDropdownToggle();
@@ -66,11 +74,14 @@ describe('Integration: SnapshotViewerHeader', function() {
         baseSnapshot = make('snapshot');
         headSnapshot = make('snapshot');
         this.set('comparison', comparison);
+        this.set('snapshot', make('snapshot'));
 
         this.render(hbs`{{snapshot-viewer-header
+          snapshot=snapshot
           toggleViewMode=stub
           updateSelectedWidth=stub
           selectedComparison=comparison
+          activeBrowser=browser
         }}`);
       });
 
@@ -105,6 +116,7 @@ describe('Integration: SnapshotViewerHeader', function() {
           toggleViewMode=stub
           updateSelectedWidth=stub
           expandSnapshot=stub
+          activeBrowser=browser
         }}`);
       });
 
@@ -144,6 +156,7 @@ describe('Integration: SnapshotViewerHeader', function() {
           toggleViewMode=stub
           updateSelectedWidth=stub
           expandSnapshot=stub
+          activeBrowser=browser
         }}`);
       });
 
@@ -189,6 +202,7 @@ describe('Integration: SnapshotViewerHeader', function() {
           toggleViewMode=stub
           updateSelectedWidth=stub
           expandSnapshot=stub
+          activeBrowser=browser
         }}`);
       });
 

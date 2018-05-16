@@ -28,6 +28,7 @@ describe('Integration: SnapshotViewerFull', function() {
     FullSnapshotPage.setContext(this);
 
     build = make('build', 'finished');
+    const browser = make('browser');
     snapshot = make('snapshot', 'withComparisons', {
       build,
       name: snapshotTitle,
@@ -47,6 +48,7 @@ describe('Integration: SnapshotViewerFull', function() {
 
     this.setProperties({
       snapshotSelectedWidth,
+      browser,
       snapshot: snapshot,
       comparisonMode: 'diff',
       closeSnapshotFullModal: closeSnapshotFullModalStub,
@@ -63,6 +65,7 @@ describe('Integration: SnapshotViewerFull', function() {
       updateComparisonMode=updateComparisonMode
       closeSnapshotFullModal=closeSnapshotFullModal
       createReview=createReview
+      activeBrowser=browser
     }}`);
   });
 
@@ -120,7 +123,6 @@ describe('Integration: SnapshotViewerFull', function() {
       expect(FullSnapshotPage.header.widthSwitcher.buttons(0).isActive).to.equal(true);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(1).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(2).isActive).to.equal(false);
-
       FullSnapshotPage.header.widthSwitcher.buttons(2).click();
       expect(FullSnapshotPage.header.widthSwitcher.buttons(0).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(1).isActive).to.equal(false);

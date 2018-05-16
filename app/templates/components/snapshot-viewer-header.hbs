@@ -52,7 +52,7 @@
                   <li class="dropdown-menu-list-item c-pointer f6 text-weight-semibold py-1 pl-2 pr-1">
                     {{#copy-button
                       class="btn-icon-only w-full flex justify-between align-center"
-                      clipboardText=(generate-fullscreen-snapshot-url snapshot.id selectedWidth comparisonMode fullscreen)
+                      clipboardText=(generate-fullscreen-snapshot-url snapshot.id snapshotSelectedWidth comparisonMode activeBrowser.familySlug fullscreen)
                       success=(pipe-action (action "onCopySnapshotUrlToClipboard") dropdown.actions.close)
                     }}
                       <span>Copy snapshot URL</span>
@@ -88,8 +88,8 @@
 
       <div class="btn-group btn-group-alt">
         {{comparison-switcher
-          comparisons=(if isShowingAllComparisons snapshot.comparisons comparisonsWithDiffs)
-          selectedWidth=selectedWidth
+          comparisons=(if isShowingAllComparisons filteredComparisons.comparisons filteredComparisons.comparisonsWithDiffs)
+          selectedWidth=snapshotSelectedWidth
           updateSelectedWidth=updateSelectedWidth
           data-test-SnapshotViewer-widthSwitcher=true
         }}

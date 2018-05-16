@@ -37,6 +37,7 @@ describe('Integration: SnapshotList', function() {
   it('gets snapshots with no diffs after expanding no diffs section', function() {
     const stub = sinon.stub();
     const build = make('build', 'finished');
+    const browser = make('browser');
 
     const numSnapshotsUnchanged = 3;
     const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs');
@@ -48,6 +49,7 @@ describe('Integration: SnapshotList', function() {
       numSnapshotsUnchanged,
       build,
       stub,
+      browser,
     });
 
     this.render(hbs`{{snapshot-list
@@ -56,6 +58,7 @@ describe('Integration: SnapshotList', function() {
       numSnapshotsUnchanged=numSnapshotsUnchanged
       createReview=stub
       showSnapshotFullModalTriggered=stub
+      activeBrowser=browser
     }}`);
 
     expect(SnapshotList.isNoDiffsBatchVisible).to.equal(true);
@@ -90,16 +93,16 @@ describe('Integration: SnapshotList', function() {
     }}`);
 
     SnapshotList.clickToggleNoDiffsSection();
-
     percySnapshot(this.test);
   });
 
-  describe('when there are more than 150 snapshots with diffs', function() {
-    const numSnapshots = 151;
+  describe('when there are too many snapshots with diffs', function() {
+    const numSnapshots = 10;
 
     beforeEach(function() {
       const stub = sinon.stub();
       const build = make('build', 'finished');
+      const browser = make('browser');
 
       const snapshotsChanged = makeList('snapshot', numSnapshots, 'withComparisons', {build});
       this.set('snapshotsChanged', snapshotsChanged);
@@ -108,15 +111,19 @@ describe('Integration: SnapshotList', function() {
         snapshotsChanged,
         build,
         stub,
+        browser,
         isKeyboardNavEnabled: true,
       });
 
+      // Override `isDefaultExpanded` so we don't have to render 150 snapshots at once
       this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub
         isKeyboardNavEnabled=isKeyboardNavEnabled
+        activeBrowser=browser
+        isDefaultExpanded=false
       }}`);
     });
 
@@ -158,6 +165,7 @@ describe('Integration: SnapshotList', function() {
     beforeEach(function() {
       const stub = sinon.stub();
       const build = make('build', 'finished');
+      const browser = make('browser');
 
       const numSnapshotsUnchanged = 3;
       const snapshotsChanged = makeList('snapshot', numSnapshots, 'withComparisons', {build});
@@ -172,6 +180,7 @@ describe('Integration: SnapshotList', function() {
         snapshotsUnchanged,
         numSnapshotsUnchanged,
         stub,
+        browser,
         isKeyboardNavEnabled: true,
       });
 
@@ -182,6 +191,7 @@ describe('Integration: SnapshotList', function() {
         createReview=stub
         showSnapshotFullModalTriggered=stub
         isKeyboardNavEnabled=isKeyboardNavEnabled
+        activeBrowser=browser
       }}`);
     });
 

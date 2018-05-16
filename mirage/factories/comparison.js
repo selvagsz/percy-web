@@ -18,6 +18,7 @@ export default Factory.extend({
   },
 
   headBuild: association(),
+  browser: association(),
   // baseSnapshot: association(),
   // headSnapshot: association(),
 
