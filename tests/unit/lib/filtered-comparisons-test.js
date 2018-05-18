@@ -29,6 +29,10 @@ describe('filtered-comparisons', function() {
         wideComparisonNoDiff,
       );
     });
+
+    it('returns undefined when comparisons is not defined', function() {
+      expect(computeWidestComparison()).to.equal(undefined);
+    });
   });
 
   describe('#computeCompraisonForWidth', function() {
@@ -42,6 +46,10 @@ describe('filtered-comparisons', function() {
       expect(
         computeComparisonForWidth([narrowComparisonNoDiff, wideComparisonNoDiff], 293847),
       ).to.equal(undefined);
+    });
+
+    it('returns undefined when comparisons and width is not defined', function() {
+      expect(computeComparisonForWidth()).to.equal(undefined);
     });
   });
 
@@ -60,6 +68,16 @@ describe('filtered-comparisons', function() {
         computeComparisonsForBrowser([narrowComparisonNoDiff, wideComparisonNoDiff], chromeBrowser),
       ).to.eql([]);
     });
+
+    it('returns empty array if browser is defined but comparisons is not', function() {
+      expect(computeComparisonsForBrowser(undefined, chromeBrowser)).to.eql([]);
+    });
+
+    it('returns empty array if comparisons is defined but browser is not', function() {
+      const chromeComparison = {browser: chromeBrowser};
+      const firefoxComparison = {browser: firefoxBrowser};
+      expect(computeComparisonsForBrowser([firefoxComparison, chromeComparison])).to.eql([]);
+    });
   });
 
   describe('#computeWidestComparisonWithDiff', function() {
@@ -77,6 +95,10 @@ describe('filtered-comparisons', function() {
       expect(
         computeWidestComparisonWithDiff([narrowComparisonNoDiff, wideComparisonNoDiff]),
       ).to.equal(undefined);
+    });
+
+    it('returns undefined if comparisons is not defined', function() {
+      expect(computeWidestComparisonWithDiff()).to.eql(undefined);
     });
   });
 
@@ -103,6 +125,10 @@ describe('filtered-comparisons', function() {
       ];
       let snapshots = snapshotsWithDiffForBrowser(allSnapshots, chromeBrowser);
       expect(snapshots).to.eql([snapshotWithChrome, snapshotWithBothBrowsersAndDiffs]);
+    });
+
+    it('returns empty array if comparisons and browser are not defined', function() {
+      expect(snapshotsWithDiffForBrowser()).to.eql([]);
     });
   });
 

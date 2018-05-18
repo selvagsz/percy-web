@@ -31,22 +31,37 @@ export default Object.extend({
 });
 
 export function computeWidestComparison(comparisons) {
+  if (!comparisons) {
+    comparisons = [];
+  }
   return get(comparisons.sortBy('width'), 'lastObject');
 }
 
 export function computeComparisonForWidth(comparisons, width) {
+  if (!comparisons || !width) {
+    return;
+  }
   return comparisons.findBy('width', parseInt(width, 10));
 }
 
 export function computeComparisonsForBrowser(comparisons, browser) {
+  if (!comparisons || !browser) {
+    return [];
+  }
   return comparisons.filterBy('browser.id', get(browser, 'id'));
 }
 
 export function computeWidestComparisonWithDiff(comparisons) {
+  if (!comparisons) {
+    return;
+  }
   return get(comparisons.sortBy('width').filterBy('isDifferent'), 'lastObject');
 }
 
 export function snapshotsWithDiffForBrowser(snapshots, browser) {
+  if (!snapshots || !browser) {
+    return [];
+  }
   return snapshots.filter(snapshot => {
     const allComparisons = get(snapshot, 'comparisons');
     const comparisonsForBrowser = computeComparisonsForBrowser(allComparisons, browser);
