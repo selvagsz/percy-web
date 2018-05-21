@@ -7,6 +7,8 @@
   createReview=createReview
   approvableSnapshots=snapshotsChanged
   activeBrowser=activeBrowser
+  updateActiveBrowser=(action 'updateActiveBrowser')
+  isSnapshotsLoading=isSnapshotsLoading
 }}
 <div class="BuildContainer-body w-full">
   {{build-header
@@ -22,11 +24,15 @@
       build=build
       allDiffsShown=allDiffsShown
       toggleAllDiffs=(action "toggleAllDiffs")
-      numSnapshotsUnchanged=numSnapshotsUnchanged
       isKeyboardNavEnabled=(not isHidingBuildContainer)
       showSnapshotFullModalTriggered=(action 'showSnapshotFullModalTriggered')
       createReview=createReview
       activeBrowser=activeBrowser
+      updateActiveBrowser=(action 'updateActiveBrowser')
+      isUnchangedSnapshotsVisible=isUnchangedSnapshotsVisible
+      toggleUnchangedSnapshotsVisible=(action "toggleUnchangedSnapshotsVisible")
+      snapshotsUnchanged=snapshotsUnchanged
+      isUnchangedSnapshotsLoading=isUnchangedSnapshotsLoading
     }}
   {{/if}}
 </div>

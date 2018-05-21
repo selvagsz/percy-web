@@ -10,90 +10,15 @@ import {percySnapshot} from 'ember-percy';
 import SnapshotList from 'percy-web/tests/pages/components/snapshot-list';
 import wait from 'ember-test-helpers/wait';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
-import Service from '@ember/service';
-import {resolve, defer} from 'rsvp';
 
 describe('Integration: SnapshotList', function() {
   setupComponentTest('snapshot-list', {
     integration: true,
   });
 
-  let snapshotQueryServiceStub;
-
   beforeEach(function() {
     setupFactoryGuy(this.container);
     SnapshotList.setContext(this);
-  });
-
-  function _mockSessionQueryFetches(context, snapshotsUnchanged, snapshotsChanged) {
-    snapshotQueryServiceStub = Service.extend({
-      getUnchangedSnapshots: sinon.stub().returns(resolve(snapshotsUnchanged)),
-      getChangedSnapshots: sinon.stub().returns(resolve(snapshotsChanged)),
-    });
-    context.register('service:snapshotQuery', snapshotQueryServiceStub);
-    context.inject.service('snapshotQuery', {as: 'snapshotQueryService'});
-  }
-
-  it('gets snapshots with no diffs after expanding no diffs section', function() {
-    const stub = sinon.stub();
-    const build = make('build', 'finished');
-    const browser = make('browser');
-
-    const numSnapshotsUnchanged = 3;
-    const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs');
-    const snapshotsChanged = [];
-    _mockSessionQueryFetches(this, snapshotsUnchanged);
-
-    this.setProperties({
-      snapshotsChanged,
-      numSnapshotsUnchanged,
-      build,
-      stub,
-      browser,
-    });
-
-    this.render(hbs`{{snapshot-list
-      build=build
-      snapshotsChanged=snapshotsChanged
-      numSnapshotsUnchanged=numSnapshotsUnchanged
-      createReview=stub
-      showSnapshotFullModalTriggered=stub
-      activeBrowser=browser
-    }}`);
-
-    expect(SnapshotList.isNoDiffsBatchVisible).to.equal(true);
-
-    SnapshotList.clickToggleNoDiffsSection();
-
-    expect(SnapshotList.isNoDiffsBatchVisible).to.equal(false);
-    expect(SnapshotList.snapshots().count).to.equal(numSnapshotsUnchanged);
-  });
-
-  it('shows loading indicator while fetching unchanged diffs', function() {
-    const stub = sinon.stub();
-    const build = make('build', 'finished');
-
-    const numSnapshotsUnchanged = 3;
-    const snapshotsChanged = [];
-    _mockSessionQueryFetches(this, defer().promise);
-
-    this.setProperties({
-      snapshotsChanged,
-      numSnapshotsUnchanged,
-      build,
-      stub,
-    });
-
-    this.render(hbs`{{snapshot-list
-      build=build
-      snapshotsChanged=snapshotsChanged
-      numSnapshotsUnchanged=numSnapshotsUnchanged
-      createReview=stub
-      showSnapshotFullModalTriggered=stub
-    }}`);
-
-    SnapshotList.clickToggleNoDiffsSection();
-    percySnapshot(this.test);
   });
 
   describe('when there are too many snapshots with diffs', function() {
@@ -124,6 +49,7 @@ describe('Integration: SnapshotList', function() {
         isKeyboardNavEnabled=isKeyboardNavEnabled
         activeBrowser=browser
         isDefaultExpanded=false
+        toggleUnchangedSnapshotsVisible=stub
       }}`);
     });
 
@@ -167,37 +93,34 @@ describe('Integration: SnapshotList', function() {
       const build = make('build', 'finished');
       const browser = make('browser');
 
-      const numSnapshotsUnchanged = 3;
       const snapshotsChanged = makeList('snapshot', numSnapshots, 'withComparisons', {build});
-      const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs', {
-        build,
-      });
-      _mockSessionQueryFetches(this, snapshotsUnchanged);
+      const snapshotsUnchanged = makeList('snapshot', 3, 'withNoDiffs', {build});
 
       this.setProperties({
         build,
         snapshotsChanged,
         snapshotsUnchanged,
-        numSnapshotsUnchanged,
         stub,
         browser,
         isKeyboardNavEnabled: true,
+        isUnchangedSnapshotsVisible: false,
       });
 
       this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
-        numSnapshotsUnchanged=numSnapshotsUnchanged
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub
         isKeyboardNavEnabled=isKeyboardNavEnabled
         activeBrowser=browser
+        toggleUnchangedSnapshotsVisible=stub
+        isUnchangedSnapshotsVisible=isUnchangedSnapshotsVisible
+        snapshotsUnchanged=snapshotsUnchanged
       }}`);
     });
 
     it('automatically expands collapsed snapshots if focused', function() {
-      // Open the collapsed no-diff snapshots
-      SnapshotList.clickToggleNoDiffsSection();
+      this.set('isUnchangedSnapshotsVisible', true);
 
       const firstNoDiffSnapshot = SnapshotList.snapshots(3);
       const secondNoDiffSnapshot = SnapshotList.snapshots(4);

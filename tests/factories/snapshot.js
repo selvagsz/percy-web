@@ -42,8 +42,7 @@ FactoryGuy.define('snapshot', {
       reviewState: SNAPSHOT_APPROVED_STATE,
       reviewStateReason: 'no_diffs',
       comparisons: () => {
-        const widths = [375, 550, 1024];
-        return widths.map(width => {
+        return TEST_COMPARISON_WIDTHS.map(width => {
           return make('comparison', {width, diffRatio: 0});
         });
       },
@@ -57,6 +56,15 @@ FactoryGuy.define('snapshot', {
       },
     },
 
+    withTwoBrowsers: {
+      comparisons: () => {
+        return TEST_COMPARISON_WIDTHS.reduce((acc, width) => {
+          acc.push(make('comparison', {width: width}));
+          acc.push(make('comparison', 'forChrome', {width: width}));
+          return acc;
+        }, []);
+      },
+    },
     withScreenshots: {},
     completeExample: {},
   },

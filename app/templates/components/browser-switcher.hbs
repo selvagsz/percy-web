@@ -1,0 +1,17 @@
+<div class="btn-group">
+  {{#each browsers as |browser|}}
+    <button
+      type="button"
+      class="browser-switcher btn btn-square position-relative {{if (eq browser.id activeBrowser.id) "is-browser-active"}} {{concat "data-test-browser-switcher-" browser.familySlug}}"
+      {{action updateActiveBrowser browser}}
+      data-test-browser-switcher-button
+    >
+      {{inline-svg (concat browser.familySlug "-browser-icon") class="opacity-25"}}
+      {{#if build}}
+        <div class="browser-switcher-diff-count position-absolute bg-white font-weight-semibold px-sm lh-1 z-1 {{if (eq browser.id activeBrowser.id) "text-white shadow-purple-lg bg-purple-600" "text-purple"}}" data-test-browser-switcher-diff-count>
+          {{get (get unapprovedSnapshotsWithDiffForBrowsers browser.id) "length"}}
+        </div>
+      {{/if}}
+    </button>
+  {{/each}}
+</div>

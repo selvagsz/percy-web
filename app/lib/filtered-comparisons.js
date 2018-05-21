@@ -9,20 +9,20 @@ export default Object.extend({
   _comparisons: alias('snapshot.comparisons'),
 
   comparisons: computed('_comparisons.@each.browser', 'activeBrowser', function() {
-    return computeComparisonsForBrowser(get(this, '_comparisons'), get(this, 'activeBrowser'));
+    return comparisonsForBrowser(get(this, '_comparisons'), get(this, 'activeBrowser'));
   }),
 
   comparisonForWidth: computed('comparisons.@each.width', 'snapshotSelectedWidth', function() {
     const width = get(this, 'snapshotSelectedWidth') || get(this, 'defaultWidth');
-    return computeComparisonForWidth(get(this, 'comparisons'), width);
+    return comparisonForWidth(get(this, 'comparisons'), width);
   }),
 
   widestComparisonForBrowser: computed('comparisons.@each.width', function() {
-    return computeWidestComparison(get(this, 'comparisons'));
+    return widestComparison(get(this, 'comparisons'));
   }),
 
   widestComparisonWithDiff: computed('comparisons.@each.width', function() {
-    return computeWidestComparisonWithDiff(get(this, 'comparisons'));
+    return widestComparisonWithDiff(get(this, 'comparisons'));
   }),
 
   selectedComparison: or('comparisonForWidth', 'widestComparisonForBrowser'),
@@ -30,28 +30,28 @@ export default Object.extend({
   comparisonsWithDiffs: filterBy('comparisons', 'isDifferent'),
 });
 
-export function computeWidestComparison(comparisons) {
+export function widestComparison(comparisons) {
   if (!comparisons) {
     comparisons = [];
   }
   return get(comparisons.sortBy('width'), 'lastObject');
 }
 
-export function computeComparisonForWidth(comparisons, width) {
+export function comparisonForWidth(comparisons, width) {
   if (!comparisons || !width) {
     return;
   }
   return comparisons.findBy('width', parseInt(width, 10));
 }
 
-export function computeComparisonsForBrowser(comparisons, browser) {
+export function comparisonsForBrowser(comparisons, browser) {
   if (!comparisons || !browser) {
     return [];
   }
   return comparisons.filterBy('browser.id', get(browser, 'id'));
 }
 
-export function computeWidestComparisonWithDiff(comparisons) {
+export function widestComparisonWithDiff(comparisons) {
   if (!comparisons) {
     return;
   }
@@ -63,11 +63,23 @@ export function snapshotsWithDiffForBrowser(snapshots, browser) {
     return [];
   }
   return snapshots.filter(snapshot => {
+    return hasDiffForBrowser(snapshot, browser);
+  });
+}
+
+export function snapshotsWithNoDiffForBrowser(snapshots, browser) {
+  return snapshots.filter(snapshot => {
     const allComparisons = get(snapshot, 'comparisons');
-    const comparisonsForBrowser = computeComparisonsForBrowser(allComparisons, browser);
-    return comparisonsForBrowser.any(comparison => {
-      return get(comparison, 'isDifferent');
+    const filteredComparisons = comparisonsForBrowser(allComparisons, browser);
+    return filteredComparisons.every(comparison => {
+      return get(comparison, 'isSame');
     });
+  });
+}
+
+export function hasDiffForBrowser(snapshot, browser) {
+  return comparisonsForBrowser(get(snapshot, 'comparisons'), browser).any(comparison => {
+    return get(comparison, 'isDifferent');
   });
 }
 

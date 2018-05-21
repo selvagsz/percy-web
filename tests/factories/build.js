@@ -75,5 +75,11 @@ FactoryGuy.define('build', {
     withNoSpacesMessageCommitMessage: {
       commit: FactoryGuy.belongsTo('commit', 'noSpacesMessage'),
     },
+
+    withTwoBrowsers: {
+      browsers: () => {
+        return [FactoryGuy.make('browser'), FactoryGuy.make('browser', 'chrome')];
+      },
+    },
   },
 });

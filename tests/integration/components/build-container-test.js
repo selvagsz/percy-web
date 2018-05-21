@@ -3,12 +3,13 @@ import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
-import {make} from 'ember-data-factory-guy';
+import {make, makeList} from 'ember-data-factory-guy';
 import sinon from 'sinon';
 import DS from 'ember-data';
 import {defer} from 'rsvp';
 import BuildPage from 'percy-web/tests/pages/build-page';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import mockSnapshotQueryService from 'percy-web/tests/helpers/mock-snapshot-query-service';
 
 describe('Integration: BuildContainer', function() {
   setupComponentTest('build-container', {
@@ -24,22 +25,20 @@ describe('Integration: BuildContainer', function() {
     beforeEach(function() {
       const build = make('build', {buildNumber: 1});
       const snapshotsChanged = [make('snapshot', 'withComparisons', {build})];
-      const snapshotsUnchanged = [make('snapshot', 'withNoDiffs', {build})];
+      const allChangedBrowserSnapshotsSorted = {firefox: snapshotsChanged};
       const browser = make('browser');
       const stub = sinon.stub();
 
-      this.setProperties({build, snapshotsChanged, snapshotsUnchanged, stub, browser});
+      this.setProperties({build, allChangedBrowserSnapshotsSorted, stub, browser});
 
       // Override the pollRefresh method for the test. This does not happen IRL,
       // but we can't have the component make requests in this integration test
       this.render(hbs`{{build-container
         build=build
-        snapshotsChanged=snapshotsChanged
-        snapshotsUnchanged=snapshotsUnchanged
         createReview=stub
         pollRefresh=stub
         showSupport=stub
-        activeBrowser=browser
+        allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
       }}`);
     });
 
@@ -78,17 +77,15 @@ describe('Integration: BuildContainer', function() {
   it('does not display snapshots when isSnapshotsLoading is true', function() {
     const build = make('build', 'finished');
     const snapshotsChanged = DS.PromiseArray.create({promise: defer().promise});
-    const stub = sinon.stub();
+    const allChangedBrowserSnapshotsSorted = {firefox: snapshotsChanged};
 
-    this.setProperties({build, snapshotsChanged, stub});
+    this.setProperties({build, allChangedBrowserSnapshotsSorted});
 
-    // Override the pollRefresh method for the test. This does not happen IRL,
-    // but we can't have the component make requests in this integration test
     this.render(hbs`{{build-container
       build=build
       isSnapshotsLoading=true
       createReview=stub
-      pollRefresh=stub
+      allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
     }}`);
 
     percySnapshot(this.test.fullTitle());
@@ -98,32 +95,169 @@ describe('Integration: BuildContainer', function() {
   it('displays snapshots when build is finished', function() {
     const build = make('build', 'finished');
     const diffSnapshot = make('snapshot', 'withComparisons', {build});
-    const sameSnapshot = make('snapshot', 'withNoDiffs', {build});
-    const browser = make('browser');
+    const allChangedBrowserSnapshotsSorted = {'firefox-id': [diffSnapshot]};
     const stub = sinon.stub();
     this.setProperties({
       build,
       stub,
-      browser,
-      numSnapshotsUnchanged: 1,
-      snapshotsChanged: [diffSnapshot],
-      snapshotsUnchanged: [sameSnapshot],
+      allChangedBrowserSnapshotsSorted,
     });
 
-    // Override the pollRefresh method for the test. This does not happen IRL,
-    // but we can't have the component make requests in this integration test
     this.render(hbs`{{build-container
       build=build
-      numSnapshotsUnchanged=numSnapshotsUnchanged
-      snapshotsChanged=snapshotsChanged
+      allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
       createReview=stub
-      pollRefresh=stub
-      activeBrowser=browser
     }}`);
     percySnapshot(this.test.fullTitle());
 
     expect(BuildPage.snapshotList.isVisible).to.equal(true);
     expect(BuildPage.snapshotList.snapshots().count).to.equal(1);
     expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
+  });
+
+  it('shows loading indicator while fetching unchanged diffs', function() {
+    const stub = sinon.stub();
+    const build = make('build', 'finished');
+    const allChangedBrowserSnapshotsSorted = {'firefox-id': []};
+
+    mockSnapshotQueryService(this, defer().promise);
+
+    this.setProperties({
+      allChangedBrowserSnapshotsSorted,
+      build,
+      stub,
+    });
+
+    this.render(hbs`{{build-container
+      build=build
+      allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
+      createReview=stub
+    }}`);
+
+    BuildPage.snapshotList.clickToggleNoDiffsSection();
+    percySnapshot(this.test);
+  });
+
+  it('gets snapshots with no diffs after expanding no diffs section', function() {
+    const stub = sinon.stub();
+    const build = make('build', 'finished');
+    const allChangedBrowserSnapshotsSorted = {'firefox-id': []};
+    const numSnapshotsUnchanged = 3;
+    const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs', {build});
+
+    mockSnapshotQueryService(this, snapshotsUnchanged);
+
+    this.setProperties({
+      allChangedBrowserSnapshotsSorted,
+      build,
+      stub,
+    });
+
+    this.render(hbs`{{build-container
+      build=build
+      allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
+      createReview=stub
+    }}`);
+
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
+    BuildPage.snapshotList.clickToggleNoDiffsSection();
+
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(false);
+    expect(BuildPage.snapshotList.snapshots().count).to.equal(numSnapshotsUnchanged);
+  });
+
+  describe('when a build has more than one browser', function() {
+    beforeEach(function() {
+      const build = make('build', 'finished', 'withTwoBrowsers');
+      const comparisonWithBigDiffInFirefox = make('comparison', {
+        build,
+        diffRatio: 0.9,
+      });
+      const comparisonWithSmallDiffInFirefox = make('comparison', {
+        build,
+        diffRatio: 0.3,
+      });
+      const comparisonWithNoDiffInFirefox = make('comparison', {
+        build,
+        diffRatio: 0,
+      });
+      const comparisonWithBigDiffInChrome = make('comparison', 'forChrome', {
+        build,
+        diffRatio: 0.8,
+      });
+      const comparisonWithNoDiffInChrome = make('comparison', 'forChrome', {build, diffRatio: 0});
+
+      const snapshotWithDiffInFirefoxOnly = make('snapshot', {
+        build,
+        comparisons: [comparisonWithNoDiffInChrome, comparisonWithBigDiffInFirefox],
+      });
+      const snapshotWithDiffInBothBrowsers = make('snapshot', {
+        build,
+        comparisons: [comparisonWithBigDiffInChrome, comparisonWithSmallDiffInFirefox],
+      });
+      const unchangedSnapshot = make('snapshot', {
+        build,
+        comparisons: [comparisonWithNoDiffInChrome, comparisonWithNoDiffInFirefox],
+      });
+
+      const allChangedBrowserSnapshotsSorted = {
+        'firefox-id': [snapshotWithDiffInFirefoxOnly, snapshotWithDiffInBothBrowsers],
+        'chrome-id': [snapshotWithDiffInBothBrowsers],
+      };
+
+      const stub = sinon.stub();
+
+      mockSnapshotQueryService(this, [unchangedSnapshot]);
+
+      this.setProperties({
+        build,
+        allChangedBrowserSnapshotsSorted,
+        stub,
+        snapshotWithDiffInBothBrowsers,
+      });
+
+      this.render(hbs`{{build-container
+        build=build
+        allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
+        createReview=stub
+        showSupport=stub
+      }}`);
+    });
+
+    it('decrements browser count badge when a snapshot is approved', async function() {
+      expect(BuildPage.browserSwitcher.chromeButton.diffCount).to.equal('1');
+      expect(BuildPage.browserSwitcher.firefoxButton.diffCount).to.equal('2');
+
+      this.set('snapshotWithDiffInBothBrowsers.reviewState', 'approved');
+
+      expect(BuildPage.browserSwitcher.chromeButton.diffCount).to.equal('0');
+      expect(BuildPage.browserSwitcher.firefoxButton.diffCount).to.equal('1');
+    });
+
+    it('shows unchanged snapshots when it is toggled', function() {
+      expect(BuildPage.isUnchangedPanelVisible).to.equal(true);
+      expect(BuildPage.snapshots().count).to.equal(1);
+      BuildPage.clickToggleNoDiffsSection();
+
+      expect(BuildPage.isUnchangedPanelVisible).to.equal(false);
+      expect(BuildPage.snapshots().count).to.equal(3);
+    });
+
+    it('resets unchanged snapshots when unchanged snapshots are visible and browser is switched', function() { // eslint-disable-line
+      BuildPage.clickToggleNoDiffsSection();
+      expect(BuildPage.isUnchangedPanelVisible).to.equal(false);
+      BuildPage.browserSwitcher.switchBrowser();
+
+      expect(BuildPage.isUnchangedPanelVisible).to.equal(true);
+      expect(BuildPage.snapshots().count).to.equal(2);
+      BuildPage.clickToggleNoDiffsSection();
+
+      expect(BuildPage.snapshots().count).to.equal(3);
+    });
+
+    it('selects chrome browser by default when present', function() {
+      expect(BuildPage.browserSwitcher.chromeButton.isActive).to.equal(true);
+      expect(BuildPage.browserSwitcher.firefoxButton.isActive).to.equal(false);
+    });
   });
 });

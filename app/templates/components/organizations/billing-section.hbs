@@ -84,7 +84,7 @@
               </div>
               <div style="max-width: 150px" class="flex-1 pr-2"></div>
               <div style="max-width: 150px" class="flex-1 pr-2 flex align-center justify-end">
-                <a href="#" disabled="disabled" class="btn btn-primary btn-shadow-purple mb-0">Selected Plan</a>
+                <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@
                     {{#if isSaving}}
                       {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
                     {{else}}
-                      <a href="#" disabled="disabled" class="btn btn-primary btn-shadow-purple mb-0">Selected Plan</a>
+                      <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
                     {{/if}}
                   {{else}}
                     {{!-- TODO: #billingadmins --}}
@@ -128,7 +128,7 @@
                         planId=planData.id
                         price=planData.monthlyPrice
                         planName=planData.name
-                        classes="btn btn-primary btn-shadow-purple mb-0"
+                        classes="btn btn-primary shadow-purple-lg mb-0"
                         changingSubscription=(action "changingSubscription")
                       }}
                     {{/if}}
@@ -153,7 +153,7 @@
             <div class="flex-1 pr-2 flex align-center justify-end">
               {{!-- TODO: #billingadmins --}}
               {{#if (eq "admin" organization.currentUserMembership.role)}}
-                {{#link-to "enterprise" class="btn btn-primary btn-shadow-purple mb-0"}}Contact Us{{/link-to}}
+                {{#link-to "enterprise" class="btn btn-primary shadow-purple-lg mb-0"}}Contact Us{{/link-to}}
               {{/if}}
             </div>
           </div>

@@ -81,4 +81,12 @@ export default Factory.extend({
       server.create('snapshot', 'noDiffs', {build});
     },
   }),
+
+  withTwoBrowsers: trait({
+    afterCreate(build, server) {
+      const ids = build.browserIds;
+      ids.push(server.create('browser', 'chrome'));
+      build.save();
+    },
+  }),
 });

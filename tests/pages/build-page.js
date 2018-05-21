@@ -4,10 +4,9 @@ import {SnapshotList} from 'percy-web/tests/pages/components/snapshot-list';
 import {alias} from 'ember-cli-page-object/macros';
 import {BuildApprovalButton} from 'percy-web/tests/pages/components/build-approval-button';
 import {BuildInfoDropdown} from 'percy-web/tests/pages/components/build-info-dropdown';
+import {BrowserSwitcher} from 'percy-web/tests/pages/components/browser-switcher';
 
 const SELECTORS = {
-  UNCHANGED_PANEL: '[data-test-toggle-unchanged]',
-  SNAPSHOT_LIST: '[data-test-snapshot-list]',
   SHOW_SUPPORT_LINK: '[data-test-build-overview-show-support]',
   TOGGLE_DIFFS_BUTTON: '[data-test-toggle-diffs-button]',
   PROJECT_LINK: '[data-test-build-toolbar-project-link]',
@@ -19,13 +18,14 @@ const BuildPage = {
     '/:orgSlug/:projectSlug/builds/:buildId/view/:snapshotId/:width',
   ),
 
+  browserSwitcher: BrowserSwitcher,
   buildApprovalButton: BuildApprovalButton,
   buildInfoDropdown: BuildInfoDropdown,
 
   toggleBuildInfoDropdown: alias('buildInfoDropdown.toggleBuildInfoDropdown'),
 
-  isUnchangedPanelVisible: isVisible(SELECTORS.UNCHANGED_PANEL),
-  clickToggleNoDiffsSection: clickable(SELECTORS.UNCHANGED_PANEL),
+  isUnchangedPanelVisible: alias('snapshotList.isNoDiffsBatchVisible'),
+  clickToggleNoDiffsSection: alias('snapshotList.clickToggleNoDiffsSection'),
 
   snapshotList: SnapshotList,
   snapshots: alias('snapshotList.snapshots'),

@@ -61,6 +61,14 @@ export default Factory.extend({
       },
     }),
   ),
+  withTwoBrowsers: trait(
+    Object.assign({}, _unreviewedProps, {
+      afterCreate(snapshot, server) {
+        _addComparisonIds(server.create('comparison'), snapshot);
+        _addComparisonIds(server.create('comparison', 'forChrome'), snapshot);
+      },
+    }),
+  ),
 });
 
 function _addComparisonIds(comparison, snapshot) {

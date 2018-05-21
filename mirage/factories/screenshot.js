@@ -20,6 +20,10 @@ export const TEST_IMAGE_URLS = {
   DIFF_MOBILE: '/images/test/diff-mobile.png',
   V2_LOSSY_MOBILE: '/images/test/v2-lossy-mobile.jpg',
   V1_LOSSY_MOBILE: '/images/test/v1-lossy-mobile.jpg',
+  V2_CHROME: '/images/test/v2-chrome.png',
+  V1_CHROME: '/images/test/v1-chrome.png',
+  V2_LOSSY_CHROME: '/images/test/v2-lossy-chrome.jpg',
+  V1_LOSSY_CHROME: '/images/test/v1-lossy-chrome.jpg',
 };
 
 export default Factory.extend({
@@ -65,6 +69,36 @@ export default Factory.extend({
         width: TEST_IMAGE_DIMS.MOBILE_WIDTH,
         height: TEST_IMAGE_DIMS.MOBILE_HEIGHT,
         url: TEST_IMAGE_URLS.V2_LOSSY_MOBILE,
+      });
+
+      screenshot.update({image, lossyImage});
+    },
+  }),
+
+  v1Chrome: trait({
+    afterCreate(screenshot, server) {
+      const image = server.create('image', {
+        url: TEST_IMAGE_URLS.V1_CHROME,
+      });
+      const lossyImage = server.create('image', {
+        height: TEST_IMAGE_DIMS.LOSSY_HEIGHT,
+        width: TEST_IMAGE_DIMS.LOSSY_WIDTH,
+        url: TEST_IMAGE_URLS.V1_LOSSY_CHROME,
+      });
+
+      screenshot.update({image, lossyImage});
+    },
+  }),
+
+  v2Chrome: trait({
+    afterCreate(screenshot, server) {
+      const image = server.create('image', {
+        url: TEST_IMAGE_URLS.V2_CHROME,
+      });
+      const lossyImage = server.create('image', {
+        height: TEST_IMAGE_DIMS.LOSSY_HEIGHT,
+        width: TEST_IMAGE_DIMS.LOSSY_WIDTH,
+        url: TEST_IMAGE_URLS.V2_LOSSY_CHROME,
       });
 
       screenshot.update({image, lossyImage});

@@ -4,3 +4,11 @@ $modal-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 .shadow-1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
+.shadow-purple-lg {
+  box-shadow: 0 4px 12px rgba(158, 102, 191, 0.4);
+}
+
+.shadow-dark-lg {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

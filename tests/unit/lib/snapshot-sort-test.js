@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {describe, beforeEach, it} from 'mocha';
 import snapshotSort from 'percy-web/lib/snapshot-sort';
-import Object from '@ember/object';
+import {set} from '@ember/object';
 
 describe('snapshot-sort', function() {
   const wideWidth = 800;
@@ -11,57 +11,117 @@ describe('snapshot-sort', function() {
   const lowDiffRatio = 0.25;
   const noDiffRatio = 0.0;
 
+  const firefoxBrowser = {id: 'firefox'};
+  const chromeBrowser = {id: 'chrome'};
+
   let wideComparisonWithHighDiff;
   let narrowComparisonWithHighDiff;
   let wideComparisonWithLowDiff;
   let wideComparisonWithNoDiff;
 
   beforeEach(() => {
-    wideComparisonWithHighDiff = Object.create({width: wideWidth, smartDiffRatio: highDiffRatio});
-    narrowComparisonWithHighDiff = Object.create({
+    wideComparisonWithHighDiff = {
+      width: wideWidth,
+      smartDiffRatio: highDiffRatio,
+      browser: firefoxBrowser,
+    };
+    narrowComparisonWithHighDiff = {
       width: narrowWidth,
       smartDiffRatio: highDiffRatio,
-    });
-    wideComparisonWithLowDiff = Object.create({width: wideWidth, smartDiffRatio: lowDiffRatio});
-    wideComparisonWithNoDiff = Object.create({width: wideWidth, smartDiffRatio: noDiffRatio});
+      browser: firefoxBrowser,
+    };
+    wideComparisonWithLowDiff = {
+      width: wideWidth,
+      smartDiffRatio: lowDiffRatio,
+      browser: firefoxBrowser,
+    };
+    wideComparisonWithNoDiff = {
+      width: wideWidth,
+      smartDiffRatio: noDiffRatio,
+      browser: firefoxBrowser,
+    };
   });
 
-  it('returns snapshots with diffs before snapshots with no diffs', function() {
-    const snapshotWithDiffs = Object.create({comparisons: [wideComparisonWithLowDiff]});
-    const snapshotWithNoDiffs = Object.create({comparisons: [wideComparisonWithNoDiff]});
-    const unorderedSnapshots = [snapshotWithNoDiffs, snapshotWithDiffs];
+  describe('when comparisons have mixed browsers', function() {
+    it('returns snapshots with highest diff ratio in active browser first', function() {
+      set(wideComparisonWithLowDiff, 'browser', chromeBrowser);
+      const snapshotWithLowDiffInActiveBrowser = {
+        comparisons: [wideComparisonWithLowDiff],
+      };
+      const snapshotWithHighDiffInInactiveBrowser = {
+        comparisons: [wideComparisonWithHighDiff],
+      };
 
-    expect(snapshotSort(unorderedSnapshots)).to.eql([snapshotWithDiffs, snapshotWithNoDiffs]);
+      expect(
+        snapshotSort(
+          [snapshotWithHighDiffInInactiveBrowser, snapshotWithLowDiffInActiveBrowser],
+          chromeBrowser,
+        ),
+      ).to.eql([snapshotWithLowDiffInActiveBrowser, snapshotWithHighDiffInInactiveBrowser]);
+    });
+
+    it('returns snapshots with widest comparisons in active browser first', function() {
+      set(narrowComparisonWithHighDiff, 'browser', chromeBrowser);
+      const snapshotWithNarrowWidthInActiveBrowser = {
+        comparisons: [narrowComparisonWithHighDiff],
+      };
+      const snapshotWithWideWidthInActiveBrowser = {
+        comparisons: [wideComparisonWithHighDiff],
+      };
+
+      expect(
+        snapshotSort(
+          [snapshotWithWideWidthInActiveBrowser, snapshotWithNarrowWidthInActiveBrowser],
+          chromeBrowser,
+        ),
+      ).to.eql([snapshotWithNarrowWidthInActiveBrowser, snapshotWithWideWidthInActiveBrowser]);
+    });
   });
 
-  it('returns snapshots with diffs at widest widths before snapshots with no diffs at widest width', function() { // eslint-disable-line
-    const snapshotWithWideDiff = Object.create({
-      maxComparisonWidth: wideWidth,
-      comparisons: [wideComparisonWithHighDiff],
-    });
-    const snapshotWithNarrowDiff = Object.create({
-      maxComparisonWidth: narrowWidth,
-      comparisons: [narrowComparisonWithHighDiff],
-    });
-    const unorderedSnapshots = [snapshotWithNarrowDiff, snapshotWithWideDiff];
+  describe('when all comparisons have the same browser', function() {
+    it('returns snapshots with diffs before snapshots with no diffs', function() {
+      const snapshotWithDiffs = {comparisons: [wideComparisonWithLowDiff]};
+      const snapshotWithNoDiffs = {comparisons: [wideComparisonWithNoDiff]};
+      const unorderedSnapshots = [snapshotWithNoDiffs, snapshotWithDiffs];
 
-    expect(snapshotSort(unorderedSnapshots)).to.eql([snapshotWithWideDiff, snapshotWithNarrowDiff]);
-  });
-
-  it('returns snapshots with high diff ratio before snapshots with low diff ratio', function() {
-    const snapshotWithHighDiffRatio = Object.create({
-      maxComparisonWidth: wideWidth,
-      comparisons: [wideComparisonWithHighDiff],
+      expect(snapshotSort(unorderedSnapshots, firefoxBrowser)).to.eql([
+        snapshotWithDiffs,
+        snapshotWithNoDiffs,
+      ]);
     });
-    const snapshotWithLowDiffRatio = Object.create({
-      maxComparisonWidth: wideWidth,
-      comparisons: [wideComparisonWithLowDiff],
-    });
-    const unorderedSnapshots = [snapshotWithLowDiffRatio, snapshotWithHighDiffRatio];
 
-    expect(snapshotSort(unorderedSnapshots)).to.eql([
-      snapshotWithHighDiffRatio,
-      snapshotWithLowDiffRatio,
-    ]);
+    it('returns snapshots with diffs at widest widths before snapshots with no diffs at widest width', function() { // eslint-disable-line
+      const snapshotWithWideDiff = {
+        maxComparisonWidth: wideWidth,
+        comparisons: [wideComparisonWithHighDiff],
+      };
+      const snapshotWithNarrowDiff = {
+        maxComparisonWidth: narrowWidth,
+        comparisons: [narrowComparisonWithHighDiff],
+      };
+      const unorderedSnapshots = [snapshotWithNarrowDiff, snapshotWithWideDiff];
+
+      expect(snapshotSort(unorderedSnapshots, firefoxBrowser)).to.eql([
+        snapshotWithWideDiff,
+        snapshotWithNarrowDiff,
+      ]);
+    });
+
+    it('returns snapshots with high diff ratio before snapshots with low diff ratio', function() {
+      const snapshotWithHighDiffRatio = {
+        maxComparisonWidth: wideWidth,
+        comparisons: [wideComparisonWithHighDiff],
+      };
+      const snapshotWithLowDiffRatio = {
+        maxComparisonWidth: wideWidth,
+        comparisons: [wideComparisonWithLowDiff],
+      };
+      const unorderedSnapshots = [snapshotWithLowDiffRatio, snapshotWithHighDiffRatio];
+
+      expect(snapshotSort(unorderedSnapshots, firefoxBrowser)).to.eql([
+        snapshotWithHighDiffRatio,
+        snapshotWithLowDiffRatio,
+      ]);
+    });
   });
 });

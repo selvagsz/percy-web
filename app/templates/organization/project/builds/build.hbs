@@ -2,13 +2,12 @@
 {{build-container
   build=model
   isSnapshotsLoading=isSnapshotsLoading
-  numSnapshotsUnchanged=numSnapshotsUnchanged
   openSnapshotFullModal='openSnapshotFullModal'
   isHidingBuildContainer=isHidingBuildContainer
   createReview=(route-action "createReview")
-  snapshotsChanged=snapshotsChanged
+  allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
   initializeSnapshotOrdering=(route-action "initializeSnapshotOrdering")
+  isUnchangedSnapshotsVisible=isUnchangedSnapshotsVisible
   showSupport=(route-action "showSupport")
-  activeBrowser=activeBrowser
 }}
 {{outlet}}

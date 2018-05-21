@@ -7,6 +7,7 @@ import {TEST_IMAGE_URLS} from 'percy-web/mirage/factories/screenshot';
 import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_REVIEW_STATE_REASONS} from 'percy-web/models/snapshot';
 import {BUILD_STATES} from 'percy-web/models/build';
 import ProjectPage from 'percy-web/tests/pages/project-page';
+import {beforeEach} from 'mocha';
 
 describe('Acceptance: Build', function() {
   freezeMoment('2018-05-22');
@@ -120,6 +121,46 @@ describe('Acceptance: Build', function() {
       expect(BuildPage.snapshots(0).name).to.equal(twoWidthsSnapshot.name);
 
       await percySnapshot(this.test);
+    });
+  });
+
+  describe('when a build has more than one browser', function() {
+    beforeEach(function() {
+      // Add a second browser to the build and each snapshot.
+      const chromeBrowser = server.create('browser', 'chrome');
+      build.browserIds.push(chromeBrowser.id);
+
+      const snapshots = server.db.snapshots;
+      snapshots.forEach(snapshot => {
+        const chromeComparison = server.create('comparison', 'forChrome');
+        snapshot.comparisonIds.push(chromeComparison.id);
+      });
+    });
+
+    it('looks correct when switching to other browser', async function() {
+      await BuildPage.visitBuild(urlParams);
+      await percySnapshot(this.test.fullTitle() + ' before switching browsers');
+      await BuildPage.browserSwitcher.switchBrowser();
+      await percySnapshot(this.test.fullTitle() + ' after switching browsers');
+    });
+
+    it('sorts snapshots correctly when switching to another browser', async function() {
+      // Change diff ratio in one browser so the sort behavior is different in the other browser.
+      const highDiffComparison = twoWidthsSnapshot.comparisons.models.findBy(
+        'browser.browserFamily.slug',
+        'firefox',
+      );
+      highDiffComparison.update({diffRatio: 0.89});
+
+      await BuildPage.visitBuild(urlParams);
+      // Same order as above
+      expect(BuildPage.snapshots(0).name).to.equal(defaultSnapshot.name);
+      expect(BuildPage.snapshots(1).name).to.equal(twoWidthsSnapshot.name);
+      await BuildPage.browserSwitcher.switchBrowser();
+
+      // Previously first snapshot should now be second.
+      expect(BuildPage.snapshots(0).name).to.equal(twoWidthsSnapshot.name);
+      expect(BuildPage.snapshots(1).name).to.equal(defaultSnapshot.name);
     });
   });
 

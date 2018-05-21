@@ -11,5 +11,9 @@ export default Component.extend({
     toggleOverlay() {
       this.get('toggleAllDiffs')({trackSource: 'clicked_toggle'});
     },
+    switchBrowsers(newBrowser) {
+      window.scrollTo(0, 0);
+      this.get('updateActiveBrowser')(newBrowser);
+    },
   },
 });

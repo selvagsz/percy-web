@@ -5,15 +5,28 @@
         {{inline-svg "percy-logo-on-light"}}
       </figure>
     {{/link-to}}
-    <div class=" flex align-center bg-purple-300 f6 rounded px-1 py-sm hide-on-mobile">
+    <div class="flex align-center bg-purple-300 f6 rounded px-1 py-sm hide-on-mobile">
       {{#link-to "organization" organization class="text-mono text-purple truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
       <span class="text-weight-semibold mx-sm hide-on-tablet">/</span>
       {{#link-to "organization.project" organization project class="text-mono text-purple truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
     </div>
   </div>
+
   {{trial-bar organization=organization}}
+
   <div class="flex align-center">
-    {{#if build.isFinished}}
+    {{#if (and build.isFinished (not isSnapshotsLoading))}}
+      {{#if build.hasMultipleBrowsers}}
+        <div class="mr-2">
+          {{browser-switcher
+            browsers=build.browsers
+            activeBrowser=activeBrowser
+            updateActiveBrowser=(action "switchBrowsers")
+            build=build
+          }}
+        </div>
+      {{/if}}
+
       <button type="button" class="btn btn-square hint--bottom hint--rounded hint--bounce" aria-label="Toggle all diffs (d)" {{action 'toggleOverlay'}} data-test-toggle-diffs-button>
         <figure class="svg-container">
           {{#if allDiffsShown}}
@@ -24,6 +37,7 @@
         </figure>
       </button>
     {{/if}}
+
     {{approval-section
       build=build
       createReview=createReview

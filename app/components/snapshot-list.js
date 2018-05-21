@@ -20,36 +20,27 @@ export default Component.extend({
   // Required params
   snapshotsChanged: null,
   build: null,
-  numSnapshotsUnchanged: 0,
   isKeyboardNavEnabled: null,
   showSnapshotFullModalTriggered: null,
   createReview: null,
   allDiffsShown: null,
   toggleAllDiffs: null,
-
-  // Set internally by actions
-  isUnchangedSnapshotsVisible: false,
+  isUnchangedSnapshotsVisible: null,
   isUnchangedSnapshotsLoading: false,
   snapshotsUnchanged: null,
+
+  // Set internally by actions
   activeSnapshotId: null,
 
   isDefaultExpanded: lt('snapshotsChanged.length', 150),
 
+  numSnapshotsUnchanged: computed('build.totalSnapshots', 'snapshotsChanged.length', function() {
+    return this.get('build.totalSnapshots') - this.get('snapshotsChanged.length');
+  }),
+
   actions: {
     updateActiveSnapshotId(newSnapshotId) {
       this.set('activeSnapshotId', newSnapshotId);
-    },
-    toggleUnchangedSnapshotsVisible() {
-      this.set('isUnchangedSnapshotsLoading', true);
-      this.get('snapshotQuery')
-        .getUnchangedSnapshots(this.get('build'))
-        .then(snapshots => {
-          this.set('snapshotsUnchanged', snapshots);
-          this.toggleProperty('isUnchangedSnapshotsVisible');
-        })
-        .finally(() => {
-          this.set('isUnchangedSnapshotsLoading', false);
-        });
     },
   },
 

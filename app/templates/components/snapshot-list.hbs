@@ -4,7 +4,6 @@
     are collapsed below. <strong>Tip:</strong> use the arrow keys <code>↓</code> and <code>↑</code> to move around.
   </div>
 {{/unless}}
-
 {{#each snapshotsChanged as |snapshot|}}
   {{snapshot-viewer
     build=build
@@ -16,13 +15,14 @@
     createReview=createReview
     updateActiveSnapshotId=(action "updateActiveSnapshotId")
     activeBrowser=activeBrowser
+    updateActiveBrowser=updateActiveBrowser
   }}
 {{/each}}
 
 {{#if numSnapshotsUnchanged}}
   {{#if (not isUnchangedSnapshotsVisible)}}
     <div class="SnapshotViewer SnapshotViewer--actionable">
-      <div class="SnapshotViewer-header flex align-center justify-center text-weight-bold p-2 mx-2 mb-2 bg-gray-000 rounded border border-gray-100 c-pointer" data-test-toggle-unchanged {{action "toggleUnchangedSnapshotsVisible"}}>
+      <div class="SnapshotViewer-header flex align-center justify-center text-weight-bold p-2 mx-2 mb-2 bg-gray-000 rounded border border-gray-100 c-pointer" data-test-toggle-unchanged {{action toggleUnchangedSnapshotsVisible}}>
         {{#if isUnchangedSnapshotsLoading}}
           {{inline-svg "loader-icon" class="mx-2"}} Loading unchanged snapshots
         {{else}}
@@ -30,7 +30,12 @@
             {{inline-svg "no-comparison-group-icon" class="mr-1"}}
           </figure>
            <div class="text-blue mr-sm">
-            {{pluralize numSnapshotsUnchanged "unchanged snapshot"}} for all widths.
+            {{pluralize numSnapshotsUnchanged "unchanged snapshot"}}
+            {{#if build.hasMultipleBrowsers}}
+              in {{activeBrowser.familyName}}
+            {{else}}
+              for all widths.
+            {{/if}}
           </div>
         {{/if}}
       </div>
@@ -47,6 +52,7 @@
         createReview=createReview
         updateActiveSnapshotId=(action "updateActiveSnapshotId")
         activeBrowser=activeBrowser
+        updateActiveBrowser=updateActiveBrowser
       }}
     {{/each}}
   {{/if}}

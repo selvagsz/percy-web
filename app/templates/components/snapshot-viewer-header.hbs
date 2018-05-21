@@ -109,6 +109,13 @@
       </div>
 
       {{#if snapshot.build.isFinished}}
+        {{#if (and fullscreen snapshot.build.hasMultipleBrowsers)}}
+          {{browser-switcher
+            browsers=snapshot.build.browsers
+            activeBrowser=activeBrowser
+            updateActiveBrowser=updateActiveBrowser
+          }}
+        {{/if}}
         <div class="btn-group" data-test-snapshot-approval-button>
           {{snapshot-approval-button
             snapshot=snapshot

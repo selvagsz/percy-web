@@ -1,11 +1,16 @@
-export default function(snapshots) {
+import {comparisonsForBrowser, comparisonForWidth} from 'percy-web/lib/filtered-comparisons';
+import {get} from '@ember/object';
+
+export default function(snapshots, browser) {
   let width = _maxWidthForSnapshots(snapshots);
 
   return snapshots.sort(function(a, b) {
     // Prioritize snapshots with diffs at any widths over snapshots with no diffs at any widths
+    const browserComparisonsForA = comparisonsForBrowser(get(a, 'comparisons'), browser);
+    const browserComparisonsForB = comparisonsForBrowser(get(b, 'comparisons'), browser);
 
-    let maxDiffRatioA = _maxDiffRatioAnyWidth(a.get('comparisons'));
-    let maxDiffRatioB = _maxDiffRatioAnyWidth(b.get('comparisons'));
+    let maxDiffRatioA = _maxDiffRatioAnyWidth(browserComparisonsForA);
+    let maxDiffRatioB = _maxDiffRatioAnyWidth(browserComparisonsForB);
 
     let aHasDiffs = maxDiffRatioA > 0;
     let bHasDiffs = maxDiffRatioB > 0;
@@ -20,8 +25,8 @@ export default function(snapshots) {
     }
 
     // Next prioritize snapshots with comparisons at the current width
-    let comparisonForA = _comparisonAtCurrentWidth(a, width);
-    let comparisonForB = _comparisonAtCurrentWidth(b, width);
+    let comparisonForA = comparisonForWidth(browserComparisonsForA, width);
+    let comparisonForB = comparisonForWidth(browserComparisonsForB, width);
 
     let aHasNoComparisonAtWidth = !comparisonForA;
     let bHasNoComparisonAtWidth = !comparisonForB;
@@ -32,7 +37,7 @@ export default function(snapshots) {
       return 1;
     } else if (comparisonForA && comparisonForB) {
       // Both snapshots have a comparison for the current width, sort by diff percentage.
-      return comparisonForB.get('smartDiffRatio') - comparisonForA.get('smartDiffRatio');
+      return get(comparisonForB, 'smartDiffRatio') - get(comparisonForA, 'smartDiffRatio');
     }
 
     // Finally, sort by diff ratio across all widths.
@@ -43,10 +48,6 @@ export default function(snapshots) {
 
 function _maxWidthForSnapshots(snapshots) {
   return Math.max(...snapshots.mapBy('maxComparisonWidth'));
-}
-
-function _comparisonAtCurrentWidth(snapshot, width) {
-  return snapshot.get('comparisons').findBy('width', width);
 }
 
 function _maxDiffRatioAnyWidth(comparisons) {

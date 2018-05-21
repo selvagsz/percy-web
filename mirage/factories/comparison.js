@@ -78,4 +78,13 @@ export default Factory.extend({
       });
     },
   }),
+  forChrome: trait({
+    afterCreate(comparison, server) {
+      const browser = server.create('browser', 'chrome');
+      const headScreenshot = server.create('screenshot', 'v2Chrome');
+      const baseScreenshot = server.create('screenshot', 'v1Chrome');
+
+      comparison.update({browser, headScreenshot, baseScreenshot});
+    },
+  }),
 });

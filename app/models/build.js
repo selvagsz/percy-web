@@ -1,7 +1,8 @@
 import {computed} from '@ember/object';
-import {bool, and, equal, not, or} from '@ember/object/computed';
+import {bool, and, equal, not, or, filterBy, gt} from '@ember/object/computed';
 import DS from 'ember-data';
 import moment from 'moment';
+import {countDiffsWithSnapshotsPerBrowser} from 'percy-web/lib/filtered-comparisons';
 
 export const BUILD_STATES = {
   FINISHED: 'finished',
@@ -34,6 +35,7 @@ export default DS.Model.extend({
   }),
   branch: DS.attr(),
   browsers: DS.hasMany('browser', {async: false}),
+  hasMultipleBrowsers: gt('browsers.length', 1),
 
   // Processing state.
   state: DS.attr(),
@@ -138,6 +140,9 @@ export default DS.Model.extend({
   baseBuild: DS.belongsTo('build', {async: false, inverse: null}),
   snapshots: DS.hasMany('snapshot', {async: true}),
 
+  unreviewedSnapshots: filterBy('snapshots', 'isUnreviewed'),
+  unreviewedSnapshotsWithDiffs: filterBy('unreviewedSnapshots', 'isUnchanged', false),
+
   comparisons: computed('snapshots', function() {
     return this.get('snapshots').reduce((acc, snapshot) => {
       return acc.concat(snapshot.get('comparisons').toArray());
@@ -180,4 +185,17 @@ export default DS.Model.extend({
   reloadAll() {
     return this.store.findRecord('build', this.get('id'), {reload: true});
   },
+
+  // Returns Ember Object with a property for each browser for the build,
+  // where the value is an array of snapshots that have diffs for that browser.
+  // It is an ember object rather than a POJO so computed properties can observe it, and for ease
+  // of use in templates.
+  unapprovedSnapshotsWithDiffForBrowsers: computed(
+    'unreviewedSnapshotsWithDiffs.[]',
+    'browsers.[]',
+    function() {
+      const unreviewedSnapshotsWithDiffs = this.get('unreviewedSnapshotsWithDiffs');
+      return countDiffsWithSnapshotsPerBrowser(unreviewedSnapshotsWithDiffs, this.get('browsers'));
+    },
+  ),
 });

@@ -165,10 +165,6 @@ button,
     border: 1px solid transparent;
   }
 
-  &:active {
-    transform: translate3d(0, 0, 0);
-  }
-
   &:focus,
   &:focus:active {
     background: var(--lightest-gray);
@@ -265,10 +261,6 @@ button,
     background-size: 20px 20px;
     animation: loading 4s linear infinite;
   }
-}
-
-.btn-shadow-purple {
-  box-shadow: 0 4px 12px rgba(158, 102, 191, 0.4);
 }
 
 .build-toolbar {
@@ -430,10 +422,6 @@ button,
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1px;
-
-  .btn:hover {
-    transform: translate3d(0, 0, 0);
-  }
 
   > .btn:not(:first-child):not(:last-child) {
     border-radius: 0;

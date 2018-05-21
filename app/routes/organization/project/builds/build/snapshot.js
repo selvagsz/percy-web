@@ -17,12 +17,12 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
 
   setupController(controller) {
     this._super(...arguments);
-
     let params = this.get('params');
     let build = this.modelFor('organization.project.builds.build');
     let activeBrowser = this.get('store')
       .peekAll('browser')
       .findBy('familySlug', params.activeBrowserFamilySlug);
+
     controller.setProperties({
       build,
       activeBrowser,
@@ -34,7 +34,6 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   actions: {
     didTransition() {
       this._super(...arguments);
-
       this.send('updateIsHidingBuildContainer', true);
 
       let build = this.modelFor('organization.project.builds.build');
@@ -47,35 +46,36 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
       };
       this.analytics.track('Snapshot Fullscreen Viewed', organization, eventProperties);
     },
-    updateComparisonMode(value) {
-      const snapshot = this.modelFor(this.routeName);
-      this.transitionTo(
-        'organization.project.builds.build.snapshot',
-        snapshot.get('build.id'),
-        snapshot.get('id'),
-        this.get('params.width'),
-        {
-          queryParams: {
-            mode: value,
-            activeBrowserFamilySlug: this.get('params.activeBrowserFamilySlug'),
-          },
-        },
-      );
+    updateComparisonMode(mode) {
+      this._updateQueryParams({comparisonMode: mode});
+    },
+    updateActiveBrowser(newBrowser) {
+      this.controllerFor(this.routeName).set('activeBrowser', newBrowser);
+      this._updateQueryParams({newBrowserSlug: newBrowser.get('familySlug')});
     },
     transitionRouteToWidth(width) {
-      const snapshot = this.modelFor(this.routeName);
-      this.transitionTo(
-        'organization.project.builds.build.snapshot',
-        snapshot.get('build.id'),
-        snapshot.get('id'),
-        width,
-        {
-          queryParams: {
-            mode: this.get('params.comparisonMode'),
-            activeBrowserFamilySlug: this.get('params.activeBrowserFamilySlug'),
-          },
-        },
-      );
+      this._updateQueryParams({newWidth: width});
     },
+  },
+
+  _updateQueryParams(params) {
+    const controller = this.controllerFor(this.routeName);
+    const snapshot = this.modelFor(this.routeName);
+    const comparisonMode = params.comparisonMode || controller.get('comparisonMode');
+    const browser = params.newBrowserSlug || controller.get('activeBrowser.familySlug');
+    const width = params.newWidth || controller.get('snapshotSelectedWidth');
+
+    this.transitionTo(
+      'organization.project.builds.build.snapshot',
+      snapshot.get('build.id'),
+      snapshot.get('id'),
+      width,
+      {
+        queryParams: {
+          mode: comparisonMode,
+          activeBrowserFamilySlug: browser,
+        },
+      },
+    );
   },
 });

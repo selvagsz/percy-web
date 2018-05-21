@@ -18,8 +18,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
       this.get('snapshotQuery')
         .getChangedSnapshots(model)
-        .then(snapshots => {
-          return this._initializeSnapshotOrdering(snapshots);
+        .then(() => {
+          return this._initializeSnapshotOrdering();
         });
     }
   },
@@ -29,10 +29,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
     controller.set('build', model);
   },
 
-  _initializeSnapshotOrdering(snapshots) {
+  _initializeSnapshotOrdering() {
     // this route path needs to be explicit so it will work with fullscreen snapshots.
     let controller = this.controllerFor('organization.project.builds.build');
-    controller.initializeSnapshotOrdering(snapshots);
+    controller.initializeSnapshotOrdering();
   },
 
   actions: {
@@ -41,8 +41,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       controller.set('isHidingBuildContainer', isHidingBuildContainer);
     },
 
-    initializeSnapshotOrdering(snapshots) {
-      this._initializeSnapshotOrdering(snapshots);
+    initializeSnapshotOrdering() {
+      this._initializeSnapshotOrdering();
     },
 
     didTransition() {

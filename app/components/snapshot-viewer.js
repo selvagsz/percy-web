@@ -3,7 +3,7 @@ import {not, alias, or} from '@ember/object/computed';
 import {computed, observer} from '@ember/object';
 import Component from '@ember/component';
 import {next} from '@ember/runloop';
-import filteredComparisons from 'percy-web/lib/filtered-comparisons';
+import filteredComparisons, {hasDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
 
 export default Component.extend({
   // required params
@@ -78,6 +78,8 @@ export default Component.extend({
     function() {
       if (this.get('isActiveSnapshot') || this.get('build.isApproved')) {
         return true;
+      } else if (!hasDiffForBrowser(this.get('snapshot'), this.get('activeBrowser'))) {
+        return false;
       } else if (this.get('snapshot.isApproved')) {
         return false;
       } else {

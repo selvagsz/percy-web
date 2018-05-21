@@ -1,51 +1,42 @@
 import Controller from '@ember/controller';
 import snapshotSort from 'percy-web/lib/snapshot-sort';
-import {filterBy, alias} from '@ember/object/computed';
-import {computed} from '@ember/object';
+import {snapshotsWithDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
 
 // NOTE: before adding something here, consider adding it to BuildContainer instead.
 // This controller should only be used to maintain the state of which snapshots have been loaded.
-
 export default Controller.extend({
   isHidingBuildContainer: false,
 
-  _browsers: alias('build.browsers'),
-  // TODO: make this always chrome if availble
-  defaultBrowser: alias('_browsers.firstObject'),
-  activeBrowser: alias('defaultBrowser'),
+  allChangedBrowserSnapshotsSorted: null, // Manually managed by initializeSnapshotOrdering.
 
-  // set by initializeSnapshotOrdering
-  snapshots: null,
-  sortedSnapshots: computed('snapshots.[]', function() {
-    if (!this.get('snapshots')) {
-      return [];
-    }
-    return snapshotSort(this.get('snapshots').toArray());
-  }),
-  snapshotsUnreviewed: filterBy('sortedSnapshots', 'isUnreviewed', true),
-  snapshotsApproved: filterBy('sortedSnapshots', 'isApprovedByUserEver', true),
-
-  snapshotsChanged: null, // Manually managed by initializeSnapshotOrdering.
-
-  numSnapshotsMissing: 0,
-  numSnapshotsUnchanged: alias('numSnapshotsMissing'),
-
-  // This breaks the binding for snapshotsChanged, specifically so that when a user clicks
+  // This breaks the binding for allChangedBrowserSnapshotsSorted,
+  // specifically so that when a user clicks
   // approve, the snapshot stays in place until reload.
   //
   // Called by the route when entered and snapshots load.
   // Called by polling when snapshots reload after build is finished.
-  initializeSnapshotOrdering(snapshots) {
-    this.set('snapshots', snapshots);
-    let orderedSnapshots = [].concat(
-      this.get('snapshotsUnreviewed'),
-      this.get('snapshotsApproved'),
-    );
-    this.set('snapshotsChanged', orderedSnapshots);
+  // Creates a hash with a keys of each browser id,
+  // and the correctly ordered snapshots as the values and sets it as
+  // allChangedBrowserSnapshotsSorted.
+  initializeSnapshotOrdering() {
+    const orderedBrowserSnapshots = {};
+    const browsers = this.get('build.browsers');
+    const buildSnapshots = this.get('build.snapshots');
 
-    const numSnapshotsMissing = this.get('build.totalSnapshots') - snapshots.get('length');
-    this.set('numSnapshotsMissing', numSnapshotsMissing);
+    browsers.forEach(browser => {
+      const snapshotsWithDiffs = snapshotsWithDiffForBrowser(buildSnapshots, browser);
+      const sortedSnapshotsWithDiffs = snapshotSort(snapshotsWithDiffs.toArray(), browser);
+      const approvedSnapshots = sortedSnapshotsWithDiffs.filterBy('isApprovedByUserEver');
+      const unreviewedSnapshots = sortedSnapshotsWithDiffs.filterBy('isUnreviewed');
+      orderedBrowserSnapshots[browser.get('id')] = [].concat(
+        unreviewedSnapshots,
+        approvedSnapshots,
+      );
+    });
 
-    this.set('isSnapshotsLoading', false);
+    this.setProperties({
+      allChangedBrowserSnapshotsSorted: orderedBrowserSnapshots,
+      isSnapshotsLoading: false,
+    });
   },
 });
