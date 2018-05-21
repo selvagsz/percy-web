@@ -38,6 +38,7 @@ export default SessionService.extend({
 
   invalidateAndLogout() {
     this.invalidate().then(() => {
+      this._clearThirdPartyUserContext();
       utils.setWindowLocation('/api/auth/logout');
     });
   },
@@ -96,6 +97,9 @@ export default SessionService.extend({
     }
   },
   _clearIntercom() {
+    if (window.Intercom) {
+      window.Intercom('shutdown');
+    }
     localStorageProxy.removeKeysWithString('intercom');
   },
 });
