@@ -1,22 +1,25 @@
-import {computed} from '@ember/object';
-import {inject as service} from '@ember/service';
 import Component from '@ember/component';
 import AdminMode from 'percy-web/lib/admin-mode';
+import {computed} from '@ember/object';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
+  subscriptionData: service(),
+
+  classNames: ['OrganizationsBillingSection'],
+  classNameBindings: ['classes'],
+
   organization: null,
   classes: null,
 
   isSaving: null,
   isSaveSuccessful: null,
 
-  subscriptionData: service(),
-  classNames: ['OrganizationsBillingSection'],
-  classNameBindings: ['classes'],
   showCancel: computed('organization.subscription.isCustomer', function() {
     let isCustomer = this.get('organization.subscription.isCustomer');
     return isCustomer && AdminMode.isAdmin();
   }),
+
   actions: {
     changingSubscription(savingPromise) {
       this.set('isSaveSuccessful', null);

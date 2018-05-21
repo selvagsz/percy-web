@@ -247,6 +247,14 @@ button,
     transform: scale(1) translate3d(0, 0, 0);
   }
 
+  &[disabled] {
+    color: var(--white);
+    pointer-events: none;
+    background: var(--purple-600);
+    border: 1px solid transparent;
+    opacity: 0.25;
+  }
+
   &.shadow-on-light {
     box-shadow: 0 2px 8px 0 rgba(46, 0, 62, 0.26), 0 8px 20px 0 rgba(39, 0, 52, 0.08);
   }

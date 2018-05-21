@@ -60,7 +60,10 @@ module.exports = function(environment) {
     },
   };
 
-  ENV.APP.STRIPE_PUBLISHABLE_KEY = 'pk_test_N5PmOTEMBIbsZMjbxnaWthNy';
+  ENV.stripe = {
+    publishableKey: 'pk_test_N5PmOTEMBIbsZMjbxnaWthNy',
+    lazyLoad: true,
+  };
   ENV.APP.INTERCOM_APP_ID = 'itdwmqct';
   ENV.APP.GOOGLE_ANALYTICS_ID = 'UA-63384548-3';
 
@@ -114,7 +117,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.APP.STRIPE_PUBLISHABLE_KEY = 'pk_live_cmaeNcmPuMihdT3Q7QDBDMDr';
+    ENV.stripe.publishableKey = 'pk_live_cmaeNcmPuMihdT3Q7QDBDMDr';
     ENV.APP.INTERCOM_APP_ID = 'm37fs4zj';
     ENV.APP.GOOGLE_ANALYTICS_ID = 'UA-63384548-1';
 

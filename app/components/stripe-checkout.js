@@ -80,7 +80,7 @@ export default Component.extend({
         this.set(
           'handler',
           window.StripeCheckout.configure({
-            key: config.APP.STRIPE_PUBLISHABLE_KEY,
+            key: config.stripe.publishableKey,
             image: '/images/touch-icon.png',
             token(token) {
               self._changeSubscription(chosenPlanId, token);

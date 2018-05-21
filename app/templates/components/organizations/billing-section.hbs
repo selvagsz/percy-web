@@ -48,7 +48,7 @@
       {{/if}}
       <div class="bg-white rounded shadow-1 p-2 mb-2">
         <h2 class="f3 text-weight-semibold mb-1">Subscription</h2>
-        
+
         {{#if organization.subscription.plan.isFree}}
           <div class="Alert Alert--warning">
             <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} visual validations. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
@@ -173,18 +173,11 @@
       {{#if organization.subscription.isCustomer}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
           <h2 class="f3 text-weight-semibold mb-1">Billing Details</h2>
-          {{stripe-checkout
+          {{organizations/billing-card-updater
             organization=organization
-            text='Update Credit Card'
-            checkoutLabelText='Update Credit Card'
-            updateCard=true
-            planId=organization.subscription.plan.id
-            price=0
-            planName='Update Credit Card'
-            changingSubscription=(action "changingSubscription")
           }}
         </div>
-       {{/if}}
+      {{/if}}
     {{/if}}
   {{/unless}}
 </section>
