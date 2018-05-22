@@ -1,7 +1,8 @@
 import {or} from '@ember/object/computed';
 import Component from '@ember/component';
-import {computed} from '@ember/object';
+import {computed, get} from '@ember/object';
 import {alias} from '@ember/object/computed';
+import {htmlSafe} from '@ember/string';
 
 export default Component.extend({
   build: null,
@@ -10,12 +11,16 @@ export default Component.extend({
   buildCompletionPercent: alias('build.buildCompletionPercent'),
 
   progressBarWidth: computed('buildCompletionPercent', function() {
-    return `${this.get('buildCompletionPercent') - 100}%`;
+    return `${get(this, 'buildCompletionPercent') - 100}%`;
+  }),
+
+  progressBarWidthStyle: computed('progressBarWidth', function() {
+    return htmlSafe(`--progress-bar-width: ${get(this, 'progressBarWidth')}`);
   }),
 
   showActions: or('build.isPending', 'build.isProcessing', 'build.isFinished'),
 
   formattedFailedSnapshots: computed('build.failureDetails', function() {
-    return '"' + this.get('build.failureDetails').failed_snapshots.join('", "') + '"';
+    return '"' + get(this, 'build.failureDetails').failed_snapshots.join('", "') + '"';
   }),
 });

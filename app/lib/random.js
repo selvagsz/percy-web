@@ -2,7 +2,8 @@ import config from 'percy-web/config/environment';
 
 export default function() {
   if (config.environment === 'test') {
-    return Math.seedrandom('randomseed');
+    Math.seedrandom('randomseed');
+    return Math.random();
   } else {
     return Math.random();
   }

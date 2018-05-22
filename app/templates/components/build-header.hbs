@@ -1,7 +1,7 @@
 <div class="build-header position-relative flex justify-between align-center py-3 pr-2 pl-3 is-{{dasherize build.state}} is-{{if build.isFinished (dasherize build.reviewState)}} border-bottom border-gray-000">
   {{#unless build.isFinished}}
-    <div class="progress-bar-subtle position-absolute" style="--progress-bar-width: {{progressBarWidth}}"></div>
-    <div class="progress-bar position-absolute" style="--progress-bar-width: {{progressBarWidth}}"></div>
+    <div class="progress-bar-subtle position-absolute" style={{progressBarWidthStyle}}></div>
+    <div class="progress-bar position-absolute" style={{progressBarWidthStyle}}></div>
   {{/unless}}
   {{build-overview-info build=build}}
   <div class="text-right">
