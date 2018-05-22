@@ -64,10 +64,6 @@ export default Component.extend({
         isCardComplete: false,
       });
     } catch (e) {
-      this.get('flashMessages').danger(
-        'There was a problem updating your card.' +
-          ' Please try again or contact customer support.',
-      );
       this.set('isSaveSuccessful', false);
     }
   }),
