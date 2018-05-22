@@ -416,6 +416,13 @@ describe('Acceptance: Fullscreen Snapshot', function() {
     expect(snapshotReview.buildId).to.equal(build.id);
     expect(snapshotReview.snapshotIds).to.eql([snapshot.id]);
   });
+
+  it('redirects to allowed browser when a browser query param is incorrect', async function() {
+    urlParams.browser = 'not-a-real-browser';
+    await BuildPage.visitFullPageSnapshot(urlParams);
+    expect(currentURL()).to.include('browser=firefox');
+    expect(find('.flash-message.flash-message-danger')).to.have.length(1);
+  });
 });
 
 describe('Acceptance: Pending Build', function() {
