@@ -58,10 +58,13 @@ describe('Integration: SnapshotList', function() {
       SnapshotList.snapshots().forEach(snapshot => {
         expect(snapshot.isCollapsed).to.equal(true);
       });
+      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(true);
       percySnapshot(this.test);
     });
 
     it('allows keyboard nav with up and down arrows', function() {
+      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(true);
+
       SnapshotList.typeDownArrow();
       wait();
       expect(SnapshotList.snapshots(0).isExpanded).to.equal(true);
@@ -83,6 +86,16 @@ describe('Integration: SnapshotList', function() {
       expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
       expect(SnapshotList.snapshots(1).isExpanded).to.equal(false);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
+    });
+
+    it('expands all snapshots if build is approved', function() {
+      this.set('build.reviewState', 'approved');
+
+      expect(SnapshotList.snapshots().count).to.equal(numSnapshots);
+      SnapshotList.snapshots().forEach(snapshot => {
+        expect(snapshot.isExpanded).to.equal(true);
+      });
+      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(false);
     });
   });
 
