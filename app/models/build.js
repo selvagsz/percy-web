@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {bool, and, equal, not, or, filterBy, gt} from '@ember/object/computed';
+import {bool, and, equal, not, or, gt} from '@ember/object/computed';
 import DS from 'ember-data';
 import moment from 'moment';
 import {countDiffsWithSnapshotsPerBrowser} from 'percy-web/lib/filtered-comparisons';
@@ -140,9 +140,6 @@ export default DS.Model.extend({
   baseBuild: DS.belongsTo('build', {async: false, inverse: null}),
   snapshots: DS.hasMany('snapshot', {async: true}),
 
-  unreviewedSnapshots: filterBy('snapshots', 'isUnreviewed'),
-  unreviewedSnapshotsWithDiffs: filterBy('unreviewedSnapshots', 'isUnchanged', false),
-
   comparisons: computed('snapshots', function() {
     return this.get('snapshots').reduce((acc, snapshot) => {
       return acc.concat(snapshot.get('comparisons').toArray());
@@ -186,15 +183,27 @@ export default DS.Model.extend({
     return this.store.findRecord('build', this.get('id'), {reload: true});
   },
 
+  loadedSnapshots: computed(function() {
+    // Get snapshots without making new request
+    return this.hasMany('snapshots').value() || [];
+  }),
+
   // Returns Ember Object with a property for each browser for the build,
   // where the value is an array of snapshots that have diffs for that browser.
   // It is an ember object rather than a POJO so computed properties can observe it, and for ease
   // of use in templates.
   unapprovedSnapshotsWithDiffForBrowsers: computed(
-    'unreviewedSnapshotsWithDiffs.[]',
+    'loadedSnapshots.@each.{isUnreviewed,isUnchanged}',
     'browsers.[]',
     function() {
-      const unreviewedSnapshotsWithDiffs = this.get('unreviewedSnapshotsWithDiffs');
+      const loadedSnapshotsForBuild = this.get('loadedSnapshots');
+      const unreviewedSnapshotsWithDiffs = loadedSnapshotsForBuild.reduce((acc, snapshot) => {
+        if (snapshot.get('isUnreviewed') && !snapshot.get('isUnchanged')) {
+          acc.push(snapshot);
+        }
+        return acc;
+      }, []);
+
       return countDiffsWithSnapshotsPerBrowser(unreviewedSnapshotsWithDiffs, this.get('browsers'));
     },
   ),
