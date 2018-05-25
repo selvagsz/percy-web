@@ -16,8 +16,8 @@ See: css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    h2 {
-      font-size: 1em;
+    .LoginButton {
+      display: none !important;
     }
 }
 
