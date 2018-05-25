@@ -1,16 +1,48 @@
-import {alias} from '@ember/object/computed';
+import {computed} from '@ember/object';
+import {alias, or} from '@ember/object/computed';
+import PollingMixin from 'percy-web/mixins/polling';
+import {inject as service} from '@ember/service';
 import Component from '@ember/component';
+import moment from 'moment';
 
-export default Component.extend({
+export default Component.extend(PollingMixin, {
   project: null,
-  classes: null,
 
   isSaving: null,
   isSaveSuccessful: null,
 
   selectedRepo: alias('project.repo'),
   organization: alias('project.organization'),
+
+  MAX_UPDATE_POLLING_REQUESTS: 10,
+  repoRefresh: service(),
+  isRepoRefreshInProgress: false,
+  isSyncing: alias('organization.isSyncing'),
   groupedRepos: alias('organization.groupedRepos'),
+  lastSyncedAt: alias('organization.lastSyncedAt'),
+  isRepoDataStale: computed('lastSyncedAt', function() {
+    const isSyncing = this.get('isSyncing');
+    const lastSyncedAt = this.get('lastSyncedAt');
+    if (!lastSyncedAt || isSyncing) {
+      return true;
+    } else {
+      return moment(lastSyncedAt).isBefore(10, 'minutes');
+    }
+  }),
+  shouldPollForUpdates: or('isRepoDataStale', 'isSyncing'),
+  pollRefresh() {
+    this.triggerRepoRefresh();
+  },
+  triggerRepoRefresh() {
+    let self = this;
+    let organization = this.get('organization');
+    this.set('isRepoRefreshInProgress', true);
+    this.get('repoRefresh')
+      .getFreshRepos(organization)
+      .finally(() => {
+        self.set('isRepoRefreshInProgress', false);
+      });
+  },
 
   triggerSavingIndicator(promise) {
     this.set('isSaveSuccessful', null);
@@ -38,6 +70,9 @@ export default Component.extend({
       if (!project.get('isNew')) {
         this.triggerSavingIndicator(project.save());
       }
+    },
+    refreshRepos() {
+      this.triggerRepoRefresh();
     },
   },
 });

@@ -1,0 +1,9 @@
+<span data-test-repo-refresh-status-message>
+{{#if isRepoRefreshInProgress }}
+  Checking repo status...
+{{else if lastSyncedAt }}
+  Last updated: {{moment-from-now lastSyncedAt}}
+{{else}}
+  Never updated
+{{/if}}
+</span>

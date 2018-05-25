@@ -11,6 +11,8 @@ const DISPLAY_NAMES = {
 export default DS.Model.extend({
   name: DS.attr(),
   slug: DS.attr(),
+  isSyncing: DS.attr(),
+  lastSyncedAt: DS.attr(),
   versionControlIntegrations: DS.hasMany('version-control-integrations', {
     async: false,
   }),

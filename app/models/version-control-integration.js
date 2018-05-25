@@ -18,6 +18,9 @@ export default DS.Model.extend({
   gitlabIntegrationId: DS.attr(),
   gitlabBotUserId: DS.attr(),
 
+  isSyncing: DS.attr(),
+  lastUpdatedAt: DS.attr(),
+
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   isGithubIntegration: equal('integrationType', GITHUB_INTEGRATION_TYPE),

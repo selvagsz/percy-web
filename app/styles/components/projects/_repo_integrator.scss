@@ -1,0 +1,12 @@
+.ProjectsRepoIntegrator {
+  .ember-power-select-group:first-of-type {
+    padding-top: 0.5rem;
+  }
+}
+
+.ProjectsRepoIntegratorRefreshStatus {
+  padding: 5px 24px;
+  font-size: 0.85em;
+  color: var(--light-gray);
+  border-bottom: 1px solid var(--lighter-gray);
+}

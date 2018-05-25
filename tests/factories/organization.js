@@ -1,6 +1,7 @@
 import FactoryGuy from 'ember-data-factory-guy';
 import faker from 'faker';
 import {makeList} from 'ember-data-factory-guy';
+import moment from 'moment';
 
 FactoryGuy.define('organization', {
   default: {
@@ -10,6 +11,12 @@ FactoryGuy.define('organization', {
     projects: FactoryGuy.hasMany('project'),
     versionControlIntegrations: FactoryGuy.hasMany('version-control-integration'),
     repos: FactoryGuy.hasMany('repo'),
+    lastSyncedAt: () => {
+      return moment().subtract(11, 'minutes');
+    },
+    isSyncing: () => {
+      return false;
+    },
   },
   traits: {
     withGithubIntegration: {
@@ -42,6 +49,22 @@ FactoryGuy.define('organization', {
       },
       repos: () => {
         return makeList('repo', 'github', 'gitlab', ['githubEnterprise', {hostname: 'foo.com'}]);
+      },
+    },
+    withStaleRepoData: {
+      lastSyncedAt: () => {
+        return moment().subtract(20, 'minutes');
+      },
+      isSyncing: () => {
+        return false;
+      },
+    },
+    withFreshRepoData: {
+      lastSyncedAt: () => {
+        return moment().subtract(1, 'minute');
+      },
+      isSyncing: () => {
+        return false;
       },
     },
     withRepos: {repos: () => makeList('repo', 3)},
