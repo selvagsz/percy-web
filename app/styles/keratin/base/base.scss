@@ -9,6 +9,18 @@ making all elements inheriting from the root box-sizing value
 See: css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 */
 
+@-moz-document url-prefix(){
+    h2 {
+      color: green;
+    }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    h2 {
+      font-size: 1em;
+    }
+}
+
 *,
 *::before,
 *::after {
