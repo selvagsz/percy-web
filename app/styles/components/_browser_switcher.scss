@@ -1,15 +1,27 @@
 .browser-switcher-diff-count {
   top: 0;
   right: 0;
+  min-width: 14px;
   height: 14px;
   padding-top: 2px;
   font-size: 10px;
   border-radius: 7px;
   transition: box-shadow 250ms, transform 250ms, background 250ms, color 250ms;
+
+  svg {
+    fill: var(--gray-300);
+    transition: fill 250ms;
+  }
 }
 
-.is-browser-active .browser-switcher-diff-count {
-  transform: translate3d(4px, -4px, 0);
+.is-browser-active {
+  .browser-switcher-diff-count {
+    transform: translate3d(4px, -4px, 0);
+
+    svg {
+      fill: var(--white);
+    }
+  }
 }
 
 .is-browser-active svg,

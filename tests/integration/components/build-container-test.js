@@ -230,7 +230,7 @@ describe('Integration: BuildContainer', function() {
 
       this.set('snapshotWithDiffInBothBrowsers.reviewState', 'approved');
 
-      expect(BuildPage.browserSwitcher.chromeButton.diffCount).to.equal('0');
+      expect(BuildPage.browserSwitcher.chromeButton.isAllApproved).to.equal(true);
       expect(BuildPage.browserSwitcher.firefoxButton.diffCount).to.equal('1');
     });
 
