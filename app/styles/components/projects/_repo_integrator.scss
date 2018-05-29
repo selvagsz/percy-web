@@ -4,9 +4,26 @@
   }
 }
 
+$repo-item-indent: 24px;
+
+@mixin repo-listing-border {
+  border-bottom: 1px solid var(--lighter-gray);
+}
+
 .ProjectsRepoIntegratorRefreshStatus {
-  padding: 5px 24px;
+  padding: 5px $repo-item-indent;
   font-size: 0.85em;
   color: var(--light-gray);
-  border-bottom: 1px solid var(--lighter-gray);
+
+  @include repo-listing-border;
+}
+
+.ember-power-select-search-input {
+  margin-bottom: 1rem;
+}
+
+.ember-power-select-option--no-matches-message {
+  padding: 0 $repo-item-indent 8px;
+
+  @include repo-listing-border;
 }
