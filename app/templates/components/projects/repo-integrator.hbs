@@ -19,7 +19,7 @@
       matchTriggerWidth=false
       allowClear=true
       options=organization.groupedRepos
-      beforeOptionsComponent=(component "repo-refresh-status" isRepoRefreshInProgress=isRepoRefreshInProgress lastSyncedAt=lastSyncedAt)
+      afterOptionsComponent=(component "repo-refresh-status" isRepoRefreshInProgress=isRepoRefreshInProgress lastSyncedAt=lastSyncedAt)
       onchange=(action "chooseRepo")
       onopen=(action "refreshRepos")
       as |repo|
