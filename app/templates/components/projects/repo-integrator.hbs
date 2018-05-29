@@ -19,6 +19,7 @@
       matchTriggerWidth=false
       allowClear=true
       options=organization.groupedRepos
+      noMatchesMessage="No repositories found"
       afterOptionsComponent=(component "repo-refresh-status" isRepoRefreshInProgress=isRepoRefreshInProgress lastSyncedAt=lastSyncedAt)
       onchange=(action "chooseRepo")
       onopen=(action "refreshRepos")
