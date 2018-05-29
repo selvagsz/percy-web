@@ -102,7 +102,7 @@ export default DS.Model.extend({
       }
 
       const totalComparisonsFinished = this.get('totalComparisonsFinished') || 0;
-      return totalComparisonsFinished / totalComparisons * 100;
+      return (totalComparisonsFinished / totalComparisons) * 100;
     },
   ),
   hasDiffs: computed('totalComparisonsDiff', 'isFinished', function() {

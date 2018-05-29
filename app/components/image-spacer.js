@@ -12,7 +12,7 @@ export default Component.extend({
   classNames: ['ImageSpacer'],
   attributeBindings: ['style'],
   style: computed('image.width', 'image.height', function() {
-    let scale = this.get('image.height') * 100.0 / this.get('image.width');
+    let scale = (this.get('image.height') * 100.0) / this.get('image.width');
     return htmlSafe(`padding-top: ${scale}%`);
   }),
 

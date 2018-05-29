@@ -52,7 +52,8 @@ export default Component.extend({
       let galleryLength = this.get('galleryMap.length');
       let directional = keyCode === 39 ? 1 : -1;
       let galleryIndex = this.get('galleryIndex');
-      let newIndex = ((galleryIndex + directional) % galleryLength + galleryLength) % galleryLength;
+      let newIndex =
+        (((galleryIndex + directional) % galleryLength) + galleryLength) % galleryLength;
       this.sendAction('updateComparisonMode', galleryMap[newIndex]);
     },
   },

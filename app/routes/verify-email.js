@@ -7,10 +7,11 @@ export default Route.extend({
     code: '',
   },
   model(params) {
-    return $.ajax({
-      type: 'PATCH',
-      url: utils.buildApiUrl('emailVerifications', params.code),
-    })
+    return $
+      .ajax({
+        type: 'PATCH',
+        url: utils.buildApiUrl('emailVerifications', params.code),
+      })
       .then(() => {
         return {success: true};
       })
