@@ -18,7 +18,9 @@ export default Component.extend(PollingMixin, {
           .get('builds')
           .reload()
           .then(() => {
-            this.set('isRefreshing', false);
+            if (!this.isDestroyed) {
+              this.set('isRefreshing', false);
+            }
           });
       });
   },

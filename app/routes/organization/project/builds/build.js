@@ -7,7 +7,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   reviews: service(),
 
   model(params) {
-    return this.store.findRecord('build', params.build_id);
+    // Note: passing {reload: true} here to ensure a full reload including all sideloaded data.
+    return this.store.findRecord('build', params.build_id, {reload: true});
   },
   afterModel(model) {
     const controller = this.controllerFor(this.routeName);

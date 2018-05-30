@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
 import snapshotSort from 'percy-web/lib/snapshot-sort';
 import {snapshotsWithDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
-import {task, timeout} from 'ember-concurrency';
 
 // NOTE: before adding something here, consider adding it to BuildContainer instead.
 // This controller should only be used to maintain the state of which snapshots have been loaded.
@@ -19,7 +18,7 @@ export default Controller.extend({
   // Creates a hash with a keys of each browser id,
   // and the correctly ordered snapshots as the values and sets it as
   // allChangedBrowserSnapshotsSorted.
-  _initializeSnapshotOrdering: task(function*() {
+  initializeSnapshotOrdering() {
     const orderedBrowserSnapshots = {};
     // Get snapshots without making new request
     const buildSnapshotsWithDiffs =
@@ -27,14 +26,15 @@ export default Controller.extend({
         .hasMany('snapshots')
         .value() || [];
 
-    // If there are no snapshots with changes, this method will complete too fast for
-    // the loading state to display properly. This gives a small delay so we can associate
-    // all the data together and display the build page correctly.
-    if (!buildSnapshotsWithDiffs.get('length')) {
-      yield timeout(300);
-    }
-
     const browsers = this.get('build.browsers');
+
+    if (!browsers.length && window.Raven) {
+      // There should always be browsers loaded, but there appears to be a certain race condition
+      // when navigating from projects to builds where build relationships are not fully loaded.
+      // Capture information about how often a race condition is happening. TODO: drop this.
+      let error = new Error('Missing browsers in initializeSnapshotOrdering');
+      window.Raven.captureException(error);
+    }
 
     browsers.forEach(browser => {
       const snapshotsWithDiffs = snapshotsWithDiffForBrowser(buildSnapshotsWithDiffs, browser);
@@ -51,9 +51,5 @@ export default Controller.extend({
       allChangedBrowserSnapshotsSorted: orderedBrowserSnapshots,
       isSnapshotsLoading: false,
     });
-  }).drop(),
-
-  initializeSnapshotOrdering() {
-    this.get('_initializeSnapshotOrdering').perform();
   },
 });
