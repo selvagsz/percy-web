@@ -50,22 +50,26 @@ describe('Integration: BrowserSwitcher', function() {
   });
 
   it('displays the correct browser as active', function() {
-    expect(browserSwitcher.buttons(1).isActive).to.equal(true);
+    expect(browserSwitcher.chromeButton.isActive).to.equal(true);
   });
 
   it('calls updateActiveBrowser when button is clicked', function() {
-    browserSwitcher.buttons(0).click();
+    browserSwitcher.switchBrowser();
     expect(updateActiveBrowserStub).to.have.been.calledWith(browsers[0]);
   });
 
   it('does not display diff counts if there is not a build provided', function() {
     this.set('build', null);
-    expect(browserSwitcher.buttons(0).isDiffCountPresent).to.equal(false);
-    expect(browserSwitcher.buttons(1).isDiffCountPresent).to.equal(false);
+    expect(browserSwitcher.firefoxButton.isDiffCountPresent).to.equal(false);
+    expect(browserSwitcher.chromeButton.isDiffCountPresent).to.equal(false);
   });
 
   it('it displays diff counts if there is a build provided', function() {
-    expect(browserSwitcher.buttons(0).diffCount).to.equal('2');
-    expect(browserSwitcher.buttons(1).diffCount).to.equal('1');
+    expect(browserSwitcher.firefoxButton.diffCount).to.equal('2');
+    expect(browserSwitcher.chromeButton.diffCount).to.equal('1');
+  });
+
+  it('displays chrome button first', function() {
+    expect(browserSwitcher.buttons(0).isChrome).to.equal(true);
   });
 });
