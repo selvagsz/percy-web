@@ -2,15 +2,7 @@
   <p>
     You can optionally link this project to a GitHub repository. This enables {{#link-to "docs.page" "learn/github-integration"}}Pull Request integration{{/link-to}} for this project.
   </p>
-  {{#if organization.repos.isFulfilled}}
-    {{#unless organization.repos}}
-      <div class="Alert Alert--warning">
-        <strong>No repos found.</strong> It can take up to 1 minute to sync your repos from GitHub if there are a lot of them. <a href="javascript:location.reload()">Refresh</a>?
-      </div>
-    {{/unless}}
-  {{/if}}
-  <p>
-    {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
+  <p class='repo-selector'>
     {{#power-select
       selected=selectedRepo
       searchField="slug"
@@ -27,6 +19,7 @@
     }}
       {{repo.slug}}
     {{/power-select}}
+    {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
   </p>
   <p>
     Missing a repository? Check your organization's {{#link-to "organizations.organization.settings" project.organization.slug}}GitHub integration settings{{/link-to}}.
