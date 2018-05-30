@@ -1,0 +1,33 @@
+<section class="p-2">
+  <div class="bg-white rounded shadow-1 p-2 mb-2" data-test-gitlab-settings>
+    <div class="flex align-center mb-2">
+      {{inline-svg "gitlab-icon-lg" class="mr-1"}}
+      <h2 class="f3 text-weight-semibold m-0">GitLab Integration</h2>
+    </div>
+    {{#if isGitlabIntegrated}}
+      <div class="p-2 rounded border text-light mb-2" data-test-gitlab-settings-status>
+        The GitLab integration is installed. Please contact support to change any settings.
+      </div>
+    {{else}}
+      <div class="p-2 rounded border text-light mb-2" data-test-gitlab-settings-status>
+        The GitLab integration is not installed.
+      </div>
+    {{/if}}
+    <div class="flex justify-end">
+      <div class="btn-toolbar">
+        {{#link-to
+          'organizations.organization.integrations'
+          organization.slug
+          class="btn"
+        }}
+          Back
+        {{/link-to}}
+        {{#unless isGitlabIntegrated}}
+          <button data-test-gitlab-settings-connect-button class="btn btn-primary shadow-purple-lg ml-1" {{action "redirectToGitlabAuthorization" organization}}>
+            Connect to GitLab
+          </button>
+        {{/unless}}
+      </div>
+    </div>
+  </div>
+</section>

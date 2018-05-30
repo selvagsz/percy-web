@@ -36,7 +36,7 @@ describe('Integration: GitLab Settings', function() {
 
     it('shows that the integration is installed', function() {
       this.render(hbs`{{
-        organizations/gitlab-settings
+        organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
       }}`);
@@ -61,7 +61,7 @@ describe('Integration: GitLab Settings', function() {
 
     it('allows the user to connect the integration', function() {
       this.render(hbs`{{
-        organizations/gitlab-settings
+        organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
       }}`);

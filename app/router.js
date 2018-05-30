@@ -67,7 +67,11 @@ Router.map(function() {
         this.route('invite');
       });
       this.route('billing');
-      this.route('integrations');
+      this.route('integrations', function() {
+        this.route('github-enterprise');
+        this.route('github');
+        this.route('gitlab');
+      });
     });
   });
   this.route('organization', {path: '/:organization_id'}, function() {

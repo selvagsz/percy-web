@@ -1,0 +1,52 @@
+<section class="px-2 pt-3">
+  <div class="w-75 pb-3">
+    <h1 class="f3 text-weight-semibold mb-sm">Set up Github Enterprise</h1>
+    <p class="text-light">We’ll need just a bit of information to get Percy set up on your GitHab account. If you need some help, check out our <a href="#" class="text-weight-semibold">Percy + GitHub</a> doc to guide you through the set up process.</p>
+  </div>
+</section>
+
+<section class="px-2">
+  <div class="bg-white rounded shadow-1 p-2 mb-2">
+    <div class="flex align-center">
+      <div class="grid col-auto gap-1 f3 text-weight-semibold mb-2">
+        <div>{{inline-svg "github-icon"}}</div>
+        <div>Github <span class="text-weight-regular">Enterprise</span></div>
+      </div>
+    </div>
+    <form action="javascript:;" class="m-0">
+      <div class="px-2 pt-2 bg-gray-000 rounded border mb-2">
+        <label>
+          <span class="label-body">Client ID</span>
+          <input type="text" class="form-control" placeholder="ba7dsgd876auhgds94j">
+        </label>
+        <label>
+          <span class="label-body">Secret</span>
+          <input type="text" class="form-control" placeholder="foo-bar-baz">
+        </label>
+        <label>
+          <span class="label-body">URL</span>
+          <input type="text" class="form-control" placeholder="https://github.percy.town">
+        </label>
+        <label>
+          <span class="label-body">Public API URL</span>
+          <input type="text" class="form-control" placeholder="https://ghe-proxy.example.com">
+        </label>
+      </div>
+      <div class="flex justify-end">
+        <div class="btn-toolbar">
+          {{#link-to
+            'organizations.organization.integrations'
+            organization.slug
+            class="btn"
+          }}
+            Back
+          {{/link-to}}
+          <button class="btn btn-primary shadow-purple-lg">Save Github Settings</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="rounded bg-yellow-000 border border-yellow-100 p-2 mb-2">
+    <strong>Reminder:</strong> Each project must be linked to a GitHub repository for <strong>{{#link-to "docs.page" "learn/github-integration"}}Pull Request integration{{/link-to}}</strong> to work. You can verify the link in each project's settings.
+  </div>
+</section>

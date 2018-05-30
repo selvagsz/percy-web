@@ -6,7 +6,7 @@
     </div>
   {{else}}
     {{#if organization.billingLocked}}
-      <div class="active container">
+      <div class="active">
         <div class="row">
           <div class="three columns">
             {{organization.subscription.plan.name}}
@@ -57,34 +57,36 @@
 
         {{#if organization.subscription.plan.isCustom}}
           <div class="p-2 bg-gray-000 rounded border mb-2">
-            <div class="flex">
-              <div style="max-width: 150px" class="flex-1 pr-2 f3 text-weight-semibold">
+            <div>
+              <div class="pr-2 f3 text-weight-semibold">
                 {{organization.subscription.plan.name}}
               </div>
-              <div class="flex-1 pr-2">
-                {{#with organization.subscription.plan as |plan|}}
-                  <div>
-                    <strong>
-                      {{plan.workerLimit}} concurrent renderers
-                      {{format-number plan.usageIncluded}} visual validations
-                    </strong>
-                  </div>
-                  <div>
-                    {{#if plan.allowOverages}}${{plan.overageUnitCost}} / extra validation{{else}}No overages allowed{{/if}}
-                  </div>
-                  <div>
-                    {{plan.historyLimitDays}} day history
-                  </div>
-                {{/with}}
-                {{#unless organization.subscription.plan.isTrial}}
-                  <div class="mt-2">
-                    You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
-                  </div>
-                {{/unless}}
-              </div>
-              <div style="max-width: 150px" class="flex-1 pr-2"></div>
-              <div style="max-width: 150px" class="flex-1 pr-2 flex align-center justify-end">
-                <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
+              <div class="flex">
+                <div class="pr-2">
+                  {{#with organization.subscription.plan as |plan|}}
+                    <div>
+                      <strong>
+                        {{plan.workerLimit}} concurrent renderers
+                        {{format-number plan.usageIncluded}} visual validations
+                      </strong>
+                    </div>
+                    <div>
+                      {{#if plan.allowOverages}}${{plan.overageUnitCost}} / extra validation{{else}}No overages allowed{{/if}}
+                    </div>
+                    <div>
+                      {{plan.historyLimitDays}} day history
+                    </div>
+                  {{/with}}
+                  {{#unless organization.subscription.plan.isTrial}}
+                    <div class="mt-2">
+                      You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
+                    </div>
+                  {{/unless}}
+                </div>
+                <div style="max-width: 150px" class="flex-1 pr-2"></div>
+                <div style="max-width: 150px" class="flex-1 pr-2 flex align-start justify-end">
+                  <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
+                </div>
               </div>
             </div>
           </div>
@@ -93,68 +95,76 @@
         <div class="pt-2 bg-gray-000 rounded border">
           {{#each subscriptionData.PLANS as |planData|}}
             {{#unless (eq planData.id "free")}}
-              <div class="flex border-bottom px-2 pb-2 mb-2">
-                <div style="max-width: 150px" class="flex-1 pr-2 f3 text-weight-semibold">
+              <div class="border-bottom px-2 pb-2 mb-2">
+                <div class="pr-2 f3 text-weight-semibold">
                   {{planData.name}}
                 </div>
-                <div class="flex-1 pr-2">
-                  <div>
-                    {{planData.numTeamMembersTitle}}
+                <div class="flex">
+                  <div class="flex-1 pr-2">
+                    <div>
+                      {{planData.numTeamMembersTitle}}
+                    </div>
+                    <div>
+                      {{planData.numWorkersTitle}}
+                    </div>
+                    <div>
+                      {{format-number planData.numDiffs}} visual validations
+                    </div>
                   </div>
-                  <div>
-                    {{planData.numWorkersTitle}}
+                  <div style="max-width: 150px" class="flex-1 pr-2">
+                    <strong><span>$</span>{{format-number planData.monthlyPrice precision=0}}</strong> / month
+                    <br>
+                    ${{planData.extraDiffPrice}} / extra validation
                   </div>
-                  <div>
-                    {{format-number planData.numDiffs}} visual validations
-                  </div>
-                </div>
-                <div style="max-width: 150px" class="flex-1 pr-2">
-                  <strong><span>$</span>{{format-number planData.monthlyPrice precision=0}}</strong> / month
-                  <br>
-                  ${{planData.extraDiffPrice}} / extra validation
-                </div>
-                <div style="max-width: 150px" class="flex-1 pr-2 flex align-center justify-end">
-                  {{#if (eq organization.subscription.plan.id planData.id)}}
-                    {{#if isSaving}}
-                      {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
+                  <div style="max-width: 150px" class="flex-1 pr-2 flex align-start justify-end">
+                    {{#if (eq organization.subscription.plan.id planData.id)}}
+                      {{#if isSaving}}
+                        {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
+                      {{else}}
+                        <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
+                      {{/if}}
                     {{else}}
-                      <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
+                      {{!-- TODO: #billingadmins --}}
+                      {{#if (eq "admin" organization.currentUserMembership.role)}}
+                        {{stripe-checkout
+                          organization=organization
+                          planId=planData.id
+                          price=planData.monthlyPrice
+                          planName=planData.name
+                          classes="btn btn-primary shadow-purple-lg mb-0"
+                          changingSubscription=(action "changingSubscription")
+                        }}
+                      {{/if}}
                     {{/if}}
-                  {{else}}
-                    {{!-- TODO: #billingadmins --}}
-                    {{#if (eq "admin" organization.currentUserMembership.role)}}
-                      {{stripe-checkout
-                        organization=organization
-                        planId=planData.id
-                        price=planData.monthlyPrice
-                        planName=planData.name
-                        classes="btn btn-primary shadow-purple-lg mb-0"
-                        changingSubscription=(action "changingSubscription")
-                      }}
-                    {{/if}}
-                  {{/if}}
+                  </div>
                 </div>
               </div>
             {{/unless}}
           {{/each}}
 
-          <div class="flex px-2 pb-2">
-            <div style="max-width: 150px" class="flex-1 pr-2 f3 text-weight-semibold">
+          <div class="px-2 pb-2">
+            <div class="flex-1 pr-2 f3 text-weight-semibold">
               Enterprise
             </div>
-            <div class="flex-1 pr-2">
-              Unlimited team members
-              <br>
-              Custom concurrent renderers
-              <br>
-              Unlimited visual validations
-            </div>
-            <div class="flex-1 pr-2"></div>
-            <div class="flex-1 pr-2 flex align-center justify-end">
-              {{!-- TODO: #billingadmins --}}
-              {{#if (eq "admin" organization.currentUserMembership.role)}}
-                {{#link-to "enterprise" class="btn btn-primary shadow-purple-lg mb-0"}}Contact Us{{/link-to}}
-              {{/if}}
+            <div class="flex">
+              <div class="flex-1 pr-2">
+                <div>
+                  Unlimited team members
+                </div>
+                <div>
+                  Custom concurrent renderers
+                </div>
+                <div>
+                  Unlimited visual validations
+                </div>
+              </div>
+              <div class="flex-1 pr-2"></div>
+              <div class="flex-1 pr-2 flex align-start justify-end">
+                {{!-- TODO: #billingadmins --}}
+                {{#if (eq "admin" organization.currentUserMembership.role)}}
+                  {{#link-to "enterprise" class="btn btn-primary shadow-purple-lg mb-0"}}Contact Us{{/link-to}}
+                {{/if}}
+              </div>
             </div>
           </div>
         </div>

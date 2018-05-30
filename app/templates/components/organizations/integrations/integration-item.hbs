@@ -1,0 +1,34 @@
+<div class="integration-item flex justify-between align-center p-2 border-bottom">
+  <div class="grid col-auto gap-1 f3 text-weight-semibold">
+    <div class="flex align-center">{{inline-svg iconName}}</div>
+    <div class="flex align-center lh-1" data-test-integration-name>
+      {{textName}}
+      {{#if isBeta}}
+        <span class="badge" data-test-integration-beta-badge>Beta</span>
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if (and isBeta isInstalled)}}
+    <button
+      class="btn btn-primary shadow-purple-lg m-0"
+      data-test-integration-button-contact-us
+      {{action 'openIntercom'}}
+    >
+      Contact Us
+    </button>
+  {{else if isBeta}}
+    <a
+      href="{{betaLink}}"
+      target="_blank"
+      class="btn btn-primary shadow-purple-lg m-0"
+      data-test-integration-button-contact-us
+    >
+      Contact Us
+    </a>
+  {{else}}
+    {{#link-to integrationSettingsRoute orgSlug class=buttonClasses}}
+      {{buttonText}}
+    {{/link-to}}
+  {{/if}}
+</div>

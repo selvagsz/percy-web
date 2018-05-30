@@ -53,6 +53,10 @@ select {
   border-radius: 4px;
   transition: border-color 250ms, box-shadow 250ms;
 
+  &::placeholder {
+    opacity: 0.4 !important;
+  }
+
   &:focus,
   &:focus:active {
     border-color: var(--lightest-purple);

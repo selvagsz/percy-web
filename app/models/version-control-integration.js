@@ -1,9 +1,10 @@
 import {equal} from '@ember/object/computed';
 import DS from 'ember-data';
 
-const GITHUB_ENTERPRISE_INTEGRATION_TYPE = 'github_enterprise';
-const GITHUB_INTEGRATION_TYPE = 'github';
-const GITLAB_INTEGRATION_TYPE = 'gitlab';
+// these strings must match what comes down from the api
+export const GITHUB_ENTERPRISE_INTEGRATION_TYPE = 'github_enterprise';
+export const GITHUB_INTEGRATION_TYPE = 'github';
+export const GITLAB_INTEGRATION_TYPE = 'gitlab';
 
 export default DS.Model.extend({
   organization: DS.belongsTo('organization'),

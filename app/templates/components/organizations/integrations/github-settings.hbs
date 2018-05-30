@@ -1,7 +1,9 @@
-<section class="px-2">
+<section class="p-2">
   <div class="bg-white rounded shadow-1 p-2 mb-2">
-    <h2 class="f3 text-weight-semibold mb-2">GitHub Integration {{fa-icon "github"}}</h2>
-
+    <div class="flex align-center mb-2">
+      {{inline-svg "github-icon-lg" class="mr-1"}}
+      <h2 class="f3 text-weight-semibold m-0">GitHub Integration</h2>
+    </div>
     {{#if (not (await isEligibleForGithubIntegration))}}
       <div>
         To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}}connect your GitHub account{{/link-to}}.
@@ -48,13 +50,20 @@
           {{/if}}
         </div>
         <div class="flex justify-end">
+          {{#link-to
+            'organizations.organization.integrations'
+            organization.slug
+            class="btn"
+          }}
+            Back
+          {{/link-to}}
           {{form-fields/submit
             isSaving=isSaving
             isSaveSuccessful=isSaveSuccessful
             value="Save"
             disabled=disableSave
             showSavingIndicator=false
-            classes="btn btn-primary shadow-purple-lg m-0"
+            classes="btn btn-primary shadow-purple-lg m-0 ml-1"
             submit=(action "saveSelection")
           }}
         </div>
