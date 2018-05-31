@@ -12,7 +12,6 @@
     "clean": "rm -rf dist/ tmp/",
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js . --fix",
-    "precommit": "lint-staged",
     "postinstall": "bower install --allow-root",
     "start": "ember server",
     "start-production-for-testing": "ember server --environment=production",
@@ -93,7 +92,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "glob": "^7.1.2",
     "http-proxy": "^1.17.0",
-    "husky": "^0.14.3",
+    "husky": "^v1.0.0-rc.8",
     "lint-staged": "^7.1.0",
     "loader.js": "^4.7.0",
     "morgan": "^1.9.0",
@@ -109,5 +108,10 @@
     "node": ">= 6.9.1"
   },
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
