@@ -31,7 +31,7 @@ describe('Acceptance: GitHub App Setup', function() {
     });
     it('redirects to settings when the installation_id and project present', async function() {
       await visit(`/setup/github-app?installation_id=${githubInstallationId}`);
-      expect(currentPath()).to.equal('organizations.organization.settings');
+      expect(currentPath()).to.equal('organizations.organization.integrations.index');
     });
   });
 });

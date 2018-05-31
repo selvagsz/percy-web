@@ -13,7 +13,7 @@ export default DS.Model.extend({
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
 
-  // Repo will be set if this project is linked to a GitHub repository.
+  // Repo will be set if this project is linked to a repository.
   repo: DS.belongsTo('repo', {async: false}),
 
   builds: DS.hasMany('build', {async: true}),

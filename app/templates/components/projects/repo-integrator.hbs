@@ -1,37 +1,32 @@
 {{#if organization.isVersionControlIntegrated}}
   <p>
-    You can optionally link this project to a GitHub repository. This enables {{#link-to "docs.page" "learn/github-integration"}}Pull Request integration{{/link-to}} for this project.
+    You can optionally link this project to a repository. This enables {{#link-to "docs.page" "integrations/overview"}}Pull Request integration{{/link-to}} for this project.
   </p>
-  {{#if organization.repos.isFulfilled}}
-    {{#unless organization.repos}}
-      <div class="Alert Alert--warning">
-        <strong>No repos found.</strong> It can take up to 1 minute to sync your repos from GitHub if there are a lot of them. <a href="javascript:location.reload()">Refresh</a>?
-      </div>
-    {{/unless}}
-  {{/if}}
-  <p>
-    {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
+  <p class='repo-selector'>
     {{#power-select
       selected=selectedRepo
       searchField="slug"
-      placeholder="Select GitHub repository (optional)"
+      placeholder="Select a repository"
       renderInPlace=true
       matchTriggerWidth=false
       allowClear=true
       options=organization.groupedRepos
-      beforeOptionsComponent=(component "repo-refresh-status" isRepoRefreshInProgress=isRepoRefreshInProgress lastSyncedAt=lastSyncedAt)
+      searchPlaceholder="Type to filter repositories"
+      noMatchesMessage="No repositories found"
+      afterOptionsComponent=(component "repo-refresh-status" isRepoRefreshInProgress=isRepoRefreshInProgress lastSyncedAt=lastSyncedAt)
       onchange=(action "chooseRepo")
       onopen=(action "refreshRepos")
       as |repo|
     }}
       {{repo.slug}}
     {{/power-select}}
+    {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
   </p>
   <p>
-    Missing a repository? Check your organization's {{#link-to "organizations.organization.settings" project.organization.slug}}GitHub integration settings{{/link-to}}.
+    Missing a repository? Check your organization's {{#link-to "organizations.organization.integrations" project.organization.slug}} integration settings{{/link-to}}.
   </p>
 {{else}}
   <div class="Alert Alert--info">
-    <strong>Missing organization GitHub integration.</strong> Before you can link a repository you must first {{#link-to "organizations.organization.settings" project.organization.slug}}install the Percy GitHub integration{{/link-to}} in your organization.
+    <strong>Missing organization source code integration.</strong> Before you can link a repository you must first {{#link-to "organizations.organization.integrations" project.organization.slug}}install an integration{{/link-to}} for your organization.
   </div>
 {{/if}}

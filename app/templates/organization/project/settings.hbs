@@ -21,7 +21,7 @@
       {{projects/env-vars project=model.project}}
       <p><code>PERCY_TOKEN</code> is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
       <hr>
-      <h4>Link GitHub repository</h4>
+      <h4>Link a repository</h4>
       {{projects/repo-integrator project=model.project}}
       {{#if (eq model.project.diffBase "manual")}}
         <hr>

@@ -1,12 +1,87 @@
+/* stylelint-disable declaration-property-value-blacklist */
+@mixin repo-listing-border {
+  border-bottom: 1px solid var(--lighter-gray);
+}
+$repo-item-indent: 24px;
+
 .ProjectsRepoIntegrator {
+  .repo-selector {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    .SavingIndicator {
+      font-size: 2.5rem;
+      opacity: 100;
+      z-index: 100;
+    }
+
+    .ember-basic-dropdown {
+      min-width: 320px;
+      max-width: 650px;
+      flex: 1;
+    }
+  }
+
   .ember-power-select-group:first-of-type {
     padding-top: 0.5rem;
+  }
+
+  .ember-basic-dropdown-content {
+    position: initial;
+  }
+
+  .ember-power-select-clear-btn {
+    font-size: 2.2rem;
+  }
+
+  .ember-power-select-trigger,
+  .ember-basic-dropdown-content {
+    border: var(--lighter-gray-border);
+  }
+
+  .ember-power-select-trigger {
+    height: 40px;
+
+    &::before {
+      content: "\f126";
+      position: absolute;
+      top: 20px;
+      margin-left: 10px;
+      font-family: FontAwesome;
+      font-size: 2.5rem;
+      line-height: 0;
+    }
+  }
+
+  .ember-power-select-placeholder {
+    font-style: italic;
+  }
+
+  .ember-power-select-placeholder,
+  .ember-power-select-selected-item {
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 40px;
+    font-size: 1.5rem;
+  }
+
+  .ember-power-select-search-input {
+    margin-bottom: 1rem;
+  }
+
+  .ember-power-select-option--no-matches-message {
+    padding: 0 $repo-item-indent 8px;
+
+    @include repo-listing-border;
   }
 }
 
 .ProjectsRepoIntegratorRefreshStatus {
-  padding: 5px 24px;
+  padding: 5px $repo-item-indent;
   font-size: 0.85em;
   color: var(--light-gray);
-  border-bottom: 1px solid var(--lighter-gray);
+
+  @include repo-listing-border;
 }
