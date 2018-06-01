@@ -12,8 +12,27 @@
       validateProperty=(action "validateProperty" changeset "slug")
   }}
   <p>
-    The slug is used to identify this project in URLs and the Percy API. If changed, you must update the <code>PERCY_PROJECT</code> environment variable in your CI service. Note, old build URLs will break if the slug is changed.
+    The slug is used to identify this project in URLs and the Percy API. If changed, you must update
+    the <code>PERCY_PROJECT</code> environment variable in your CI service. Note, old build URLs
+    will break if the slug is changed.
   </p>
+  {{#if (is-admin)}}
+    <hr>
+    <h4>Auto-Approve Branches</h4>
+    <p>
+      Builds with branches that match this filter will be automatically approved and won't require
+      manual approval.
+    </p>
+    {{form-fields/input
+      property="autoApproveBranchFilter"
+      title="Branch filter pattern"
+      changeset=changeset
+    }}
+    <p>
+      Separate multiple branches with spaces. You can use <code>*</code> as a wildcard match.
+      Example: <code>master staging-* release-*.*.*</code>
+    </p>
+  {{/if}}
   {{form-fields/submit
     isSaving=isSaving
     isSaveSuccessful=isSaveSuccessful

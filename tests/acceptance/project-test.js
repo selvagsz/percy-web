@@ -1,7 +1,9 @@
+import {afterEach, beforeEach} from 'mocha';
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import freezeMoment from '../helpers/freeze-moment';
 import moment from 'moment';
 import ProjectPage from 'percy-web/tests/pages/project-page';
+import adminMode from 'percy-web/lib/admin-mode';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -48,6 +50,7 @@ describe('Acceptance: Project', function() {
     let organization;
     let versionControlIntegration;
     let repos;
+
     setupSession(function(server) {
       organization = server.create('organization', 'withUser');
       versionControlIntegration = server.create('versionControlIntegration', 'github');
@@ -96,6 +99,24 @@ describe('Acceptance: Project', function() {
 
       await visit(`/${this.enabledProject.fullSlug}/settings`);
       await percySnapshot(this.test);
+    });
+
+    context('admin mode', function() {
+      // This is necessary while the auto-approve-branch-filter part of the settings page
+      // is behind the is-admin flag:
+      beforeEach(function() {
+        adminMode.setAdminMode();
+      });
+      afterEach(function() {
+        adminMode.clear();
+      });
+
+      it('displays Auto-Approve Branches setting', async function() {
+        await visit(`/${this.enabledProject.fullSlug}/settings`);
+        await percySnapshot(this.test);
+
+        expect(find('h4:contains("Auto-Approve Branches")').length).to.equal(1);
+      });
     });
   });
 
