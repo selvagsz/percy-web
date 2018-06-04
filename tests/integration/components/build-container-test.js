@@ -77,7 +77,7 @@ describe('Integration: BuildContainer', function() {
   it('does not display snapshots when isSnapshotsLoading is true', function() {
     const build = make('build', 'finished');
     const snapshotsChanged = DS.PromiseArray.create({promise: defer().promise});
-    const allChangedBrowserSnapshotsSorted = {firefox: snapshotsChanged};
+    const allChangedBrowserSnapshotsSorted = {'firefox-id': snapshotsChanged};
 
     this.setProperties({build, allChangedBrowserSnapshotsSorted});
 
@@ -215,7 +215,6 @@ describe('Integration: BuildContainer', function() {
         stub,
         snapshotWithDiffInBothBrowsers,
       });
-
       this.render(hbs`{{build-container
         build=build
         allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
@@ -236,7 +235,7 @@ describe('Integration: BuildContainer', function() {
 
     it('shows unchanged snapshots when it is toggled', function() {
       expect(BuildPage.isUnchangedPanelVisible).to.equal(true);
-      expect(BuildPage.snapshots().count).to.equal(1);
+      expect(BuildPage.snapshots().count).to.equal(2);
       BuildPage.clickToggleNoDiffsSection();
 
       expect(BuildPage.isUnchangedPanelVisible).to.equal(false);
@@ -249,13 +248,20 @@ describe('Integration: BuildContainer', function() {
       BuildPage.browserSwitcher.switchBrowser();
 
       expect(BuildPage.isUnchangedPanelVisible).to.equal(true);
-      expect(BuildPage.snapshots().count).to.equal(2);
+      expect(BuildPage.snapshots().count).to.equal(1);
       BuildPage.clickToggleNoDiffsSection();
 
       expect(BuildPage.snapshots().count).to.equal(3);
     });
 
-    it('selects chrome browser by default when present', function() {
+    it('selects browser with most diffs by default', function() {
+      expect(BuildPage.browserSwitcher.chromeButton.isActive).to.equal(false);
+      expect(BuildPage.browserSwitcher.firefoxButton.isActive).to.equal(true);
+    });
+
+    it('selects chrome by default when both browsers have equal snapshots with diffs', function() {
+      this.set('allChangedBrowserSnapshotsSorted', {'chrome-id': ['bar'], 'firefox-id': ['foo']});
+
       expect(BuildPage.browserSwitcher.chromeButton.isActive).to.equal(true);
       expect(BuildPage.browserSwitcher.firefoxButton.isActive).to.equal(false);
     });

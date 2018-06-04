@@ -24,15 +24,30 @@ export default Component.extend(PollingMixin, {
     return this.get('allChangedBrowserSnapshotsSorted')[this.get('activeBrowser.id')];
   }),
 
+  browserWithMostDiffs: computed('_browsers', 'allChangedBrowserSnapshotsSorted.[]', function() {
+    const snapshots = this.get('allChangedBrowserSnapshotsSorted');
+    if (!snapshots) {
+      return;
+    }
+
+    const browserWithmostDiffsId = _browserWithMostDiffsId(snapshots);
+    return this.get('_browsers').findBy('id', browserWithmostDiffsId);
+  }),
+
   _browsers: alias('build.browsers'),
-  defaultBrowser: computed('_browsers', function() {
+
+  defaultBrowser: computed('_browsers', 'browserWithMostDiffs', function() {
     const chromeBrowser = this.get('_browsers').findBy('familySlug', 'chrome');
-    if (chromeBrowser) {
+    const browserWithMostDiffs = this.get('browserWithMostDiffs');
+    if (browserWithMostDiffs) {
+      return browserWithMostDiffs;
+    } else if (chromeBrowser) {
       return chromeBrowser;
     } else {
       return this.get('_browsers.firstObject');
     }
   }),
+
   chosenBrowser: null,
   activeBrowser: or('chosenBrowser', 'defaultBrowser'),
 
@@ -132,3 +147,30 @@ export default Component.extend(PollingMixin, {
     },
   },
 });
+
+function _browserWithMostDiffsId(allChangedBrowserSnapshotsSorted) {
+  // need to convert the object of arrays to an array of objects
+  // [{browserId: foo, len: int1}, {browserId: bar, len: int2}]
+  const browserCounts = Object.keys(allChangedBrowserSnapshotsSorted).map(browserId => {
+    return {
+      browserId: browserId,
+      len: allChangedBrowserSnapshotsSorted[browserId].length,
+    };
+  });
+
+  let maxCount = 0;
+  let maxCountId = null;
+
+  // Use vanilla `for` loop so we can return early if we want.
+  for (let i = 0; i < browserCounts.length; i++) {
+    const browserCount = browserCounts[i];
+    if (browserCount.len > maxCount) {
+      maxCount = browserCount.len;
+      maxCountId = browserCount.browserId;
+    } else if (browserCount.len === maxCount) {
+      return;
+    }
+  }
+
+  return maxCountId;
+}
