@@ -8,7 +8,6 @@ const D_KEY = 68;
 const SELECTORS = {
   SNAPSHOT_LIST: '[data-test-snapshot-list]',
   NO_DIFFS_TOGGLE: '[data-test-toggle-unchanged]',
-  TOO_MANY_SNAPSHOTS_ALERT: '[data-test-too-many-snapshots-alert]',
 };
 
 export const SnapshotList = {
@@ -71,8 +70,6 @@ export const SnapshotList = {
         });
     },
   },
-
-  isTooManySnapshotsAlertVisible: isVisible(SELECTORS.TOO_MANY_SNAPSHOTS_ALERT),
 
   typeDownArrow: triggerable('keydown', '', {
     eventProperties: {keyCode: DOWN_ARROW_KEY},

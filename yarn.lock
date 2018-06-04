@@ -3956,6 +3956,12 @@ ember-ignore-children-helper@^1.0.0:
   dependencies:
     ember-cli-babel "^6.8.2"
 
+ember-in-viewport@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/ember-in-viewport/-/ember-in-viewport-3.0.3.tgz#49c60b52525795246761742ed4495ad6cd9bf70d"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-inflector@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-2.1.0.tgz#afcb92d022a4eab58f08ff4578eafc3a1de2d09b"

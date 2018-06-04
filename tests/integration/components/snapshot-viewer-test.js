@@ -44,8 +44,6 @@ describe('Integration: SnapshotViewer', function() {
       userSelectedWidth: null,
       showSnapshotFullModalTriggered: showSnapshotFullModalTriggeredStub,
       createReview: createReviewStub,
-      // true is the default in the component
-      isDefaultExpanded: true,
     });
   });
 
@@ -222,15 +220,6 @@ describe('Integration: SnapshotViewer', function() {
     it('is collapsed by default when the snapshot is approved', function() {
       this.set('snapshot.reviewState', SNAPSHOT_APPROVED_STATE);
       expect(SnapshotViewerPO.isExpanded).to.equal(false);
-    });
-
-    it('is collapsed when isDefaultExpanded is false', function() {
-      this.set('snapshot.reviewState', SNAPSHOT_UNAPPROVED_STATE);
-      this.set('isDefaultExpanded', false);
-
-      return wait(() => {
-        expect(SnapshotViewerPO.isExpanded).to.equal(false);
-      });
     });
 
     it('is expanded when build is approved', function() {

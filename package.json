@@ -68,6 +68,7 @@
     "ember-fakerjs": "^0.2.0",
     "ember-font-awesome": "^3.1.1",
     "ember-inflector": "^3.0.0",
+    "ember-in-viewport": "^3.0.2",
     "ember-inline-svg": "^0.1.11",
     "ember-load-initializers": "^1.1.0",
     "ember-modal-dialog": "^2.4.0",

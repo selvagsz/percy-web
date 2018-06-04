@@ -21,7 +21,7 @@ describe('Integration: SnapshotList', function() {
     SnapshotList.setContext(this);
   });
 
-  describe('when there are too many snapshots with diffs', function() {
+  describe('when shouldDeferRendering is true', function() {
     const numSnapshots = 10;
 
     beforeEach(function() {
@@ -37,65 +37,26 @@ describe('Integration: SnapshotList', function() {
         build,
         stub,
         browser,
-        isKeyboardNavEnabled: true,
+        shouldDeferRendering: true,
       });
 
-      // Override `isDefaultExpanded` so we don't have to render 150 snapshots at once
       this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
         build=build
         createReview=stub
         showSnapshotFullModalTriggered=stub
-        isKeyboardNavEnabled=isKeyboardNavEnabled
         activeBrowser=browser
-        isDefaultExpanded=false
+        shouldDeferRendering=shouldDeferRendering
         toggleUnchangedSnapshotsVisible=stub
       }}`);
     });
 
-    it('collapses all snapshots by default', function() {
+    it('renders snapshot header placeholder', function() {
       expect(SnapshotList.snapshots().count).to.equal(numSnapshots);
       SnapshotList.snapshots().forEach(snapshot => {
-        expect(snapshot.isCollapsed).to.equal(true);
+        expect(snapshot.isLazyRenderHeaderVisible).to.equal(true);
       });
-      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(true);
       percySnapshot(this.test);
-    });
-
-    it('allows keyboard nav with up and down arrows', function() {
-      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(true);
-
-      SnapshotList.typeDownArrow();
-      wait();
-      expect(SnapshotList.snapshots(0).isExpanded).to.equal(true);
-      expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
-      expect(SnapshotList.snapshots(1).isExpanded).to.equal(false);
-      expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
-      percySnapshot(this.test);
-
-      SnapshotList.typeDownArrow();
-      wait();
-      expect(SnapshotList.snapshots(0).isExpanded).to.equal(false);
-      expect(SnapshotList.snapshots(0).isFocused).to.equal(false);
-      expect(SnapshotList.snapshots(1).isExpanded).to.equal(true);
-      expect(SnapshotList.snapshots(1).isFocused).to.equal(true);
-
-      SnapshotList.typeUpArrow();
-      wait();
-      expect(SnapshotList.snapshots(0).isExpanded).to.equal(true);
-      expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
-      expect(SnapshotList.snapshots(1).isExpanded).to.equal(false);
-      expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
-    });
-
-    it('expands all snapshots if build is approved', function() {
-      this.set('build.reviewState', 'approved');
-
-      expect(SnapshotList.snapshots().count).to.equal(numSnapshots);
-      SnapshotList.snapshots().forEach(snapshot => {
-        expect(snapshot.isExpanded).to.equal(true);
-      });
-      expect(SnapshotList.isTooManySnapshotsAlertVisible).to.equal(false);
     });
   });
 
