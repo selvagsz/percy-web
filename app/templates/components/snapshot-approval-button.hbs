@@ -6,6 +6,10 @@
       Approved
     {{/if}}
   </div>
-{{else}}
+{{else if hasDiffsInBrowser}}
   <button type="button" class="btn btn-success {{if isLoading 'is-loading'}}" {{action "approveSnapshot"}} data-test-SnapshotViewerHeader-approve>Approve</button>
+{{else}}
+  <div class="status-pill" data-test-no-changes-in-browser>
+    No changes in {{inline-svg (concat activeBrowser.familySlug "-browser-icon") class="opacity-25 ml-1"}}
+  </div>
 {{/if}}

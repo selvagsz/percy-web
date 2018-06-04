@@ -1,5 +1,5 @@
 import Object, {computed, get, set} from '@ember/object';
-import {alias, or, filterBy} from '@ember/object/computed';
+import {alias, or, filterBy, notEmpty} from '@ember/object/computed';
 
 export default Object.extend({
   activeBrowser: null,
@@ -28,6 +28,7 @@ export default Object.extend({
   selectedComparison: or('comparisonForWidth', 'widestComparisonForBrowser'),
   defaultWidth: or('widestComparisonWithDiff.width', 'widestComparisonForBrowser.width'),
   comparisonsWithDiffs: filterBy('comparisons', 'isDifferent'),
+  anyComparisonsHaveDiffs: notEmpty('comparisonsWithDiffs'),
 });
 
 export function widestComparison(comparisons) {

@@ -129,7 +129,9 @@ describe('Integration: SnapshotViewerHeader', function() {
       it('displays correct text on the buttons', function() {
         SnapshotViewerHeaderPO.widthSwitcher.buttons().forEach((button, i) => {
           expect(button.text, `button ${i} should contain correct width`).to.equal(
-            `${this.get('snapshot.comparisons').toArray()[i].get('width')}px` // eslint-disable-line
+            `${this.get('snapshot.comparisons')
+              .toArray()
+              [i].get('width')}px`, // eslint-disable-line
           );
         });
       });
@@ -167,7 +169,7 @@ describe('Integration: SnapshotViewerHeader', function() {
       it('displays correct text on the buttons', function() {
         SnapshotViewerHeaderPO.widthSwitcher.buttons().forEach((button, i) => {
           expect(button.text, `button ${i} should contain correct width`).to.equal(
-            `${comparisonsWithDiffs.toArray()[i].get('width')}px` // eslint-disable-line
+            `${comparisonsWithDiffs.toArray()[i].get('width')}px`, // eslint-disable-line
           );
         });
       });
@@ -185,7 +187,9 @@ describe('Integration: SnapshotViewerHeader', function() {
 
         SnapshotViewerHeaderPO.widthSwitcher.buttons().forEach((button, i) => {
           expect(button.text, `button ${i} should contain correct width`).to.equal(
-            `${this.get('snapshot.comparisons').toArray()[i].get('width')}px` // eslint-disable-line
+            `${this.get('snapshot.comparisons')
+              .toArray()
+              [i].get('width')}px`, // eslint-disable-line
           );
         });
       });
@@ -215,7 +219,9 @@ describe('Integration: SnapshotViewerHeader', function() {
       it('displays correct text on the buttons', function() {
         SnapshotViewerHeaderPO.widthSwitcher.buttons().forEach((button, i) => {
           expect(button.text, `button ${i} should contain correct width`).to.equal(
-            `${this.get('snapshot.comparisons').toArray()[i].get('width')}px` // eslint-disable-line
+            `${this.get('snapshot.comparisons')
+              .toArray()
+              [i].get('width')}px`, // eslint-disable-line
           );
         });
       });
@@ -224,6 +230,59 @@ describe('Integration: SnapshotViewerHeader', function() {
         SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.isToggleWidthsOptionVisible).to.equal(false);
       });
+    });
+  });
+
+  describe('snapshot approval badge', function() {
+    beforeEach(function() {
+      const build = make('build', 'finished');
+      const snapshot = make('snapshot', 'withTwoBrowsers', {build});
+      const stub = sinon.stub();
+      snapshot
+        .get('comparisons')
+        .filterBy('browser.familySlug', 'chrome')
+        .forEach(comparison => {
+          comparison.set('diffRatio', 0);
+        });
+
+      this.setProperties({
+        snapshot,
+        stub,
+      });
+    });
+
+    it('displays "No Changes in [browser]" when there are changes in a different browser', function() {  // eslint-disable-line
+      const browser = make('browser', 'chrome');
+      this.set('browser', browser);
+      this.render(hbs`{{snapshot-viewer-header
+        snapshot=snapshot
+        toggleViewMode=stub
+        updateSelectedWidth=stub
+        expandSnapshot=stub
+        activeBrowser=browser
+      }}`);
+
+      expect(SnapshotViewerHeaderPO.snapshotApprovalButton.isNoChangeInBrowserVisible).to.equal(
+        true,
+      );
+      expect(SnapshotViewerHeaderPO.snapshotApprovalButton.isUnapproved).to.equal(false);
+    });
+
+    it('displays "Approve" button when there are changes in the active browser', function() {
+      const browser = make('browser');
+      this.set('browser', browser);
+      this.render(hbs`{{snapshot-viewer-header
+        snapshot=snapshot
+        toggleViewMode=stub
+        updateSelectedWidth=stub
+        expandSnapshot=stub
+        activeBrowser=browser
+      }}`);
+
+      expect(SnapshotViewerHeaderPO.snapshotApprovalButton.isNoChangeInBrowserVisible).to.equal(
+        false,
+      );
+      expect(SnapshotViewerHeaderPO.snapshotApprovalButton.isUnapproved).to.equal(true);
     });
   });
 });

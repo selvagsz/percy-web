@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
 import {computed} from '@ember/object';
-import {equal, not, or} from '@ember/object/computed';
+import {equal, not, or, readOnly} from '@ember/object/computed';
 import utils from 'percy-web/lib/utils';
 import filteredComparisons from 'percy-web/lib/filtered-comparisons';
 
@@ -50,6 +50,8 @@ export default Component.extend({
       );
     },
   ),
+
+  hasDiffsInBrowser: readOnly('filteredComparisons.anyComparisonsHaveDiffs'),
 
   actions: {
     onCopySnapshotUrlToClipboard() {

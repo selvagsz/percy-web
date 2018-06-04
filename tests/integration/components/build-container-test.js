@@ -195,7 +195,7 @@ describe('Integration: BuildContainer', function() {
         build,
         comparisons: [comparisonWithBigDiffInChrome, comparisonWithSmallDiffInFirefox],
       });
-      const unchangedSnapshot = make('snapshot', {
+      const unchangedSnapshot = make('snapshot', 'withNoDiffs', {
         build,
         comparisons: [comparisonWithNoDiffInChrome, comparisonWithNoDiffInFirefox],
       });

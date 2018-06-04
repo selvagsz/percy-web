@@ -83,7 +83,7 @@ export default Component.extend(PollingMixin, {
     const alreadyLoadedSnapshotsWithNoDiff = yield snapshotsWithNoDiffForBrowser(
       loadedSnapshots,
       this.get('activeBrowser'),
-    );
+    ).sortBy('isUnchanged');
 
     this.set('snapshotsUnchanged', alreadyLoadedSnapshotsWithNoDiff);
     this.toggleProperty('isUnchangedSnapshotsVisible');

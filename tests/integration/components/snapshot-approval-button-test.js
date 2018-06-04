@@ -22,16 +22,32 @@ describe('Integration: SnapshotApprovalButton', function() {
   beforeEach(function() {
     setupFactoryGuy(this.container);
     SnapshotApprovalButton.setContext(this);
-    snapshot = make('snapshot');
+    snapshot = make('snapshot', 'withTwoBrowsers');
     createReview = sinon.stub().returns(resolve());
-    this.setProperties({snapshot, createReview});
+    const activeBrowser = make('browser');
+    const hasDiffsInBrowser = true;
+    this.setProperties({snapshot, createReview, activeBrowser, hasDiffsInBrowser});
   });
 
-  it('displays correctly when snapshot is not approved ', function() {
+  it('displays correctly when snapshot is not approved and has diffs in active browser', function() {  // eslint-disable-line
     this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
+      activeBrowser=activeBrowser
+      hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
+    percySnapshot(this.test);
+  });
+
+  it('displays correctly when snapshot is not approved does not have diffs in active browser ', function() {  // eslint-disable-line
+    this.set('hasDiffsInBrowser', false);
+    this.render(hbs`{{snapshot-approval-button
+      snapshot=snapshot
+      createReview=createReview
+      activeBrowser=activeBrowser
+      hasDiffsInBrowser=hasDiffsInBrowser
+    }}`);
+
     percySnapshot(this.test);
   });
 
@@ -39,6 +55,8 @@ describe('Integration: SnapshotApprovalButton', function() {
     this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
+      activeBrowser=activeBrowser
+      hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
     this.set('snapshot.reviewState', 'approved');
     percySnapshot(this.test);
@@ -48,6 +66,7 @@ describe('Integration: SnapshotApprovalButton', function() {
     this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
+      hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
     SnapshotApprovalButton.clickButton();
 
@@ -61,6 +80,7 @@ describe('Integration: SnapshotApprovalButton', function() {
     this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=(action createReview)
+      hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
     SnapshotApprovalButton.clickButton();
 
