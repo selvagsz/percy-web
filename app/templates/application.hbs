@@ -6,16 +6,16 @@
   <div class="flash-message-container z-top">
     {{#each flashMessages.queue as |flash|}}
       {{#flash-message flash=flash classNames=(concat "flash-message-" flash.type (if flash.sticky ' flash-message-sticky')) as |component flash|}}
-        <div class="flash-message-detail flash-message-detail-{{flash.type}} flex justify-center align-center">
+        <div class="flash-message-detail flash-message-detail-{{flash.type}} flex justify-center items-center">
           <figure class="svg-container">
             {{inline-svg (concat "flash-" flash.type "-icon")}}
           </figure>
         </div>
         <div class="px-2 py-1">
-          <div class="f4 text-weight-semibold">{{flash.title}}</div>
-          <p class="f5 text-light">{{flash.message}}</p>
+          <div class="text-base font-semibold">{{flash.title}}</div>
+          <p class="text-base text-gray-400">{{flash.message}}</p>
         </div>
-        <div class="flash-message-close flex justify-center align-center c-pointer">
+        <div class="flash-message-close flex justify-center items-center cursor-pointer">
           <figure class="svg-container">
             {{inline-svg "close-icon"}}
           </figure>

@@ -1,11 +1,11 @@
-<div data-test-user-card class="user-card border-bottom c-pointer">
-  <div class="p-2 flex align-center" {{action "toggleExpanded"}}>
+<div data-test-user-card class="user-card border-b cursor-pointer">
+  <div class="p-2 flex items-center" {{action "toggleExpanded"}}>
     {{user-avatar user=organizationUser.user linked=true class="mr-1"}}
     <div>
-      <div class="lh-1 mb-sm text-weight-semibold">
+      <div class="leading-none mb-sm font-semibold">
         {{organizationUser.user.name}}
       </div>
-      <div class="lh-1 text-light f6">
+      <div class="leading-none text-gray-400 text-sm">
         {{organizationUser.roleTitle}}
       </div>
     </div>

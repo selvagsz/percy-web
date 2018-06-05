@@ -13,6 +13,9 @@ module.exports = function(defaults) {
     'ember-cli-mocha': {
       useLintTree: false,
     },
+    'ember-cli-tailwind': {
+      buildTarget: 'app',
+    },
     sassOptions: {
       extension: 'scss',
       sourceMapEmbed: true,

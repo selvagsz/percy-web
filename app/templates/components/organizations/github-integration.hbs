@@ -1,8 +1,8 @@
 {{#if currentIntegration}}
-  <div class="flex align-center justify-between pl-3 mb-2">
-    <div class="flex align-center">
+  <div class="flex items-center justify-between pl-3 mb-2">
+    <div class="flex items-center">
       {{inline-svg 'percy-logo-on-light' class="mr-2"}}
-      <div class="f3 text-weight-semibold">Installed!</div>
+      <div class="text-xl font-semibold">Installed!</div>
     </div>
     <div class="OrganizationsGithubIntegration-actions">
       <a href="{{currentIntegration.githubHtmlUrl}}" class="btn" target="_blank" rel="noopener">

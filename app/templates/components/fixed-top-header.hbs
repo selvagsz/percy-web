@@ -1,36 +1,34 @@
-<div class="container">
-  <div class="Header Header--dark flex justify-between align-center">
-    <div class="flex align-center">
-      {{#if session.isAuthenticated}}
-        {{#link-to "index"}}
-          <figure class="svg-container">
-            {{inline-svg "percy-mascot-on-dark" class="mr-3"}}
-          </figure>
-        {{/link-to}}
-      {{else}}
-        {{#link-to "index"}}
-          <figure class="svg-container">
-            {{inline-svg "percy-full-horizontal-on-dark" class="mr-3"}}
-          </figure>
-        {{/link-to}}
-      {{/if}}
-
-      {{#if session.isAuthenticated}}
-        {{organizations/switcher-nav currentOrganization=currentOrganization}}
-      {{/if}}
-      {{#if currentOrganization}}
-        {{#if (eq "admin" currentOrganization.currentUserMembership.role)}}
-          {{#link-to "organizations.organization.settings" currentOrganization.slug data-test-settings-link=true class="hide-on-mobile"}}Settings{{/link-to}}
-        {{/if}}
-      {{/if}}
-    </div>
-
-    {{trial-bar organization=currentOrganization type="is-on-dark"}}
+<div class="Header Header--dark flex justify-between items-center w-screen">
+  <div class="flex items-center">
+    {{#if session.isAuthenticated}}
+      {{#link-to "index"}}
+        <figure class="svg-container">
+          {{inline-svg "percy-mascot-on-dark" class="mr-3"}}
+        </figure>
+      {{/link-to}}
+    {{else}}
+      {{#link-to "index"}}
+        <figure class="svg-container">
+          {{inline-svg "percy-full-horizontal-on-dark" class="mr-3"}}
+        </figure>
+      {{/link-to}}
+    {{/if}}
 
     {{#if session.isAuthenticated}}
-      {{nav-menu user=session.currentUser currentOrganization=currentOrganization}}
-    {{else}}
-      {{nav-menu}}
+      {{organizations/switcher-nav currentOrganization=currentOrganization}}
+    {{/if}}
+    {{#if currentOrganization}}
+      {{#if (eq "admin" currentOrganization.currentUserMembership.role)}}
+        {{#link-to "organizations.organization.settings" currentOrganization.slug data-test-settings-link=true class="hide-on-mobile"}}Settings{{/link-to}}
+      {{/if}}
     {{/if}}
   </div>
+
+  {{trial-bar organization=currentOrganization type="is-on-dark"}}
+
+  {{#if session.isAuthenticated}}
+    {{nav-menu user=session.currentUser currentOrganization=currentOrganization}}
+  {{else}}
+    {{nav-menu}}
+  {{/if}}
 </div>

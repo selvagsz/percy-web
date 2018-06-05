@@ -1,6 +1,6 @@
 {{#if organization.subscription.isTrialOrFree}}
-  <div class="flex align-center hide-on-laptop">
-    <div class="trial-bar px-2 py-sm rounded-left {{if organization.subscription.plan.isFree 'is-expired'}} {{type}}" style="margin-right: 1px;">
+  <div class="flex items-center hide-on-laptop">
+    <div class="trial-bar px-2 py-sm rounded-l {{if organization.subscription.plan.isFree 'is-expired'}} {{type}}" style="margin-right: 1px;">
       {{#if organization.subscription.plan.isFree}}
         <strong>Your trial has expired.</strong>
       {{else}}
@@ -11,7 +11,7 @@
         {{/if}}
       {{/if}}
     </div>
-    <div class="trial-bar px-2 py-sm rounded-right {{if organization.subscription.plan.isFree 'is-expired'}} {{type}}">
+    <div class="trial-bar px-2 py-sm rounded-r {{if organization.subscription.plan.isFree 'is-expired'}} {{type}}">
       {{#link-to "organizations.organization.billing" organization.slug}}
         See plans
       {{/link-to}}

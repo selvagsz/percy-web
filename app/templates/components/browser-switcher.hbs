@@ -2,7 +2,7 @@
   {{#each sortedBrowsers as |browser|}}
     <button
       type="button"
-      class="browser-switcher btn btn-square position-relative {{if (eq browser.id activeBrowser.id) "is-browser-active"}} {{concat "data-test-browser-switcher-" browser.familySlug}}"
+      class="browser-switcher btn btn-square relative {{if (eq browser.id activeBrowser.id) "is-browser-active"}} {{concat "data-test-browser-switcher-" browser.familySlug}}"
       {{action updateActiveBrowser browser}}
       data-test-browser-switcher-button
     >

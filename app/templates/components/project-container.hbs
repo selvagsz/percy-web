@@ -1,12 +1,12 @@
-<header class="sticky bg-white z-1">
-  <div class="flex justify-between align-center py-3 px-4">
-    <div class="flex align-center">
+<header class="sticky pin-t bg-white z-1">
+  <div class="flex justify-between items-center py-3 px-4">
+    <div class="flex items-center">
       {{menu-icon
-        class="mr-2 c-pointer show-on-tablet"
+        class="mr-2 cursor-pointer show-on-tablet"
         toggleSidebar=toggleSidebar
         isSidebarVisible=isSidebarVisible
       }}
-      <h2 class="m-0 mr-2 f2 text-weight-regular">{{project.name}}</h2>
+      <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
       {{#if project.isDisabled}}
         <div class="label">disabled</div>
       {{/if}}
@@ -21,22 +21,22 @@
     </div>
     {{#if project.organization.isGithubIntegrated}}
       {{#if project.repo}}
-        <div class="flex align-center">
+        <div class="flex items-center">
           <figure class="svg-container mr-1">
             {{inline-svg "github-icon"}}
           </figure>
-          <span class="text-weight-semibold mr-1">Linked to</span>
+          <span class="font-semibold mr-1">Linked to</span>
           <a href="{{project.repo.htmlUrl}}"><code>{{project.repo.slug}}</code></a>
         </div>
       {{/if}}
     {{/if}}
   </div>
-  <div class="build-list-header px-4 border-bottom border-gray-100">
+  <div class="build-list-header px-4 border-b">
     {{#if builds}}
-      <div class="f6 text-light text-weight-semibold pb-sm">Build #</div>
-      <div class="f6 text-light text-weight-semibold pb-sm">Details</div>
-      <div class="f6 text-light text-weight-semibold pb-sm">Diffs</div>
-      <div class="f6 text-light text-weight-semibold pb-sm">Status</div>
+      <div class="text-sm text-gray-400 font-semibold pb-sm">Build #</div>
+      <div class="text-sm text-gray-400 font-semibold pb-sm">Details</div>
+      <div class="text-sm text-gray-400 font-semibold pb-sm">Diffs</div>
+      <div class="text-sm text-gray-400 font-semibold pb-sm">Status</div>
     {{/if}}
   </div>
 </header>

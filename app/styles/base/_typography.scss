@@ -1,22 +1,77 @@
-body {
-  -webkit-font-smoothing: antialiased;
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Body text */
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+small {
+  font-size: 90%;
+}
+
+blockquote {
+  margin: 0;
+}
+
+/* Lists */
+
+ul,
+ol {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+/* Code */
+code {
+  padding: 0 var(--spacing-1);
+  font-family: var(--monospace-font) !important;
+  font-weight: 400 !important;
+  color: var(--text-color);
+  letter-spacing: 0.5px !important;
+  white-space: nowrap;
+  background: var(--gray-100);
+  border-radius: var(--border-radius);
 }
 
 code,
 kbd,
 pre,
 samp {
-  font-family: $monospace-font;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: var(--mono-font);
   font-size: var(--f6-size);
+  font-weight: 400 !important;
   letter-spacing: 0.5px;
-}
-
-code {
-  padding: 0 var(--spacing-1);
-  color: var(--text-color);
-  white-space: nowrap;
-  background: var(--gray-100);
-  border-radius: var(--border-radius);
 }
 
 pre > code {
@@ -37,14 +92,4 @@ a {
     color: var(--blue-500);
     text-decoration: underline;
   }
-}
-
-.alt-p {
-  font-size: var(--f4-size);
-}
-
-.alt-a {
-  padding: 2px 8px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
 }

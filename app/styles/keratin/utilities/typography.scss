@@ -1,19 +1,10 @@
-.text-weight-regular { font-weight: 400 !important; }
-
-.text-weight-semibold { font-weight: var(--keratin-font-weight-semibold) !important; }
-
-.text-weight-bold { font-weight: var(--keratin-font-weight-bold) !important; }
-
-.text-mono {
-  font-family: var(--keratin-monospace-font) !important;
+.font-mono {
+  font-family: var(--monospace-font) !important;
   font-weight: 400 !important;
   letter-spacing: 0.5px !important;
 }
 
-.text-center { text-align: center !important; }
-
 .truncate {
-  display: inline-block;
   max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -23,10 +14,4 @@
 
 .truncate-target {
   max-width: 160px;
-}
-
-.no-wrap { white-space: nowrap; }
-
-.lh-1 {
-  line-height: 1 !important;
 }

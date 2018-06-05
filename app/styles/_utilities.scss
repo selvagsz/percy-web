@@ -2,11 +2,6 @@
   visibility: hidden;
 }
 
-.alt-hr {
-  margin: 0;
-  border-top: 1px solid var(--lightest-gray);
-}
-
 .bg-purple-light {
   background: var(--bg-purple-light);
 }
@@ -25,4 +20,18 @@
 
 .bg-white-pattern {
   background: url("/images/pattern-on-white.svg");
+}
+
+.alt-p {
+  font-size: var(--f4-size);
+}
+
+.alt-a {
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.list-reset {
+  margin-top: 0;
 }

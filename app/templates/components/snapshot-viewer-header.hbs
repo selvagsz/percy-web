@@ -1,5 +1,5 @@
-<header class="SnapshotViewer-header sticky grid gap-4 z-1 px-2 py-1 bg-gray-000 border-top border-bottom border-gray-100 {{if fullscreen 'SnapshotViewer-header-full position-fixed vw-full z-1'}}" data-test-SnapshotViewer-header {{action expandSnapshot}}>
-  <div class="flex align-center truncate">
+<header class="SnapshotViewer-header sticky pin-t grid gap-4 z-1 px-2 py-1 bg-gray-000 border-t border-b {{if fullscreen 'SnapshotViewer-header-full fixed w-screen z-1'}}" data-test-SnapshotViewer-header {{action expandSnapshot}}>
+  <div class="flex items-center truncate">
 
     <figure class="svg-container mr-1" data-test-SnapshotViewer-comparisonIcon>
       {{#if noComparisonsHaveDiffs}}
@@ -9,7 +9,7 @@
       {{/if}}
     </figure>
 
-    <div class="Viewer-header-title SnapshotViewer-title c-default truncate text-weight-bold" title="{{snapshot.name}}" data-test-SnapshotViewer-title>{{snapshot.name}}</div>
+    <div class="Viewer-header-title SnapshotViewer-title cursor-default truncate font-bold" title="{{snapshot.name}}" data-test-SnapshotViewer-title>{{snapshot.name}}</div>
   </div>
 
   {{#if fullscreen}}
@@ -33,9 +33,9 @@
             {{/dropdown.trigger}}
             {{#dropdown.content}}
               <div class="dropdown-menu" data-test-snapshot-header-dropdown-pane>
-                <ul class="list-reset">
+                <ul class="list-reset mb-0">
                   {{#unless (or allComparisonsHaveDiffs noComparisonsHaveDiffs)}}
-                    <li class="dropdown-menu-list-item flex justify-between align-center c-pointer f6 text-weight-semibold border-bottom border-gray-000 py-1 pl-2 pr-1"
+                    <li class="dropdown-menu-list-item flex justify-between items-center cursor-pointer text-sm font-semibold border-b border-gray-000 py-1 pl-2 pr-1 mb-0"
                       {{action (pipe-action
                         (action 'toggleFilteredComparisons')
                         dropdown.actions.close
@@ -49,9 +49,9 @@
                       {{/if}}
                     </li>
                   {{/unless}}
-                  <li class="dropdown-menu-list-item c-pointer f6 text-weight-semibold py-1 pl-2 pr-1">
+                  <li class="dropdown-menu-list-item cursor-pointer text-sm font-semibold py-1 pl-2 pr-1 mb-0">
                     {{#copy-button
-                      class="btn-icon-only w-full flex justify-between align-center"
+                      class="btn-icon-only w-full flex justify-between items-center"
                       clipboardText=(generate-fullscreen-snapshot-url snapshot.id snapshotSelectedWidth comparisonMode activeBrowser.familySlug fullscreen)
                       success=(pipe-action (action "onCopySnapshotUrlToClipboard") dropdown.actions.close)
                     }}
@@ -60,7 +60,7 @@
                     {{/copy-button}}
                   </li>
                   {{#if selectedComparison.baseSnapshot}}
-                    <li class="dropdown-menu-list-item c-pointer flex justify-between align-center f6 text-weight-semibold py-1 pl-2 pr-1"
+                    <li class="dropdown-menu-list-item cursor-pointer flex justify-between items-center text-sm font-semibold py-1 pl-2 pr-1 mb-0"
                     {{action (pipe-action
                       (action 'downloadHTML' 'base' selectedComparison.baseSnapshot)
                       dropdown.actions.close
@@ -70,7 +70,7 @@
                     </li>
                   {{/if}}
                   {{#if selectedComparison.headSnapshot}}
-                    <li class="dropdown-menu-list-item c-pointer flex justify-between align-center f6 text-weight-semibold py-1 pl-2 pr-1"
+                    <li class="dropdown-menu-list-item cursor-pointer flex justify-between items-center text-sm font-semibold py-1 pl-2 pr-1 mb-0"
                     {{action (pipe-action
                       (action 'downloadHTML' 'head' selectedComparison.headSnapshot)
                       dropdown.actions.close

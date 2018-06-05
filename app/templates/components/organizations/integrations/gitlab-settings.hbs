@@ -1,15 +1,15 @@
 <section class="p-2">
   <div class="bg-white rounded shadow-1 p-2 mb-2" data-test-gitlab-settings>
-    <div class="flex align-center mb-2">
+    <div class="flex items-center mb-2">
       {{inline-svg "gitlab-icon-lg" class="mr-1"}}
-      <h2 class="f3 text-weight-semibold m-0">GitLab Integration</h2>
+      <h2 class="text-xl font-semibold m-0">GitLab Integration</h2>
     </div>
     {{#if isGitlabIntegrated}}
-      <div class="p-2 rounded border text-light mb-2" data-test-gitlab-settings-status>
+      <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
         The GitLab integration is installed. Please contact support to change any settings.
       </div>
     {{else}}
-      <div class="p-2 rounded border text-light mb-2" data-test-gitlab-settings-status>
+      <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
         The GitLab integration is not installed.
       </div>
     {{/if}}

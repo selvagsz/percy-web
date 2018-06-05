@@ -7,7 +7,7 @@ export default Component.extend({
   allDiffsShown: null,
 
   // State:
-  classNames: ['ComparisonViewer bg-gray-000 border-bottom border-gray-100'],
+  classNames: ['ComparisonViewer bg-gray-000 border-b'],
   isUnchangedSnapshotExpanded: false,
 
   // The state of showing the diff overlay is local to each comparison viewer.

@@ -333,13 +333,12 @@ button,
 .build-approval-button {
   position: relative;
   width: 146px;
+  padding-left: var(--spacing-7);
   overflow: hidden;
   transition: width 250ms;
 
   &:hover,
   &.is-loading {
-    transform: none;
-
     span {
       opacity: 0;
       transform: translate3d(60px, 0, 0);

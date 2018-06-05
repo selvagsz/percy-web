@@ -1,20 +1,20 @@
-<header class="build-toolbar position-fixed t-0 vw-full z-3 flex justify-between align-center px-2 bg-gray-000 border-bottom border-gray-100">
-  <div class="flex align-center">
+<header class="build-toolbar fixed pin-t w-screen z-3 flex justify-between items-center px-2 bg-gray-000 border-b">
+  <div class="flex items-center">
     {{#link-to "index"}}
       <figure class="svg-container mr-2">
         {{inline-svg "percy-logo-on-light"}}
       </figure>
     {{/link-to}}
-    <div class="flex align-center bg-purple-300 f6 rounded px-1 py-sm hide-on-mobile">
-      {{#link-to "organization" organization class="text-mono text-purple truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
-      <span class="text-weight-semibold mx-sm hide-on-tablet">/</span>
-      {{#link-to "organization.project" organization project class="text-mono text-purple truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
+    <div class="flex items-center bg-purple-300 text-sm rounded px-1 py-sm hide-on-mobile">
+      {{#link-to "organization" organization class="font-mono text-purple-600 truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
+      <span class="font-semibold mx-sm hide-on-tablet">/</span>
+      {{#link-to "organization.project" organization project class="font-mono text-purple-600 truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
     </div>
   </div>
 
   {{trial-bar organization=organization}}
 
-  <div class="flex align-center">
+  <div class="flex items-center">
     {{#if (and build.isFinished (not isSnapshotsLoading))}}
       {{#if build.hasMultipleBrowsers}}
         <div class="mr-2">

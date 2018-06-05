@@ -2,9 +2,9 @@
   {{organizations/integrations/github-enterprise-settings}}
 {{else}}
   <section class="px-2 pt-3">
-    <div class="w-75 pb-3">
-      <h1 class="f3 text-weight-semibold mb-sm">Percy Integrations</h1>
-      <p class="text-light">Integrations will let you get Percy running on various platforms with ease. Some integrations might require more configuration. Feel free to check out our integration docs if you need some guidance.
+    <div class="w-3/4 pb-3">
+      <h1 class="text-xl font-semibold mb-sm">Percy Integrations</h1>
+      <p class="text-gray-400">Integrations will let you get Percy running on various platforms with ease. Some integrations might require more configuration. Feel free to check out our integration docs if you need some guidance.
       As always, if you’re stuck with something, feel free to reach out and we’d love to help you out.</p>
     </div>
   </section>
@@ -12,7 +12,7 @@
   {{#if model.isVersionControlIntegrated}}
     <section class="px-2">
       <div class="bg-white rounded shadow-1 p-2 mb-2">
-        <h2 class="f3 text-weight-semibold mb-2">Installed Integrations</h2>
+        <h2 class="text-xl font-semibold mb-2">Installed Integrations</h2>
         <div class="bg-gray-000 rounded border border-gray-100">
           {{#each model.versionControlIntegrations as |integration|}}
             {{organizations/integrations/integration-item

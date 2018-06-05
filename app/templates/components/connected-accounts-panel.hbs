@@ -1,8 +1,8 @@
 {{#if hasAnyIdentities}}
-  <div class="mb-3">
+  <div class="border-b mb-3 pb-3">
     {{#if emailPasswordIdentity}}
-      <div class="flex justify-between align-center mb-1">
-        <div class="text-mono flex align-center">
+      <div class="flex justify-between items-center mb-1">
+        <div class="font-mono flex items-center">
           {{inline-svg "percy-logo-tiny-on-light" class="mr-1"}}
           {{emailPasswordIdentity.user.name}}
         </div>
@@ -17,8 +17,8 @@
       </div>
     {{/if}}
     {{#if githubIdentity}}
-      <div class="flex justify-between align-center mb-1">
-        <div class="text-mono flex align-center">
+      <div class="flex justify-between items-center mb-1">
+        <div class="font-mono flex items-center">
           {{inline-svg "github-icon" class="mr-1"}}
           {{#if githubIdentity.nickname}}
             {{githubIdentity.nickname}}
@@ -36,10 +36,9 @@
       </div>
     {{/if}}
   </div>
-  <hr class="alt-hr mb-3">
 {{/if}}
 
-<div class="flex align-center mb-2">
+<div class="flex items-center mb-2">
   {{#if (not emailPasswordIdentity)}}
     <button type="button" class="btn btn-primary shadow-purple-lg flex-1 mx-1"
       {{action addIdentity "auth0"}}
@@ -47,7 +46,7 @@
       Add email/password account
     </button>
   {{/if}}
-  
+
   {{#if (not githubIdentity)}}
     <button type="button" class="btn btn-github flex-1 mx-1"
       {{action addIdentity "github"}}

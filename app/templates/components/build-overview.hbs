@@ -1,6 +1,6 @@
-<div class="grid col-auto gap-1 align-center">
+<div class="grid col-auto gap-1 items-center">
   {{comparison-icon build=build}}
-  <div class="f2 lh-1 text-weight-semibold">
+  <div class="text-xl md:text-2xl leading-none font-semibold">
     {{#if build.isPending}}
       Receiving build
     {{else if build.isProcessing}}
@@ -24,14 +24,14 @@
     {{/if}}
   </div>
 </div>
-<div class="f5 text-weight-semibold text-light">
+<div class="font-semibold text-gray-400">
   {{#if build.isPending}}
     Hang tight&hellip;
   {{else if build.isProcessing}}
     {{#if (eq progressBarWidth "0%")}}
       Finishing up&hellip;
     {{else}}
-      <span class="text-dark">{{build.totalComparisonsFinished}}</span> of <span class="text-dark">{{build.totalComparisons}}</span> screenshots processed
+      <span class="text-gray-700">{{build.totalComparisonsFinished}}</span> of <span class="text-gray-700">{{build.totalComparisons}}</span> screenshots processed
     {{/if}}
   {{else if build.isFinished}}
     <div>
@@ -41,7 +41,7 @@
           by {{build.approvedBy.name}}
         {{/if}}
       {{else}}
-        in <span class="text-dark">{{build.totalSnapshots}}</span> total snapshots
+        in <span class="text-gray-700">{{build.totalSnapshots}}</span> total snapshots
       {{/if}}
     </div>
   {{else if build.isFailed}}

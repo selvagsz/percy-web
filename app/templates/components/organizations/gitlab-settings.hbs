@@ -1,13 +1,13 @@
 {{#if (is-admin)}}
   <section class="px-2">
     <div class="bg-white rounded shadow-1 p-2 mb-2" data-test-gitlab-settings>
-      <h2 class="f3 text-weight-semibold mb-2">GitLab Integration {{fa-icon "gitlab"}}</h2>
+      <h2 class="text-xl font-semibold mb-2">GitLab Integration {{fa-icon "gitlab"}}</h2>
       {{#if isGitlabIntegrated}}
-        <div class="p-2 rounded border text-light" data-test-gitlab-settings-status>
+        <div class="p-2 rounded border text-gray-400" data-test-gitlab-settings-status>
           The GitLab integration is installed. Please contact support to change any settings.
         </div>
       {{else}}
-        <div class="p-2 rounded border text-light mb-2" data-test-gitlab-settings-status>
+        <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
           The GitLab integration is not installed.
         </div>
         <button data-test-gitlab-settings-connect-button class="btn btn-primary shadow-purple-lg" {{action "redirectToGitlabAuthorization" organization}}>

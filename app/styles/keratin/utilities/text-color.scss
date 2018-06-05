@@ -1,17 +1,5 @@
-.text-dark { color: var(--gray-700) !important; }
-.text-light { color: var(--light-text-color) !important; }
-.text-blue { color: var(--blue-500) !important; }
-.text-red { color: var(--red-700) !important; }
-.text-green { color: var(--green-500) !important; }
-.text-purple { color: var(--purple-600) !important; }
-.text-yellow { color: var(--yellow-500) !important; }
-
-.text-white {
-  color: var(--white) !important;
-
-  a {
-    color: var(--white) !important;
-  }
+.text-white a {
+  color: var(--white);
 }
 
 /* Link colors */
@@ -25,7 +13,6 @@
   }
 
   &.active {
-    font-weight: 700;
     color: var(--gray-700) !important;
   }
 }

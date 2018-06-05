@@ -9,7 +9,7 @@ export default Component.extend({
 
   redirectToDefaultOrganization: null,
 
-  classNames: ['btn py-1 px-4 btn-app-access f5 c-pointer text-white'],
+  classNames: ['btn btn-md py-1 px-4 btn-app-access text-base cursor-pointer text-white'],
   classNameBindings: ['classes'],
 
   click() {

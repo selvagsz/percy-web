@@ -1,31 +1,31 @@
-<div class="settings-nav-wrapper flex position-relative">
-  <aside class="settings-sidebar vh-full overflow-y-scroll shrink-0 sticky pt-3 border-right border-gray-100" data-test-sidenav>
-    <section class="border-bottom border-gray-000 mb-3">
+<div class="settings-nav-wrapper flex relative">
+  <aside class="settings-sidebar h-screen overflow-y-scroll flex-no-shrink sticky pin-t pt-3 border-r" data-test-sidenav>
+    <section class="border-b border-gray-000 mb-3">
       <ul class="list-reset mb-2">
-        <li>
-          {{#link-to "organizations.organization.settings" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Settings{{/link-to}}
+        <li class="mb-0">
+          {{#link-to "organizations.organization.settings" organization.slug class="block py-1 px-4 link-gray font-semibold"}}Settings{{/link-to}}
         </li>
-        <li>
-          {{#link-to "organizations.organization.billing" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Billing{{/link-to}}
+        <li class="mb-0">
+          {{#link-to "organizations.organization.billing" organization.slug class="block py-1 px-4 link-gray font-semibold"}}Billing{{/link-to}}
         </li>
-        <li>
-          {{#link-to "organizations.organization.integrations" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Integrations{{/link-to}}
+        <li class="mb-0">
+          {{#link-to "organizations.organization.integrations" organization.slug class="block py-1 px-4 link-gray font-semibold"}}Integrations{{/link-to}}
         </li>
-        <li>
-          {{#link-to "organizations.organization.users" organization.slug class="d-block py-1 px-4 link-gray text-weight-semibold"}}Users{{/link-to}}
+        <li class="mb-0">
+          {{#link-to "organizations.organization.users" organization.slug class="block py-1 px-4 link-gray font-semibold"}}Users{{/link-to}}
         </li>
       </ul>
     </section>
     <section>
-      <ul class="pb-4 list-reset" data-test-sidenav-list-projects>
+      <ul class="list-reset pb-4 mb-0" data-test-sidenav-list-projects>
         {{#each organization.projects as |project|}}
-        <li>
-          {{#link-to "organization.project.settings" organization.slug project.slug classNames="d-block mb-2 px-4 link-gray text-weight-semibold
+        <li class="mb-0">
+          {{#link-to "organization.project.settings" organization.slug project.slug classNames="block mb-2 px-4 link-gray font-semibold
           truncate"}}{{project.name}}{{/link-to}}
         </li>
         {{/each}}
         <li class="px-4">
-          {{#link-to "organizations.organization.projects.new" organization.slug classNames="text-weight-semibold"}}Create new project{{/link-to}}
+          {{#link-to "organizations.organization.projects.new" organization.slug classNames="font-semibold"}}Create new project{{/link-to}}
         </li>
       </ul>
     </section>

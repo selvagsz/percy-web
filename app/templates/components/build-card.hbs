@@ -1,14 +1,14 @@
-<div class="build-card c-pointer {{if build.isExpired 'opacity-50'}} is-{{dasherize build.state}} is-{{if build.isFinished (dasherize build.reviewState)}}" {{action "navigateToBuild"}} data-test-build-card>
+<div class="build-card cursor-pointer {{if build.isExpired 'opacity-50'}} is-{{dasherize build.state}} is-{{if build.isFinished (dasherize build.reviewState)}}" {{action "navigateToBuild"}} data-test-build-card>
   <div>
     <div style="margin-bottom: -6px;">
-      {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.id class="f2 text-mono"}}{{build.buildNumber}}{{/link-to}}
+      {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.id class="text-xl md:text-2xl font-mono"}}{{build.buildNumber}}{{/link-to}}
     </div>
-    <div class="f6 text-light text-weight-semibold no-wrap truncate">
+    <div class="text-sm text-gray-400 font-semibold whitespace-no-wrap truncate">
       {{moment-from-now build.createdAt interval=60000}}
     </div>
   </div>
   <div style="min-width: 0">
-    <div class="flex align-center mb-sm pt-sm">
+    <div class="flex items-center mb-sm pt-sm">
       {{#if build.isGithubLinked}}
         {{inline-svg "github-icon" class="mr-1"}}
       {{/if}}
@@ -16,49 +16,49 @@
         {{build.branch}}
       </code>
       {{#if build.isGithubLinked}}
-        <a class="f6 text-mono" href="{{build.repo.htmlUrl}}/commit/{{build.commit.sha}}" onclick={{action "stopPropagation"}}>{{build.commit.shaShort}}</a>
+        <a class="text-sm font-mono" href="{{build.repo.htmlUrl}}/commit/{{build.commit.sha}}" onclick={{action "stopPropagation"}}>{{build.commit.shaShort}}</a>
       {{else}}
-        <span class="f6 text-mono">{{build.commit.shaShort}}</span>
+        <span class="text-sm font-mono">{{build.commit.shaShort}}</span>
       {{/if}}
     </div>
-    <div class="flex align-center">
+    <div class="flex items-center">
       {{#if build.isGithubLinked}}
         {{#if build.commit}}
           {{#if build.isPullRequest}}
             {{inline-svg "pull-request-icon" class="mr-1"}}
-            <a href="{{build.repo.htmlUrl}}/pull/{{build.pullRequestNumber}}" class="no-wrap truncate text-weight-semibold mr-1" onclick={{action "stopPropagation"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a>
+            <a href="{{build.repo.htmlUrl}}/pull/{{build.pullRequestNumber}}" class="whitespace-no-wrap truncate font-semibold mr-1" onclick={{action "stopPropagation"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a>
           {{else}}
             {{inline-svg "commit-icon" class="mr-1"}}
           {{/if}}
-          <strong class="no-wrap mr-1">{{build.commit.authorName}}</strong>
-          <span class="text-light truncate">{{build.commit.message}}</span>
+          <strong class="whitespace-no-wrap mr-1">{{build.commit.authorName}}</strong>
+          <span class="text-gray-400 truncate">{{build.commit.message}}</span>
         {{/if}}
       {{/if}}
     </div>
   </div>
-  <div class="flex align-center">
+  <div class="flex items-center">
     <div class="mr-2">
       {{comparison-icon build=build}}
     </div>
     <div>
       {{#if build.isPending}}
-        <span class="f6 text-weight-semibold text-light">Receiving Build</span>
+        <span class="text-sm font-semibold text-gray-400">Receiving Build</span>
       {{else if build.isProcessing}}
-        <span class="f6 text-weight-semibold text-light">Processing snapshots</span>
+        <span class="text-sm font-semibold text-gray-400">Processing snapshots</span>
       {{else if build.isFailed}}
-        <span class="text-weight-semibold text-light">{{build.failureReasonHumanized}}</span>
+        <span class="font-semibold text-gray-400">{{build.failureReasonHumanized}}</span>
       {{else}}
         {{#if build.hasDiffs}}
           {{#unless build.isApproved}}
-            <div class="no-wrap">
+            <div class="whitespace-no-wrap">
               <strong>{{build.totalSnapshotsUnreviewed}}</strong>
-              <span class="f6 text-light text-weight-semibold">unreviewed</span>
+              <span class="text-sm text-gray-400 font-semibold">unreviewed</span>
             </div>
           {{/unless}}
         {{/if}}
-        <div class="no-wrap">
+        <div class="whitespace-no-wrap">
           <strong>{{build.totalSnapshots}}</strong>
-          <span class="f6 text-light text-weight-semibold">{{pluralize build.totalSnapshots "total snapshot" without-count=true}}</span>
+          <span class="text-sm text-gray-400 font-semibold">{{pluralize build.totalSnapshots "total snapshot" without-count=true}}</span>
         </div>
       {{/if}}
     </div>

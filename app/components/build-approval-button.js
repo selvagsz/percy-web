@@ -10,7 +10,7 @@ export default Component.extend({
   isApproved: alias('build.isApproved'),
   isLoading: false,
   tagName: 'button',
-  classNames: ['build-approval-button btn btn-md btn-success ml-2 px-2 pl-7 flex align-center'],
+  classNames: ['build-approval-button btn btn-md btn-success ml-2 px-2 flex items-center'],
   classNameBindings: ['classes', 'isLoading:is-loading', 'isApproved:is-approved'],
   attributeBindings: ['data-test-build-approval-button'],
   'data-test-build-approval-button': true,

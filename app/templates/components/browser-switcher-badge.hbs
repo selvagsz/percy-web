@@ -1,4 +1,4 @@
-<div class="browser-switcher-diff-count text-center position-absolute bg-white font-weight-semibold px-sm lh-1 z-1 {{if isActive "text-white shadow-purple-lg bg-purple-600" "text-purple"}} {{if (and (eq unnapprovedSnapshotCount 0) isActive) "bg-green-500 shadow-green-lg"}}" data-test-browser-switcher-diff-count>
+<div class="browser-switcher-diff-count text-center absolute bg-white font-weight-semibold px-sm leading-none z-1 {{if isActive "text-white shadow-purple-lg bg-purple-600" "text-purple-600"}} {{if (and (eq unnapprovedSnapshotCount 0) isActive) "bg-green-500 shadow-green-lg"}}" data-test-browser-switcher-diff-count>
   {{#if unnapprovedSnapshotCount}}
     {{unnapprovedSnapshotCount}}
   {{else}}

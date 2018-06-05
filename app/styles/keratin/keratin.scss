@@ -1,31 +1,11 @@
-@import "vendor/normalize";
-
 @import "variables/layout";
 @import "variables/typography";
 @import "variables/colors";
 
-@import "base/base";
-@import "base/typography";
-
-@import "utilities/backgrounds";
-@import "utilities/borders";
-@import "utilities/border-radius";
-@import "utilities/cursors";
-@import "utilities/display";
 @import "utilities/dropdown";
-@import "utilities/flexbox";
-@import "utilities/font-sizing";
 @import "utilities/grid";
 @import "utilities/images";
-@import "utilities/lists";
-@import "utilities/margin";
 @import "utilities/opacity";
-@import "utilities/overflow";
-@import "utilities/padding";
-@import "utilities/position";
-@import "utilities/sizing";
 @import "utilities/status";
-@import "utilities/text-alignment";
 @import "utilities/text-color";
 @import "utilities/typography";
-@import "utilities/z-index";

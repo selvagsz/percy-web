@@ -1,13 +1,15 @@
-// stylelint-disable selector-no-qualifying-type
-
-html {
-  box-sizing: border-box;
+:root {
+  --body-font-size: 14px;
+  --sans-font: "proxima-nova", Helvetica, sans-serif;
+  --mono-font: "source-code-pro", monospace;
 }
 
-// Make all elements from the DOM inherit from the parent box-sizing
-// Since `*` has a specificity of 0, it does not override the `html` value
-// making all elements inheriting from the root box-sizing value
-// See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+/*
+* Make all elements from the DOM inherit from the parent box-sizing
+* Since `*` has a specificity of 0, it does not override the `html` value
+* making all elements inheriting from the root box-sizing value
+* See: css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+*/
 
 *,
 *::before,
@@ -15,13 +17,12 @@ html {
   box-sizing: inherit;
 }
 
-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-hr {
-  overflow: hidden;
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--sans-font);
+  font-size: var(--body-font-size);
+  line-height: 16px;
+  color: var(--gray-700);
 }
 
 button,
@@ -29,8 +30,55 @@ input,
 optgroup,
 select,
 textarea {
-  font: inherit;
-  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: var(--link-color, var(--blue-500));
+  text-decoration: none;
+  transition: color 250ms;
+
+  &:hover {
+    color: var(--link-color, var(--blue-500)); /* In case there is a color altering class on a link for it's not hovered state */
+    text-decoration: underline;
+  }
+}
+
+a > code {
+  color: var(--link-color, var(--blue-500));
+  background: var(--link-background-color, var(--blue-000));
+}
+
+b,
+strong {
+  font-weight: var(--font-weight-strong, var(--keratin-font-weight-strong));
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--gray-100);
+  overflow: hidden;
+}
+
+/* Remove most spacing between table cells. */
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 0; /* Remove border radius added by Chroma macOS */
 }
 
 svg:not(:root) {
@@ -39,13 +87,4 @@ svg:not(:root) {
 
 img {
   max-width: 100%;
-}
-
-input[type="text"] {
-  width: 100%;
-
-  &:focus,
-  &:active {
-    outline: 0;
-  }
 }

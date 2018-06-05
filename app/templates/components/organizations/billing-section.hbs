@@ -17,7 +17,7 @@
         </div>
       </div>
     {{else}}
-      <h1 class="f3 text-weight-semibold mb-sm">
+      <h1 class="text-xl font-semibold mb-sm">
         Total monthly usage
         {{#if organization.subscription.isCustomer}}
           {{!-- TODO: remove this, show billing period always after legacy capped monthly users are migrated. --}}
@@ -29,15 +29,15 @@
           {{/if}}
         {{/if}}
       </h1>
-      <div class="text-light w-75">
+      <div class="text-gray-400 w-3/4">
         Current usage:
         {{#if organization.subscription.currentUsageStats}}
-          <strong class="text-dark">{{format-number organization.subscription.currentUsageStats.total}} visual validations</strong>
+          <strong class="text-gray-700">{{format-number organization.subscription.currentUsageStats.total}} visual validations</strong>
         {{else}}
           ...
         {{/if}}
       </div>
-      <div class="text-light mb-2">Visual validation usage is calculated across all projects in this organization.</div>
+      <div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
       {{#if organization.subscription.plan.isTrial}}
         <div class="Alert Alert--warning">
           <strong>Trial ends {{moment-from-now organization.subscription.trialEnd}}</strong>.
@@ -47,7 +47,7 @@
         </div>
       {{/if}}
       <div class="bg-white rounded shadow-1 p-2 mb-2">
-        <h2 class="f3 text-weight-semibold mb-1">Subscription</h2>
+        <h2 class="text-xl font-semibold mb-1">Subscription</h2>
 
         {{#if organization.subscription.plan.isFree}}
           <div class="Alert Alert--warning">
@@ -58,7 +58,7 @@
         {{#if organization.subscription.plan.isCustom}}
           <div class="p-2 bg-gray-000 rounded border mb-2">
             <div>
-              <div class="pr-2 f3 text-weight-semibold">
+              <div class="pr-2 text-xl font-semibold">
                 {{organization.subscription.plan.name}}
               </div>
               <div class="flex">
@@ -84,7 +84,7 @@
                   {{/unless}}
                 </div>
                 <div style="max-width: 150px" class="flex-1 pr-2"></div>
-                <div style="max-width: 150px" class="flex-1 pr-2 flex align-start justify-end">
+                <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
                   <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
                 </div>
               </div>
@@ -95,8 +95,8 @@
         <div class="pt-2 bg-gray-000 rounded border">
           {{#each subscriptionData.PLANS as |planData|}}
             {{#unless (eq planData.id "free")}}
-              <div class="border-bottom px-2 pb-2 mb-2">
-                <div class="pr-2 f3 text-weight-semibold">
+              <div class="border-b px-2 pb-2 mb-2">
+                <div class="pr-2 text-xl font-semibold">
                   {{planData.name}}
                 </div>
                 <div class="flex">
@@ -116,7 +116,7 @@
                     <br>
                     ${{planData.extraDiffPrice}} / extra validation
                   </div>
-                  <div style="max-width: 150px" class="flex-1 pr-2 flex align-start justify-end">
+                  <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
                     {{#if (eq organization.subscription.plan.id planData.id)}}
                       {{#if isSaving}}
                         {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
@@ -143,7 +143,7 @@
           {{/each}}
 
           <div class="px-2 pb-2">
-            <div class="flex-1 pr-2 f3 text-weight-semibold">
+            <div class="flex-1 pr-2 text-xl font-semibold">
               Enterprise
             </div>
             <div class="flex">
@@ -159,7 +159,7 @@
                 </div>
               </div>
               <div class="flex-1 pr-2"></div>
-              <div class="flex-1 pr-2 flex align-start justify-end">
+              <div class="flex-1 pr-2 flex items-start justify-end">
                 {{!-- TODO: #billingadmins --}}
                 {{#if (eq "admin" organization.currentUserMembership.role)}}
                   {{#link-to "enterprise" class="btn btn-primary shadow-purple-lg mb-0"}}Contact Us{{/link-to}}
@@ -171,18 +171,18 @@
       </div>
 
       <div class="rounded border p-2 mb-2">
-        <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="text-weight-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="text-weight-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
+        <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
       </div>
 
       {{!-- TODO: #billingadmins --}}
       <div class="bg-white rounded shadow-1 p-2 mb-2">
-        <h2 class="f3 text-weight-semibold mb-1">Invoice Settings</h2>
+        <h2 class="text-xl font-semibold mb-1">Invoice Settings</h2>
         {{forms/billing-edit subscription=organization.subscription}}
       </div>
 
       {{#if organization.subscription.isCustomer}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
-          <h2 class="f3 text-weight-semibold mb-1">Billing Details</h2>
+          <h2 class="text-xl font-semibold mb-1">Billing Details</h2>
           {{organizations/billing-card-updater
             organization=organization
           }}

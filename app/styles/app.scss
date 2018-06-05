@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+//Tailwind CSS: https://tailwindcss.com/docs/what-is-tailwind/
+@import "tailwind";
+
+@import
+  "base/base",
+  "base/typography";
+
 @import
   "keratin/keratin",
   "keratin-config";
@@ -27,8 +34,6 @@
 
 // Base components.
 @import
-  "base/base",
-  "base/typography",
   "buttons",
   "cards",
   "forms",
