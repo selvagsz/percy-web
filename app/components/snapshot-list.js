@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {alias, gt, mapBy} from '@ember/object/computed';
+import {alias, lt, mapBy} from '@ember/object/computed';
 import {computed} from '@ember/object';
 import Component from '@ember/component';
 import {inject as service} from '@ember/service';
@@ -32,7 +32,7 @@ export default Component.extend({
   // Set internally by actions
   activeSnapshotId: null,
 
-  shouldDeferRendering: gt('snapshotsChanged.length', 75),
+  isDefaultExpanded: lt('snapshotsChanged.length', 150),
 
   numSnapshotsUnchanged: computed('build.totalSnapshots', 'snapshotsChanged.length', function() {
     return this.get('build.totalSnapshots') - this.get('snapshotsChanged.length');

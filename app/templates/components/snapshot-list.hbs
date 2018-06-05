@@ -1,10 +1,16 @@
+{{#unless (or isDefaultExpanded build.isApproved)}}
+  <div class="Alert Alert--warning text-center" data-test-too-many-snapshots-alert>
+    <strong>Whew!</strong> There are too many snapshots to show all at once, so they
+    are collapsed below. <strong>Tip:</strong> use the arrow keys <code>↓</code> and <code>↑</code> to move around.
+  </div>
+{{/unless}}
 {{#each snapshotsChanged as |snapshot|}}
   {{snapshot-viewer
     build=build
     snapshot=snapshot
     allDiffsShown=allDiffsShown
     activeSnapshotId=activeSnapshotId
-    shouldDeferRendering=shouldDeferRendering
+    isDefaultExpanded=isDefaultExpanded
     showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
     createReview=createReview
     updateActiveSnapshotId=(action "updateActiveSnapshotId")
@@ -41,7 +47,7 @@
         allDiffsShown=allDiffsShown
         snapshot=snapshot
         activeSnapshotId=activeSnapshotId
-        shouldDeferRendering=shouldDeferRendering
+        isDefaultExpanded=isDefaultExpanded
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
         createReview=createReview
         updateActiveSnapshotId=(action "updateActiveSnapshotId")

@@ -8,7 +8,6 @@ const SELECTORS = {
   DIFF_IMAGE_BOX: '[data-test-comparison-viewer-diff-image-container] img',
   NO_DIFF_BOX: '[data-test-comparison-viewer-unchanged]',
   SHOW_UNCHANGED_COMPARISONS: '[data-test-comaprison-viewer-show-unchanged-comparisons]',
-  LAZY_RENDER_HEADER: '[data-test-snapshot-viewer-lazy-header]',
 };
 
 export const SnapshotViewer = {
@@ -41,8 +40,6 @@ export const SnapshotViewer = {
   isUnchangedComparisonsVisible: isVisible(SELECTORS.SHOW_UNCHANGED_COMPARISONS),
 
   clickApprove: alias('header.clickApprove'),
-
-  isLazyRenderHeaderVisible: isVisible(SELECTORS.LAZY_RENDER_HEADER),
 };
 
 export default create(SnapshotViewer);
