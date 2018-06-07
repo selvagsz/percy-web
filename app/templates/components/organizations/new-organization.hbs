@@ -1,0 +1,66 @@
+<div class="flex h-screen-header">
+  <div class="flex flex-1 items-center md:max-w-sm bg-white border-r">
+    <div>
+      {{#if isGithubPurchase}}
+        <section class="px-4 mb-4 {{if (not needsGithubIdentity) 'opacity-25 pointer-events-none'}}" data-test-setup-github-section>
+          <h2 class="text-xl font-semibold mb-sm">Continue your Marketplace Setup</h2>
+          <p class="text-gray-400">
+            Link your GitHub account to complete your Marketplace Purchase.
+          </p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              {{inline-svg "github-icon-lg" class="mr-1"}}
+              {{#if hasGithubIdentity}}
+                <div
+                  class="font-mono flex items-center mr-1"
+                  data-test-setup-github-account
+                >
+                  {{#if githubIdentity.nickname}}
+                    {{githubIdentity.nickname}}
+                  {{else}}
+                    {{githubIdentity.user.name}}
+                  {{/if}}
+                </div>
+
+              {{else}}
+                <button
+                  type="button"
+                  name="button"
+                  class="btn btn-github shadow-dark-lg"
+                  data-test-setup-github-connect-button
+                  {{action "connectGithub"}}
+                >
+                  Connect your Github Account
+                </button>
+              {{/if}}
+            </div>
+            <div>
+              {{#if hasGithubIdentity}}
+                {{inline-svg "check-green-icon"}}
+              {{/if}}
+            </div>
+          </div>
+        </section>
+      {{/if}}
+
+      <section class="px-4 {{if needsGithubIdentity "opacity-25 pointer-events-none"}}">
+        <h2 class="text-xl font-semibold mb-sm">Create an Organization</h2>
+        <p class="text-gray-400">
+          Let's start by creating a new organization to contain your projects. After setup, you can invite team members to join your organization.
+        </p>
+        <p class="text-gray-400">
+          If your organization already has Percy set up, ask an administrator to {{#link-to "organizations.organization.users.invite" model.slug class="font-semibold"}}send you an invite{{/link-to}}.
+        </p>
+
+        {{forms/organization-new
+          saveSuccess=organizationCreated
+          marketplaceListingPlanId=githubMarketplacePlanId
+          needsGithubIdentity=needsGithubIdentity
+        }}
+      </section>
+    </div>
+  </div>
+  <div class="hidden md:flex flex-1 items-center justify-center bg-gray-000 bg-white-pattern">
+    {{inline-svg "percy-logo-lg-on-light"}}
+  </div>
+</div>

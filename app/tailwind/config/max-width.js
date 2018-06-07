@@ -14,11 +14,11 @@
 */
 
 export default {
-  xs: '20rem',
-  sm: '30rem',
-  md: '40rem',
-  lg: '50rem',
-  xl: '60rem',
+     xs: '460px',
+     sm: '544px',
+     md: '768px',
+     lg: '1012px',
+     xl: '1280px',
   '2xl': '70rem',
   '3xl': '80rem',
   '4xl': '90rem',

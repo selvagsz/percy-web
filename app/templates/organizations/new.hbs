@@ -1,12 +1,7 @@
 {{title "Create a new organization"}}
 {{fixed-top-header}}
-<div class="container container--forContent container--fixedWidth">
-  <h3>Welcome!</h3>
-  <p>
-    Let's start by creating a new organization to contain your projects. After setup, you can invite team members to join your organization.
-  </p>
-  <p>
-    If your organization already has Percy set up, ask an administrator to send you an invite.
-  </p>
-  {{forms/organization-new saveSuccess="organizationCreated" marketplaceListingPlanId=marketplaceListingPlanId}}
-</div>
+
+{{organizations/new-organization
+  githubMarketplacePlanId=githubMarketplacePlanId
+  organizationCreated=(route-action 'organizationCreated')
+}}

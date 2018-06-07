@@ -3,11 +3,22 @@ import BaseFormComponent from './base';
 import OrganizationNewValidations from '../../validations/organization-new';
 
 export default BaseFormComponent.extend({
+  validator: OrganizationNewValidations,
   marketplaceListingPlanId: null,
+  needsGithubIdentity: false,
   classes: null,
 
   classNames: ['FormsOrganizationNew', 'Form'],
   classNameBindings: ['classes'],
+
+  isSubmitDisabled: computed.or('changeset.isInvalid', 'changeset.isPristine'),
+
+  model: computed(function() {
+    return this.get('store').createRecord('organization', {
+      billingProvider: this.get('_billingProvider'),
+      billingProviderData: this.get('_billingProviderData'),
+    });
+  }),
 
   // Setup data for creating an org from different billing providers and marketplaces.
   _billingProvider: computed('marketplaceListingPlanId', function() {
@@ -16,6 +27,7 @@ export default BaseFormComponent.extend({
       return 'github_marketplace';
     }
   }),
+
   _billingProviderData: computed('marketplaceListingPlanId', function() {
     let marketplaceListingPlanId = this.get('marketplaceListingPlanId');
     if (marketplaceListingPlanId) {
@@ -24,12 +36,4 @@ export default BaseFormComponent.extend({
       });
     }
   }),
-
-  model: computed(function() {
-    return this.get('store').createRecord('organization', {
-      billingProvider: this.get('_billingProvider'),
-      billingProviderData: this.get('_billingProviderData'),
-    });
-  }),
-  validator: OrganizationNewValidations,
 });

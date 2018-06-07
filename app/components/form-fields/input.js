@@ -16,4 +16,11 @@ export default Component.extend({
   fieldErrors: computed('changeset.error', function() {
     return get(this.get('changeset.error'), this.get('property'));
   }),
+
+  didUpdateAttrs() {
+    // if autofocus changes and is true then the input needs to be manually focused
+    if (this.get('autofocus')) {
+      document.getElementsByClassName('form-control')[0].focus();
+    }
+  },
 });

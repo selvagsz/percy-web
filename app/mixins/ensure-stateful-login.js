@@ -66,6 +66,17 @@ var EnsureStatefulLogin = Mixin.create({
     this.get('flashMessages').success("We've sent an email to the address you've entered.");
   },
 
+  showConnectToGithubPurchaseModal(githubPlanId) {
+    const originalRedirectUrl = lockOptions.auth.redirectUrl;
+    lockOptions.auth.redirectUrl = `${lockOptions.auth.redirectUrl}?github_plan_id=${githubPlanId}`;
+    lockOptions.allowLogin = false;
+    lockOptions.allowedConnections = ['github'];
+    this.showLoginModalEnsuringState().then(() => {
+      this.resetLockOptionsToDefault();
+      lockOptions.auth.redirectUrl = originalRedirectUrl;
+    });
+  },
+
   showConnectToServiceModal(serviceName) {
     const originalRedirectUrl = lockOptions.auth.redirectUrl;
     lockOptions.auth.redirectUrl = `${lockOptions.auth.redirectUrl}?connect=true`;

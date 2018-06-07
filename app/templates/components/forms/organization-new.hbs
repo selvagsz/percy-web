@@ -1,20 +1,26 @@
 <form action="javascript:;">
-  {{form-fields/input
+  <div class="pt-2 px-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
       property="name"
       title="Organization name"
       changeset=changeset
       validateProperty=(action "validateProperty" changeset "name")
-      autofocus=true
+      autofocus=(not isSubmitDisabled)
       placeholder="Acme Co."
-  }}
-  {{#if errorMessage}}
-    <div class="Form-errors">
-      {{errorMessage}}
-    </div>
-  {{/if}}
-  {{form-fields/submit
-    value="Create Organization"
-    classes="Button Button--primary"
-    submit=(action "save")
-  }}
+    }}
+    {{#if errorMessage}}
+      <div class="Form-errors">
+        {{errorMessage}}
+      </div>
+    {{/if}}
+  </div>
+  <div class="flex justify-end">
+    {{form-fields/submit
+      value="Create Organization"
+      classes="btn btn-primary shadow-purple-lg mb-0"
+      showSavingIndicator=false
+      submit=(action "save")
+      disabled=isSubmitDisabled
+    }}
+  </div>
 </form>

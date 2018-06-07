@@ -3,8 +3,11 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   queryParams: {
-    marketplaceListingPlanId: {as: 'marketplace_listing_plan_id', replace: true},
+    githubMarketplacePlanId: {as: 'marketplace_listing_plan_id', replace: true},
   },
+
+  githubMarketplacePlanId: null,
+
   actions: {
     organizationCreated(organization) {
       this.transitionTo('organizations.organization.index', organization.get('slug'));
