@@ -1,41 +1,59 @@
 {{fixed-top-header currentOrganization=model.organization}}
 
 {{#organizations/settings-nav-wrapper organization=model.organization project=model.project projects=model.projects}}
-  <section class="p-2">
-    {{#link-to "organization.project.index" model.organization.slug model.project.slug classNames="Button u-pull-right"}}
-      Back to project
-    {{/link-to}}
-    <h3>Project Settings</h3>
-
+  <section class="px-2 pt-3">
+    <div class="flex items-start">
+      <div>
+        <h1 class="text-xl font-semibold mb-sm">Project Settings</h1>
+        <p class="text-gray-400 md:w-3/4 mb-2">
+          These are the settings specific to the {{model.project.slug}} project. If you want to update settings for your entire organization, use the settings link in the header above. Not seeing the setting you were looking for? <strong><a href="#" {{action "showSupport"}}>Reach out</a></strong> and let us know!
+        </p>
+      </div>
+      {{#link-to "organization.project.index" model.organization.slug model.project.slug classNames="btn btn-primary shadow-purple-lg mb-0"}}
+        Back to project
+      {{/link-to}}
+    </div>
     {{#unless model.project.isEnabled}}
-      <div class="Alert Alert--warning">
+      <div class="Alert Alert--warning mt-2">
         <strong>This project is disabled.</strong>
       </div>
     {{/unless}}
-
+  </section>
+  <section class="p-2">
     {{#if model.project.isEnabled}}
-      {{forms/project-edit project=model.project saveSuccess="projectUpdated"}}
-      <hr>
-      <h4>Environment variables for CI</h4>
-      <p>See the {{#link-to "docs"}}docs{{/link-to}} for how to set up client authentication for your app.</p>
-      {{projects/env-vars project=model.project}}
-      <p><code>PERCY_TOKEN</code> is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
-      <hr>
-      <h4>Link a repository</h4>
-      {{projects/repo-integrator project=model.project}}
-      {{#if (eq model.project.diffBase "manual")}}
-        <hr>
-        <h4>Diff base config</h4>
-        <div class="Alert Alert--warning">
-          <strong>Deprecated:</strong> Manual diff base mode is deprecated and may be removed in the future. Switching to Automatic diff base is encouraged, and cannot be undone.
+      <div class="bg-white rounded shadow-1 p-2 mb-2">
+        <h2 class="text-xl font-semibold mb-1">Project Details</h2>
+        {{forms/project-edit project=model.project saveSuccess="projectUpdated"}}
+      </div>
+
+      <div class="bg-white rounded shadow-1 p-2 mb-2">
+        <h2 class="text-xl font-semibold mb-sm">Environment variables for CI</h2>
+        <p class="text-gray-400 mb-2">See the {{#link-to "docs" class="font-semibold"}}docs{{/link-to}} for how to set up client authentication for your app.</p>
+        <div class="p-2 bg-gray-000 rounded border">
+          {{projects/env-vars project=model.project}}
+          <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+            <strong>Reminder:</strong> <code>PERCY_TOKEN</code> is a project-specific, write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.
+          </div>
         </div>
-        {{projects/diff-base-settings project=model.project}}
-      {{/if}}
+      </div>
+
+      <div class="bg-white rounded shadow-1 p-2 mb-2">
+        <h2 class="text-xl font-semibold mb-sm">Link a repository</h2>
+        {{projects/repo-integrator project=model.project}}
+        {{#if (eq model.project.diffBase "manual")}}
+          <h2 class="text-xl font-semibold mb-1 mt-3">Diff base config</h2>
+          <div class="Alert Alert--warning">
+            <strong>Deprecated:</strong> Manual diff base mode is deprecated and may be removed in the future. Switching to Automatic diff base is encouraged, and cannot be undone.
+          </div>
+          {{projects/diff-base-settings project=model.project}}
+        {{/if}}
+      </div>
     {{/if}}
 
-    <hr>
-    <h4>Actions</h4>
-    {{projects/enabled-toggle project=model.project}}
+    <div class="bg-white rounded shadow-1 p-2 mb-2">
+      <h2 class="text-xl font-semibold mb-1">Actions</h2>
+      {{projects/enabled-toggle project=model.project}}
+    </div>
   </section>
 {{/organizations/settings-nav-wrapper}}
 

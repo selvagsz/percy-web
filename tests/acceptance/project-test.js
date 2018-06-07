@@ -115,7 +115,7 @@ describe('Acceptance: Project', function() {
         await visit(`/${this.enabledProject.fullSlug}/settings`);
         await percySnapshot(this.test);
 
-        expect(find('h4:contains("Auto-Approve Branches")').length).to.equal(1);
+        expect(find('h2:contains("Auto-Approve Branches")').length).to.equal(1);
       });
     });
   });

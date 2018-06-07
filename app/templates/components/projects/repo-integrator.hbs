@@ -1,8 +1,6 @@
 {{#if organization.isVersionControlIntegrated}}
-  <p>
-    You can optionally link this project to a repository. This enables {{#link-to "docs.page" "integrations/overview"}}Pull Request integration{{/link-to}} for this project.
-  </p>
-  <p class='repo-selector'>
+  <p class="text-gray-400 mb-2">You can optionally link this project to a repository. This enables {{#link-to "docs.page" "integrations/overview" class="font-semibold"}}Pull Request integration{{/link-to}} for this project.</p>
+  <div class='repo-selector flex items-center mb-2'>
     {{#power-select
       selected=selectedRepo
       searchField="slug"
@@ -21,10 +19,10 @@
       {{repo.slug}}
     {{/power-select}}
     {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
-  </p>
-  <p>
-    Missing a repository? Check your organization's {{#link-to "organizations.organization.integrations" project.organization.slug}} integration settings{{/link-to}}.
-  </p>
+  </div>
+  <div class="rounded border p-2">
+    <strong>Note:</strong> Missing a repository? Check your organization's {{#link-to "organizations.organization.integrations" project.organization.slug class="font-semibold"}} integration settings{{/link-to}}.
+  </div>
 {{else}}
   <div class="Alert Alert--info">
     <strong>Missing organization source code integration.</strong> Before you can link a repository you must first {{#link-to "organizations.organization.integrations" project.organization.slug}}install an integration{{/link-to}} for your organization.

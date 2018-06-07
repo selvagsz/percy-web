@@ -60,6 +60,7 @@ select {
   &:focus,
   &:focus:active {
     border-color: var(--lightest-purple);
+    outline: none;
     box-shadow: 0 0 2px var(--lightest-purple);
   }
 }
