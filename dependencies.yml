@@ -26,8 +26,3 @@ collectors:
       github_assignees:
         - cadeparade
         - maprules1000
-
-  - type: slack
-    versions: "L.Y.Y"
-    settings:
-      slack_webhook_url: https://hooks.slack.com/services/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
