@@ -1,8 +1,17 @@
 [class*=hint--]::after,
 [class*=hint--]::before {
   text-shadow: none;
-  border-bottom-color: var(--gray-700);
   transition: 250ms ease;
+}
+
+[class*=hint--top]::after,
+[class*=hint--top]::before {
+  border-top-color: var(--gray-700);
+}
+
+[class*=hint--bottom]::after,
+[class*=hint--bottom]::before {
+  border-bottom-color: var(--gray-700);
 }
 
 [class*=hint--]::after {

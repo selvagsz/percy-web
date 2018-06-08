@@ -13,6 +13,9 @@ export default Factory.extend({
   },
 
   afterCreate(subscription, server) {
+    let currentUsageStats = server.create('usageStat');
+    subscription.update({currentUsageStats});
+
     if (!subscription.plan) {
       let plan = server.create('plan');
       subscription.update({plan});

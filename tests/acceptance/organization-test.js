@@ -2,9 +2,11 @@ import setupAcceptance, {
   setupSession,
   renderAdapterErrorsAsPage,
 } from '../helpers/setup-acceptance';
+import freezeMoment from '../helpers/freeze-moment';
 
 describe('Acceptance: Organization', function() {
   setupAcceptance();
+  freezeMoment('2020-01-30');
 
   describe('user is member', function() {
     setupSession(function(server) {

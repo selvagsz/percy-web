@@ -1,5 +1,6 @@
 .grid { display: grid !important; }
 .gap-0 { grid-gap: 0 !important; }
+.gap-sm { grid-gap: var(--spacing-0) !important; }
 .gap-1 { grid-gap: var(--spacing-1) !important; }
 .gap-2 { grid-gap: var(--spacing-2) !important; }
 .gap-3 { grid-gap: var(--spacing-3) !important; }

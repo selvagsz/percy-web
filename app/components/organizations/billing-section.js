@@ -20,6 +20,15 @@ export default Component.extend({
     return isCustomer && AdminMode.isAdmin();
   }),
 
+  daysInBillingCycle: computed('dayStats', function() {
+    const dayStats = this.get('dayStats');
+    if (!dayStats) {
+      return;
+    }
+
+    return this.get('dayStats').length;
+  }),
+
   actions: {
     changingSubscription(savingPromise) {
       this.set('isSaveSuccessful', null);
