@@ -5,7 +5,7 @@
       title="Organization name"
       changeset=changeset
       validateProperty=(action "validateProperty" changeset "name")
-      autofocus=(not isSubmitDisabled)
+      autofocus=isInputFocused
       placeholder="Acme Co."
     }}
     {{#if errorMessage}}

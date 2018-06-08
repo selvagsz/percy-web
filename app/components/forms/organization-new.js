@@ -11,6 +11,7 @@ export default BaseFormComponent.extend({
   classNames: ['FormsOrganizationNew', 'Form'],
   classNameBindings: ['classes'],
 
+  isInputFocused: computed.not('needsGithubIdentity'),
   isSubmitDisabled: computed.or('changeset.isInvalid', 'changeset.isPristine'),
 
   model: computed(function() {
