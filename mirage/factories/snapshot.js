@@ -17,10 +17,13 @@ const _userApprovedPreviouslyProps = {
   reviewState: SNAPSHOT_APPROVED_STATE,
   reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED_PREVIOUSLY,
 };
-
 const _noDiffProps = {
   reviewState: SNAPSHOT_APPROVED_STATE,
   reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.NO_DIFFS,
+};
+const _autoApprovedBranchProps = {
+  reviewState: SNAPSHOT_APPROVED_STATE,
+  reviewStateReason: SNAPSHOT_REVIEW_STATE_REASONS.AUTO_APPROVED_BRANCH,
 };
 
 export default Factory.extend({
@@ -66,6 +69,15 @@ export default Factory.extend({
       afterCreate(snapshot, server) {
         _addComparisonIds(server.create('comparison'), snapshot);
         _addComparisonIds(server.create('comparison', 'forChrome'), snapshot);
+      },
+    }),
+  ),
+
+  autoApprovedBranch: trait(
+    Object.assign({}, _autoApprovedBranchProps, {
+      afterCreate(snapshot, server) {
+        const comparison = server.create('comparison');
+        _addComparisonIds(comparison, snapshot);
       },
     }),
   ),

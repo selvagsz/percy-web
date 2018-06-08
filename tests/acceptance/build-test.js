@@ -425,6 +425,30 @@ describe('Acceptance: Fullscreen Snapshot', function() {
   });
 });
 
+describe('Acceptance: Auto-Approved Branch Build', function() {
+  setupAcceptance();
+  let urlParams;
+
+  setupSession(function(server) {
+    let organization = server.create('organization', 'withUser');
+    let project = server.create('project', {name: 'auto-approved-branch build', organization});
+    let build = server.create('build', 'approvedAutoBranch', {project});
+
+    urlParams = {
+      orgSlug: organization.slug,
+      projectSlug: project.slug,
+      buildId: build.id,
+    };
+  });
+
+  it('shows as auto-approved', async function() {
+    await BuildPage.visitBuild(urlParams);
+    expect(currentPath()).to.equal('organization.project.builds.build.index');
+
+    await percySnapshot(this.test.fullTitle() + ' on the build page');
+  });
+});
+
 describe('Acceptance: Pending Build', function() {
   freezeMoment('2018-05-22');
   setupAcceptance();

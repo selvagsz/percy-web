@@ -6,14 +6,16 @@ export const SNAPSHOT_APPROVED_STATE = 'approved';
 export const SNAPSHOT_UNAPPROVED_STATE = 'unreviewed';
 
 export const SNAPSHOT_REVIEW_STATE_REASONS = {
+  AUTO_APPROVED_BRANCH: 'auto_approved_branch',
+  NO_DIFFS: 'no_diffs',
   UNREVIEWED: 'unreviewed_comparisons',
   USER_APPROVED: 'user_approved',
   USER_APPROVED_PREVIOUSLY: 'user_approved_previously',
-  NO_DIFFS: 'no_diffs',
 };
 
 // These are the possible reviewStateReasons for snapshots that have diffs
 export const DIFF_REVIEW_STATE_REASONS = [
+  SNAPSHOT_REVIEW_STATE_REASONS.AUTO_APPROVED_BRANCH,
   SNAPSHOT_REVIEW_STATE_REASONS.UNREVIEWED,
   SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED,
   SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED_PREVIOUSLY,
@@ -44,16 +46,25 @@ export default DS.Model.extend({
   //    approved the same thing in this branch.
   // - 'approved' --> 'no_diffs': automatically approved because there were no visual differences
   //    when compared the baseline.
+  // - 'approved' --> 'auto_approved_branch': Automatically approved based on branch name
   reviewStateReason: DS.attr(),
   isApprovedByUser: equal('reviewStateReason', SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED),
   isApprovedByUserPreviously: equal(
     'reviewStateReason',
     SNAPSHOT_REVIEW_STATE_REASONS.USER_APPROVED_PREVIOUSLY,
   ),
+  isAutoApprovedBranch: equal(
+    'reviewStateReason',
+    SNAPSHOT_REVIEW_STATE_REASONS.AUTO_APPROVED_BRANCH,
+  ),
   isUnchanged: equal('reviewStateReason', SNAPSHOT_REVIEW_STATE_REASONS.NO_DIFFS),
 
-  // Is true for both approved in build and approved by carry-forward.
-  isApprovedByUserEver: or('isApprovedByUser', 'isApprovedByUserPreviously'),
+  // Is true for approved in build, approved by carry-forward, and auto-approved by branch.
+  isApprovedWithChanges: or(
+    'isApprovedByUser',
+    'isApprovedByUserPreviously',
+    'isAutoApprovedBranch',
+  ),
 
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),

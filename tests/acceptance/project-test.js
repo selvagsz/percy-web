@@ -161,6 +161,7 @@ describe('Acceptance: Project', function() {
       server.create('build', 'approved', {project, createdAt: _timeAgo(5, 'minutes')});
       server.create('build', 'approvedPreviously', {project, createdAt: _timeAgo(4, 'minutes')});
       server.create('build', 'approvedWithNoDiffs', {project, createdAt: _timeAgo(2, 'minutes')});
+      server.create('build', 'approvedAutoBranch', {project, createdAt: _timeAgo(3, 'minutes')});
       server.create('build', 'processing', {project, createdAt: _timeAgo(10, 'seconds')});
       this.project = project;
     });

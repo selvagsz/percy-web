@@ -11,6 +11,8 @@
           All changes approved
         {{else if (eq build.reviewStateReason 'all_snapshots_approved_previously')}}
           All changes approved
+        {{else if (eq build.reviewStateReason 'auto_approved_branch')}}
+          All changes approved automatically on this branch
         {{else if (eq build.reviewStateReason 'no_diffs')}}
           No changes to review
         {{/if}}

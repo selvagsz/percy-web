@@ -39,7 +39,7 @@ export default Controller.extend({
     browsers.forEach(browser => {
       const snapshotsWithDiffs = snapshotsWithDiffForBrowser(buildSnapshotsWithDiffs, browser);
       const sortedSnapshotsWithDiffs = snapshotSort(snapshotsWithDiffs.toArray(), browser);
-      const approvedSnapshots = sortedSnapshotsWithDiffs.filterBy('isApprovedByUserEver');
+      const approvedSnapshots = sortedSnapshotsWithDiffs.filterBy('isApprovedWithChanges');
       const unreviewedSnapshots = sortedSnapshotsWithDiffs.filterBy('isUnreviewed');
       orderedBrowserSnapshots[browser.get('id')] = [].concat(
         unreviewedSnapshots,

@@ -12,13 +12,14 @@ export const BUILD_STATES = {
   EXPIRED: 'expired',
 };
 
+const APPROVED_LABEL = 'Approved';
+const AUTO_APPROVED_BRANCH_LABEL = 'Auto-Approved';
+const EXPIRED_LABEL = 'Expired';
+const FAILED_LABEL = 'Failed';
+const NO_DIFFS_LABEL = 'No Changes';
 const PENDING_LABEL = 'Receiving';
 const PROCESSING_LABEL = 'Processing';
 const UNREVIEWED_LABEL = 'Unreviewed';
-const APPROVED_LABEL = 'Approved';
-const NO_DIFFS_LABEL = 'No Changes';
-const FAILED_LABEL = 'Failed';
-const EXPIRED_LABEL = 'Expired';
 
 export default DS.Model.extend({
   project: DS.belongsTo('project', {async: false}),
@@ -78,6 +79,7 @@ export default DS.Model.extend({
   //   because a user had previously approved the same snapshots in this branch.
   // - 'approved' --> 'no_diffs': All snapshots were automatically approved because there were no
   //    visual differences when compared with the baseline.
+  // - 'approved' --> 'auto_approved_branch': Automatically approved based on branch name
   reviewStateReason: DS.attr(),
 
   // Aggregate numbers for snapshots and comparisons. These will only be set for finished builds.
@@ -123,6 +125,8 @@ export default DS.Model.extend({
       if (this.get('isApproved')) {
         if (this.get('reviewStateReason') === 'no_diffs') {
           return NO_DIFFS_LABEL;
+        } else if (this.get('reviewStateReason') === 'auto_approved_branch') {
+          return AUTO_APPROVED_BRANCH_LABEL;
         } else {
           return APPROVED_LABEL;
         }

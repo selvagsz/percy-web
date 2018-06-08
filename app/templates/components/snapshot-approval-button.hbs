@@ -2,6 +2,8 @@
   <div class="status-pill {{if snapshot.isUnchanged 'is-unchanged' 'is-approved'}}" data-test-snapshot-approved-pill>
     {{#if snapshot.isUnchanged}}
       No Changes
+    {{else if snapshot.isAutoApprovedBranch}}
+      Auto-Approved
     {{else}}
       Approved
     {{/if}}
