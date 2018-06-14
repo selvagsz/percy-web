@@ -1,9 +1,7 @@
-import {afterEach, beforeEach} from 'mocha';
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import freezeMoment from '../helpers/freeze-moment';
 import moment from 'moment';
 import ProjectPage from 'percy-web/tests/pages/project-page';
-import adminMode from 'percy-web/lib/admin-mode';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -22,6 +20,34 @@ describe('Acceptance: Project', function() {
       expect(currentPath()).to.equal('organizations.organization.projects.new');
 
       await percySnapshot(this.test.fullTitle() + ' | new project');
+    });
+  });
+
+  describe('organization with admin user has no projects', function() {
+    setupSession(function(server) {
+      this.organization = server.create('organization', 'withAdminUser');
+    });
+
+    it('shows admin specific links', async function() {
+      await visit(`/${this.organization.slug}`);
+      expect(currentPath()).to.equal('organization.index');
+      await percySnapshot(this.test.fullTitle() + ' | index | admin mode');
+    });
+
+    it('links to invite team members page', async function() {
+      await visit(`/${this.organization.slug}`);
+      expect(currentPath()).to.equal('organization.index');
+
+      await click('a:contains("invite team members")');
+      expect(currentPath()).to.equal('organizations.organization.users.invite');
+    });
+
+    it('links to install github intergration page', async function() {
+      await visit(`/${this.organization.slug}`);
+      expect(currentPath()).to.equal('organization.index');
+
+      await click('a:contains("GitHub")');
+      expect(currentPath()).to.equal('organizations.organization.integrations.github');
     });
   });
 
@@ -101,22 +127,11 @@ describe('Acceptance: Project', function() {
       await percySnapshot(this.test);
     });
 
-    context('admin mode', function() {
-      // This is necessary while the auto-approve-branch-filter part of the settings page
-      // is behind the is-admin flag:
-      beforeEach(function() {
-        adminMode.setAdminMode();
-      });
-      afterEach(function() {
-        adminMode.clear();
-      });
+    it('displays Auto-Approve Branches setting', async function() {
+      await visit(`/${this.enabledProject.fullSlug}/settings`);
+      await percySnapshot(this.test);
 
-      it('displays Auto-Approve Branches setting', async function() {
-        await visit(`/${this.enabledProject.fullSlug}/settings`);
-        await percySnapshot(this.test);
-
-        expect(find('h2:contains("Auto-Approve Branches")').length).to.equal(1);
-      });
+      expect(find('h2:contains("Auto-Approve Branches")').length).to.equal(1);
     });
   });
 

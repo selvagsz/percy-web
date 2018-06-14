@@ -13,7 +13,7 @@
   </p>
   {{!-- TODO: #billingadmins --}}
   {{#if (eq "admin" model.currentUserMembership.role)}}
-    <p>You can also {{#link-to "organizations.organization.users.invite" model.slug}}invite team members{{/link-to}} or {{#link-to "organizations.organization.settings" model.slug}}install the GitHub integration{{/link-to}}.</p>
+    <p>You can also {{#link-to "organizations.organization.users.invite" model.slug}}invite team members{{/link-to}} or {{#link-to "organizations.organization.integrations.github" model.slug}}install the GitHub integration{{/link-to}}.</p>
   {{/if}}
 </div>
 
