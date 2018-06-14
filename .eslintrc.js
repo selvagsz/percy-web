@@ -32,14 +32,25 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'no-unused-expressions': ["error", { "allowTernary": true }],
   },
-  overrides: {
-    // chai uses some expressions like `to.be.ok` which are valid syntax
-    // but get caught by this rule.
-    files: '*-test.js',
-    rules: {
-      "no-unused-expressions": 'off'
+  overrides: [
+    {
+      // chai uses some expressions like `to.be.ok` which are valid syntax
+      // but get caught by this rule.
+      files: '*-test.js',
+      rules: {
+        "no-unused-expressions": 'off'
+      }
+    }, {
+      // node files
+      files: [
+        'ember-cli-build.js',
+        'testem.js',
+        'blueprints/*/index.js',
+        'config/**/*.js',
+        'lib/*/index.js',
+      ],
     }
-  },
+  ],
   globals: {
     "Raven": true
   }
