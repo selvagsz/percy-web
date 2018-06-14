@@ -21,6 +21,10 @@ export default Component.extend(PollingMixin, {
   groupedRepos: alias('organization.groupedRepos'),
   lastSyncedAt: alias('organization.lastSyncedAt'),
   isRepoDataStale: computed('lastSyncedAt', function() {
+    if (!this.get('organization.isVersionControlIntegrated')) {
+      return false;
+    }
+
     const isSyncing = this.get('isSyncing');
     const lastSyncedAt = this.get('lastSyncedAt');
     if (!lastSyncedAt || isSyncing) {

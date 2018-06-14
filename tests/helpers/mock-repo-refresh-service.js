@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import {resolve} from 'rsvp';
 
-export default function mockRepoRefresh(context, newRepos, newLastSyncedAt) {
+export default function mockRepoRefresh(context, newRepos, newLastSyncedAt, stub) {
   const repoRefreshServiceStub = Service.extend({
     getFreshRepos() {
       let organization = context.get('project.organization');
@@ -10,6 +10,9 @@ export default function mockRepoRefresh(context, newRepos, newLastSyncedAt) {
       }
       if (newRepos) {
         organization.set('repos', newRepos);
+      }
+      if (stub) {
+        stub();
       }
       return resolve(organization.get('repos'));
     },

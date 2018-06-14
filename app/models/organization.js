@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {filterBy, alias, bool, or, mapBy, uniq} from '@ember/object/computed';
+import {filterBy, alias, bool, mapBy, uniq} from '@ember/object/computed';
 import DS from 'ember-data';
 
 const DISPLAY_NAMES = {
@@ -55,11 +55,7 @@ export default DS.Model.extend({
   }),
   isGithubEnterpriseIntegrated: bool('githubEnterpriseIntegration'),
   isGitlabIntegrated: bool('gitlabIntegration'),
-  isVersionControlIntegrated: or(
-    'isGithubEnterpriseIntegrated',
-    'isGithubIntegrated',
-    'isGitlabIntegrated',
-  ),
+  isVersionControlIntegrated: bool('versionControlIntegrations.length'),
 
   githubAuthMechanism: computed('githubIntegration', function() {
     if (this.get('githubIntegration')) {

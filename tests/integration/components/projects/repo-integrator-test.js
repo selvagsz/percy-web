@@ -8,6 +8,7 @@ import RepoIntegrator from 'percy-web/tests/pages/components/repo-integrator';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import repoRefreshServiceStub from 'percy-web/tests/helpers/mock-repo-refresh-service';
 import moment from 'moment';
+import sinon from 'sinon';
 
 describe('Integration: RepoIntegratorComponent', function() {
   setupComponentTest('repo-integrator', {
@@ -123,6 +124,31 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(1).name).to.eq('GitLab');
       expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitHub Enterprise');
       percySnapshot(this.test.fullTitle());
+    });
+  });
+
+  describe('with no integrations', function() {
+    let freshReposStub;
+    beforeEach(function() {
+      const project = make('project');
+      const organization = make('organization', {lastSyncedAt: undefined});
+      project.set('organization', organization);
+
+      this.setProperties({project});
+
+      freshReposStub = sinon.stub();
+      repoRefreshServiceStub(this, null, null, freshReposStub);
+
+      this.render(hbs`{{projects/repo-integrator project=project}}`);
+    });
+
+    it('displays no integrations message', function() {
+      expect(RepoIntegrator.isNoIntegrationsMessageVisible).to.equal(true);
+      percySnapshot(this.test.fullTitle());
+    });
+
+    it('does not call getFreshRepos', function() {
+      expect(freshReposStub).to.not.have.been.called;
     });
   });
 

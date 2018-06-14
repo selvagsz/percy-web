@@ -24,7 +24,7 @@
     <strong>Note:</strong> Missing a repository? Check your organization's {{#link-to "organizations.organization.integrations" project.organization.slug class="font-semibold"}} integration settings{{/link-to}}.
   </div>
 {{else}}
-  <div class="Alert Alert--info">
+  <div class="Alert Alert--info" data-test-repo-integrator-no-integrations>
     <strong>Missing organization source code integration.</strong> Before you can link a repository you must first {{#link-to "organizations.organization.integrations" project.organization.slug}}install an integration{{/link-to}} for your organization.
   </div>
 {{/if}}

@@ -10,6 +10,7 @@ const SELECTORS = {
   POWER_SELECT_GROUP_NAME: '.ember-power-select-group-name',
   REPO_FRESHNESS_CONTAINER: '[data-test-repo-refresh-status]',
   REPO_STATUS_MESSAGE: 'span[data-test-repo-refresh-status-message]',
+  NO_INTEGRATIONS_MESSAGE: '[data-test-repo-integrator-no-integrations]',
 };
 
 export const RepoIntegrator = {
@@ -36,6 +37,8 @@ export const RepoIntegrator = {
     scope: SELECTORS.REPO_FRESHNESS_CONTAINER,
     message: text(SELECTORS.REPO_STATUS_MESSAGE),
   },
+
+  isNoIntegrationsMessageVisible: isVisible(SELECTORS.NO_INTEGRATIONS_MESSAGE),
 };
 
 export default create(RepoIntegrator);
