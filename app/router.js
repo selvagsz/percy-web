@@ -48,6 +48,7 @@ Router.map(function() {
   this.route('privacy');
   this.route('security');
   this.route('admin');
+  this.route('changelog');
   this.route('settings', function() {
     this.route('profile');
     this.route('connected-accounts');

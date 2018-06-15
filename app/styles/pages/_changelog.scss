@@ -1,0 +1,39 @@
+.changelog-post {
+  h2 {
+    margin-bottom: var(--spacing-1);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--gray-400);
+  }
+
+  img {
+    width: 100%;
+    margin-bottom: var(--spacing-1);
+    border: 1px solid var(--gray-100);
+  }
+
+  a {
+    font-weight: 600;
+  }
+}
+
+.changelog-post-detail::before {
+  @media (min-width: $width-sm) {
+    content: "";
+    display: block;
+    position: absolute;
+    top: var(--spacing-4);
+    right: calc((var(--spacing-2) * -1) - var(--spacing-0));
+    width: var(--spacing-1);
+    height: var(--spacing-1);
+    background: var(--status-color);
+    border-radius: 50%;
+  }
+}
+
+.changelog-post-detail-tag {
+  background: var(--status-color);
+}

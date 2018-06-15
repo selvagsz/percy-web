@@ -1,0 +1,9 @@
+<article id={{postId}} class="changelog-post sm:flex mb-4">
+  <div class="changelog-post-detail flex relative flex-col items-start sm:items-end mr-4 pt-3 {{if (eq tag "feature") 'is-unreviewed'}} {{if (eq tag "integration") 'is-unchanged'}} {{if (eq tag "update") 'is-approved'}} {{if (eq tag "bugfix") 'is-failed'}}" style="min-width: 100px;">
+    <div class="text-gray-400">{{date}}</div>
+    <div class="changelog-post-detail-tag font-mono text-sm rounded-full text-white mb-1 px-1">{{tag}}</div>
+  </div>
+  <div class="flex-1 bg-white rounded shadow-1 pt-3 px-2 pb-1">
+    {{yield}}
+  </div>
+</article>
