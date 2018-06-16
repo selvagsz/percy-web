@@ -1,6 +1,7 @@
 import FactoryGuy from 'ember-data-factory-guy';
 import faker from 'faker';
 import {makeList} from 'ember-data-factory-guy';
+import {resolve} from 'rsvp';
 
 FactoryGuy.define('user', {
   default: {
@@ -17,6 +18,12 @@ FactoryGuy.define('user', {
     withOrganizations: {
       organizations: () => {
         return makeList('organization', 5);
+      },
+    },
+
+    withGithubIdentity: {
+      hasGithubIdentity: () => {
+        return resolve(true);
       },
     },
   },
