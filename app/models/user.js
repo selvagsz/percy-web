@@ -16,14 +16,14 @@ export default DS.Model.extend({
     });
   }),
 
-  hasEmailPasswordIdentity: computed('identities.@each.provider', function() {
-    return this.get('identities').then(identities => {
+  hasEmailPasswordIdentity: computed('identities.@each.provider', async function() {
+    return await this.get('identities').then(identities => {
       return identities.findBy('provider', 'emailPasswordIdentity');
     });
   }),
 
-  emailPasswordIdentity: computed('identities.@each.provider', function() {
-    return this.get('identities').then(identities => {
+  emailPasswordIdentity: computed('identities.@each.provider', async function() {
+    return await this.get('identities').then(identities => {
       return identities.findBy('provider', 'auth0');
     });
   }),
