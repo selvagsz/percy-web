@@ -35,6 +35,7 @@ export default Component.extend({
   ),
 
   isEligibleForGithubIntegration: alias('currentUser.hasGithubIdentity'),
+  githubAuthMechanism: alias('changeset.githubAuthMechanism'),
 
   isSaveSuccessful: null,
   isSaving: null,
@@ -45,8 +46,7 @@ export default Component.extend({
     showSupport() {
       this.sendAction('showSupport');
     },
-    changeSelection() {
-      let newSelection = this.$('input[name="github-integration-setting"]:checked').val();
+    changeSelection(newSelection) {
       this.get('changeset').rollback();
 
       // If selecting the same as the currently active auth mechanism, don't dirty the changeset.

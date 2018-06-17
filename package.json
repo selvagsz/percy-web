@@ -78,6 +78,7 @@
     "ember-percy": "^1.4.1",
     "ember-power-select": "^1.10.4",
     "ember-promise-helpers": "^1.0.3",
+    "ember-radio-button": "^1.2.3",
     "ember-remarkable": "^3.6.1",
     "ember-resolver": "^4.5.0",
     "ember-route-action-helper": "^2.0.6",

@@ -35,11 +35,11 @@ describe('Integration: GitHub Settings', function() {
       expect(GithubSettings.isNoAccessRadioButtonSelected, 'two').to.equal(true);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected, 'trhee').to.equal(false);
       percySnapshot(this.test.fullTitle());
-
       await GithubSettings.clickIntegrateGithubRadio();
+
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
-      // TODO make github integraotr component appear - changeset.githuvAuthMechanism
+      percySnapshot(this.test.fullTitle());
     });
 
     it('shows that the integration is installed', function() {
@@ -54,7 +54,6 @@ describe('Integration: GitHub Settings', function() {
       expect(GithubSettings.isGithubSettingsFormVisible).to.equal(true);
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
-      // TODO test that correct things display.
       percySnapshot(this.test.fullTitle());
     });
   });

@@ -12,27 +12,25 @@
       <form action="javascript:;" class="Form" data-test-github-settings-form>
         <div class="p-2 bg-gray-000 rounded border mb-2">
           <label>
-            <input
-              type="radio"
-              name="github-integration-setting"
+            {{radio-button
               value="no-access"
-              checked={{if (eq changeset.githubAuthMechanism "no-access") "checked"}}
-              {{action "changeSelection" preventDefault=false}}
-              data-test-github-settings-no-access-radio
-            >
+              groupValue=githubAuthMechanism
+              name="github-integration-setting"
+              changed="changeSelection"
+              radioClass="data-test-github-settings-no-access-radio"
+            }}
             <span class="label-body">No access</span>
             <p>Some Percy features will not be available.</p>
           </label>
 
           <label>
-            <input
-              type="radio"
-              name="github-integration-setting"
+            {{radio-button
               value="github-integration"
-              checked={{if (eq changeset.githubAuthMechanism "github-integration") "checked"}}
-              {{action "changeSelection" preventDefault=false}}
-              data-test-github-settings-access-provided-radio
-            >
+              groupValue=githubAuthMechanism
+              name="github-integration-setting"
+              changed="changeSelection"
+              radioClass="data-test-github-settings-access-provided-radio"
+            }}
             <span class="label-body">GitHub App</span>
             <p>Shows visual change status in GitHub pull requests. Has customizable access control.</p>
           </label>

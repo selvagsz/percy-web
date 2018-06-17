@@ -4229,6 +4229,13 @@ ember-promise-helpers@^1.0.3:
   dependencies:
     ember-cli-babel "^6.6.0"
 
+ember-radio-button@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/ember-radio-button/-/ember-radio-button-1.2.3.tgz#2afaa165292826b9876e2bff2f007db22938d609"
+  dependencies:
+    ember-cli-babel "^6.9.2"
+    ember-cli-htmlbars "^1.1.1"
+
 ember-remarkable@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/ember-remarkable/-/ember-remarkable-3.6.1.tgz#c351d4cf3cd943eba7bf8052ecbb13b0622a7866"

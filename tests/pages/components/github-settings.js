@@ -6,8 +6,8 @@ const SELECTORS = {
   INTEGRATION_STATUS_MESSAGE: '[data-test-github-settings-status]',
   INTEGRATION_BUTTON: '[data-test-github-settings-connect-button]',
   SETTINGS_FORM: '[data-test-github-settings-form]',
-  NO_ACCESS_RADIO_BUTTON: '[data-test-github-settings-no-access-radio]',
-  ACCESS_PROVIDED_RADIO_BUTTON: '[data-test-github-settings-access-provided-radio]',
+  NO_ACCESS_RADIO_BUTTON: '.data-test-github-settings-no-access-radio',
+  ACCESS_PROVIDED_RADIO_BUTTON: '.data-test-github-settings-access-provided-radio',
 };
 
 export const GitlabSettings = {
