@@ -34,12 +34,12 @@ describe('Integration: GitHub Settings', function() {
       expect(GithubSettings.isGithubSettingsFormVisible, 'one').to.equal(true);
       expect(GithubSettings.isNoAccessRadioButtonSelected, 'two').to.equal(true);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected, 'trhee').to.equal(false);
-      percySnapshot(this.test.fullTitle());
+      percySnapshot(this.test.fullTitle() + 'with "no access" selected');
       await GithubSettings.clickIntegrateGithubRadio();
 
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
-      percySnapshot(this.test.fullTitle());
+      percySnapshot(this.test.fullTitle() + 'with "github access" selected');
     });
 
     it('shows that the integration is installed', function() {
