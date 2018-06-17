@@ -4,7 +4,7 @@
       {{inline-svg "github-icon-lg" class="mr-1"}}
       <h2 class="text-xl font-semibold m-0">GitHub Integration</h2>
     </div>
-    {{#if (not (await isEligibleForGithubIntegration))}}
+    {{#if (not isEligibleForGithubIntegration)}}
       <div data-test-github-integration-no-github-identity>
         To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}}connect your GitHub account{{/link-to}}.
       </div>

@@ -25,22 +25,21 @@ describe('Integration: GitHub Settings', function() {
     });
 
     it('offers installation options when integration has not been installed', async function() {
-      //TODO why do i need isEligibleForGithubIntegration to be set manually?
       this.render(hbs`{{
         organizations/integrations/github-settings
         currentUser=user
         organization=organization
-        isEligibleForGithubIntegration=true
       }}`);
 
-      expect(GithubSettings.isGithubSettingsFormVisible).to.equal(true);
-      expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(true);
-      expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(false);
+      expect(GithubSettings.isGithubSettingsFormVisible, 'one').to.equal(true);
+      expect(GithubSettings.isNoAccessRadioButtonSelected, 'two').to.equal(true);
+      expect(GithubSettings.isAccessProvidedRadioButtonSelected, 'trhee').to.equal(false);
       percySnapshot(this.test.fullTitle());
 
       await GithubSettings.clickIntegrateGithubRadio();
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
+      // TODO make github integraotr component appear - changeset.githuvAuthMechanism
     });
 
     it('shows that the integration is installed', function() {
@@ -55,6 +54,7 @@ describe('Integration: GitHub Settings', function() {
       expect(GithubSettings.isGithubSettingsFormVisible).to.equal(true);
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
+      // TODO test that correct things display.
       percySnapshot(this.test.fullTitle());
     });
   });

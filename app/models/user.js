@@ -10,16 +10,22 @@ export default DS.Model.extend({
 
   identities: DS.hasMany('identities'),
 
-  hasGithubIdentity: computed('identities.@each.provider', function() {
-    return this._hasIdentityType('github');
+  hasGithubIdentity: computed('identities.@each.provider', async function() {
+    return await this.get('identities').then(identities => {
+      return identities.findBy('provider', 'github');
+    });
   }),
 
   hasEmailPasswordIdentity: computed('identities.@each.provider', function() {
-    return this.get('emailPasswordIdentity');
+    return this.get('identities').then(identities => {
+      return identities.findBy('provider', 'emailPasswordIdentity');
+    });
   }),
 
   emailPasswordIdentity: computed('identities.@each.provider', function() {
-    return this._hasIdentityType('auth0');
+    return this.get('identities').then(identities => {
+      return identities.findBy('provider', 'auth0');
+    });
   }),
 
   // These endpoints are only available on the current user and should not be accessed otherwise.
@@ -29,12 +35,4 @@ export default DS.Model.extend({
   updatedAt: DS.attr('date'),
 
   isVerified: computed.notEmpty('email'),
-
-  _hasIdentityType(provider) {
-    return DS.PromiseObject.create({
-      promise: this.get('identities').then(identity => {
-        return identity.findBy('provider', provider);
-      }),
-    });
-  },
 });

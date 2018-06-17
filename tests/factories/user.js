@@ -1,7 +1,6 @@
 import FactoryGuy from 'ember-data-factory-guy';
 import faker from 'faker';
-import {makeList} from 'ember-data-factory-guy';
-import {resolve} from 'rsvp';
+import {make, makeList} from 'ember-data-factory-guy';
 
 FactoryGuy.define('user', {
   default: {
@@ -22,8 +21,8 @@ FactoryGuy.define('user', {
     },
 
     withGithubIdentity: {
-      hasGithubIdentity: () => {
-        return resolve(true);
+      identities() {
+        return [make('identity', 'githubProvider')];
       },
     },
   },
