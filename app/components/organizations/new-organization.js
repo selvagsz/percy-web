@@ -10,7 +10,7 @@ export default Component.extend(EnsureStatefulLogin, {
 
   currentUser: computed.alias('session.currentUser'),
   githubIdentity: computed.alias('currentUser.hasGithubIdentity'),
-  hasGithubIdentity: computed.alias('currentUser.hasGithubIdentity.isTruthy'),
+  hasGithubIdentity: computed.notEmpty('githubIdentity'),
   isGithubPurchase: computed.notEmpty('githubMarketplacePlanId'),
 
   needsGithubIdentity: computed('isGithubPurchase', 'hasGithubIdentity', function() {

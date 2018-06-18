@@ -8,24 +8,18 @@ export default DS.Model.extend({
   avatarUrl: DS.attr(),
   unverifiedEmail: DS.attr(),
 
-  identities: DS.hasMany('identities'),
+  identities: DS.hasMany('identities', {async: false}),
 
-  hasGithubIdentity: computed('identities.@each.provider', async function() {
-    return await this.get('identities').then(identities => {
-      return identities.findBy('provider', 'github');
-    });
+  hasGithubIdentity: computed('identities.@each.provider', function() {
+    return this.get('identities').findBy('provider', 'github');
   }),
 
-  hasEmailPasswordIdentity: computed('identities.@each.provider', async function() {
-    return await this.get('identities').then(identities => {
-      return identities.findBy('provider', 'emailPasswordIdentity');
-    });
+  hasEmailPasswordIdentity: computed('identities.@each.provider', function() {
+    return this.get('identities').findBy('provider', 'emailPasswordIdentity');
   }),
 
-  emailPasswordIdentity: computed('identities.@each.provider', async function() {
-    return await this.get('identities').then(identities => {
-      return identities.findBy('provider', 'auth0');
-    });
+  emailPasswordIdentity: computed('identities.@each.provider', function() {
+    return this.get('identities').findBy('provider', 'auth0');
   }),
 
   // These endpoints are only available on the current user and should not be accessed otherwise.
