@@ -23,6 +23,9 @@ FactoryGuy.define('build', {
     withLongBranch: {branch: () => faker.lorem.slug(20)},
     withBaseBuild: {baseBuild: {baseBuild: FactoryGuy.belongsTo('build')}},
     withRepo: {repo: FactoryGuy.belongsTo('repo')},
+    withGithubRepo: {repo: FactoryGuy.belongsTo('repo', 'github')},
+    withGitlabRepo: {repo: FactoryGuy.belongsTo('repo', 'gitlab')},
+    withGithubEnterpriseRepo: {repo: FactoryGuy.belongsTo('repo', 'githubEnterprise')},
     finished: {
       state: 'finished',
       finishedAt: () =>
@@ -60,10 +63,12 @@ FactoryGuy.define('build', {
     hasPullRequest: {
       isPullRequest: true,
       pullRequestNumber: 123,
+      pullRequestHtmlUrl: f => `http://example.com/pull/${f.pullRequestNumber}`,
       pullRequestTitle: () => faker.lorem.sentence(5),
     },
     hasPullRequestWithoutTitle: {
       isPullRequest: true,
+      pullRequestHtmlUrl: f => `http://example.com/pull/${f.pullRequestNumber}`,
       pullRequestNumber: 456,
     },
 

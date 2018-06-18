@@ -50,9 +50,7 @@ export default DS.Model.extend({
   // useful on their own other than for listing. A repo must be linked to a project.
   repos: DS.hasMany('repo'),
 
-  isGithubIntegrated: computed('githubAuthMechanism', function() {
-    return this.get('githubAuthMechanism') !== 'no-access';
-  }),
+  isGithubIntegrated: bool('githubIntegration'),
   isGithubEnterpriseIntegrated: bool('githubEnterpriseIntegration'),
   isGitlabIntegrated: bool('gitlabIntegration'),
   isVersionControlIntegrated: bool('versionControlIntegrations.length'),

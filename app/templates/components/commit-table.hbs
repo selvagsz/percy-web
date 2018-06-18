@@ -2,7 +2,7 @@
   <tr>
     <td>Commit</td>
     <td>
-      {{#if build.isGithubLinked}}
+      {{#if build.isRepoLinked}}
         <code><a href="{{build.repo.htmlUrl}}/tree/{{build.branch}}">{{build.branch}}</a></code>
         @
         <a href="{{build.repo.htmlUrl}}/commit/{{commit.sha}}">{{commit.shaShort}}</a>

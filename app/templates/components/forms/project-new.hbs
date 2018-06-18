@@ -11,7 +11,7 @@
       autofocus=true
       placeholder="widgets-web-app"
   }}
-  {{#if organization.isGithubIntegrated}}
+  {{#if organization.isVersionControlIntegrated}}
     <strong>Link a repository</strong>
     {{projects/repo-integrator project=model}}
   {{/if}}

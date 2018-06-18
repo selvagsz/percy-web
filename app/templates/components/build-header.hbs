@@ -44,7 +44,7 @@
         Changes from
       {{/if}}
       {{#if build.isPullRequest}}
-        <a href="{{build.repo.htmlUrl}}/pull/{{build.pullRequestNumber}}" class="font-semibold truncate ml-sm">#{{build.pullRequestNumber}} - {{build.pullRequestTitle}}</a>
+        <a href="{{build.pullRequestHtmlUrl}}" class="font-semibold truncate ml-sm">#{{build.pullRequestNumber}} - {{build.pullRequestTitle}}</a>
       {{else}}
         <code class="ml-sm truncate">
           {{build.branch}}

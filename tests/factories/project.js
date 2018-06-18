@@ -5,5 +5,10 @@ FactoryGuy.define('project', {
   default: {
     name: faker.commerce.productName(),
   },
-  traits: {},
+  traits: {
+    withRepo: {repo: FactoryGuy.belongsTo('repo')},
+    withGithubRepo: {repo: FactoryGuy.belongsTo('repo', 'github')},
+    withGitlabRepo: {repo: FactoryGuy.belongsTo('repo', 'gitlab')},
+    withGithubEnterpriseRepo: {repo: FactoryGuy.belongsTo('repo', 'githubEnterprise')},
+  },
 });

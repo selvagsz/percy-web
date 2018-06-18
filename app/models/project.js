@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {not} from '@ember/object/computed';
+import {and, bool, not} from '@ember/object/computed';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -16,6 +16,11 @@ export default DS.Model.extend({
 
   // Repo will be set if this project is linked to a repository.
   repo: DS.belongsTo('repo', {async: false}),
+  isRepoConnected: bool('repo'),
+  isGithubRepo: and('isRepoConnected', 'repo.isGithubRepo'),
+  isGithubEnterpriseRepo: and('isRepoConnected', 'repo.isGithubEnterpriseRepo'),
+  isGitlabRepo: and('isRepoConnected', 'repo.isGitlabRepo'),
+  isGithubRepoFamily: and('isRepoConnected', 'repo.isGithubRepoFamily'),
 
   builds: DS.hasMany('build', {async: true}),
   tokens: DS.hasMany('token', {async: true}),

@@ -1,5 +1,5 @@
 <header class="sticky pin-t bg-white z-1">
-  <div class="flex justify-between items-center py-3 px-4">
+  <div class="flex flex-wrap justify-between items-center py-3 px-4">
     <div class="flex items-center">
       {{menu-icon
         class="mr-2 cursor-pointer show-on-tablet"
@@ -19,17 +19,20 @@
         {{inline-svg "refresh-icon"}}
       </button>
     </div>
-    {{#if project.organization.isGithubIntegrated}}
+
+    <div data-test-project-container-project-repo-linked>
       {{#if project.repo}}
         <div class="flex items-center">
           <figure class="svg-container mr-1">
-            {{inline-svg "github-icon"}}
+            {{#if (repo-logo project.repo)}}
+              {{inline-svg (repo-logo project.repo)}}
+            {{/if}}
           </figure>
-          <span class="font-semibold mr-1">Linked to</span>
+          <span class="whitespace-no-wrap font-semibold mr-1">Linked to</span>
           <a href="{{project.repo.htmlUrl}}"><code>{{project.repo.slug}}</code></a>
         </div>
       {{/if}}
-    {{/if}}
+    </div>
   </div>
   <div class="build-list-header px-4 border-b">
     {{#if builds}}

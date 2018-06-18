@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {bool, and, equal, not, or, gt} from '@ember/object/computed';
+import {alias, bool, and, equal, not, or, gt} from '@ember/object/computed';
 import DS from 'ember-data';
 import moment from 'moment';
 import {countDiffsWithSnapshotsPerBrowser} from 'percy-web/lib/filtered-comparisons';
@@ -25,10 +25,15 @@ export default DS.Model.extend({
   project: DS.belongsTo('project', {async: false}),
   repo: DS.belongsTo('repo', {async: false}),
 
-  // Check isGithubLinked before accessing repo.
-  isGithubLinked: bool('repo'),
+  // Check isRepoLinked before accessing repo.
+  isRepoLinked: bool('repo'),
 
-  isGithubPullRequest: and('isGithubLinked', 'isPullRequest'),
+  isGithubPullRequest: and('isRepoLinked', 'isPullRequest'),
+  repoSource: alias('repo.source'),
+  isGithubRepo: alias('repo.isGithubRepo'),
+  isGithubRepoFamily: alias('repo.isGithubRepoFamily'),
+  isGithubEnterpriseRepo: alias('repo.isGithubEnterpriseRepo'),
+  isGitlabRepo: alias('repo.isGitlabRepo'),
 
   buildNumber: DS.attr('number'),
   buildTitle: computed('buildNumber', function() {
@@ -153,6 +158,7 @@ export default DS.Model.extend({
   hasNoDiffs: not('hasDiffs'),
   isPullRequest: DS.attr('boolean'),
   pullRequestNumber: DS.attr('number'),
+  pullRequestHtmlUrl: DS.attr(),
   pullRequestTitle: DS.attr(),
 
   finishedAt: DS.attr('date'),
