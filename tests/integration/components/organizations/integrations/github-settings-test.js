@@ -39,6 +39,7 @@ describe('Integration: GitHub Settings', function() {
 
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
+      expect(GithubSettings.isGithubIntegratorVisible).to.equal(true);
       percySnapshot(this.test.fullTitle() + 'with "github access" selected');
     });
 
@@ -54,6 +55,7 @@ describe('Integration: GitHub Settings', function() {
       expect(GithubSettings.isGithubSettingsFormVisible).to.equal(true);
       expect(GithubSettings.isNoAccessRadioButtonSelected).to.equal(false);
       expect(GithubSettings.isAccessProvidedRadioButtonSelected).to.equal(true);
+      expect(GithubSettings.isGithubIntegrationVisible).to.equal(true);
       percySnapshot(this.test.fullTitle());
     });
   });

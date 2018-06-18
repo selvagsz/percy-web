@@ -30,6 +30,8 @@ export default Component.extend(PollingMixin, {
 
   classNames: ['OrganizationsGithubIntegrator'],
   classNameBindings: ['classes'],
+  attributeBindings: ['data-test-ogranizations-github-integrator'],
+  'data-test-ogranizations-github-integrator': true,
   actions: {
     cancelIntegrationRequest() {
       let integrationRequest = this.get('organization.githubIntegrationRequest');

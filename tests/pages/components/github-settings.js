@@ -8,6 +8,8 @@ const SELECTORS = {
   SETTINGS_FORM: '[data-test-github-settings-form]',
   NO_ACCESS_RADIO_BUTTON: '.data-test-github-settings-no-access-radio',
   ACCESS_PROVIDED_RADIO_BUTTON: '.data-test-github-settings-access-provided-radio',
+  GITHUB_INTEGRATOR: '[data-test-ogranizations-github-integrator]',
+  GITHUB_INTEGRATION_INSTALLED: '[data-test-github-integration]',
 };
 
 export const GitlabSettings = {
@@ -20,6 +22,9 @@ export const GitlabSettings = {
   isAccessProvidedRadioButtonSelected: is(':checked', SELECTORS.ACCESS_PROVIDED_RADIO_BUTTON),
 
   clickIntegrateGithubRadio: clickable(SELECTORS.ACCESS_PROVIDED_RADIO_BUTTON),
+
+  isGithubIntegratorVisible: isVisible(SELECTORS.GITHUB_INTEGRATOR),
+  isGithubIntegrationVisible: isVisible(SELECTORS.GITHUB_INTEGRATION_INSTALLED),
 };
 
 export default create(GitlabSettings);

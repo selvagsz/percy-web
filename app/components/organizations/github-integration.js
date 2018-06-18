@@ -8,6 +8,8 @@ export default Component.extend({
   currentIntegration: alias('organization.githubIntegration'),
   classNames: ['OrganizationsGithubIntegration'],
   classNameBindings: ['classes'],
+  attributeBindings: ['data-test-github-integration'],
+  'data-test-github-integration': true,
   actions: {
     cancelIntegrationRequest() {
       this.sendAction('cancelIntegrationRequest');
