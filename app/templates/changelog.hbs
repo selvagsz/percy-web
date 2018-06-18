@@ -16,9 +16,9 @@
   </div>
   <div class="container container-lg mb-3">
     <div class="w-3/4 mb-9">
-      <h1 class="text-2xl md:text-3xl md:text-4xl font-normal mb-2">Percy Changes</h1>
+      <h1 class="text-2xl md:text-3xl md:text-4xl font-normal mb-2">Percy Changelog</h1>
       <div class="w-3/4">
-        <h2 class="text-xl font-normal mb-3">We work hard to make daily improvements to Percy. Need help or found a bug? Contact Us!</h2>
+        <h2 class="text-xl font-normal mb-3">Have a look at what we're building to make automated visual testing more efficient and accessible to all.</h2>
       </div>
       <div class="mb-2">
         {{#if session.isAuthenticated}}
@@ -39,110 +39,111 @@
 
     <div class="hidden sm:block absolute h-full bg-gray-100" style="width: 1px; top: 0; left: 116px;"></div>
 
-    {{#changelog-post date="June 18, 2018" tag="feature" postId="17"}}
-      <h2>Changelog launched!</h2>
-      <p>In our commitment to transparency with our customers and the community, we've decided to maintain a public changelog, backfilling a handful of UI updates and product features we've shipped over the past three years. For more launches and announcements, visit our <a href="https://blog.percy.io">blog</a>.</p>
-    {{/changelog-post}}
+    <div class="changelog-post-list">
+      {{#changelog-post date="June 18, 2018" tag="feature" postId="17"}}
+        <h2>Changelog launched!</h2>
+        <p>In our commitment to transparency with our customers and the community, we've decided to maintain a public changelog, backfilling a handful of UI updates and product features we've shipped over the past three years. For more launches and announcements, visit our <a href="https://blog.percy.io">blog</a>.</p>
+      {{/changelog-post}}
 
-    {{#changelog-post date="June 08, 2018" tag="feature" postId="16"}}
-      <h2>Auto-approve master branch</h2>
-      <p>This project setting allows teams to filter and ‘auto-approve’ master branches. Now, branches that meet the specified filter(s) don’t require manual approval and will always be ‘green,’ reducing false positives and saving your team time.</p>
-      <img src="/images/changelog/auto-approve-master-branch.png">
-    {{/changelog-post}}
+      {{#changelog-post date="June 08, 2018" tag="feature" postId="16"}}
+        <h2>Auto-approved branches</h2>
+        <p>This project setting allows teams to filter and ‘auto-approve’ specific branches. Now, branches that meet the specified filter(s) don’t require manual approval and will always be ‘green,’ reducing false positives and saving your team time.</p>
+        <img src="/images/changelog/auto-approve-master-branch.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="June 07, 2018" tag="feature" postId="15"}}
-      <h2>Snapshot usage graph</h2>
-      <p>All admins can now get insight into daily snapshot usage throughout current billing periods, helping them understand their team's activity within Percy.</p>
-      <img src="/images/changelog/snapshot-usage-graph.png">
-    {{/changelog-post}}
+      {{#changelog-post date="June 07, 2018" tag="feature" postId="15"}}
+        <h2>Snapshot usage graph</h2>
+        <p>All admins can now get insight into daily snapshot usage throughout current billing periods, helping them understand their team's activity within Percy.</p>
+        <img src="/images/changelog/snapshot-usage-graph.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Mar 29, 2018" tag="feature" postId="14"}}
-      <h2>Universal diff toggle</h2>
-      <p>It's now even easier to review visual diffs in Percy by simply pressing the "d" key.</p>
-      <img src="/images/changelog/diff-toggle.gif">
-    {{/changelog-post}}
+      {{#changelog-post date="Mar 29, 2018" tag="feature" postId="14"}}
+        <h2>Universal diff toggle</h2>
+        <p>It's now even easier to review visual diffs in Percy by simply pressing the "d" key.</p>
+        <img src="/images/changelog/diff-toggle.gif">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Feb 26, 2018" tag="feature" postId="13"}}
-      <h2>Source HTML download</h2>
-      <p>On any build within a Percy project, users now have the ability to download the HTML behind a given snapshot.</p>
-      <img src="/images/changelog/download-source.gif">
-    {{/changelog-post}}
+      {{#changelog-post date="Feb 26, 2018" tag="feature" postId="13"}}
+        <h2>Source HTML download</h2>
+        <p>On any build within a Percy project, users now have the ability to download the HTML behind a given snapshot.</p>
+        <img src="/images/changelog/download-source.gif">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Feb 09, 2018" tag="feature" postId="12"}}
-      <h2>Snapshot approval carry-forward</h2>
-      <p>With this update, previously approved snapshots will stay approved from one build to the next for the life of the branch. In other words, we now “carry-forward” snapshot approvals. Read more about how this impacts your review process on our <a href="https://blog.percy.io/new-in-percy-improving-our-visual-diff-approval-workflow-dd298ea4c2c1">blog</a>.</p>
-    {{/changelog-post}}
+      {{#changelog-post date="Feb 09, 2018" tag="feature" postId="12"}}
+        <h2>Snapshot approval carry-forward</h2>
+        <p>With this update, previously approved snapshots will stay approved from one build to the next for the life of the branch. In other words, we now “carry-forward” snapshot approvals. Read more about how this impacts your review process on our <a href="https://blog.percy.io/new-in-percy-improving-our-visual-diff-approval-workflow-dd298ea4c2c1">blog</a>.</p>
+      {{/changelog-post}}
 
-    {{#changelog-post date="Jan 18, 2018" tag="update" postId="11"}}
-      <h2>Project pages improvements</h2>
-      <p>We gave our project pages a brand new look!</p>
-      <img src="/images/changelog/percy-page-improvements.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Jan 18, 2018" tag="update" postId="11"}}
+        <h2>Project pages improvements</h2>
+        <p>We gave our project pages a brand new look!</p>
+        <img src="/images/changelog/percy-page-improvements.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Dec 01, 2017" tag="update" postId="10"}}
-      <h2>Email and password sign up support</h2>
-      <p>You can now sign up for a Percy account using an email and password in addition to signing up through GitHub!</p>
-    {{/changelog-post}}
+      {{#changelog-post date="Dec 01, 2017" tag="update" postId="10"}}
+        <h2>Email and password sign up support</h2>
+        <p>You can now sign up for a Percy account using an email and password in addition to signing up through GitHub!</p>
+      {{/changelog-post}}
 
-    {{#changelog-post date="Jul 19, 2017" tag="update" postId="9"}}
-      <h2>Build header redesigned</h2>
-      <p>In redesigning our build headers, we've made major improvements to mobile usability, hidden extra details in an information drop down, and updated the overall UI for style.</p>
-      <img src="/images/changelog/updated-build-header.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Jul 19, 2017" tag="update" postId="9"}}
+        <h2>Build header redesigned</h2>
+        <p>This update simplifies our build header UI and makes major improvements to mobile usability.</p>
+        <img src="/images/changelog/updated-build-header.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Jun 28, 2017" tag="integration" postId="8"}}
-      <h2>Storybook integration</h2>
-      <p>Bringing visual testing to React and component libraries! When you add Percy to your Storybook, it automatically adds visual testing and review to every story, doing the hard work of visual testing for you. Percy highlights exactly which pixels have changed allowing you to quickly find visual bugs that have been introduced. Read more on our <a href="https://blog.percy.io/turbocharge-your-react-development-with-storybook-and-percy-d9bff19c187e">blog</a>.</p>
-      <img src="/images/changelog/percy-storybook-integration.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Jun 28, 2017" tag="integration" postId="8"}}
+        <h2>Storybook integration</h2>
+        <p>We're bringing visual testing to React and component libraries! When you add Percy to your Storybook, it automatically adds visual testing and review to every story, doing the hard work of visual testing for you. Percy highlights exactly which pixels have changed allowing you to quickly find visual bugs that have been introduced. Read more on our <a href="https://blog.percy.io/turbocharge-your-react-development-with-storybook-and-percy-d9bff19c187e">blog</a>.</p>
+        <img src="/images/changelog/percy-storybook-integration.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Mar 30, 2017" tag="update" postId="7"}}
-      <h2>Bundling of "no diff" snapshots</h2>
-      <p>Snapshots without visual diffs are now batched together, simplifying the diff review UI and workflow.</p>
-    {{/changelog-post}}
+      {{#changelog-post date="Mar 30, 2017" tag="update" postId="7"}}
+        <h2>Bundling of "no diff" snapshots</h2>
+        <p>Snapshots without visual diffs are now batched together, simplifying the diff review UI and workflow.</p>
+      {{/changelog-post}}
 
-    {{#changelog-post date="Dec 08, 2016" tag="update" postId="6"}}
-      <h2>Open sourced front-end</h2>
-      <p>As big open source advocates, we now open source our entire front-end Ember application. Check out our repos and start contributing to our <a href="https://github.com/percy/percy-web">GitHub</a>!</p>
-    {{/changelog-post}}
+      {{#changelog-post date="Dec 08, 2016" tag="update" postId="6"}}
+        <h2>Open sourced front-end</h2>
+        <p>As big open source advocates, we now open source our entire front-end Ember application. Check out our <a href="https://github.com/percy/percy-web">open source repos</a> and start contributing on GitHub!</p>
+      {{/changelog-post}}
 
-    {{#changelog-post date="Sep 29, 2016" tag="integration" postId="5"}}
-      <h2>Buildkite support</h2>
-      <p>You can now take advantage of Percy’s continuous visual integration service combined with your test suites on Buildkite. We’ve added support to our Ruby, Python, and JavaScript libraries—just configure the PERCY_TOKEN and PERCY_PROJECT environment variables and our client libraries will take care of the rest! See our <a href="https://blog.percy.io/launched-buildkite-support-in-percy-53b440cd5ce6">docs</a> for more details.</p>
-      <img src="/images/changelog/percy-buildkite-support.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Sep 29, 2016" tag="integration" postId="5"}}
+        <h2>Buildkite support</h2>
+        <p>You can now take advantage of Percy’s continuous visual integration service combined with your test suites on Buildkite. We’ve added support to our Ruby, Python, and JavaScript libraries—just configure the PERCY_TOKEN and PERCY_PROJECT environment variables and our client libraries will take care of the rest! See our <a href="https://blog.percy.io/launched-buildkite-support-in-percy-53b440cd5ce6">docs</a> for more details.</p>
+        <img src="/images/changelog/percy-buildkite-support.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Jul 11, 2016" tag="integration" postId="4"}}
-      <h2>Ember support</h2>
-      <p>We’ve just launched ember-percy, a drop-in client for visual regression testing for Ember apps. Learn more about getting started on our<a href="https://blog.percy.io/continuous-visual-integration-for-ember-d9c438e7c4fa">blog</a>.</p>
-      <img src="/images/changelog/percy-ember-support.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Jul 11, 2016" tag="integration" postId="4"}}
+        <h2>Ember support</h2>
+        <p>We’ve just launched ember-percy, a drop-in client for visual regression testing for Ember apps. Learn more about getting started on our <a href="https://blog.percy.io/continuous-visual-integration-for-ember-d9c438e7c4fa">blog</a>.</p>
+        <img src="/images/changelog/percy-ember-support.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Mar 02, 2016" tag="feature" postId="3"}}
-      <h2>Support for responsive diffs</h2>
-      <p>We're proud to release this #1 requested feature, allowing teams to automatically take screenshots at multiple responsive breakpoint widths. Learn more about how to get started with responsive visual diffing in our <a href="https://percy.io/docs/learn/responsive">docs</a>.</p>
-      <img src="/images/changelog/responsive-visual-diffs.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Mar 02, 2016" tag="feature" postId="3"}}
+        <h2>Support for responsive diffs</h2>
+        <p>We're proud to release this #1 requested feature, allowing teams to automatically take screenshots at multiple responsive breakpoint widths. Learn more about how to get started with responsive visual diffing in our <a href="https://percy.io/docs/learn/responsive">docs</a>.</p>
+        <img src="/images/changelog/responsive-visual-diffs.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="Oct 26, 2015" tag="update" postId="2"}}
-      <h2>Percy launched for all!</h2>
-      <p>After a successful beta test, we're officially open for business! You no longer need an invite to login and we have pushed v1.0.0 of all client libraries. You can count on stable and backwards-compatible updates that follow semantic versioning.</p>
-      <img src="/images/changelog/percy-open-for-business.png">
-    {{/changelog-post}}
+      {{#changelog-post date="Oct 26, 2015" tag="update" postId="2"}}
+        <h2>Percy launched for all!</h2>
+        <p>After a successful beta test, we're officially open for business! You no longer need an invite to login and we have pushed v1.0.0 of all client libraries. You can count on stable and backwards-compatible updates that follow semantic versioning.</p>
+        <img src="/images/changelog/percy-open-for-business.png">
+      {{/changelog-post}}
 
-    {{#changelog-post date="July 22, 2015" tag="integration" postId="1"}}
-      <h2>Support for several CI services, static sites, and GitHub pages</h2>
-      <p>With this update we've added support for Travis CI, Circle CI, Jenkins, and Codeship, as well as static sites with a single command. This lets you easily get automated visual diffs of sites generated by Jekyll (ie. for GitHub Pages), Grow, or any other static site generator. Learn more on our <a href="https://blog.percy.io/percy-beta-launch-af894d86d346">blog</a>.</p>
-      <img src="/images/changelog/visual-testing-ci-support.png">
-    {{/changelog-post}}
+      {{#changelog-post date="July 22, 2015" tag="integration" postId="1"}}
+        <h2>Support for several CI services, static sites, and GitHub pages</h2>
+        <p>With this update we've added support for Travis CI, Circle CI, Jenkins, and Codeship, as well as static sites with a single command. This lets you easily get automated visual diffs of sites generated by Jekyll (ie. for GitHub Pages), Grow, or any other static site generator. Learn more on our <a href="https://blog.percy.io/percy-beta-launch-af894d86d346">blog</a>.</p>
+        <img src="/images/changelog/visual-testing-ci-support.png">
+      {{/changelog-post}}
 
-    {{!-- {{#changelog-post date="xxxx xx, 2018" tag="feature / integration / update / bugfix" postId="1"}}
-      <h2>Title of post go in an h2</h2>
-      <p>Paragraphs look like this</p>
-      <img src="/images/changelog/filename.gif">
-      <a href="#">link name</a>
-    {{/changelog-post}} --}}
-
+      {{!-- {{#changelog-post date="xxxx xx, 2018" tag="feature / integration / update / bugfix" postId="1"}}
+        <h2>Title of post go in an h2</h2>
+        <p>Paragraphs look like this</p>
+        <img src="/images/changelog/filename.gif">
+        <a href="#">link name</a>
+      {{/changelog-post}} --}}
+    </div>
   </div>
 </section>
 
