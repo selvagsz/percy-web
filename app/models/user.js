@@ -8,12 +8,13 @@ export default DS.Model.extend({
   avatarUrl: DS.attr(),
   unverifiedEmail: DS.attr(),
 
-  identities: DS.hasMany('identities', {async: false}),
+  identities: DS.hasMany('identities'),
 
   hasGithubIdentity: computed('identities.@each.provider', function() {
     return this.get('identities').findBy('provider', 'github');
   }),
 
+  // is this used anymore?
   hasEmailPasswordIdentity: computed('identities.@each.provider', function() {
     return this.get('identities').findBy('provider', 'emailPasswordIdentity');
   }),
