@@ -1,4 +1,4 @@
-import {visitable, collection, create, isVisible} from 'ember-cli-page-object';
+import {visitable, collection, clickable, create, isVisible} from 'ember-cli-page-object';
 import {BuildCard} from 'percy-web/tests/pages/components/build-card';
 
 const SELECTORS = {
@@ -6,6 +6,7 @@ const SELECTORS = {
   REPO_LINKED: '[data-test-project-container-project-repo-linked]',
   GITHUB_LOGO: 'svg[data-test-github-icon]',
   GITLAB_LOGO: 'svg[data-test-gitlab-icon]',
+  QUICKSTART_BUTTON: '[data-test-quickstart-button]',
 };
 
 const ProjectPage = {
@@ -36,6 +37,8 @@ const ProjectPage = {
       return this.builds().filter(build => !!build.isFinished);
     },
   },
+
+  clickQuickstartButton: clickable(SELECTORS.QUICKSTART_BUTTON),
 };
 
 export default create(ProjectPage);

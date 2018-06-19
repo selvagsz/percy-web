@@ -2,6 +2,7 @@ import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import freezeMoment from '../helpers/freeze-moment';
 import moment from 'moment';
 import ProjectPage from 'percy-web/tests/pages/project-page';
+import ProjectSettingsPage from 'percy-web/tests/pages/project-settings-page';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -52,6 +53,7 @@ describe('Acceptance: Project', function() {
   });
 
   describe('waiting for first snapshot', function() {
+    let urlParams;
     setupSession(function(server) {
       let organization = server.create('organization', 'withUser');
       let project = server.create('project', {
@@ -60,20 +62,27 @@ describe('Acceptance: Project', function() {
       });
       server.create('token', {project});
       this.project = project;
+
+      urlParams = {
+        orgSlug: organization.slug,
+        projectSlug: project.slug,
+      };
     });
 
     it('shows environment variables and demo project instructions', async function() {
-      await visit(`/${this.project.fullSlug}`);
+      await ProjectPage.visitProject(urlParams);
       expect(currentPath()).to.equal('organization.project.index');
 
       await percySnapshot(this.test);
-      await click('a:contains("Demo Project Instructions")');
+      await ProjectPage.clickQuickstartButton();
       await percySnapshot(this.test.fullTitle() + ' | demo project instructions are visible');
     });
   });
 
   describe('settings', function() {
     let organization;
+    let enabledProject;
+    let disabledProject;
     let versionControlIntegration;
     let repos;
 
@@ -81,41 +90,38 @@ describe('Acceptance: Project', function() {
       organization = server.create('organization', 'withUser');
       versionControlIntegration = server.create('versionControlIntegration', 'github');
       repos = server.createList('repo', 3);
-      let disabled = server.create('project', {
+      disabledProject = server.create('project', {
         name: 'Disabled Project',
         isEnabled: false,
         organization,
       });
-      let enabled = server.create('project', {name: 'Enabled Project', organization});
-
-      this.enabledProject = enabled;
-      this.disabledProject = disabled;
+      enabledProject = server.create('project', {name: 'Enabled Project', organization});
     });
 
     it('for disabled', async function() {
-      await visit(`/${this.disabledProject.fullSlug}/settings`);
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: disabledProject.slug,
+      });
+
       expect(currentPath()).to.equal('organization.project.settings');
-      expect(find('[data-test-sidenav-list-projects] li:eq(0)').text()).to.match(
-        /Disabled Project/,
-      );
-      expect(find('[data-test-sidenav-list-projects] li:eq(1)').text()).to.match(/Enabled Project/);
-      expect(find('[data-test-sidenav-list-projects] li:eq(2)').text()).to.match(
-        /Create new project/,
-      );
+      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Disabled Project/);
+      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
 
       await percySnapshot(this.test);
     });
 
     it('for enabled', async function() {
-      await visit(`/${this.enabledProject.fullSlug}/settings`);
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
+
       expect(currentPath()).to.equal('organization.project.settings');
-      expect(find('[data-test-sidenav-list-projects] li:eq(0)').text()).to.match(
-        /Disabled Project/,
-      );
-      expect(find('[data-test-sidenav-list-projects] li:eq(1)').text()).to.match(/Enabled Project/);
-      expect(find('[data-test-sidenav-list-projects] li:eq(2)').text()).to.match(
-        /Create new project/,
-      );
+      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Disabled Project/);
+      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
 
       await percySnapshot(this.test);
     });
@@ -123,15 +129,21 @@ describe('Acceptance: Project', function() {
     it('displays github integration select menu', async function() {
       organization.update({versionControlIntegrations: [versionControlIntegration], repos});
 
-      await visit(`/${this.enabledProject.fullSlug}/settings`);
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
       await percySnapshot(this.test);
     });
 
     it('displays Auto-Approve Branches setting', async function() {
-      await visit(`/${this.enabledProject.fullSlug}/settings`);
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
       await percySnapshot(this.test);
 
-      expect(find('h2:contains("Auto-Approve Branches")').length).to.equal(1);
+      expect(ProjectSettingsPage.isAutoApproveBranchesVisible).to.equal(true);
     });
   });
 

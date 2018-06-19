@@ -1,4 +1,4 @@
-<div class="settings-nav-wrapper flex relative">
+<div class="settings-nav-wrapper flex relative" data-test-organizations-settings-nav-wrapper>
   <aside class="settings-sidebar h-screen-header overflow-y-scroll flex-no-shrink sticky pin-t pt-3 border-r" data-test-sidenav>
     <section class="border-b border-gray-000 mb-3">
       <ul class="list-reset mb-2">
@@ -19,12 +19,12 @@
     <section>
       <ul class="list-reset pb-4 mb-0" data-test-sidenav-list-projects>
         {{#each organization.projects as |project|}}
-        <li class="mb-0">
+        <li class="mb-0" data-test-sidenav-list-item>
           {{#link-to "organization.project.settings" organization.slug project.slug classNames="block mb-2 px-4 link-gray font-semibold
           truncate"}}{{project.name}}{{/link-to}}
         </li>
         {{/each}}
-        <li class="px-4">
+        <li class="px-4" data-test-sidenav-list-item>
           {{#link-to "organizations.organization.projects.new" organization.slug classNames="font-semibold"}}Create new project{{/link-to}}
         </li>
       </ul>
