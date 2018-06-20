@@ -21,23 +21,20 @@
         <span class="text-sm font-mono">{{build.commit.shaShort}}</span>
       {{/if}}
     </div>
-    <div class="flex flex-wrap items-center" data-test-build-card-commit-details>
+    <div class="flex items-center" data-test-build-card-commit-details>
       {{#if build.isRepoLinked}}
         {{#if build.commit}}
           {{#if build.isPullRequest}}
-            <div class='inline-flex'>
-              {{inline-svg "pull-request-icon" class="mr-1"}}
-              <span class='flex-grow' data-test-pull-request-link>
-                <a href="{{build.pullRequestHtmlUrl}}" class="whitespace-no-wrap truncate font-semibold mr-1" onclick={{action "stopPropagation"}}>#{{build.pullRequestNumber}} {{build.pullRequestTitle}}</a>
-              </span>
-            </div>
+            {{inline-svg "pull-request-icon" class="mr-1"}}
+              <a href="{{build.pullRequestHtmlUrl}}" class="whitespace-no-wrap font-semibold mr-1" onclick={{action "stopPropagation"}}>#{{build.pullRequestNumber}}</a>
+            <span class="truncate" data-test-pull-request-link>
+              <a href="{{build.pullRequestHtmlUrl}}" class="whitespace-no-wrap font-semibold mr-1" onclick={{action "stopPropagation"}}>{{build.pullRequestTitle}}</a>
+            </span>
           {{else}}
             {{inline-svg "commit-icon" class="mr-1"}}
           {{/if}}
-            <div class='flex-nowrap'>
-              <strong class="whitespace-no-wrap mr-1">{{build.commit.authorName}}</strong>
-              <span class="text-gray-400 truncate">{{build.commit.message}}</span>
-            </div>
+          <strong class="whitespace-no-wrap mr-1">{{build.commit.authorName}}</strong>
+          <span class="text-gray-400 truncate">{{build.commit.message}}</span>
         {{/if}}
       {{/if}}
     </div>

@@ -17,7 +17,7 @@ export const BuildCard = {
   commitDetails: {
     scope: SELECTORS.COMMIT_DETAILS,
     pullRequestUrl: {
-      scope: SELECTORS.PULL_REQUEST_URL,
+      scope: SELECTORS.PULL_REQUEST_LINK,
       text: text(),
       link: attribute('href', 'a'),
     },

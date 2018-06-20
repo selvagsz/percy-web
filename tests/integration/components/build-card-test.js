@@ -45,6 +45,21 @@ describe('Integration: BuildCard', function() {
     });
   });
 
+  describe('with a build with a long commit message', function() {
+    beforeEach(function() {
+      const build = make('build', 'withGithubRepo', 'withLongHeadCommitMessage', {buildNumber: 1});
+      this.setProperties({build});
+
+      this.render(hbs`{{build-card
+        build=build
+      }}`);
+    });
+
+    it('renders correctly', function() {
+      percySnapshot(this.test.fullTitle());
+    });
+  });
+
   describe('with a github repo', function() {
     beforeEach(function() {
       const build = make('build', 'withGithubRepo', 'hasPullRequest', {buildNumber: 1});
