@@ -1,30 +1,44 @@
-{{snapshot-viewer-header
-  fullscreen=false
-  snapshot=snapshot
-  snapshotSelectedWidth=snapshotSelectedWidth
-  selectedComparison=selectedComparison
-  toggleViewMode=(action showSnapshotFullModalTriggered snapshot.id snapshotSelectedWidth activeBrowser)
-  updateSelectedWidth=(action "updateSelectedWidth")
-  createReview=createReview
-  expandSnapshot=(action "expandSnapshot")
-  activeBrowser=activeBrowser
-  updateActiveBrowser=updateActiveBrowser
-}}
+{{#if shouldFullyRender}}
+  {{snapshot-viewer-header
+    fullscreen=false
+    snapshot=snapshot
+    snapshotSelectedWidth=snapshotSelectedWidth
+    selectedComparison=selectedComparison
+    toggleViewMode=(action showSnapshotFullModalTriggered snapshot.id snapshotSelectedWidth activeBrowser)
+    updateSelectedWidth=(action "updateSelectedWidth")
+    createReview=createReview
+    expandSnapshot=(action "expandSnapshot")
+    activeBrowser=activeBrowser
+    updateActiveBrowser=updateActiveBrowser
+  }}
 
-{{#if isExpanded}}
-  {{#if selectedComparison}}
-    {{comparison-viewer
-      comparison=selectedComparison
-      allDiffsShown=allDiffsShown
-      snapshotSelectedWidth=snapshotSelectedWidth
-      isDefaultExpanded=isDefaultExpanded
-      isUnchangedSnapshotExpanded=isUnchangedSnapshotExpanded
-      data-test-SnapshotViewer-comparison=true
-      activeBrowser=activeBrowser
-    }}
-  {{else}}
-    <div class="p-2 text-center bg-gray-000 border-b" data-test-SnapshotViewer-noComparison>
-      No snapshot taken at {{snapshotSelectedWidth}}px.
-    </div>
+  {{#if isExpanded}}
+    {{#if selectedComparison}}
+      {{comparison-viewer
+        comparison=selectedComparison
+        allDiffsShown=allDiffsShown
+        snapshotSelectedWidth=snapshotSelectedWidth
+        isDefaultExpanded=isDefaultExpanded
+        isUnchangedSnapshotExpanded=isUnchangedSnapshotExpanded
+        data-test-SnapshotViewer-comparison=true
+        activeBrowser=activeBrowser
+      }}
+    {{else}}
+      <div class="p-2 text-center bg-gray-000 border-b" data-test-SnapshotViewer-noComparison>
+        No snapshot taken at {{snapshotSelectedWidth}}px.
+      </div>
+    {{/if}}
   {{/if}}
+{{else}}
+  <header class="SnapshotViewer-header sticky pin-t grid gap-4 z-1 px-2 py-1 bg-gray-000 border-t border-b" data-test-snapshot-viewer-lazy-header>
+  <div class="flex items-center truncate">
+
+    <figure class="svg-container mr-1" data-test-SnapshotViewer-comparisonIcon>
+      {{inline-svg "comparison-icon"}}
+    </figure>
+
+    <div class="Viewer-header-title SnapshotViewer-title cursor-default truncate font-bold" title="{{snapshot.name}}" data-test-SnapshotViewer-title>{{snapshot.name}}</div>
+  </div>
+
+  </header>
 {{/if}}

@@ -4,8 +4,9 @@ import {computed, observer} from '@ember/object';
 import Component from '@ember/component';
 import {next} from '@ember/runloop';
 import filteredComparisons, {hasDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
+import InViewportMixin from 'ember-in-viewport';
 
-export default Component.extend({
+export default Component.extend(InViewportMixin, {
   // required params
   allDiffsShown: null,
   build: null,
@@ -31,6 +32,16 @@ export default Component.extend({
 
   snapshotSelectedWidth: or('userSelectedWidth', 'filteredComparisons.defaultWidth'),
   userSelectedWidth: null,
+
+  shouldDeferRendering: false,
+  shouldRenderImmediately: not('shouldDeferRendering'),
+  inViewport: false,
+
+  didEnterViewport() {
+    this.set('inViewport', true);
+  },
+
+  shouldFullyRender: or('shouldRenderImmediately', 'inViewport'),
 
   filteredComparisons: computed('snapshot', 'activeBrowser', 'snapshotSelectedWidth', function() {
     return filteredComparisons.create({
@@ -65,13 +76,12 @@ export default Component.extend({
     this.set('_shouldScroll', true);
   }),
 
-  isDefaultExpanded: true,
   isFocus: alias('isActiveSnapshot'),
   isExpanded: or('isUserExpanded', '_isDefaultExpanded'),
   isUserExpanded: false,
 
   _isDefaultExpanded: computed(
-    'isDefaultExpanded',
+    'shouldDeferRendering',
     'snapshot.isApproved',
     'build.isApproved',
     'isActiveSnapshot',
@@ -83,7 +93,7 @@ export default Component.extend({
       } else if (this.get('snapshot.isApproved')) {
         return false;
       } else {
-        return this.get('isDefaultExpanded');
+        return true;
       }
     },
   ),
