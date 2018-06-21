@@ -4,7 +4,6 @@ import {beforeEach, afterEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
-import seedFaker from '../../helpers/seed-faker';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import BuildInfoDropdown from 'percy-web/tests/pages/components/build-info-dropdown';
 import AdminMode from 'percy-web/lib/admin-mode';
@@ -17,7 +16,6 @@ describe('Integration: BuildInfoDropdownComponent', function() {
 
   beforeEach(function() {
     isAdminModeEnabled = this.get('isAdminEnabled');
-    seedFaker();
     setupFactoryGuy(this.container);
     BuildInfoDropdown.setContext(this);
     AdminMode.clear();

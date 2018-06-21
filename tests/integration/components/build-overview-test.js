@@ -5,7 +5,6 @@ import {expect} from 'chai';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
-import seedFaker from '../../helpers/seed-faker';
 import sinon from 'sinon';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
@@ -15,7 +14,6 @@ describe('Integration: BuildOverviewComponent', function() {
   });
 
   beforeEach(function() {
-    seedFaker();
     setupFactoryGuy(this.container);
   });
 

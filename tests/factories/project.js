@@ -3,7 +3,7 @@ import faker from 'faker';
 
 FactoryGuy.define('project', {
   default: {
-    name: faker.commerce.productName(),
+    name: () => faker.commerce.productName(),
   },
   traits: {
     withRepo: {repo: FactoryGuy.belongsTo('repo')},

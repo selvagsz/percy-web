@@ -4,7 +4,6 @@ import {beforeEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
-import seedFaker from '../../helpers/seed-faker';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: BuildOverviewInfoComponent', function() {
@@ -13,7 +12,6 @@ describe('Integration: BuildOverviewInfoComponent', function() {
   });
 
   beforeEach(function() {
-    seedFaker();
     setupFactoryGuy(this.container);
   });
 
