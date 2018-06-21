@@ -8437,9 +8437,9 @@ percy-client@^2.8.0:
   optionalDependencies:
     lint-staged "^4.1.3"
 
-"percy-docs@git+https://github.com/percy/percy-docs.git#49b795f200ac70e6922b8262f6bf189d29f8d49e":
+"percy-docs@git+https://github.com/percy/percy-docs.git#f38b365135dab4f7749296dc37d03a324ced7779":
   version "0.0.0"
-  resolved "git+https://github.com/percy/percy-docs.git#49b795f200ac70e6922b8262f6bf189d29f8d49e"
+  resolved "git+https://github.com/percy/percy-docs.git#f38b365135dab4f7749296dc37d03a324ced7779"
   dependencies:
     broccoli-flatiron "git+https://github.com/percy/broccoli-flatiron.git"
     broccoli-funnel "^2.0.1"
