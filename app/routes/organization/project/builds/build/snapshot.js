@@ -58,29 +58,43 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
     this._updateQueryParams({newBrowserSlug: newBrowser.get('familySlug')});
   },
 
+  activate() {
+    this._track('Snapshot Fullscreen Viewed');
+  },
+
+  _track(actionName, extraProps) {
+    let build = this.modelFor('organization.project.builds.build');
+    const genericProps = {
+      project_id: build.get('project.id'),
+      project_slug: build.get('project.slug'),
+      build_id: build.get('id'),
+      snapshot_id: this.get('params').snapshot_id,
+    };
+    const organization = build.get('project.organization');
+
+    const props = Object.assign({}, extraProps, genericProps);
+    this.analytics.track(actionName, organization, props);
+  },
+
   actions: {
     didTransition() {
       this._super(...arguments);
       this.send('updateIsHidingBuildContainer', true);
-
-      let build = this.modelFor('organization.project.builds.build');
-      let organization = build.get('project.organization');
-      let eventProperties = {
-        project_id: build.get('project.id'),
-        project_slug: build.get('project.slug'),
-        build_id: build.get('id'),
-        snapshot_id: this.get('params').snapshot_id,
-      };
-      this.analytics.track('Snapshot Fullscreen Viewed', organization, eventProperties);
     },
     updateComparisonMode(mode) {
       this._updateQueryParams({comparisonMode: mode});
+      this._track('Fullscreen: Comparison Mode Switched', {mode});
     },
     updateActiveBrowser(newBrowser) {
       this._updateActiveBrowser(newBrowser);
+      this._track('Fullscreen: Browser Switched', {
+        browser_id: newBrowser.get('id'),
+        browser_family_slug: newBrowser.get('browserFamily.slug'),
+      });
     },
     transitionRouteToWidth(width) {
       this._updateQueryParams({newWidth: width});
+      this._track('Fullscreen: Width Switched', {width});
     },
   },
 

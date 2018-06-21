@@ -117,6 +117,13 @@ export default Component.extend(PollingMixin, {
     updateActiveBrowser(newBrowser) {
       this.set('chosenBrowser', newBrowser);
       this._resetUnchangedSnapshots();
+      const organization = this.get('build.project.organization');
+      const eventProperties = {
+        browser_id: newBrowser.get('id'),
+        browser_family_slug: newBrowser.get('browserFamily.slug'),
+        build_id: this.get('build.id'),
+      };
+      this.get('analytics').track('Browser Switched', organization, eventProperties);
     },
 
     toggleUnchangedSnapshotsVisible() {

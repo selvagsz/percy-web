@@ -207,6 +207,11 @@ describe('Integration: BuildContainer', function() {
 
       const stub = sinon.stub();
 
+      // Don't use the analytics service.
+      const analyticsStub = {
+        track: stub,
+      };
+
       mockSnapshotQueryService(this, [unchangedSnapshot]);
 
       this.setProperties({
@@ -214,12 +219,14 @@ describe('Integration: BuildContainer', function() {
         allChangedBrowserSnapshotsSorted,
         stub,
         snapshotWithDiffInBothBrowsers,
+        analyticsStub,
       });
       this.render(hbs`{{build-container
         build=build
         allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
         createReview=stub
         showSupport=stub
+        analytics=analyticsStub
       }}`);
     });
 
