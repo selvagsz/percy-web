@@ -1,0 +1,23 @@
+    <div
+      class="browser-family-selector overflow-hidden cursor-pointer flex justify-center bg-white-pattern border border-transparent rounded p-3 shadow-1 {{if isBrowserEnabled "is-browser-active"}} {{concat "data-test-browser-selector-" family.slug}}"
+      {{action updateProjectBrowserTargets family}}
+      data-test-browser-selector-button>
+      <div class="browser-family-selector-detail flex flex-col items-center">
+        {{inline-svg (concat family.slug "-icon-lg") class="browser-family-selector-icon mb-1"}}
+        <div class="browser-family-selector-name font-semibold leading-none mb-2">
+          {{#unless isBrowserEnabled}}
+            <span class="opacity-0">Enable</span>
+          {{/unless}}
+          {{capitalize family.slug}}
+        </div>
+        {{#if isBrowserEnabled}}
+        <div class="border border-purple-400 bg-purple-300 rounded-full text-purple-600 text-sm font-semibold px-2 py-sm">
+          Enabled
+        </div>
+        {{else}}
+          <div class="browser-family-selector-enable border rounded text-gray-300 text-sm font-semibold px-2 py-sm">
+            Enable Browser
+          </div>
+        {{/if}}
+      </div>
+    </div>

@@ -25,6 +25,8 @@ export default DS.Model.extend({
   builds: DS.hasMany('build', {async: true}),
   tokens: DS.hasMany('token', {async: true}),
 
+  projectBrowserTargets: DS.hasMany('projectBrowserTargets', {async: false}),
+
   _lastBuild: computed('organization', 'slug', 'builds', function() {
     return this.store.query('build', {project: this, page: {limit: 1}});
   }),

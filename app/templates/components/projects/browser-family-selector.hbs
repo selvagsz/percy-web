@@ -1,0 +1,19 @@
+<div class="grid col-2 gap-2" data-test-browser-family-selector>
+  {{#each sortedAllBrowserFamilies as |family|}}
+    {{projects/browser-family-selector-button
+      family=family
+      existingBrowserFamilies=existingBrowserFamilies
+      updateProjectBrowserTargets=(action "updateProjectBrowserTargets")
+    }}
+  {{/each}}
+</div>
+
+{{#if areAllBrowsersSelected}}
+  <div class="rounded border p-2 mt-2">
+     <strong>Note:</strong> Removing a browser will decrease your snapshot usage. If you would like to add the browser back at some point in the future, the browser will be updated to our newest version of that browser, and the subsequent build will create a new baseline for that browser.
+  </div>
+{{else}}
+  <div class="rounded border p-2 mt-2">
+    <strong>Note:</strong> Adding a browser to your project will increase your snapshot usage.
+  </div>
+{{/if}}

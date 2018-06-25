@@ -3,6 +3,9 @@ import freezeMoment from '../helpers/freeze-moment';
 import moment from 'moment';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 import ProjectSettingsPage from 'percy-web/tests/pages/project-settings-page';
+import sinon from 'sinon';
+import {beforeEach, afterEach} from 'mocha';
+import AdminMode from 'percy-web/lib/admin-mode';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -95,7 +98,10 @@ describe('Acceptance: Project', function() {
         isEnabled: false,
         organization,
       });
-      enabledProject = server.create('project', {name: 'Enabled Project', organization});
+      enabledProject = server.create('project', 'withChromeAndFirefox', {
+        name: 'Enabled Project',
+        organization,
+      });
     });
 
     it('for disabled', async function() {
@@ -144,6 +150,74 @@ describe('Acceptance: Project', function() {
       await percySnapshot(this.test);
 
       expect(ProjectSettingsPage.isAutoApproveBranchesVisible).to.equal(true);
+    });
+
+    describe('browser toggling', function() {
+      let deleteStub;
+      let createStub;
+      let projectWithBothBrowsers;
+      let projectWithFirefoxOnly;
+      let isAdminModeEnabled;
+
+      const createData = {
+        data: {
+          relationships: {
+            'browser-family': {data: {type: 'browser-families', id: '2'}},
+            project: {data: {type: 'projects', id: '2'}},
+          },
+          type: 'project-browser-targets',
+        },
+      };
+
+      beforeEach(function() {
+        isAdminModeEnabled = this.isAdminEnabled;
+        AdminMode.setAdminMode();
+        deleteStub = sinon.stub();
+        createStub = sinon.stub();
+        projectWithBothBrowsers = enabledProject;
+        projectWithFirefoxOnly = server.create('project', 'withFirefox', {organization});
+
+        server.del('/project-browser-targets/:id', (schema, request) => {
+          deleteStub(request.url);
+        });
+
+        server.post('/project-browser-targets', () => {
+          createStub(createData);
+          // This response object is not used for testing,
+          // it is only used to make mirage think it has recieved a valid response.
+          return server.create('projectBrowserTarget', {
+            project: projectWithFirefoxOnly,
+            browserTarget: server.create('browserTarget', 'withChromeBrowserFamily'),
+          });
+        });
+      });
+
+      afterEach(function() {
+        this.isAdminEnabled = isAdminModeEnabled;
+      });
+
+      it('calls correct endpoint when removing a browser', async function() {
+        await ProjectSettingsPage.visitProjectSettings({
+          orgSlug: organization.slug,
+          projectSlug: projectWithBothBrowsers.slug,
+        });
+        await ProjectSettingsPage.browserSelector.chromeButton.click();
+        await percySnapshot(this.test);
+
+        expect(deleteStub).to.have.been.calledWith('/api/v1/project-browser-targets/2');
+      });
+
+      it('calls correct endpoint when adding a browser', async function() {
+        await ProjectSettingsPage.visitProjectSettings({
+          orgSlug: organization.slug,
+          projectSlug: projectWithFirefoxOnly.slug,
+        });
+
+        await ProjectSettingsPage.browserSelector.chromeButton.click();
+        await percySnapshot(this.test);
+
+        expect(createStub).to.have.been.calledWith(createData);
+      });
     });
   });
 

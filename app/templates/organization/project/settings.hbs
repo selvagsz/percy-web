@@ -21,9 +21,29 @@
   </section>
   <section class="p-2">
     {{#if model.project.isEnabled}}
+      {{#if (is-admin)}}
+        <div class="bg-white rounded shadow-1 p-2 mb-2">
+          <h2 class="text-xl font-semibold mb-1">Browsers</h2>
+          <p class="text-gray-400 mb-2">
+            This setting lets you change which browser your snapshots are created in. Better yet, you can enable multiple browsers for cross browser testing snapshots!
+          </p>
+          <div class="p-2 bg-gray-000 rounded border">
+            {{projects/browser-family-selector
+              allBrowserFamilies=model.browserFamilies
+              project=model.project
+              removeProjectBrowserTargetForFamily=(route-action "removeProjectBrowserTargetForFamily")
+              addProjectBrowserTargetForFamily=(route-action "addProjectBrowserTargetForFamily")
+            }}
+          </div>
+        </div>
+      {{/if}}
+
       <div class="bg-white rounded shadow-1 p-2 mb-2">
         <h2 class="text-xl font-semibold mb-1">Project Details</h2>
-        {{forms/project-edit project=model.project saveSuccess="projectUpdated"}}
+        {{forms/project-edit
+          project=model.project
+          saveSuccess="projectUpdated"
+        }}
       </div>
 
       <div class="bg-white rounded shadow-1 p-2 mb-2">

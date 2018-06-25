@@ -1,7 +1,15 @@
 import {JSONAPISerializer} from 'ember-cli-mirage';
 
 export default JSONAPISerializer.extend({
-  include: ['organization'],
+  include: [
+    'organization',
+    'repo',
+    'browserTargets',
+    'browserTargets.browserFamily',
+    'projectBrowserTargets',
+    'projectBrowserTargets.project',
+    'projectBrowserTargets.browserTarget',
+  ],
   links(project) {
     return {
       tokens: {

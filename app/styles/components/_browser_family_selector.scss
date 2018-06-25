@@ -1,0 +1,53 @@
+.browser-family-selector,
+.browser-family-selector-enable,
+.browser-family-selector-icon,
+.browser-family-selector-detail,
+.browser-family-selector-name {
+  transition: border 250ms, box-shadow 250ms, background 250ms, opacity 250ms, transform 250ms;
+  transform-origin: center 100%;
+}
+
+.browser-family-selector {
+  &:hover:not(.is-browser-active) {
+    background: url("/images/pattern-on-white.svg"), var(--blue-000);
+    border: 1px solid var(--blue-500);
+    box-shadow: 0 0 16px rgba(29, 141, 219, 0.2);
+    animation: move-background 8s linear infinite;
+    @at-root {
+      @keyframes move-background {
+        100% { background-position: -300px 0; }
+      }
+    }
+
+    .browser-family-selector-detail {
+      transform: translate3d(0, 26px, 0);
+    }
+
+    .browser-family-selector-icon {
+      transform: scale(1.1);
+    }
+
+    .browser-family-selector-enable {
+      opacity: 0;
+    }
+
+    .browser-family-selector-name {
+      transform: translate3d(0, 0, 0);
+    }
+
+    span {
+      opacity: 1;
+    }
+  }
+
+  &.is-browser-active {
+    background: url("/images/pattern-on-white.svg"), var(--purple-200);
+    border-color: var(--purple-600);
+  }
+
+  &:not(.is-browser-active) {
+    .browser-family-selector-name {
+      transform: translate3d(-24px, 0, 0);
+    }
+  }
+}
