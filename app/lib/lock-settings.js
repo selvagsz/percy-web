@@ -1,4 +1,5 @@
 export default {
+  configurationBaseUrl: 'https://cdn.auth0.com',
   auth: {
     redirect: true,
     redirectUrl: `${window.location.origin}/api/auth/auth0/callback`,

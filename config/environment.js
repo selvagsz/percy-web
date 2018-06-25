@@ -94,7 +94,7 @@ module.exports = function(environment) {
     ENV.APP.SENTRY_URL = 'https://9745b9952dd74a14bf9ff4fd2cf154a3@sentry.io/1216596';
 
     ENV['ember-simple-auth']['auth0'].clientID = '1W3CbZu2iYnvJsilsVV2QG3DCTAcUpp3';
-    ENV['ember-simple-auth']['auth0'].domain = 'percy-io-dev.auth0.com';
+    ENV['ember-simple-auth']['auth0'].domain = 'login-dev.percy.io';
   }
 
   if (environment === 'test') {
