@@ -47,6 +47,7 @@ module.exports = function(environment) {
         baseAsset: '/api/v1/snapshots/%@/assets/base.html',
         headAsset: '/api/v1/snapshots/%@/assets/head.html',
         buildSnapshots: '/api/v1/builds/%@/snapshots',
+        snapshotSourceDiff: '/api/v1/comparisons/%@/diffs/source.diff',
       },
       githubUrls: {
         integration: 'https://github.com/apps/percy/installations/new',

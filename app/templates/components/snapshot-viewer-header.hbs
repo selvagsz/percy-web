@@ -79,6 +79,16 @@
                       {{inline-svg "download-source-icon"}}
                     </li>
                   {{/if}}
+                  {{#if (and selectedComparison.headSnapshot selectedComparison.baseSnapshot)}}
+                    <li class="dropdown-menu-list-item cursor-pointer flex justify-between items-center text-sm font-semibold py-1 pl-2 pr-1 mb-0"
+                    {{action (pipe-action
+                      (action 'downloadDiff' selectedComparison)
+                      dropdown.actions.close
+                    )}}>
+                      <span>Download source diff</span>
+                      {{inline-svg "download-source-icon"}}
+                    </li>
+                  {{/if}}
                 </ul>
               </div>
             {{/dropdown.content}}

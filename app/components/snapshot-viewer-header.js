@@ -68,5 +68,12 @@ export default Component.extend({
 
       utils.setWindowLocation(url);
     },
+
+    downloadDiff(selectedComparison) {
+      const options = {includePercyMode: true};
+      const url = utils.buildApiUrl('snapshotSourceDiff', selectedComparison.get('id'), options);
+
+      utils.setWindowLocation(url);
+    },
   },
 });

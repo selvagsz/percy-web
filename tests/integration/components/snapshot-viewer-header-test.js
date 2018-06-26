@@ -103,6 +103,91 @@ describe('Integration: SnapshotViewerHeader', function() {
         percySnapshot(this.test);
       });
     });
+
+    describe('download source diff', function() {
+      let comparison;
+      let baseSnapshot;
+      let headSnapshot;
+
+      describe('When a snapshot comparison has a visual diff', function() {
+        beforeEach(function() {
+          comparison = make('comparison');
+          baseSnapshot = make('snapshot');
+          headSnapshot = make('snapshot');
+          this.set('comparison', comparison);
+          this.set('snapshot', headSnapshot);
+          this.set('comparison.baseSnapshot', baseSnapshot);
+          this.set('comparison.headSnapshot', headSnapshot);
+
+          this.render(hbs`{{snapshot-viewer-header
+            snapshot=snapshot
+            toggleViewMode=stub
+            updateSelectedWidth=stub
+            selectedComparison=comparison
+            activeBrowser=browser
+          }}`);
+        });
+
+        it('shows download source diff', function() {
+          SnapshotViewerHeaderPO.clickDropdownToggle();
+          expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
+            .true;
+          percySnapshot(this.test);
+        });
+      });
+
+      describe('When a shapshot comparison has no visual diff', function() {
+        beforeEach(function() {
+          comparison = make('comparison');
+          baseSnapshot = make('snapshot', 'withNoDiffs');
+          headSnapshot = make('snapshot', 'withNoDiffs');
+          this.set('comparison', comparison);
+          this.set('snapshot', headSnapshot);
+          this.set('comparison.baseSnapshot', headSnapshot);
+          this.set('comparison.headSnapshot', headSnapshot);
+
+          this.render(hbs`{{snapshot-viewer-header
+            snapshot=snapshot
+            toggleViewMode=stub
+            updateSelectedWidth=stub
+            selectedComparison=comparison
+            activeBrowser=browser
+          }}`);
+        });
+
+        it('shows download source diff', function() {
+          SnapshotViewerHeaderPO.clickDropdownToggle();
+          expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
+            .true;
+          percySnapshot(this.test);
+        });
+      });
+
+      describe('When a head snapshot has no base to compare', function() {
+        beforeEach(function() {
+          comparison = make('comparison');
+          headSnapshot = make('snapshot');
+          this.set('comparison', comparison);
+          this.set('snapshot', headSnapshot);
+          this.set('comparison.headSnapshot', headSnapshot);
+
+          this.render(hbs`{{snapshot-viewer-header
+            snapshot=snapshot
+            toggleViewMode=stub
+            updateSelectedWidth=stub
+            selectedComparison=comparison
+            activeBrowser=browser
+          }}`);
+        });
+
+        it('does not show download source diff', function() {
+          SnapshotViewerHeaderPO.clickDropdownToggle();
+          expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
+            .false;
+          percySnapshot(this.test);
+        });
+      });
+    });
   });
 
   describe('comparison width switcher', function() {
