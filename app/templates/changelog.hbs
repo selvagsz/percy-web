@@ -40,6 +40,14 @@
     <div class="hidden sm:block absolute h-full bg-gray-100" style="width: 1px; top: 0; left: 116px;"></div>
 
     <div class="changelog-post-list">
+      {{#changelog-post date="Jun 27, 2018" tag="feature" postId="19"}}
+        <h2>Cross-browser visual testing</h2>
+        <p>
+          With the addition of Chrome snapshot rendering, Percy now supports cross-browser visual testing! All Percy customers can now enable Chrome and Firefox on any project to start rendering and comparing snapshots across browsers. See our {{#link-to "docs.page" "learn/cross-browser-visual-testing"}}docs{{/link-to}} for more on enabling cross-browser testing, and read our feature announcement <a href="https://blog.percy.io/announcing-cross-browser-visual-testing-3cadb4e7f125">blog post</a> to learn more about the benefits of cross-browser testing.
+        </p>
+        <img src="/images/changelog/cross-browser-visual-testing.gif">
+      {{/changelog-post}}
+
       {{#changelog-post date="Jun 26, 2018" tag="update" postId="18"}}
         <h2>Downloadable source diffs</h2>
         <p>Sometimes it’s not obvious how a visual change occurred, and we want to make that easier.  Now, in addition to downloading the original and new HTML source for a snapshot, Percy users can download the source diff. Downloading the source diff generates a text file containing the line-for-line differences between the original and new sources in a standard UNIX ‘diff’ format. This enables you to easily review the differences in the DOM used for the original and new screenshots.</p>
