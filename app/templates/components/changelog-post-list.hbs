@@ -1,0 +1,13 @@
+<div class="changelog-post-list">
+  {{#each changelogPosts as |changelogPost|}}
+    {{#changelog-post
+      postId=changelogPost.id
+      tag=changelogPost.tag
+      date=(moment-format changelogPost.date 'MMM D, YYYY')
+    }}
+      <h2>{{changelogPost.title}}</h2>
+      {{md-text text=changelogPost.content html=false typographer=false linkify=true}}
+      <img src="{{changelogPost.image.file.url}}">
+    {{/changelog-post}}
+  {{/each}}
+</div>

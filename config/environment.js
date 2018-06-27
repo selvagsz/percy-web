@@ -67,6 +67,12 @@ module.exports = function(environment) {
   };
   ENV.APP.INTERCOM_APP_ID = 'itdwmqct';
   ENV.APP.GOOGLE_ANALYTICS_ID = 'UA-63384548-3';
+  ENV.contentful = {
+    space: 'k62me4xboi1l',
+    accessToken: '0965344a7250891b26c8f458a57060b5dcf28b145a240db9cfb2df9f61cf3acb',
+    previewAccessToken: '21021245f13ddfac6efe72acab3e5fa52b929f1d4c03f4b95f6ace3bacbde87e',
+    usePreviewApi: false,
+  };
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -96,6 +102,8 @@ module.exports = function(environment) {
 
     ENV['ember-simple-auth']['auth0'].clientID = '1W3CbZu2iYnvJsilsVV2QG3DCTAcUpp3';
     ENV['ember-simple-auth']['auth0'].domain = 'login-dev.percy.io';
+
+    ENV.contentful.usePreviewApi = true;
   }
 
   if (environment === 'test') {
