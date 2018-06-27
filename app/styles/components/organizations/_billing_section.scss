@@ -22,7 +22,7 @@
 
   @for $i from 1 through 31 {
     &:nth-child(#{$i}) {
-      animation-delay: ($i * 40) * 1ms;
+      animation-delay: ($i * 40) * 1ms !important;
     }
   }
 
