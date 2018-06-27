@@ -1,8 +1,10 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import {hash} from 'rsvp';
+import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  flashMessages: service(),
   model() {
     const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
@@ -27,7 +29,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
           return pbt.get('browserTarget.browserFamily.id') === familyToRemove.get('id');
         });
 
-      projectBrowserTargetForFamily.destroyRecord();
+      projectBrowserTargetForFamily
+        .destroyRecord()
+        .then(() => {
+          this.get('flashMessages').success(`All builds for this project going forward will not be run with ${familyToRemove.get('name')}.`, {title: 'Oh Well.'}); // eslint-disable-line
+        })
+        .catch(() => {
+          this.get('flashMessages').danger('Something went wrong. Please try again later');
+        });
       this._callAnalytics('Remove Browser Family', {
         browser_family_slug: familyToRemove.get('slug'),
       });
@@ -38,7 +47,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
         project,
         browserFamily: familyToAdd,
       });
-      newProjectBrowserTarget.save();
+      newProjectBrowserTarget
+        .save()
+        .then(() => {
+          this.get('flashMessages').success(`Great! All builds for this project going forward will be run with ${familyToAdd.get('name')}.`); // eslint-disable-line
+        })
+        .catch(() => {
+          this.get('flashMessages').danger('Something went wrong. Please try again later');
+        });
       this._callAnalytics('Add Browser Family', {browser_family_slug: familyToAdd.get('slug')});
     },
   },
