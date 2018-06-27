@@ -4,8 +4,7 @@ import moment from 'moment';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 import ProjectSettingsPage from 'percy-web/tests/pages/project-settings-page';
 import sinon from 'sinon';
-import {beforeEach, afterEach} from 'mocha';
-import AdminMode from 'percy-web/lib/admin-mode';
+import {beforeEach} from 'mocha';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -157,7 +156,6 @@ describe('Acceptance: Project', function() {
       let createStub;
       let projectWithBothBrowsers;
       let projectWithFirefoxOnly;
-      let isAdminModeEnabled;
 
       const createData = {
         data: {
@@ -170,8 +168,6 @@ describe('Acceptance: Project', function() {
       };
 
       beforeEach(function() {
-        isAdminModeEnabled = this.isAdminEnabled;
-        AdminMode.setAdminMode();
         deleteStub = sinon.stub();
         createStub = sinon.stub();
         projectWithBothBrowsers = enabledProject;
@@ -190,10 +186,6 @@ describe('Acceptance: Project', function() {
             browserTarget: server.create('browserTarget', 'withChromeBrowserFamily'),
           });
         });
-      });
-
-      afterEach(function() {
-        this.isAdminEnabled = isAdminModeEnabled;
       });
 
       it('calls correct endpoint when removing a browser', async function() {
