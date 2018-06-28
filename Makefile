@@ -1,5 +1,6 @@
 _pull_parent_image:
-	gcloud docker -- pull $$(grep '^FROM' Dockerfile | grep -o ' .*' | tr -d ' ')
+	gcloud auth configure-docker --quiet
+	docker pull $$(grep '^FROM' Dockerfile | grep -o ' .*' | tr -d ' ')
 
 build: _pull_parent_image
 	docker-compose build

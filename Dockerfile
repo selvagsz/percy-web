@@ -1,4 +1,4 @@
-FROM gcr.io/percy_dev/baseimage-web:2018-03-31-223908
+FROM gcr.io/percy-dev/baseimage-web:2018-06-27-230729
 
 # Configure nginx.
 ADD config/nginx-main.conf /etc/nginx/nginx.conf
