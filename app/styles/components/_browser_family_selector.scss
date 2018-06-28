@@ -9,7 +9,8 @@
 
 .browser-family-selector {
   &:hover:not(.is-browser-active) {
-    background: url("/images/pattern-on-white.svg"), var(--blue-000);
+    background: url("/images/pattern-on-white.svg");
+    background-color: var(--blue-000);
     border: 1px solid var(--blue-500);
     box-shadow: 0 0 16px rgba(29, 141, 219, 0.2);
     animation: move-background 8s linear infinite;
@@ -41,7 +42,8 @@
   }
 
   &.is-browser-active {
-    background: url("/images/pattern-on-white.svg"), var(--purple-200);
+    background: url("/images/pattern-on-white.svg");
+    background-color: var(--purple-200);
     border-color: var(--purple-600);
   }
 

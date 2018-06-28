@@ -19,7 +19,8 @@
 }
 
 .bg-white-pattern {
-  background: url("/images/pattern-on-white.svg"), var(--white);
+  background: url("/images/pattern-on-white.svg");
+  background-color: var(--white);
 }
 
 .bg-gray-pattern {
