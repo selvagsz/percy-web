@@ -1,10 +1,12 @@
 import Controller from '@ember/controller';
 import snapshotSort from 'percy-web/lib/snapshot-sort';
 import {snapshotsWithDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
+import {inject as service} from '@ember/service';
 
 // NOTE: before adding something here, consider adding it to BuildContainer instead.
 // This controller should only be used to maintain the state of which snapshots have been loaded.
 export default Controller.extend({
+  raven: service(),
   isHidingBuildContainer: false,
 
   allChangedBrowserSnapshotsSorted: null, // Manually managed by initializeSnapshotOrdering.
@@ -28,12 +30,12 @@ export default Controller.extend({
 
     const browsers = this.get('build.browsers');
 
-    if (!browsers.length && window.Raven) {
+    if (!browsers.length && this.get('raven.isRavenUsable')) {
       // There should always be browsers loaded, but there appears to be a certain race condition
       // when navigating from projects to builds where build relationships are not fully loaded.
       // Capture information about how often a race condition is happening. TODO: drop this.
       let error = new Error('Missing browsers in initializeSnapshotOrdering');
-      window.Raven.captureException(error);
+      this.get('raven').captureException(error);
     }
 
     browsers.forEach(browser => {

@@ -10,7 +10,7 @@ import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('SessionService', function() {
   setupTest('service:session', {
-    needs: ['service:analytics', 'model:user'],
+    needs: ['service:analytics', 'model:user', 'service:raven', 'model:identity'],
   });
 
   describe('loadCurrentUser', function() {
@@ -51,9 +51,12 @@ describe('SessionService', function() {
 
       it('sets raven user context', function() {
         const promise = subject.loadCurrentUser();
+        const raven = subject.get('raven');
+        const callRavenStub = sinon.stub(raven, 'callRaven');
+        raven.set('isRavenUsable', true);
 
         return promise.then(() => {
-          expect(Raven.getContext().user.id).to.equal(user.get('id'));
+          expect(callRavenStub).to.have.been.calledWith('setUserContext', {id: user.get('id')});
         });
       });
 
@@ -108,11 +111,13 @@ describe('SessionService', function() {
 
       it('clears raven user context', function() {
         subject.invalidate = sinon.stub().returns(resolve());
-        Raven.setUserContext = sinon.stub();
         const promise = subject.loadCurrentUser();
+        const raven = subject.get('raven');
+        const callRavenStub = sinon.stub(raven, 'callRaven');
+        raven.set('isRavenUsable', true);
 
         return promise.then(() => {
-          expect(Raven.setUserContext).to.have.been.calledWith();
+          expect(callRavenStub).to.have.been.calledWith();
         });
       });
 

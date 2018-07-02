@@ -8,6 +8,8 @@ import utils from 'percy-web/lib/utils';
 export default SessionService.extend({
   store: service(),
   analytics: service(),
+  raven: service(),
+
   // set by load method
   currentUser: null,
 
@@ -69,13 +71,14 @@ export default SessionService.extend({
   },
 
   _setupSentry(user) {
-    if (window.Raven) {
-      Raven.setUserContext({id: user.get('id')});
+    if (this.get('raven.isRavenUsable')) {
+      this.get('raven').callRaven('setUserContext', {id: user.get('id')});
     }
   },
+
   _clearSentry() {
-    if (window.Raven) {
-      Raven.setUserContext();
+    if (this.get('raven.isRavenUsable')) {
+      this.get('raven').callRaven('setUserContext');
     }
   },
   _setupAnalytics(user) {

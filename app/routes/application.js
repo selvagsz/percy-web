@@ -12,6 +12,7 @@ export const AUTH_REDIRECT_LOCALSTORAGE_KEY = 'percyAttemptedTransition';
 export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   session: service(),
   flashMessages: service(),
+  raven: service(),
   currentUser: alias('session.currentUser'),
 
   beforeModel(transition) {
@@ -91,6 +92,14 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
       let organizationSlug = project.get('organization.slug');
       let projectSlug = project.get('slug');
       this.transitionTo('organization.project.settings', organizationSlug, projectSlug);
+    },
+
+    // See: https://github.com/damiencaselli/ember-cli-sentry/issues/105
+    error(error) {
+      if (this.get('raven.isRavenUsable')) {
+        this.get('raven').captureException(error);
+      }
+      return true; // Let the route above this handle the error.
     },
   },
 

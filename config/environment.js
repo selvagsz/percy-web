@@ -98,7 +98,10 @@ module.exports = function(environment) {
     ENV.APP.AMPLITUDE_ORGANIZATIONS_INSTANCE_NAME = 'Organizations';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_PROJECT_ID = '89f8fae9aab3fccc0740237f17e43745';
 
-    ENV.APP.SENTRY_URL = 'https://9745b9952dd74a14bf9ff4fd2cf154a3@sentry.io/1216596';
+    ENV.sentry = {
+      dsn: 'https://9745b9952dd74a14bf9ff4fd2cf154a3@sentry.io/1216596',
+      development: true,
+    };
 
     ENV['ember-simple-auth']['auth0'].clientID = '1W3CbZu2iYnvJsilsVV2QG3DCTAcUpp3';
     ENV['ember-simple-auth']['auth0'].domain = 'login-dev.percy.io';
@@ -126,6 +129,11 @@ module.exports = function(environment) {
     };
     ENV['ember-simple-auth']['auth0'].clientID = 'foo';
     ENV['ember-simple-auth']['auth0'].domain = 'percy-io-test.auth0.com';
+
+    ENV.sentry = {
+      dsn: 'https://1234567890@sentry.io/123456789',
+      development: true,
+    };
   }
 
   if (environment === 'production') {
@@ -138,7 +146,10 @@ module.exports = function(environment) {
     ENV.APP.AMPLITUDE_ORGANIZATIONS_INSTANCE_NAME = 'Organizations';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_PROJECT_ID = '43ed24c6891251bbbdddc310a5371afd';
 
-    ENV.APP.SENTRY_URL = 'https://4c28a8c59c934d729d261b988d6187c3@sentry.io/235025';
+    ENV.sentry = {
+      dsn: 'https://4c28a8c59c934d729d261b988d6187c3@sentry.io/235025',
+      development: false,
+    };
 
     ENV['ember-simple-auth']['auth0'].clientID = '9oRqSsl0iEbVK4Zh5AGHeC7pu3ACmnN3';
     ENV['ember-simple-auth']['auth0'].domain = 'login.percy.io';

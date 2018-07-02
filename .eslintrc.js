@@ -51,7 +51,4 @@ module.exports = {
       ],
     }
   ],
-  globals: {
-    "Raven": true
-  }
 };

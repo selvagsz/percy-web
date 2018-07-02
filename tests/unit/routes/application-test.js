@@ -11,7 +11,13 @@ describe('ApplicationRoute', function() {
   let subject;
 
   setupTest('route:application', {
-    needs: ['service:session', 'service:flashMessages', 'service:auth0', 'service:analytics'],
+    needs: [
+      'service:session',
+      'service:flashMessages',
+      'service:auth0',
+      'service:analytics',
+      'service:raven',
+    ],
   });
 
   beforeEach(function() {
