@@ -37,7 +37,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
         .catch(() => {
           this.get('flashMessages').danger('Something went wrong. Please try again later');
         });
-      this._callAnalytics('Remove Browser Family', {
+      this._callAnalytics('Browser Family Removed', {
         browser_family_slug: familyToRemove.get('slug'),
       });
     },
@@ -55,7 +55,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
         .catch(() => {
           this.get('flashMessages').danger('Something went wrong. Please try again later');
         });
-      this._callAnalytics('Add Browser Family', {browser_family_slug: familyToAdd.get('slug')});
+      this._callAnalytics('Browser Family Added', {browser_family_slug: familyToAdd.get('slug')});
     },
   },
 
