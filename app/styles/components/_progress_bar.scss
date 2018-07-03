@@ -18,3 +18,8 @@
   top: 0;
   background: var(--gray-000);
 }
+
+.progress-bar-light {
+  background: linear-gradient(to right, var(--gray-100) 0%, var(--gray-200) 25%, var(--gray-100) 50%);
+  animation: progress-bar 30s infinite linear;
+}
