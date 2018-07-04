@@ -9,7 +9,11 @@
     </div>
   </div>
 
-  {{#if (and isBeta isInstalled)}}
+  {{#if (is-admin)}}
+    {{#link-to integrationSettingsRoute orgSlug class=buttonClasses}}
+      {{buttonText}}
+    {{/link-to}}
+  {{else if (and isBeta isInstalled)}}
     <button
       class="btn btn-primary shadow-purple-lg m-0"
       data-test-integration-button-contact-us

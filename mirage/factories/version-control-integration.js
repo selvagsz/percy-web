@@ -9,4 +9,12 @@ export default Factory.extend({
       });
     },
   }),
+  gitlab: trait({
+    afterCreate(integration) {
+      integration.update({
+        integrationType: 'gitlab',
+        gitlabIntegrationId: `${integration.id}`,
+      });
+    },
+  }),
 });

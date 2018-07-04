@@ -18,6 +18,8 @@ export default DS.Model.extend({
   githubEnterpriseIntegrationId: DS.attr(),
   gitlabIntegrationId: DS.attr(),
   gitlabBotUserId: DS.attr(),
+  gitlabPersonalAccessToken: DS.attr(),
+  isGitlabPersonalAccessTokenPresent: DS.attr('boolean'),
 
   isSyncing: DS.attr(),
   lastUpdatedAt: DS.attr(),

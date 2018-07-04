@@ -1,18 +1,26 @@
-<section class="p-2">
-  <div class="bg-white rounded shadow-1 p-2 mb-2" data-test-gitlab-settings>
-    <div class="flex items-center mb-2">
-      {{inline-svg "gitlab-icon-lg" class="mr-1"}}
-      <h2 class="text-xl font-semibold m-0">GitLab Integration</h2>
-    </div>
+<section class="px-2 pt-3">
+  <div class="w-3/4 pb-3">
+    <h1 class="text-xl font-semibold mb-sm">Set up GitLab</h1>
+    <p class="text-gray-400">We’ll need just a bit of information to get Percy set up on your GitLab account. If you need some help, check out our <strong>{{#link-to "docs.page" "integrations/gitlab"}}Percy + GitLab{{/link-to}}</strong> doc to guide you through the set up process.</p>
+  </div>
+</section>
+
+<section class="px-2">
+  <div data-test-gitlab-settings class="bg-white rounded shadow-1 p-2 mb-2">
     {{#if isGitlabIntegrated}}
-      <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
-        The GitLab integration is installed. Please contact support to change any settings.
-      </div>
+      {{#organizations/require-role role="admin" organization=organization}}
+        {{forms/gitlab-settings-edit
+          model=gitlabIntegration
+          organization=organization
+          isGitlabPersonalAccessTokenPresent=isGitlabPersonalAccessTokenPresent
+          gitlabPersonalAccessTokenLabel=gitlabPersonalAccessTokenLabel
+          gitlabPersonalAccessTokenPlaceholder=gitlabPersonalAccessTokenPlaceholder
+        }}
+      {{/organizations/require-role}}
     {{else}}
-      <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
-        The GitLab integration is not installed.
-      </div>
-    {{/if}}
+    <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
+      The GitLab integration is not installed.
+    </div>
     <div class="flex justify-end">
       <div class="btn-toolbar">
         {{#link-to
@@ -22,12 +30,16 @@
         }}
           Back
         {{/link-to}}
-        {{#unless isGitlabIntegrated}}
-          <button data-test-gitlab-settings-connect-button class="btn btn-primary shadow-purple-lg ml-1" {{action "redirectToGitlabAuthorization" organization}}>
-            Connect to GitLab
-          </button>
-        {{/unless}}
+        <button data-test-gitlab-settings-connect-button class="btn btn-primary shadow-purple-lg ml-1" {{action "createGitlabIntegration"}}>
+          Connect to GitLab
+        </button>
       </div>
     </div>
+    {{/if}}
   </div>
+  {{#if isGitlabIntegrated}}
+    <div class="rounded bg-yellow-000 border border-yellow-100 p-2 mb-2">
+      <strong>Reminder:</strong> Each project must be linked to a GitLab repository for <strong>{{#link-to "docs.page" "integrations/gitlab"}}Merge Request integration{{/link-to}}</strong> to work. You can verify the link in each project's settings.
+    </div>
+  {{/if}}
 </section>

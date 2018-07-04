@@ -60,6 +60,13 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
     if (requestType === 'createRecord' && modelName === 'invite') {
       return utils.buildApiUrl('invites', snapshot.record.get('organization.slug'));
     }
+    // Use the nested /organizations/:org_id/version-control-integrations route
+    if (requestType === 'createRecord' && modelName === 'version-control-integration') {
+      return utils.buildApiUrl(
+        'organizationVersionControlIntegrations',
+        snapshot.record.get('organization.id'),
+      );
+    }
     // Use the nested /organizations/:org_id/organization-users collection route.
     if (requestType === 'query' && modelName === 'organization-user') {
       let organization = query.organization;

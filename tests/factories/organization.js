@@ -11,6 +11,7 @@ FactoryGuy.define('organization', {
     projects: FactoryGuy.hasMany('project'),
     versionControlIntegrations: FactoryGuy.hasMany('version-control-integration'),
     repos: FactoryGuy.hasMany('repo'),
+    organizationUsers: FactoryGuy.hasMany('organization-user'),
     lastSyncedAt: () => {
       return moment().subtract(11, 'minutes');
     },

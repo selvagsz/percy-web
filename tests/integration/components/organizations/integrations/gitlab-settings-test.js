@@ -3,8 +3,6 @@ import {setupComponentTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import {percySnapshot} from 'ember-percy';
 import {make} from 'ember-data-factory-guy';
-import sinon from 'sinon';
-import utils from 'percy-web/lib/utils';
 import AdminMode from 'percy-web/lib/admin-mode';
 import GitlabSettings from 'percy-web/tests/pages/components/gitlab-settings';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
@@ -30,49 +28,57 @@ describe('Integration: GitLab Settings', function() {
     beforeEach(function() {
       const user = make('user');
       const organization = make('organization', 'withGitlabIntegration');
+      const organizationUser = make('organization-user', 'adminUser', {organization, user});
+      organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization});
     });
 
-    it('shows that the integration is installed', function() {
+    it('shows the settings form', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
       }}`);
-      expect(GitlabSettings.integrationMessage).to.include('is installed');
+      expect(GitlabSettings.isPersonalAccessTokenFieldVisible).to.eq(true);
+      percySnapshot(this.test.fullTitle());
+    });
+
+    it('validates the personal access token field', function() {
+      this.render(hbs`{{
+        organizations/integrations/gitlab-settings
+        currentUser=user
+        organization=organization
+      }}`);
+      GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
       percySnapshot(this.test.fullTitle());
     });
   });
 
   describe('without a gitlab integration', function() {
-    let windowStub;
     beforeEach(function() {
       const user = make('user');
       const organization = make('organization');
+      const organizationUser = make('organization-user', 'adminUser', {
+        organization: organization,
+        user: user,
+      });
+      organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization});
-      windowStub = sinon.stub(utils, 'setWindowLocation');
     });
 
-    afterEach(function() {
-      windowStub.restore();
-    });
-
-    it('allows the user to connect the integration', function() {
+    it('shows the connect integration button', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
       }}`);
       expect(GitlabSettings.statusIsHidden).to.equal(true);
-      expect(GitlabSettings.integrationButton.isVisible).to.eq(true);
+      expect(GitlabSettings.integrationButton.isVisible, 'integration button not visible').to.eq(
+        true,
+      );
       expect(GitlabSettings.integrationButton.text).to.eq('Connect to GitLab');
-
-      GitlabSettings.integrationButton.click();
-      const slug = this.get('organization.slug');
-      expect(windowStub).to.have.been.calledWith(`/api/auth/gitlab/redirect/${slug}`);
-
       percySnapshot(this.test.fullTitle());
     });
   });

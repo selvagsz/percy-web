@@ -1,0 +1,36 @@
+.GitlabSettingsEdit {
+  .btn-toolbar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    min-width: 0;
+  }
+
+  .buttons {
+    flex: 1;
+    grid-gap: 10px;
+    align-items: center;
+  }
+
+  .FormFieldsSubmit {
+    display: flex;
+  }
+
+  .SavingIndicator {
+    flex: 1;
+
+    * {
+      vertical-align: middle;
+    }
+  }
+
+  .btn-danger {
+    color: var(--red-200);
+
+    &:hover {
+      color: var(--white);
+      background-color: var(--red-400);
+    }
+  }
+}
+

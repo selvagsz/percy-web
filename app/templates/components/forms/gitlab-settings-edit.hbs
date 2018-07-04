@@ -1,0 +1,48 @@
+<form action="javascript:;" class="mb-0" data-test-gitlab-settings-edit-form>
+  <div class="flex items-center">
+    <div class="grid col-auto gap-1 text-xl font-semibold mb-2">
+      <div>{{inline-svg "gitlab-icon-lg" class="mr-1"}}</div>
+      <div><h2 class="text-xl font-semibold m-0">GitLab Integration</h2></div>
+    </div>
+  </div>
+  <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
+      data-test-gitlab-personal-access-token-field
+      type="password"
+      autocomplete="new-password-gitlab"
+      property="gitlabPersonalAccessToken"
+      title=gitlabPersonalAccessTokenLabel
+      changeset=changeset
+      placeholder=gitlabPersonalAccessTokenPlaceholder
+    }}
+    <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+      <strong>Note:</strong> The <a href="https://gitlab.com/profile/personal_access_tokens" target="_blank">personal access token</a> is used to update commit statuses in GitLab. These updates will be made on behalf of this user. You may wish to create a specialized GitLab user for this purpose.
+    </div>
+  </div>
+
+  <div class="btn-toolbar">
+    <div data-test-gitlab-settings-edit-form-toolbar class="buttons btn-group justify-end">
+      {{saving-indicator
+        isSaving=isSaving
+        isSaveSuccessful=isSaveSuccessful
+        classes="u-pull-left"
+      }}
+      {{#link-to
+        'organizations.organization.integrations'
+        organization.slug
+        class="btn back"
+      }}
+        Back
+      {{/link-to}}
+      {{form-fields/submit
+        data-test-gitlab-settings-edit-form-submit
+        value="Save"
+        showSavingIndicator=false
+        disabled=changeset.isPristine
+        classes="btn btn-primary shadow-purple-lg mb-0"
+        submit=(action "save")
+      }}
+    </div>
+    <button class="btn btn-danger mb-0 truncate" {{action "delete"}}>Remove Integration</button>
+  </div>
+</form>

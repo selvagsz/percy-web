@@ -7,6 +7,7 @@ export default Component.extend({
   property: null,
   type: 'text',
   autofocus: false,
+  autocomplete: null,
   classes: null,
   disabled: false,
 

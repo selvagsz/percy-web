@@ -92,7 +92,11 @@ export default Component.extend({
       }
     },
     delete() {
-      this.get('model').destroyRecord();
+      let store = this.get('store');
+      let model = this.get('model');
+      // Delete the record on the server
+      // and remove the associated record from the store
+      model.destroyRecord().then(() => store.unloadRecord(model));
     },
   },
 });
