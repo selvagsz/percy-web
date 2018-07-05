@@ -7,7 +7,6 @@ export default Component.extend({
   disabled: false,
 
   confirmationMessage: null,
-  showSavingIndicator: true,
   isSaving: null,
   isSaveSuccessful: null,
 

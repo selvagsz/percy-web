@@ -2,7 +2,7 @@ import {fillable, clickable, property, create} from 'ember-cli-page-object';
 
 const SELECTORS = {
   PASSWORD_INPUT: '[data-test-account-new-password] input[type=password]',
-  SUBMIT_BUTTON: '[data-test-account-new-submit] input[type=submit]',
+  SUBMIT_BUTTON: '[data-test-account-new-submit] [data-test-form-submit-button]',
 };
 
 export const AccountNew = {

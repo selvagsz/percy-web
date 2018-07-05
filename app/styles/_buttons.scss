@@ -145,7 +145,7 @@ button,
 
 .btn {
   display: inline-block;
-  height: auto;
+  height: 30px;
   padding: 5px 16px;
   font-size: 12px;
   font-weight: var(--semibold);
@@ -211,6 +211,7 @@ button,
 }
 
 .btn-sm {
+  height: 24px;
   padding: 2px 6px;
   font-size: 12px;
 }
@@ -257,9 +258,22 @@ button,
 
   &.is-loading {
     display: table; /* safari needs a forced repaint to draw the gradient again after loading is finished */
-    background-image: linear-gradient(-45deg, var(--purple-700) 25%, var(--purple-800) 25%, var(--purple-800) 50%, var(--purple-700) 50%, var(--purple-700) 75%, var(--purple-800) 75%, var(--purple-800));
+    background-image: linear-gradient(-45deg, var(--purple-700) 25%, var(--purple-600) 25%, var(--purple-600) 50%, var(--purple-700) 50%, var(--purple-700) 75%, var(--purple-600) 75%, var(--purple-600));
     background-size: 20px 20px;
     animation: loading 4s linear infinite;
+  }
+
+  &.is-successful {
+    svg {
+      animation: fadeinout 3s;
+    }
+  }
+
+  &.is-failed {
+    color: var(--red-500);
+    text-shadow: none;
+    background: var(--red-000);
+    box-shadow: none !important;
   }
 }
 
@@ -333,6 +347,7 @@ button,
 .build-approval-button {
   position: relative;
   width: 146px;
+  height: 42px;
   padding-left: var(--spacing-7);
   overflow: hidden;
   transition: width 250ms;
@@ -399,6 +414,7 @@ button,
 }
 
 .btn-app-access {
+  height: 42px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   background: var(--purple-700);
   border: 1px solid var(--purple-500);

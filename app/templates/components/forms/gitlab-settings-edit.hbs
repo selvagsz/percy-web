@@ -35,9 +35,7 @@
         Back
       {{/link-to}}
       {{form-fields/submit
-        data-test-gitlab-settings-edit-form-submit
         value="Save"
-        showSavingIndicator=false
         disabled=changeset.isPristine
         classes="btn btn-primary shadow-purple-lg mb-0"
         submit=(action "save")

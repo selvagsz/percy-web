@@ -10,6 +10,10 @@
   }
 }
 
+.loader {
+  margin: 0;
+}
+
 @media only percy {
   .loader path {
     transform: none;

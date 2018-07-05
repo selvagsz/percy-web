@@ -15,7 +15,7 @@ const SELECTORS = {
   INTEGRATION_SETTINGS_FORM: '[data-test-gitlab-settings-edit-form]',
   PERSONAL_ACCESS_TOKEN_INPUT: '[data-test-gitlab-personal-access-token-field]',
   INTEGRATION_SETTINGS_TOOLBAR: '[data-test-gitlab-settings-edit-form-toolbar]',
-  INTEGRATION_SETTINGS_SAVE_BUTTON: 'input[type=submit]',
+  INTEGRATION_SETTINGS_SAVE_BUTTON: '[data-test-form-submit-button]',
 };
 
 export const GitlabSettings = {

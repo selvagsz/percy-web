@@ -1,11 +1,17 @@
-<input
-  type="submit"
-  class="{{classes}}"
-  value="{{value}}"
+<button
+  class="{{classes}} relative {{if isSaving 'is-loading'}} {{if isSaveSuccessful 'is-successful'}} {{if (eq isSaveSuccessful false) 'is-failed'}}"
   disabled={{disabled}}
   onclick={{action "perform"}}
   data-test-form-submit-button
 >
-{{#if showSavingIndicator}}
-  {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
-{{/if}}
+  <span class="trans trans-opacity {{if (or isSaving isSaveSuccessful (eq isSaveSuccessful false)) 'opacity-0'}}">{{value}}</span>
+  <figure class="svg-container absolute" style="left: 50%; top: 50%; transform: translate3d(-50%, -50%, 0)">
+    {{#if isSaving}}
+      {{inline-svg "loader-icon"}}
+    {{else if isSaveSuccessful}}
+      {{inline-svg "check-icon" class="scale-15"}}
+    {{else if (eq isSaveSuccessful false)}}
+      Failed!
+    {{/if}}
+  </figure>
+</button>

@@ -37,7 +37,7 @@ describe('Acceptance: Organization', function() {
 
       await percySnapshot(this.test.fullTitle() + ' | new');
       await fillIn('.FormsOrganizationNew input[type=text]', 'New organization');
-      await click('.FormsOrganizationNew input[type=submit]');
+      await click('.FormsOrganizationNew [data-test-form-submit-button]');
       expect(currentPath()).to.equal('organization.index');
 
       await percySnapshot(this.test.fullTitle() + ' | setup');
@@ -86,10 +86,7 @@ describe('Acceptance: Organization', function() {
         '.FormsBillingEdit span:contains("Billing email") + input',
         'a_valid_email@gmail.com',
       );
-      await click('.FormsBillingEdit input[type=submit]');
-      expect(
-        find('.FormsBillingEdit .FormFieldsSubmit .SavingIndicator i.fa-check-circle').length,
-      ).to.equal(1);
+      await click('.FormsBillingEdit [data-test-form-submit-button]');
       expect(server.schema.subscriptions.first().billingEmail).to.equal('a_valid_email@gmail.com');
 
       await percySnapshot(this.test.fullTitle() + ' | ok modification');
@@ -98,13 +95,7 @@ describe('Acceptance: Organization', function() {
           '.FormsBillingEdit span:contains("Billing email") + input',
           'an invalid email@gmail.com',
         );
-        await click('.FormsBillingEdit input[type=submit]');
-        expect(
-          find('.FormsBillingEdit .FormFieldsSubmit .SavingIndicator i.fa-check-circle').length,
-        ).to.equal(0);
-        expect(
-          find('.FormsBillingEdit .FormFieldsSubmit .SavingIndicator i.fa-times-circle').length,
-        ).to.equal(1);
+        await click('.FormsBillingEdit [data-test-form-submit-button]');
         expect(find('.FormsBillingEdit .FormFieldsInput ul.Form-errors li').text()).to.equal(
           'Billing email is invalid',
         );

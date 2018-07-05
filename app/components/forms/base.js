@@ -4,6 +4,8 @@ import {inject as service} from '@ember/service';
 import Component from '@ember/component';
 import Changeset from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
+import timeoutForEnv from 'percy-web/lib/timeout-for-env';
+import {later} from '@ember/runloop';
 
 export default Component.extend({
   // To be defined by superclass:
@@ -26,6 +28,8 @@ export default Component.extend({
     this.$('[autofocus]').focus();
   }),
 
+  _successIndicatorTimeout: timeoutForEnv(3000),
+
   actions: {
     saving(promise) {
       this.set('isSaveSuccessful', null);
@@ -35,6 +39,9 @@ export default Component.extend({
         () => {
           this.set('isSaving', false);
           this.set('isSaveSuccessful', true);
+          later(() => {
+            this.set('isSaveSuccessful', null);
+          }, this.get('_successIndicatorTimeout'));
         },
         errors => {
           this.set('isSaving', false);

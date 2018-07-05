@@ -11,7 +11,7 @@ import {
 const SELECTORS = {
   NAME_INPUT: '[data-test-profile-edit-name] input[type=text]',
   EMAIL_INPUT: '[data-test-profile-edit-email] input[type=text]',
-  INFO_SUBMIT_BUTTON: '[data-test-profile-edit-submit] input[type=submit]',
+  INFO_SUBMIT_BUTTON: '[data-test-profile-edit-submit] [data-test-form-submit-button]',
   UNVERIFIED_EMAIL_MESSAGE: '[data-test-profile-edit-unverified-email-message]',
 };
 

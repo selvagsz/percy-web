@@ -3,7 +3,7 @@
     <circle id="loader-icon2-a" cx="10.5" cy="10.5" r="10.5"/>
   </defs>
   <g fill="none" fill-rule="evenodd">
-    <use fill="#FFF" xlink:href="#loader-icon2-a"/>
+    <use xlink:href="#loader-icon2-a"/>
     <circle cx="10.5" cy="10.5" r="9.5" stroke="#E1DFE2" stroke-width="2"/>
     <path stroke="#9E66BF" stroke-linecap="round" stroke-width="2" d="M1,10 C1.14147949,5.49999934 5.00437084,0.956663874 10.5013061,1.00031374 C15.9982414,1.04396361 19.8972168,5.49999934 19.9998888,10">
       <animateTransform attributeType="xml"
