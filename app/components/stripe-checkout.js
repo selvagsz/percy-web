@@ -46,7 +46,14 @@ export default Component.extend({
 
     // Get or create the plan record with the right ID.
     let plan = this.get('store').peekRecord('plan', planId);
-    plan = plan || this.get('store').createRecord('plan', {id: planId});
+    if (!plan) {
+      plan = this.get('store').push({
+        data: {
+          id: planId,
+          type: 'plan',
+        },
+      });
+    }
 
     let savingPromise = subscriptionService.changeSubscription(organization, plan, token);
     if (this.get('changingSubscription')) {
