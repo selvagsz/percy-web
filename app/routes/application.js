@@ -6,8 +6,7 @@ import localStorageProxy from 'percy-web/lib/localstorage';
 import {DO_NOT_FORWARD_REDIRECT_ROUTES} from 'percy-web/router';
 import EnsureStatefulLogin from 'percy-web/mixins/ensure-stateful-login';
 import isDevWithProductionAPI from 'percy-web/lib/dev-auth';
-
-export const AUTH_REDIRECT_LOCALSTORAGE_KEY = 'percyAttemptedTransition';
+import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/router';
 
 export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   session: service(),
@@ -35,6 +34,7 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
     // By default, it executes some pre-set redirects but we want our own redirect logic,
     // so we're not calling super here.
     this._loadCurrentUser().then(() => {
+      this.closeLock();
       this._decideRedirect();
     });
   },
@@ -128,17 +128,21 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
     const attemptedRoute = transition.targetName;
     if (!DO_NOT_FORWARD_REDIRECT_ROUTES.includes(attemptedRoute)) {
       const attemptedTransitionUrl = transition.intent.url;
-      localStorageProxy.set(AUTH_REDIRECT_LOCALSTORAGE_KEY, attemptedTransitionUrl);
+      localStorageProxy.set(AUTH_REDIRECT_LOCALSTORAGE_KEY, attemptedTransitionUrl, {
+        useSessionStorage: true,
+      });
     }
   },
 
   _decideRedirect() {
-    const redirectAddress = localStorageProxy.get(AUTH_REDIRECT_LOCALSTORAGE_KEY);
+    const redirectAddress = localStorageProxy.get(AUTH_REDIRECT_LOCALSTORAGE_KEY, '/', {
+      useSessionStorage: true,
+    });
     if (redirectAddress) {
       if (redirectAddress === '/') {
         this._redirectToDefaultOrganization();
       } else {
-        localStorageProxy.removeItem(AUTH_REDIRECT_LOCALSTORAGE_KEY);
+        localStorageProxy.removeItem(AUTH_REDIRECT_LOCALSTORAGE_KEY, {useSessionStorage: true});
         this.transitionTo(redirectAddress);
       }
     } else {

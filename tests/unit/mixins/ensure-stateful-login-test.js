@@ -7,6 +7,8 @@ import EnsureStatefulLogin from 'percy-web/mixins/ensure-stateful-login';
 import {startMirage} from 'percy-web/initializers/ember-cli-mirage';
 import lockOptions from 'percy-web/lib/lock-settings';
 import {all} from 'rsvp';
+import localStorageProxy from 'percy-web/lib/localstorage';
+import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/router';
 
 describe('EnsureStatefulLoginMixin', function() {
   let subject;
@@ -30,6 +32,7 @@ describe('EnsureStatefulLoginMixin', function() {
     fakeLockInstance = {
       on: sinon.stub(),
       show: sinon.stub(),
+      hide: sinon.stub(),
     };
     getLockInstanceStub = sinon.stub().returns(fakeLockInstance);
     setupLockStub = sinon.stub().returns((lock, resolve) => {
@@ -38,6 +41,7 @@ describe('EnsureStatefulLoginMixin', function() {
 
     // inject mixin and fake auth0 service into test subject
     subject = Ember.Object.extend(EnsureStatefulLogin).create({
+      session: {},
       transitionTo: sinon.stub(),
       auth0: Ember.Object.create({
         getAuth0LockInstance: getLockInstanceStub,
@@ -111,6 +115,19 @@ describe('EnsureStatefulLoginMixin', function() {
 
       expect(fakeLockInstance.show).to.have.been.called;
     });
+
+    it('stores instance of lock on session service', function() {
+      subject._showLock();
+      expect(subject.get('session.lockInstance')).to.equal(fakeLockInstance);
+    });
+  });
+
+  describe('_closeLock', function() {
+    it('calls hide on session.lockInstance', function() {
+      subject.set('session.lockInstance', fakeLockInstance);
+      subject.closeLock();
+      expect(fakeLockInstance.hide).to.have.been.called;
+    });
   });
 
   describe('_onLockClosed', function() {
@@ -121,11 +138,31 @@ describe('EnsureStatefulLoginMixin', function() {
       expect(subject.get('_hasOpenedLoginModal')).to.equal(false);
     });
 
-    it('transitions to root', function() {
-      const redirectRoute = 'route';
+    it('removes redirect route from sessionStorage', function() {
+      localStorageProxy.set(AUTH_REDIRECT_LOCALSTORAGE_KEY, 'foo', {useSessionStorage: true});
+      subject._onLockClosed();
+      expect(sessionStorage.getItem(AUTH_REDIRECT_LOCALSTORAGE_KEY)).to.equal(null);
+    });
+
+    it('transitions to stored redirect when user and redirect route exists', function() {
+      subject.set('session.currentUser', 'foo');
+      const redirectRoute = 'fakeRoute';
       subject._onLockClosed(redirectRoute);
 
       expect(subject.transitionTo).to.have.been.calledWith(redirectRoute);
+    });
+
+    it('transitions to home when user does not exist and redirect route exists', function() {
+      subject.set('session.currentUser', null);
+      const redirectRoute = 'fakeRoute';
+      subject._onLockClosed(redirectRoute);
+
+      expect(subject.transitionTo).to.have.been.calledWith('/');
+    });
+
+    it('does not transition when redirectRoute is not defined', function() {
+      subject._onLockClosed();
+      expect(subject.transitionTo).to.not.have.been.called;
     });
   });
 });

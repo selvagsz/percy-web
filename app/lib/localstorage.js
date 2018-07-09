@@ -1,8 +1,14 @@
+// Use this if you want to store something locally on a user's client.
+// Use localStorage -- no third argument or, useSessionStorage: false -- if you want to
+// persist information across page loads AND accross tabs.
+// Use sessionstorage -- useSessionStorage: true -- if you want to persist information for a
+// single tab only.
 export default {
-  get(key, defaultValue) {
+  get(key, defaultValue, {useSessionStorage = false} = {}) {
     let item;
+    const storageSystem = useSessionStorage ? sessionStorage : localStorage;
     try {
-      item = JSON.parse(localStorage.getItem(key));
+      item = JSON.parse(storageSystem.getItem(key));
     } catch (_) {
       // Safari throws errors while accessing localStorage in private mode.
     } finally {
@@ -10,9 +16,10 @@ export default {
     }
   },
 
-  set(key, value) {
+  set(key, value, {useSessionStorage = false} = {}) {
+    const storageSystem = useSessionStorage ? sessionStorage : localStorage;
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      storageSystem.setItem(key, JSON.stringify(value));
     } catch (_) {
       // Safari throws errors while accessing localStorage in private mode.
     } finally {
@@ -20,19 +27,22 @@ export default {
     }
   },
 
-  removeItem(key) {
+  removeItem(key, {useSessionStorage = false} = {}) {
+    const storageSystem = useSessionStorage ? sessionStorage : localStorage;
     try {
-      localStorage.removeItem(key);
+      storageSystem.removeItem(key);
     } catch (_) {
       // Safari throws errors while accessing localStorage in private mode.
     }
   },
 
-  _keys() {
+  _keys({useSessionStorage = false} = {}) {
+    const storageSystem = useSessionStorage ? sessionStorage : localStorage;
+
     try {
       const ret = [];
-      for (var i = 0; i < localStorage.length; i++) {
-        ret.push(localStorage.key(i));
+      for (var i = 0; i < storageSystem.length; i++) {
+        ret.push(storageSystem.key(i));
       }
       return ret;
     } catch (_) {
@@ -41,14 +51,14 @@ export default {
     }
   },
 
-  keysWithString(string) {
-    return this._keys().filter(key => {
+  keysWithString(string, {useSessionStorage = false} = {}) {
+    return this._keys(useSessionStorage).filter(key => {
       return new RegExp(string).test(key);
     });
   },
 
-  removeKeysWithString(string) {
-    this.keysWithString(string).forEach(key => {
+  removeKeysWithString(string, {useSessionStorage = false} = {}) {
+    this.keysWithString(string, useSessionStorage).forEach(key => {
       this.removeItem(key);
     });
   },

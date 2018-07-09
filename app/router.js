@@ -2,16 +2,19 @@ import {on} from '@ember/object/evented';
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
+export const AUTH_REDIRECT_LOCALSTORAGE_KEY = 'percyAttemptedTransition';
 export const AUTH_CALLBACK_ROUTE = 'auth-callback';
 const VERIFY_EMAIL_ROUTE = 'verify-email';
 const VERIFICATION_REQUIRED_ROUTE = 'email-verification-required';
 const PASSWORD_UPDATED_ROUTE = 'password-updated';
+const LOGIN_ROUTE = 'login';
 
 export const DO_NOT_FORWARD_REDIRECT_ROUTES = [
   AUTH_CALLBACK_ROUTE,
   VERIFY_EMAIL_ROUTE,
   VERIFICATION_REQUIRED_ROUTE,
   PASSWORD_UPDATED_ROUTE,
+  LOGIN_ROUTE,
 ];
 
 const Router = EmberRouter.extend({
@@ -39,7 +42,7 @@ Router.map(function() {
   this.route('docs', {path: '/docs'}, function() {
     this.route('page', {path: '*path'});
   });
-  this.route('login');
+  this.route(LOGIN_ROUTE);
   this.route('pricing');
   this.route('enterprise');
   this.route('team');
