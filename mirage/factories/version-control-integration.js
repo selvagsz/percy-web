@@ -17,4 +17,12 @@ export default Factory.extend({
       });
     },
   }),
+  personalAccessToken: trait({
+    afterCreate(integration) {
+      integration.update({
+        gitlabBotUserId: 1,
+        isGitlabPersonalAccessTokenPresent: true,
+      });
+    },
+  }),
 });

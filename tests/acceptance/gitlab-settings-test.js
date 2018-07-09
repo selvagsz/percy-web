@@ -1,5 +1,8 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import GitlabSettings from 'percy-web/tests/pages/components/gitlab-settings';
+import sinon from 'sinon';
+import utils from 'percy-web/lib/utils';
+import {afterEach} from 'mocha';
 
 describe('Acceptance: Gitlab Settings', function() {
   setupAcceptance();
@@ -64,6 +67,37 @@ describe('Acceptance: Gitlab Settings', function() {
 
         await GitlabSettings.integrationSettings.toolbar.back();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
+      });
+    });
+
+    describe('with a gitlab integration and personal access token', function() {
+      let organization;
+      let windowStub;
+      setupSession(function(server) {
+        organization = server.create(
+          'organization',
+          'withAdminUser',
+          'withCompleteGitlabIntegration',
+        );
+        windowStub = sinon.stub(utils, 'confirmMessage').returns(true);
+      });
+
+      afterEach(function() {
+        windowStub.restore();
+      });
+
+      it('allows deleting the integration', async function() {
+        await visit(`/organizations/${organization.slug}/integrations/gitlab`);
+        expect(GitlabSettings.integrationSettings.personalAccessTokenField.text).to.equal(
+          'Personal access token (installed by you)',
+        );
+        await GitlabSettings.delete();
+        expect(GitlabSettings.integrationSettings.personalAccessTokenField.isVisible).to.equal(
+          false,
+        );
+        expect(GitlabSettings.integrationButton.isVisible).to.equal(true);
+        expect(GitlabSettings.integrationButton.text).to.equal('Connect to GitLab');
+        await percySnapshot(this.test.fullTitle());
       });
     });
   });

@@ -157,7 +157,7 @@ button,
   border: 1px solid transparent;
   border-radius: 4px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 1px 0 rgba(0, 0, 0, 0.06);
-  transition: color 250ms, background 250ms;
+  transition: color 250ms, background 250ms, box-shadow 250ms;
 
   &:hover {
     color: var(--blue);
@@ -308,6 +308,16 @@ button,
     color: var(--white);
     background: var(--darkest-gray);
     border: 1px solid transparent;
+  }
+}
+
+.btn-danger {
+  color: var(--red-500);
+
+  &:hover {
+    color: var(--white);
+    background-color: var(--red-500);
+    box-shadow: 0 4px 12px rgba(#e85344, 0.3);
   }
 }
 

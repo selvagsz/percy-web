@@ -16,6 +16,7 @@ const SELECTORS = {
   PERSONAL_ACCESS_TOKEN_INPUT: '[data-test-gitlab-personal-access-token-field]',
   INTEGRATION_SETTINGS_TOOLBAR: '[data-test-gitlab-settings-edit-form-toolbar]',
   INTEGRATION_SETTINGS_SAVE_BUTTON: '[data-test-form-submit-button]',
+  INTEGRATION_SETTINGS_DELETE_BUTTON: '[data-test-gitlab-settings-delete]',
 };
 
 export const GitlabSettings = {
@@ -34,6 +35,7 @@ export const GitlabSettings = {
       save: clickable(SELECTORS.INTEGRATION_SETTINGS_SAVE_BUTTON),
       isSaveDisabled: attribute('disabled', SELECTORS.INTEGRATION_SETTINGS_SAVE_BUTTON),
       back: clickable('a.back'),
+      delete: clickable('button[data-test-gitlab-settings-delete]'),
     },
   },
   integrationButton: {
@@ -42,6 +44,7 @@ export const GitlabSettings = {
     isVisible: isVisible(),
   },
   install: clickable(SELECTORS.INTEGRATION_CONNECT_BUTTON),
+  delete: alias('integrationSettings.toolbar.delete'),
   statusIsHidden: isHidden(SELECTORS.GITLAB_INTEGRATION),
   isPersonalAccessTokenFieldVisible: alias(
     'integrationSettings.personalAccessTokenField.isVisible',

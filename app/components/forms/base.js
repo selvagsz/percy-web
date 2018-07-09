@@ -6,6 +6,7 @@ import Changeset from 'ember-changeset';
 import lookupValidator from 'ember-changeset-validations';
 import timeoutForEnv from 'percy-web/lib/timeout-for-env';
 import {later} from '@ember/runloop';
+import utils from 'percy-web/lib/utils';
 
 export default Component.extend({
   // To be defined by superclass:
@@ -15,6 +16,7 @@ export default Component.extend({
   isSaving: false,
   isSaveSuccessful: null,
   errorMessage: null,
+  confirmationMessage: null,
 
   store: service(),
   changeset: computed('model', 'validator', function() {
@@ -98,11 +100,14 @@ export default Component.extend({
           });
       }
     },
-    delete() {
+    delete(confirmationMessage) {
       let store = this.get('store');
       let model = this.get('model');
       // Delete the record on the server
       // and remove the associated record from the store
+      if (confirmationMessage && !utils.confirmMessage(confirmationMessage)) {
+        return;
+      }
       model.destroyRecord().then(() => store.unloadRecord(model));
     },
   },

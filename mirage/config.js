@@ -248,6 +248,10 @@ export default function() {
     }
   });
 
+  this.delete('/version-control-integrations/:id', function() {
+    return new Mirage.Response(204, {}, {});
+  });
+
   this.get('/projects/:full_slug/', function(schema, request) {
     let fullSlug = decodeURIComponent(request.params.full_slug);
     return schema.projects.findBy({fullSlug: fullSlug});

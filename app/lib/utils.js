@@ -62,6 +62,10 @@ export default {
     window.location.replace(url);
   },
 
+  confirmMessage(message) {
+    return confirm(message);
+  },
+
   getQueryParam(param) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');

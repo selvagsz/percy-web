@@ -53,4 +53,10 @@ export default Factory.extend({
       server.create('versionControlIntegration', 'gitlab', {organization});
     },
   }),
+
+  withCompleteGitlabIntegration: trait({
+    afterCreate(organization, server) {
+      server.create('versionControlIntegration', 'gitlab', 'personalAccessToken', {organization});
+    },
+  }),
 });

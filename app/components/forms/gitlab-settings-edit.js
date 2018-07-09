@@ -6,7 +6,5 @@ export default BaseFormComponent.extend({
   classes: null,
   model: null,
 
-  classNames: ['GitlabSettingsEdit', 'Form'],
-
   validator: GitlabSettingsEditValidations,
 });
