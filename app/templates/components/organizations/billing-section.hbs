@@ -1,10 +1,15 @@
 {{!-- TODO: #billingadmins --}}
 <section class="px-2 pt-3">
-  {{#unless (eq "admin" organization.currentUserMembership.role)}}
+  {{#unless (or isUserOrgAdmin (is-admin))}}
     <div class="Alert Alert--error">
       <strong>Changing billing settings requires organization admin permissions.</strong>
     </div>
   {{else}}
+    {{#if (and (not isUserOrgAdmin) (is-admin))}}
+      <div class="bg-red-300 p-1 mt-1 mb-3 text-center font-bold" style="background: linear-gradient(to right, var(--red-100) 25%, var(--red-300) 100%, var(--red-800) 50%);">
+         This page is only visible to you as a Percy superuser with admin mode enabled.
+      </div>
+    {{/if}}
     <section>
       <div class="bg-white rounded shadow-1" style="min-height: 363px;">
         <div class="flex items-center justify-between p-6">

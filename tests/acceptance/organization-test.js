@@ -3,6 +3,8 @@ import setupAcceptance, {
   renderAdapterErrorsAsPage,
 } from '../helpers/setup-acceptance';
 import freezeMoment from '../helpers/freeze-moment';
+import AdminMode from 'percy-web/lib/admin-mode';
+import {beforeEach, afterEach} from 'mocha';
 
 describe('Acceptance: Organization', function() {
   setupAcceptance();
@@ -129,6 +131,28 @@ describe('Acceptance: Organization', function() {
 
         await percySnapshot(this.test);
       });
+    });
+  });
+
+  describe('user is not member of organization but is in admin-mode', function() {
+    let organization;
+    setupSession(function(server) {
+      organization = server.create('organization');
+      server.create('project', {organization});
+      server.create('user');
+    });
+
+    beforeEach(() => {
+      AdminMode.setAdminMode();
+    });
+
+    afterEach(() => {
+      AdminMode.clear();
+    });
+
+    it('shows billing page with warning message', async function() {
+      await visit(`/organizations/${organization.slug}/billing`);
+      await percySnapshot(this.test.fullTitle() + ' | setup');
     });
   });
 });
