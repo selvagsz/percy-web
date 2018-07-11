@@ -39,7 +39,6 @@
         {{else}}
           {{!-- TODO: #billingadmins --}}
           {{#if (eq "admin" organization.currentUserMembership.role)}}
-          {{log plan.isCustom plan.name}}
             {{#if isCustom}}
               <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action handleSelection}}>{{buttonText}}</a>
             {{else}}

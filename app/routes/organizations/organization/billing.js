@@ -25,7 +25,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     },
 
     transitionToEnterpriseForm() {
-      console.log("transitioning");
+      this.transitionTo('enterprise');
     },
   },
 });
