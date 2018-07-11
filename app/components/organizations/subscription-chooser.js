@@ -18,11 +18,6 @@ export default Component.extend({
   subscription: readOnly('organization.subscription'),
   plan: readOnly('subscription.plan'),
 
-  actions: {
-    redirectToEnterprise() {
-      console.log('redirecting to enterprise');
-    },
-  },
   // isCardComplete: false,
   // isUpdatingCard: false,
 

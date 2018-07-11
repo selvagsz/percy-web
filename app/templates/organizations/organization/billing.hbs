@@ -1,3 +1,7 @@
 {{#organizations/settings-nav-wrapper organization=model}}
-  {{organizations/billing-section organization=model showSupport="showSupport"}}
+  {{organizations/billing-section
+    organization=model
+    showSupport="showSupport"
+    transitionToEnterpriseForm=(route-action "transitionToEnterpriseForm")
+  }}
 {{/organizations/settings-nav-wrapper}}

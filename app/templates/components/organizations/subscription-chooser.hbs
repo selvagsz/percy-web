@@ -58,7 +58,7 @@
                 planData=planData
                 plan=plan
                 organization=organization
-                changingSubscription=changingSubscription
+                handleSelection=changingSubscription
               }}
             {{/each}}
 
@@ -72,7 +72,7 @@
               buttonText="Contact Us"
               plan=plan
               organization=organization
-              changingSubscription=(action "redirectToEnterprise")
+              handleSelection=transitionToEnterpriseForm
             }}
 
           </div>

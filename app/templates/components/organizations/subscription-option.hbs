@@ -14,7 +14,7 @@
           <div>
           {{#if planData.numDiffs}}
             {{format-number planData.numDiffs}}
-          {{else}}
+          {{else if planData.numDiffsTitle}}
             {{planData.numDiffsTitle}}
           {{/if}}
           visual validations
@@ -39,14 +39,19 @@
         {{else}}
           {{!-- TODO: #billingadmins --}}
           {{#if (eq "admin" organization.currentUserMembership.role)}}
-            {{stripe-checkout
-              organization=organization
-              planId=planData.id
-              price=planData.monthlyPrice
-              planName=planData.name
-              classes="btn btn-primary shadow-purple-lg mb-0"
-              changingSubscription=changingSubscription
-            }}
+          {{log plan.isCustom plan.name}}
+            {{#if isCustom}}
+              <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action handleSelection}}>{{buttonText}}</a>
+            {{else}}
+              {{stripe-checkout
+                organization=organization
+                planId=planData.id
+                price=planData.monthlyPrice
+                planName=planData.name
+                classes="btn btn-primary shadow-purple-lg mb-0"
+                changingSubscription=handleSelection
+              }}
+            {{/if}}
           {{/if}}
         {{/if}}
       </div>
