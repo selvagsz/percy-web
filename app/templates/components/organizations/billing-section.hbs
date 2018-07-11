@@ -17,20 +17,20 @@
             {{inline-svg 'comparison-icon-lg' class="mr-2"}}
             <div>
               <div class="leading-none">
-                {{#if organization.subscription.currentUsageStats.total}}
-                  {{format-number organization.subscription.currentUsageStats.total}}
+                {{#if subscription.currentUsageStats.total}}
+                  {{format-number subscription.currentUsageStats.total}}
                 {{else}}
                   …
                 {{/if}}
               </div>
               <div class="text-sm text-gray-400 font-semibold">
-                Visual validations since {{moment-format organization.subscription.currentPeriodStart 'MMMM D'}}
+                Visual validations since {{moment-format subscription.currentPeriodStart 'MMMM D'}}
               </div>
             </div>
           </div>
           <div class="text-right">
             <div class="font-semibold">
-              {{moment-format organization.subscription.currentPeriodStart 'MMMM D, YYYY'}} - {{moment-format organization.subscription.currentPeriodEndDisplayed
+              {{moment-format subscription.currentPeriodStart 'MMMM D, YYYY'}} - {{moment-format subscription.currentPeriodEndDisplayed
               'MMMM D, YYYY'}}
             </div>
             <span class="text-sm font-bold bg-purple-600 text-white text-right py-sm px-1" style="border-radius: 11px;">
@@ -46,7 +46,7 @@
         <div class="active">
           <div class="row">
             <div class="three columns">
-              {{organization.subscription.plan.name}}
+              {{subscription.plan.name}}
             </div>
             <div class="nine columns">
               You are on a custom billing plan, please <a href="#" {{action "showSupport"}}>reach out</a> with any questions about changing your billing plan.
@@ -56,168 +56,37 @@
       {{else}}
         <h1 class="text-xl font-semibold mb-sm">
           Total monthly usage
-          {{#if organization.subscription.isCustomer}}
+          {{#if subscription.isCustomer}}
             {{!-- TODO: remove this, show billing period always after legacy capped monthly users are migrated. --}}
-            {{#if organization.subscription.plan.allowOverages}}
+            {{#if subscription.plan.allowOverages}}
               <span>
-                {{moment-format organization.subscription.currentPeriodStart 'MMMM D'}} to
-                {{moment-format organization.subscription.currentPeriodEndDisplayed 'MMMM D'}}
+                {{moment-format subscription.currentPeriodStart 'MMMM D'}} to
+                {{moment-format subscription.currentPeriodEndDisplayed 'MMMM D'}}
               </span>
             {{/if}}
           {{/if}}
         </h1>
         <div class="text-gray-400 w-3/4">
           Current usage:
-          {{#if organization.subscription.currentUsageStats}}
-            <strong class="text-gray-700">{{format-number organization.subscription.currentUsageStats.total}} visual validations</strong>
+          {{#if subscription.currentUsageStats}}
+            <strong class="text-gray-700">{{format-number subscription.currentUsageStats.total}} visual validations</strong>
           {{else}}
             ...
           {{/if}}
         </div>
-        <div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
-        {{#if organization.subscription.plan.isTrial}}
-          <div class="Alert Alert--warning">
-            <strong>Trial ends {{moment-from-now organization.subscription.trialEnd}}</strong>.
-            <br>
-            <br>
-            If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions during your trial!
-          </div>
-        {{/if}}
-        <div class="bg-white rounded shadow-1 p-2 mb-2">
-          <h2 class="text-xl font-semibold mb-1">Subscription</h2>
 
-          {{#if organization.subscription.plan.isFree}}
-            <div class="Alert Alert--warning">
-              <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} visual validations. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
-            </div>
-          {{/if}}
-
-          {{#if organization.subscription.plan.isCustom}}
-            <div class="p-2 bg-gray-000 rounded border mb-2">
-              <div>
-                <div class="pr-2 text-xl font-semibold">
-                  {{organization.subscription.plan.name}}
-                </div>
-                <div class="flex">
-                  <div class="pr-2">
-                    {{#with organization.subscription.plan as |plan|}}
-                      <div>
-                        <strong>
-                          {{plan.workerLimit}} concurrent renderers
-                          {{format-number plan.usageIncluded}} visual validations
-                        </strong>
-                      </div>
-                      <div>
-                        {{#if plan.allowOverages}}${{plan.overageUnitCost}} / extra validation{{else}}No overages allowed{{/if}}
-                      </div>
-                      <div>
-                        {{plan.historyLimitDays}} day history
-                      </div>
-                    {{/with}}
-                    {{#unless organization.subscription.plan.isTrial}}
-                      <div class="mt-2">
-                        You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
-                      </div>
-                    {{/unless}}
-                  </div>
-                  <div style="max-width: 150px" class="flex-1 pr-2"></div>
-                  <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-                    <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {{/if}}
-
-          <div class="pt-2 bg-gray-000 rounded border">
-            {{#each subscriptionData.PLANS as |planData|}}
-              {{#unless (eq planData.id "free")}}
-                <div class="border-b px-2 pb-2 mb-2">
-                  <div class="pr-2 text-xl font-semibold">
-                    {{planData.name}}
-                  </div>
-                  <div class="flex">
-                    <div class="flex-1 pr-2">
-                      <div>
-                        {{planData.numTeamMembersTitle}}
-                      </div>
-                      <div>
-                        {{planData.numWorkersTitle}}
-                      </div>
-                      <div>
-                        {{format-number planData.numDiffs}} visual validations
-                      </div>
-                    </div>
-                    <div style="max-width: 150px" class="flex-1 pr-2">
-                      <strong><span>$</span>{{format-number planData.monthlyPrice precision=0}}</strong> / month
-                      <br>
-                      ${{planData.extraDiffPrice}} / extra validation
-                    </div>
-                    <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-                      {{#if (eq organization.subscription.plan.id planData.id)}}
-                        {{#if isSaving}}
-                          {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
-                        {{else}}
-                          <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
-                        {{/if}}
-                      {{else}}
-                        {{!-- TODO: #billingadmins --}}
-                        {{#if (eq "admin" organization.currentUserMembership.role)}}
-                          {{stripe-checkout
-                            organization=organization
-                            planId=planData.id
-                            price=planData.monthlyPrice
-                            planName=planData.name
-                            classes="btn btn-primary shadow-purple-lg mb-0"
-                            changingSubscription=(action "changingSubscription")
-                          }}
-                        {{/if}}
-                      {{/if}}
-                    </div>
-                  </div>
-                </div>
-              {{/unless}}
-            {{/each}}
-
-            <div class="px-2 pb-2">
-              <div class="flex-1 pr-2 text-xl font-semibold">
-                Enterprise
-              </div>
-              <div class="flex">
-                <div class="flex-1 pr-2">
-                  <div>
-                    Unlimited team members
-                  </div>
-                  <div>
-                    Custom concurrent renderers
-                  </div>
-                  <div>
-                    Unlimited visual validations
-                  </div>
-                </div>
-                <div class="flex-1 pr-2"></div>
-                <div class="flex-1 pr-2 flex items-start justify-end">
-                  {{!-- TODO: #billingadmins --}}
-                  {{#if (eq "admin" organization.currentUserMembership.role)}}
-                    {{#link-to "enterprise" class="btn btn-primary shadow-purple-lg mb-0"}}Contact Us{{/link-to}}
-                  {{/if}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rounded border p-2 mb-2">
-          <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
-        </div>
+        {{organizations/subscription-chooser
+          organization=organization
+          changingSubscription=(action "changingSubscription")
+        }}
 
         {{!-- TODO: #billingadmins --}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
           <h2 class="text-xl font-semibold mb-1">Invoice Settings</h2>
-          {{forms/billing-edit subscription=organization.subscription}}
+          {{forms/billing-edit subscription=subscription}}
         </div>
 
-        {{#if organization.subscription.isCustomer}}
+        {{#if subscription.isCustomer}}
           <div class="bg-white rounded shadow-1 p-2 mb-2">
             <h2 class="text-xl font-semibold mb-1">Billing Details</h2>
             {{organizations/billing-card-updater
@@ -225,6 +94,9 @@
             }}
           </div>
         {{/if}}
+
+
+
       {{/if}}
     </section>
   {{/unless}}

@@ -1,0 +1,55 @@
+{{#unless (eq planData.id "free")}}
+  <div class="border-b px-2 pb-2 mb-2">
+    <div class="pr-2 text-xl font-semibold">
+      {{planData.name}}
+    </div>
+    <div class="flex">
+      <div class="flex-1 pr-2">
+        <div>
+          {{planData.numTeamMembersTitle}}
+        </div>
+        <div>
+          {{planData.numWorkersTitle}}
+        </div>
+          <div>
+          {{#if planData.numDiffs}}
+            {{format-number planData.numDiffs}}
+          {{else}}
+            {{planData.numDiffsTitle}}
+          {{/if}}
+          visual validations
+        </div>
+      </div>
+      <div style="max-width: 150px" class="flex-1 pr-2">
+        {{#if planData.monthlyPrice}}
+          <strong><span>$</span>{{format-number planData.monthlyPrice precision=0}}</strong> / month
+        {{/if}}
+        <br>
+        {{#if planData.extraDiffPrice}}
+          ${{planData.extraDiffPrice}} / extra validation
+        {{/if}}
+      </div>
+      <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
+        {{#if (eq plan.id planData.id)}}
+          {{#if isSaving}}
+            {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
+          {{else}}
+            <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
+          {{/if}}
+        {{else}}
+          {{!-- TODO: #billingadmins --}}
+          {{#if (eq "admin" organization.currentUserMembership.role)}}
+            {{stripe-checkout
+              organization=organization
+              planId=planData.id
+              price=planData.monthlyPrice
+              planName=planData.name
+              classes="btn btn-primary shadow-purple-lg mb-0"
+              changingSubscription=changingSubscription
+            }}
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/unless}}
