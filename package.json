@@ -115,5 +115,8 @@
   "engines": {
     "node": ">= 6.9.1"
   },
+  "resolutions": {
+    "eslint-scope": "3.7.1"
+  },
   "private": true
 }
