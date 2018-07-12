@@ -12,8 +12,6 @@ export default Component.extend({
 
   changingSubscription: null,
 
-  // This is set to true when updating credit card info.
-  updateCard: false,
   checkoutLabelText: 'Select Plan ({{amount}})',
 
   store: service(),
@@ -73,16 +71,14 @@ export default Component.extend({
       var chosenPlanId = this.get('planId');
       var planName = this.get('planName');
 
-      if (!this.get('updateCard')) {
-        let organization = this.get('organization');
-        let eventProperties = {
-          plan_id: chosenPlanId,
-          current_plan_id: this.get('organization.subscription.plan.id'),
-        };
-        this.analytics.track('Billing Plan Selected', organization, eventProperties);
-      }
+      let organization = this.get('organization');
+      let eventProperties = {
+        plan_id: chosenPlanId,
+        current_plan_id: this.get('organization.subscription.plan.id'),
+      };
+      this.analytics.track('Billing Plan Selected', organization, eventProperties);
 
-      if (this.get('updateCard') || this.get('organization.subscription.isTrialOrFree')) {
+      if (this.get('organization.subscription.isTrialOrFree')) {
         this.set(
           'handler',
           window.StripeCheckout.configure({
