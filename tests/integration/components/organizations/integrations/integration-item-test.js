@@ -34,6 +34,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="github_enterprise"
         organization=organization}}`);
+
       expect(IntegrationItem.hasContactButton).to.equal(true);
     });
 

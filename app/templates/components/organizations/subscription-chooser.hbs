@@ -1,83 +1,82 @@
+<div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
+{{#if plan.isTrial}}
+  <div class="Alert Alert--warning">
+    <strong>Trial ends {{moment-from-now subscription.trialEnd}}</strong>.
+    <br>
+    <br>
+    If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions during your trial!
+  </div>
+{{/if}}
+<div class="bg-white rounded shadow-1 p-2 mb-2">
+  <h2 class="text-xl font-semibold mb-1">Subscription</h2>
 
-        <div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
-        {{#if plan.isTrial}}
-          <div class="Alert Alert--warning">
-            <strong>Trial ends {{moment-from-now subscription.trialEnd}}</strong>.
-            <br>
-            <br>
-            If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions during your trial!
-          </div>
-        {{/if}}
-        <div class="bg-white rounded shadow-1 p-2 mb-2">
-          <h2 class="text-xl font-semibold mb-1">Subscription</h2>
+  {{#if plan.isFree}}
+    <div class="Alert Alert--warning">
+      <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} visual validations. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
+    </div>
+  {{/if}}
 
-          {{#if plan.isFree}}
-            <div class="Alert Alert--warning">
-              <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} visual validations. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
+  {{#if plan.isCustom}}
+    <div class="p-2 bg-gray-000 rounded border mb-2">
+      <div>
+        <div class="pr-2 text-xl font-semibold">
+          {{plan.name}}
+        </div>
+        <div class="flex">
+          <div class="pr-2">
+            <div>
+              <strong>
+                {{plan.workerLimit}} concurrent renderers
+                {{format-number plan.usageIncluded}} visual validations
+              </strong>
             </div>
-          {{/if}}
-
-          {{#if plan.isCustom}}
-            <div class="p-2 bg-gray-000 rounded border mb-2">
-              <div>
-                <div class="pr-2 text-xl font-semibold">
-                  {{plan.name}}
-                </div>
-                <div class="flex">
-                  <div class="pr-2">
-                    <div>
-                      <strong>
-                        {{plan.workerLimit}} concurrent renderers
-                        {{format-number plan.usageIncluded}} visual validations
-                      </strong>
-                    </div>
-                    <div>
-                      {{#if plan.allowOverages}}${{plan.overageUnitCost}} / extra validation{{else}}No overages allowed{{/if}}
-                    </div>
-                    <div>
-                      {{plan.historyLimitDays}} day history
-                    </div>
-                    {{#unless plan.isTrial}}
-                      <div class="mt-2">
-                        You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
-                      </div>
-                    {{/unless}}
-                  </div>
-                  <div style="max-width: 150px" class="flex-1 pr-2"></div>
-                  <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-                    <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
-                  </div>
-                </div>
+            <div>
+              {{#if plan.allowOverages}}${{plan.overageUnitCost}} / extra validation{{else}}No overages allowed{{/if}}
+            </div>
+            <div>
+              {{plan.historyLimitDays}} day history
+            </div>
+            {{#unless plan.isTrial}}
+              <div class="mt-2">
+                You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
               </div>
-            </div>
-          {{/if}}
-
-          <div class="pt-2 bg-gray-000 rounded border">
-            {{#each subscriptionData.PLANS as |planData|}}
-              {{organizations/subscription-option
-                planData=planData
-                plan=plan
-                organization=organization
-                handleSelection=changingSubscription
-              }}
-            {{/each}}
-
-            {{organizations/subscription-option
-              planData=(hash
-                name="Enterprise"
-                numTeamMembersTitle="Unlimited team members"
-                numWorkersTitle="Custom concurrent renderers"
-                numDiffsTitle="Unlimited"
-              )
-              buttonText="Contact Us"
-              plan=plan
-              organization=organization
-              handleSelection=transitionToEnterpriseForm
-            }}
-
+            {{/unless}}
+          </div>
+          <div style="max-width: 150px" class="flex-1 pr-2"></div>
+          <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
+            <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
           </div>
         </div>
+      </div>
+    </div>
+  {{/if}}
 
-        <div class="rounded border p-2 mb-2">
-          <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
-        </div>
+  <div class="pt-2 bg-gray-000 rounded border">
+    {{#each subscriptionData.PLANS as |planData|}}
+      {{organizations/subscription-option
+        planData=planData
+        plan=plan
+        organization=organization
+        handleSelection=changingSubscription
+      }}
+    {{/each}}
+
+    {{organizations/subscription-option
+      planData=(hash
+        name="Enterprise"
+        numTeamMembersTitle="Unlimited team members"
+        numWorkersTitle="Custom concurrent renderers"
+        numDiffsTitle="Unlimited"
+      )
+      buttonText="Contact Us"
+      plan=plan
+      organization=organization
+      handleSelection=transitionToEnterpriseForm
+    }}
+
+  </div>
+</div>
+
+<div class="rounded border p-2 mb-2">
+  <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
+</div>
