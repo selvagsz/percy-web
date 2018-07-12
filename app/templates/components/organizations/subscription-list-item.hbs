@@ -30,29 +30,7 @@
         {{/if}}
       </div>
       <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-        {{#if (eq plan.id planData.id)}}
-          {{#if isSaving}}
-            {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
-          {{else}}
-            <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
-          {{/if}}
-        {{else}}
-          {{!-- TODO: #billingadmins --}}
-          {{#if (eq "admin" organization.currentUserMembership.role)}}
-            {{#if isCustom}}
-              <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action handleSelection}}>{{buttonText}}</a>
-            {{else}}
-              {{stripe-checkout
-                organization=organization
-                planId=planData.id
-                price=planData.monthlyPrice
-                planName=planData.name
-                classes="btn btn-primary shadow-purple-lg mb-0"
-                changingSubscription=handleSelection
-              }}
-            {{/if}}
-          {{/if}}
-        {{/if}}
+        <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action "handleSelection"}}>{{selectButtonText}}</a>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
+
 {{#if plan.isTrial}}
   <div class="Alert Alert--warning">
     <strong>Trial ends {{moment-from-now subscription.trialEnd}}</strong>.
@@ -7,6 +8,7 @@
     If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions during your trial!
   </div>
 {{/if}}
+
 <div class="bg-white rounded shadow-1 p-2 mb-2">
   <h2 class="text-xl font-semibold mb-1">Subscription</h2>
 
