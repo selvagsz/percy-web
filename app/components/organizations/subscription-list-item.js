@@ -24,7 +24,6 @@ export default Component.extend({
 
   isSaveSuccessful: null,
 
-  isSaving: readOnly('_updateSubscriptionSavingStatus.isRunning'),
   shouldShowSubmit: readOnly('isCardComplete'),
   shouldShowCardInput: readOnly('isUpdatingCard'),
   planId: readOnly('plan.id'),
@@ -62,7 +61,7 @@ export default Component.extend({
     },
 
     updateCreditCard(stripeElement) {
-      this.get('subscriptionService')._updateCreditCard.perform(
+      this.get('subscriptionService').updateCreditCard.perform(
         stripeElement,
         this.get('organization'),
         this.get('planData.id'),
@@ -76,10 +75,12 @@ export default Component.extend({
       }
 
       if (this.get('creditCardExists')) {
-        this.get('subscriptionService')._changeSubscription(
-          this.get('organization'),
-          selectedPlanId,
-        );
+        this.set('isSaving', true);
+        this.get('subscriptionService')
+          .changeSubscription(this.get('organization'), selectedPlanId)
+          .finally(() => {
+            this.set('isSaving', false);
+          });
       } else {
         this._toggleCardInput();
       }

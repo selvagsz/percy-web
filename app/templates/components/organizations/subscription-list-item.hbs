@@ -29,9 +29,15 @@
           ${{planData.extraDiffPrice}} / extra validation
         {{/if}}
       </div>
+
       <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
         {{#if shouldShowCardInput}}
           <div {{action 'toggleCardInput'}}>x</div>
+        {{else if isSaving}}
+          {{saving-indicator
+            isSaving=isSaving
+            isSaveSuccessful=isSaveSuccessful
+          }}
         {{else}}
           <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{isSelected}} {{action "handleSubscriptionSelection" planData.id}}>{{selectButtonText}}</button>
         {{/if}}
