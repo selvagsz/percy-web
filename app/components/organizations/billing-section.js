@@ -36,18 +36,19 @@ export default Component.extend({
 
   actions: {
     changingSubscription(savingPromise) {
-      this.set('isSaveSuccessful', null);
-      this.set('isSaving', true);
-      savingPromise.then(
-        () => {
-          this.set('isSaving', false);
-          this.set('isSaveSuccessful', true);
-        },
-        () => {
-          this.set('isSaving', false);
-          this.set('isSaveSuccessful', false);
-        },
-      );
+      console.log('changing subscription')
+      // this.set('isSaveSuccessful', null);
+      // this.set('isSaving', true);
+      // savingPromise.then(
+      //   () => {
+      //     this.set('isSaving', false);
+      //     this.set('isSaveSuccessful', true);
+      //   },
+      //   () => {
+      //     this.set('isSaving', false);
+      //     this.set('isSaveSuccessful', false);
+      //   },
+      // );
     },
     showSupport() {
       this.sendAction('showSupport');

@@ -59,7 +59,6 @@
         planData=planData
         plan=plan
         organization=organization
-        handleSelection=changingSubscription
       }}
     {{/each}}
 
@@ -73,12 +72,9 @@
       buttonText="Contact Us"
       plan=plan
       organization=organization
-      handleSelection=transitionToEnterpriseForm
+      transitionToEnterpriseForm=transitionToEnterpriseForm
     }}
 
   </div>
 </div>
 
-<div class="rounded border p-2 mb-2">
-  <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
-</div>

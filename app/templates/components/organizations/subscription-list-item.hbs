@@ -1,7 +1,7 @@
 {{#unless (eq planData.id "free")}}
   <div class="border-b px-2 pb-2 subscription-chooser-list">
     <div class="pr-2 text-xl font-semibold">
-      {{planData.name}}
+      {{planData.name}}=={{planData.id}}
     </div>
     <div class="flex">
       <div class="flex-1 pr-2">
@@ -30,8 +30,28 @@
         {{/if}}
       </div>
       <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-        <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action "handleSelection"}}>{{selectButtonText}}</a>
+        {{#if shouldShowCardInput}}
+          <div {{action 'toggleCardInput'}}>x</div>
+        {{else}}
+          <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{isSelected}} {{action "handleSubscriptionSelection" planData.id}}>{{selectButtonText}}</button>
+        {{/if}}
       </div>
     </div>
+
+    {{#if shouldShowCardInput}}
+      <div class="mt-3">
+        {{#stripe-card
+          options=options
+          change=(action 'checkCard')
+          as |stripeElement stripeError|}}
+          {{#if stripeError}}
+            <p class="error">{{stripeError.message}}</p>
+          {{/if}}
+          <div class="flex justify-end mt-2">
+            <button class="btn btn-primary btn-shadow-purple" {{action 'updateCreditCard' stripeElement}} disabled={{if (not shouldShowSubmit) "disabled"}}>Select Plan (${{planData.monthlyPrice}})</button>
+          </div>
+        {{/stripe-card}}
+      </div>
+    {{/if}}
   </div>
 {{/unless}}
