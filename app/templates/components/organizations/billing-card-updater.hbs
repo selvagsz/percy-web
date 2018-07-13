@@ -1,9 +1,14 @@
-{{#if isSaving}}
-  {{saving-indicator
-    isSaving=isSaving
-    isSaveSuccessful=isSaveSuccessful
-  }}
-{{else if shouldShowCardInput}}
+
+{{#if shouldShowCardInput}}
+
+  {{#if isSaving}}
+    {{saving-indicator
+      isSaving=isSaving
+      isSaveSuccessful=isSaveSuccessful
+    }}
+  {{/if}}
+
+  <div style="{{if isSaving "display: none;"}}">
   {{#stripe-card
     options=options
     change=(action 'checkCard')
@@ -15,6 +20,7 @@
       <button class="btn btn-primary btn-shadow-purple" {{action 'updateCreditCard' stripeElement}} disabled={{if (not shouldShowSubmit) "disabled"}}>Update Card</button>
     </div>
   {{/stripe-card}}
+</div>
 {{else}}
   <button class="btn btn-primary btn-shadow-purple" onclick={{action 'showCardInput'}}>Update Credit Card</button>
 {{/if}}

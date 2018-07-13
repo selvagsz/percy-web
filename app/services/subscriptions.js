@@ -7,8 +7,12 @@ export default Service.extend({
   stripeService: service('stripev3'),
 
   updateCreditCard: task(function*(stripeElement, organization, planId) {
-    const stripeResponse = yield this.get('stripeService').createToken(stripeElement);
-    return this.changeSubscription(organization, planId, stripeResponse.token);
+    try {
+      const stripeResponse = yield this.get('stripeService').createToken(stripeElement);
+      return this.changeSubscription(organization, planId, stripeResponse.token);
+    } catch (e) {
+      // console.log(e)
+    }
   }),
 
   changeSubscription(organization, planId, token) {
@@ -37,6 +41,7 @@ export default Service.extend({
       },
     );
 
+    // Use this promise in component to control saving state.
     return savingPromise;
   },
 
