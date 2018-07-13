@@ -53,18 +53,22 @@ export default Component.extend({
   },
 
   actions: {
-    toggleCardInput(){
+    toggleCardInput() {
       this._toggleCardInput();
     },
 
     checkCard(event, cardDetails) {
-      console.log('checking card')
+      console.log('checking card');
       this.set('isCardComplete', cardDetails.complete);
     },
 
     updateCreditCard(stripeElement) {
-      console.log('updating card')
-      this.get('subscriptionService')._updateCreditCard.perform(stripeElement, this.get('organization'), this.get('planData.id'));
+      console.log('updating card');
+      this.get('subscriptionService')._updateCreditCard.perform(
+        stripeElement,
+        this.get('organization'),
+        this.get('planData.id'),
+      );
       // this.get('subscriptionService').updateCreditCard.perform(stripeElement, this.get('organization'), this.get('planId'));
     },
 
@@ -80,6 +84,8 @@ export default Component.extend({
       const planName = this.get('organization.subscription.plan.name');
 
       if (this.get('creditCardExists')) {
+        this.get('subscriptionService')._changeSubscription(this.get('organization'), this.get('planData.id'))
+
         console.log('update subscription only');
       } else {
         console.log('show credit card form');
@@ -95,8 +101,7 @@ export default Component.extend({
       // }
       // this.toggleProperty('shouldShowCardInput');
       // console.log('choosing one');
-    }
-
+    },
   },
 });
 

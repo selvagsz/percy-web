@@ -28,7 +28,7 @@ export default Service.extend({
   changeSubscription(organization, plan, stripeResponse) {
     // Always create a new POST request to change subscription, don't modify the subscription
     // object directly unless just changing attributes.
-    console.log("TOKEN", stripeResponse.token.id)
+    // console.log("TOKEN", stripeResponse.token.id)
 
     let subscription = this.get('store').createRecord('subscription', {
       organization: organization,
