@@ -46,10 +46,7 @@ export default Component.extend({
     const organization = this.get('organization');
     const subscriptionService = this.get('subscriptionService');
 
-    // expect organization to have plan if they are able to update card
-    const plan = this.get('store').peekRecord('plan', planId);
-
-    const savingPromise = subscriptionService.changeSubscription(organization, plan, token);
+    const savingPromise = subscriptionService.changeSubscription(organization, planId, token);
     this.get('_updateSubscriptionSavingStatus').perform(savingPromise);
   },
 

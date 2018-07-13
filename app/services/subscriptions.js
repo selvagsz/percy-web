@@ -14,6 +14,33 @@ export default Service.extend({
   changeSubscription(organization, planId, token) {
     // Always create a new POST request to change subscription, don't modify the subscription
     // object directly unless just changing attributes.
+    let subscription = this.get('store').createRecord('subscription', {
+      organization: organization,
+      billingEmail: organization.get('subscription.billingEmail'),
+      plan: this._get_or_create_plan(planId),
+      token: token && token.id,
+    });
+
+    let savingPromise = subscription.save();
+
+    savingPromise.then(
+      // success -- handle success in component
+      () => {},
+      // failure. Generic handler, but can add additional handling in component.
+      () => {
+        this.get('flashMessages').createPersistentFlashMessage({
+          message:
+            'A Stripe error occurred! Your card may have been declined. Please try again or ' +
+            'contact us at hello@percy.io and we will help you get set up.',
+          type: 'danger',
+        });
+      },
+    );
+
+    return savingPromise;
+  },
+
+  _get_or_create_plan(planId) {
     let plan = this.get('store').peekRecord('plan', planId);
     if (!plan) {
       plan = this.get('store').push({
@@ -23,46 +50,6 @@ export default Service.extend({
         },
       });
     }
-
-    let subscription = this.get('store').createRecord('subscription', {
-      organization: organization,
-      billingEmail: organization.get('subscription.billingEmail'),
-      plan: plan,
-      token: token && token.id,
-    });
-    let savingPromise = subscription.save();
-
-    savingPromise.then(
-      () => {},
-      () => {
-        this.get('flashMessages').createPersistentFlashMessage(
-          {
-            message:
-              'A Stripe error occurred! Your card may have been declined. Please try again or ' +
-              'contact us at hello@percy.io and we will help you get set up.',
-            type: 'danger',
-          },
-          {persistentReloads: 1},
-        );
-        location.reload();
-      },
-    );
-
-    this.get('_updateSubscriptionSavingStatus').perform(savingPromise);
-
-    return savingPromise;
+    return plan;
   },
-
-  _updateSubscriptionSavingStatus: task(function*(savingPromise) {
-    this.set('isSaveSuccessful', null);
-    try {
-      yield savingPromise;
-      this.get('flashMessages').success('Your subscription was updated successfully!');
-      this.setProperties({
-        isSaveSuccessful: true,
-      });
-    } catch (e) {
-      this.set('isSaveSuccessful', false);
-    }
-  }),
 });

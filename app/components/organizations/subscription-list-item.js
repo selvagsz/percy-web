@@ -13,6 +13,8 @@ export default Component.extend({
   subscriptionData: service(),
   subscriptionService: service('subscriptions'),
   store: service(),
+  flashMessages: service(),
+
   options: StripeOptions,
   organization: null,
   plan: null,
@@ -51,6 +53,18 @@ export default Component.extend({
     this.toggleProperty('isUpdatingCard');
   },
 
+  _updateSubscription(newPlanId) {
+    this.set('isSaving', true);
+    this.get('subscriptionService')
+      .changeSubscription(this.get('organization'), newPlanId)
+      .then(() => {
+        this.get('flashMessages').success('Your subscription was updated successfully!');
+      })
+      .finally(() => {
+        this.set('isSaving', false);
+      });
+  },
+
   actions: {
     toggleCardInput() {
       this._toggleCardInput();
@@ -68,19 +82,14 @@ export default Component.extend({
       );
     },
 
-    handleSubscriptionSelection(selectedPlanId) {
+    handleSubscriptionSelection(newPlanId) {
       if (this.get('transitionToEnterpriseForm')) {
         this.get('transitionToEnterpriseForm')();
         return;
       }
 
       if (this.get('creditCardExists')) {
-        this.set('isSaving', true);
-        this.get('subscriptionService')
-          .changeSubscription(this.get('organization'), selectedPlanId)
-          .finally(() => {
-            this.set('isSaving', false);
-          });
+        this._updateSubscription(newPlanId);
       } else {
         this._toggleCardInput();
       }
