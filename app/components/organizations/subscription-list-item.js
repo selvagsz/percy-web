@@ -58,18 +58,15 @@ export default Component.extend({
     },
 
     checkCard(event, cardDetails) {
-      console.log('checking card');
       this.set('isCardComplete', cardDetails.complete);
     },
 
     updateCreditCard(stripeElement) {
-      console.log('updating card');
       this.get('subscriptionService')._updateCreditCard.perform(
         stripeElement,
         this.get('organization'),
         this.get('planData.id'),
       );
-      // this.get('subscriptionService').updateCreditCard.perform(stripeElement, this.get('organization'), this.get('planId'));
     },
 
     handleSubscriptionSelection(selectedPlanId) {
@@ -77,33 +74,15 @@ export default Component.extend({
         this.get('transitionToEnterpriseForm')();
         return;
       }
-      // This is intentionally evaluated here, outside of the handlers below, because password
-      // managers like 1Password might strangely change the inputs underneath Stripe Checkout
-      // when filling out credit card info.
-      // const selectedPlanId = this.get('planData.id');
-      const planName = this.get('organization.subscription.plan.name');
 
       if (this.get('creditCardExists')) {
-        this.get('subscriptionService')._changeSubscription(this.get('organization'), this.get('planData.id'))
-
-        console.log('update subscription only');
+        this.get('subscriptionService')._changeSubscription(
+          this.get('organization'),
+          selectedPlanId,
+        );
       } else {
-        console.log('show credit card form');
         this._toggleCardInput();
       }
-      // if (this.get('creditCardExists')) {
-      //   this.toggleCardInput();
-      // } else {
-      //   const msg = `Ready to change to the ${planName} plan? We'll use your existing payment info.`;
-      //   if (confirm(msg)) {
-      //     this.get('subscriptionService').updateSomeStuff(this.get('organization'), chosenPlanId);
-      //   }
-      // }
-      // this.toggleProperty('shouldShowCardInput');
-      // console.log('choosing one');
     },
   },
 });
-
-// lower case snapshot in build info dropdown
-// in build info dropdown -- total snapshots: # across all browsers and widths
