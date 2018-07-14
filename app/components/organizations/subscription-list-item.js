@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import {computed} from '@ember/object';
-import {readOnly, not} from '@ember/object/computed';
+import {readOnly, or, not} from '@ember/object/computed';
 import {inject as service} from '@ember/service';
 import StripeOptions from 'percy-web/lib/stripe-elements-options';
+import {task} from 'ember-concurrency';
 
 // If is free plan, show stripe element thing
 //  - on save, update credit card, then update subscription via percy api
@@ -28,7 +29,23 @@ export default Component.extend({
 
   shouldShowSubmit: readOnly('isCardComplete'),
   shouldShowCardInput: readOnly('isUpdatingCard'),
-  planId: readOnly('plan.id'),
+
+  isSaving: or('processSubscriptionUpdate.isRunning', 'processCardUpdate.isRunning'),
+
+  processSubscriptionUpdate: task(function*(newPlanId) {
+    yield this.get('subscriptionService').changeSubscription.perform(
+      this.get('organization'),
+      newPlanId,
+    );
+  }),
+
+  processCardUpdate: task(function*(stripeElement) {
+    yield this.get('subscriptionService').updateCreditCard.perform(
+      stripeElement,
+      this.get('organization'),
+      this.get('planData.id'),
+    );
+  }),
 
   isCustom: computed(function() {
     return this.get('subscriptionData.PLAN_IDS').indexOf(this.get('planData.id')) === -1;
@@ -54,15 +71,7 @@ export default Component.extend({
   },
 
   _updateSubscription(newPlanId) {
-    this.set('isSaving', true);
-    this.get('subscriptionService')
-      .changeSubscription(this.get('organization'), newPlanId)
-      .then(() => {
-        this.get('flashMessages').success('Your subscription was updated successfully!');
-      })
-      .finally(() => {
-        this.set('isSaving', false);
-      });
+    this.processSubscriptionUpdate.perform(newPlanId);
   },
 
   actions: {
@@ -75,11 +84,7 @@ export default Component.extend({
     },
 
     updateCreditCard(stripeElement) {
-      this.get('subscriptionService').updateCreditCard.perform(
-        stripeElement,
-        this.get('organization'),
-        this.get('planData.id'),
-      );
+      this.processCardUpdate.perform(stripeElement);
     },
 
     handleSubscriptionSelection(newPlanId) {

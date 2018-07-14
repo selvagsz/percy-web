@@ -17,7 +17,7 @@ export default Component.extend({
 
   isSaveSuccessful: null,
 
-  // isSaving: readOnly('_updateSubscriptionSavingStatus.isRunning'),
+  isSaving: readOnly('_updateSubscriptionSavingStatus.isRunning'),
   shouldShowSubmit: readOnly('isCardComplete'),
   shouldShowCardInput: readOnly('isUpdatingCard'),
   planId: readOnly('organization.subscription.plan.id'),
@@ -57,7 +57,6 @@ export default Component.extend({
 
   _updateSubscriptionSavingStatus: task(function*(savingPromise) {
     this.set('isSaveSuccessful', null);
-    this.set('isSaving', true);
     try {
       yield savingPromise;
       this.get('flashMessages').success('Your card was updated successfully!');
@@ -65,11 +64,9 @@ export default Component.extend({
         isSaveSuccessful: true,
         isUpdatingCard: false,
         isCardComplete: false,
-        isSaving: false,
       });
     } catch (e) {
       this.set('isSaveSuccessful', false);
-      this.set('isSaving', false);
     }
   }),
 });

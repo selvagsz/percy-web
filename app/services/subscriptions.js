@@ -9,13 +9,13 @@ export default Service.extend({
   updateCreditCard: task(function*(stripeElement, organization, planId) {
     try {
       const stripeResponse = yield this.get('stripeService').createToken(stripeElement);
-      return this.changeSubscription(organization, planId, stripeResponse.token);
+      return this.changeSubscription.perform(organization, planId, stripeResponse.token);
     } catch (e) {
-      // console.log(e)
+      console.log(e)
     }
   }),
 
-  changeSubscription(organization, planId, token) {
+  changeSubscription: task(function*(organization, planId, token) {
     // Always create a new POST request to change subscription, don't modify the subscription
     // object directly unless just changing attributes.
     let subscription = this.get('store').createRecord('subscription', {
@@ -25,25 +25,31 @@ export default Service.extend({
       token: token && token.id,
     });
 
-    let savingPromise = subscription.save();
+    const savingPromise = subscription.save();
 
-    savingPromise.then(
-      // success -- handle success in component
-      () => {},
-      // failure. Generic handler, but can add additional handling in component.
-      () => {
-        this.get('flashMessages').createPersistentFlashMessage({
-          message:
-            'A Stripe error occurred! Your card may have been declined. Please try again or ' +
-            'contact us at hello@percy.io and we will help you get set up.',
-          type: 'danger',
-        });
-      },
-    );
+    try {
+      return yield savingPromise;
+    } catch (e) {
+      console.log(e);
+    }
 
-    // Use this promise in component to control saving state.
-    return savingPromise;
-  },
+    // savingPromise.then(
+    //   // success -- handle success in component
+    //   () => {},
+    //   // failure. Generic handler, but can add additional handling in component.
+    //   () => {
+    //     this.get('flashMessages').createPersistentFlashMessage({
+    //       message:
+    //         'A Stripe error occurred! Your card may have been declined. Please try again or ' +
+    //         'contact us at hello@percy.io and we will help you get set up.',
+    //       type: 'danger',
+    //     });
+    //   },
+    // );
+
+    // // Use this promise in component to control saving state.
+    // return savingPromise;
+  }),
 
   _get_or_create_plan(planId) {
     let plan = this.get('store').peekRecord('plan', planId);
