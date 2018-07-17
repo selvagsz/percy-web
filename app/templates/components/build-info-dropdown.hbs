@@ -31,6 +31,13 @@
         <td>{{build-comparison-info build=build}}</td>
       </tr>
 
+      {{#if build.isFinished}}
+        <tr>
+          <td>Total snapshots:</td>
+          <td>{{build.totalComparisons}} across all browsers and widths</td>
+        </tr>
+      {{/if}}
+
       {{#if build.isGithubPullRequest}}
         <tr>
           <td>Pull Request</td>

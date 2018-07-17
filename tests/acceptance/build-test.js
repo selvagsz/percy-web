@@ -30,6 +30,7 @@ describe('Acceptance: Build', function() {
       finishedAt: moment().subtract(5, 'seconds'),
       totalSnapshotsUnreviewed: 3,
       totalSnapshots: 4,
+      totalComparisons: 6,
     });
 
     defaultSnapshot = server.create('snapshot', 'withComparison', {build});

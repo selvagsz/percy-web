@@ -24,7 +24,7 @@
                 {{/if}}
               </div>
               <div class="text-sm text-gray-400 font-semibold">
-                Visual validations since {{moment-format organization.subscription.currentPeriodStart 'MMMM D'}}
+                Snapshots since {{moment-format organization.subscription.currentPeriodStart 'MMMM D'}}
               </div>
             </div>
           </div>
@@ -69,12 +69,12 @@
         <div class="text-gray-400 w-3/4">
           Current usage:
           {{#if organization.subscription.currentUsageStats}}
-            <strong class="text-gray-700">{{format-number organization.subscription.currentUsageStats.total}} visual validations</strong>
+            <strong class="text-gray-700">{{format-number organization.subscription.currentUsageStats.total}} snapshots {{snapshot-explanation-tooltip}}</strong>
           {{else}}
             ...
           {{/if}}
         </div>
-        <div class="text-gray-400 mb-2">Visual validation usage is calculated across all projects in this organization.</div>
+        <div class="text-gray-400 mb-2">Snapshot usage is calculated across all projects in this organization.</div>
         {{#if organization.subscription.plan.isTrial}}
           <div class="Alert Alert--warning">
             <strong>Trial ends {{moment-from-now organization.subscription.trialEnd}}</strong>.
@@ -88,7 +88,7 @@
 
           {{#if organization.subscription.plan.isFree}}
             <div class="Alert Alert--warning">
-              <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} visual validations. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
+              <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} snapshots. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
             </div>
           {{/if}}
 
@@ -104,7 +104,7 @@
                       <div>
                         <strong>
                           {{plan.workerLimit}} concurrent renderers
-                          {{format-number plan.usageIncluded}} visual validations
+                          {{format-number plan.usageIncluded}} snapshots {{snapshot-explanation-tooltip}}
                         </strong>
                       </div>
                       <div>
@@ -145,7 +145,7 @@
                         {{planData.numWorkersTitle}}
                       </div>
                       <div>
-                        {{format-number planData.numDiffs}} visual validations
+                        {{format-number planData.numDiffs}} snapshots {{snapshot-explanation-tooltip}}
                       </div>
                     </div>
                     <div style="max-width: 150px" class="flex-1 pr-2">
@@ -192,7 +192,7 @@
                     Custom concurrent renderers
                   </div>
                   <div>
-                    Unlimited visual validations
+                    Custom snapshots {{snapshot-explanation-tooltip}}
                   </div>
                 </div>
                 <div class="flex-1 pr-2"></div>
