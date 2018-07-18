@@ -193,6 +193,22 @@ export default DS.Model.extend({
     return this.store.findRecord('build', this.get('id'), {reload: true});
   },
 
+  browsersUpgraded: computed('browsers.[]', 'baseBuild.browsers.[]', function() {
+    const headBuildBrowsers = this.get('browsers') || [];
+    const baseBuildBrowsers = this.get('baseBuild.browsers') || [];
+    const browsersUpgraded = [];
+    headBuildBrowsers.forEach(headBrowser => {
+      baseBuildBrowsers.forEach(baseBrowser => {
+        // Only count a browser as "upgraded" if the same family existed in the base build,
+        // so that we don't accidentally include browsers that were added.
+        if (baseBrowser.browserFamily == headBrowser.browserFamily && baseBrowser !== headBrowser) {
+          browsersUpgraded.push(headBrowser);
+        }
+      });
+    });
+    return browsersUpgraded;
+  }),
+
   loadedSnapshots: computed(function() {
     // Get snapshots without making new request
     return this.hasMany('snapshots').value() || [];

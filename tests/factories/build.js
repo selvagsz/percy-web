@@ -15,13 +15,11 @@ FactoryGuy.define('build', {
     updatedAt: () => new Date(),
     commit: FactoryGuy.belongsTo('commit'),
     snapshots: FactoryGuy.hasMany('snapshot'),
-    browsers: () => {
-      return [FactoryGuy.make('browser')];
-    },
+    browsers: () => [FactoryGuy.make('browser')],
   },
   traits: {
     withLongBranch: {branch: () => faker.lorem.slug(20)},
-    withBaseBuild: {baseBuild: {baseBuild: FactoryGuy.belongsTo('build')}},
+    withBaseBuild: {baseBuild: FactoryGuy.belongsTo('build')},
     withRepo: {repo: FactoryGuy.belongsTo('repo')},
     withGithubRepo: {repo: FactoryGuy.belongsTo('repo', 'github')},
     withGitlabRepo: {repo: FactoryGuy.belongsTo('repo', 'gitlab')},
@@ -85,6 +83,31 @@ FactoryGuy.define('build', {
       browsers: () => {
         return [FactoryGuy.make('browser'), FactoryGuy.make('browser', 'chrome')];
       },
+    },
+
+    withUpgradedBrowser: {
+      baseBuild: FactoryGuy.belongsTo('build', '_withOlderBrowser'),
+      browsers: () => [FactoryGuy.make('browser')],
+    },
+
+    withTwoUpgradedBrowsers: {
+      baseBuild: FactoryGuy.belongsTo('build', '_withTwoOlderBrowsers'),
+      browsers: () => {
+        return [FactoryGuy.make('browser'), FactoryGuy.make('browser', 'chrome')];
+      },
+    },
+
+    // Private: use withUpgradedBrowser instead.
+    _withOlderBrowser: {
+      browsers: () => [FactoryGuy.make('browser', 'olderFirefox')],
+    },
+
+    // Private: use withTwoUpgradedBrowsers instead.
+    _withTwoOlderBrowsers: {
+      browsers: () => [
+        FactoryGuy.make('browser', 'olderFirefox'),
+        FactoryGuy.make('browser', 'olderChrome'),
+      ],
     },
   },
 });

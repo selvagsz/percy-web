@@ -6,16 +6,22 @@ FactoryGuy.define('browser', {
     // they have the same browser
     id: 'firefox-id',
     version: '123.123',
-    browserFamily: () => {
-      return FactoryGuy.make('browser-family');
-    },
+    browserFamily: FactoryGuy.belongsTo('browser-family'),
   },
   traits: {
     chrome: {
       id: 'chrome-id',
-      browserFamily: () => {
-        return FactoryGuy.make('browser-family', 'chrome');
-      },
+      browserFamily: FactoryGuy.belongsTo('browser-family', 'chrome'),
+    },
+    olderChrome: {
+      id: 'chrome-id-old',
+      browserFamily: FactoryGuy.belongsTo('browser-family', 'chrome'),
+      version: '0.99',
+    },
+    olderFirefox: {
+      id: 'firefox-id-old',
+      browserFamily: FactoryGuy.belongsTo('browser-family'),
+      version: '0.99',
     },
   },
 });

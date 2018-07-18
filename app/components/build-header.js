@@ -6,7 +6,7 @@ import {htmlSafe} from '@ember/string';
 
 export default Component.extend({
   build: null,
-  classNames: ['BuildHeader'],
+  tagName: null,
 
   buildCompletionPercent: alias('build.buildCompletionPercent'),
 
