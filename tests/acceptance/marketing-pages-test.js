@@ -14,13 +14,6 @@ describe('Acceptance: Marketing pages', function() {
         await percySnapshot(this.test);
       }
     });
-    it('can visit /docs', async function() {
-      await visit('/docs');
-      expect(currentPath()).to.equal('docs.index');
-      if (takeSnapshot) {
-        await percySnapshot(this.test);
-      }
-    });
     it('can visit /team', async function() {
       await visit('/team');
       expect(currentPath()).to.equal('team');
