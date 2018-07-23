@@ -110,8 +110,8 @@ describe('Acceptance: Project', function() {
       });
 
       expect(currentPath()).to.equal('organization.project.settings');
-      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Disabled Project/);
-      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
       expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
 
       await percySnapshot(this.test);
@@ -124,8 +124,8 @@ describe('Acceptance: Project', function() {
       });
 
       expect(currentPath()).to.equal('organization.project.settings');
-      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Disabled Project/);
-      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
+      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
       expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
 
       await percySnapshot(this.test);
