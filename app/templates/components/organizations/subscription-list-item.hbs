@@ -1,5 +1,5 @@
 {{#unless (eq planData.id "free")}}
-  <div class="border-b px-2 pb-2 subscription-chooser-list">
+  <div class="border-b px-2 pb-2 subscription-chooser-list" data-test-subscription-list-item>
     <div class="pr-2 text-xl font-semibold">
       {{planData.name}}
     </div>
@@ -30,30 +30,34 @@
         {{/if}}
       </div>
       <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end">
-        {{#if (eq plan.id planData.id)}}
-          {{#if isSaving}}
-            {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful}}
-          {{else}}
-            <a href="#" disabled="disabled" class="btn btn-primary shadow-purple-lg mb-0">Selected Plan</a>
-          {{/if}}
-        {{else}}
-          {{!-- TODO: #billingadmins --}}
-          {{#if (eq "admin" organization.currentUserMembership.role)}}
-            {{#if isCustom}}
-              <a href="#" class="btn btn-primary shadow-purple-lg mb-0" {{action handleSelection}}>{{buttonText}}</a>
-            {{else}}
-              {{stripe-checkout
-                organization=organization
-                planId=planData.id
-                price=planData.monthlyPrice
-                planName=planData.name
-                classes="btn btn-primary shadow-purple-lg mb-0"
-                changingSubscription=handleSelection
-              }}
-            {{/if}}
-          {{/if}}
+        {{#if (eq "admin" organization.currentUserMembership.role)}}
+          <button href="#" class="btn btn-primary shadow-purple-lg mb-0 {{if isSaving "is-loading"}}" disabled={{isActivePlan}} {{action "handleSubscriptionSelection"}} data-test-subscription-list-item-choose-subscription>
+            {{subscriptionButtonText}}
+          </button>
         {{/if}}
       </div>
     </div>
+
+    {{#if shouldShowCardInput}}
+      {{#if isNotSaving}}
+        <div class="py-2 pr-2 flex">
+          <div class="flex-1">
+            {{#stripe-card
+              data-test-subscription-list-item-stripe-card
+              options=options
+              change=(action 'checkCard')
+              as |stripeElement stripeError|}}
+              {{#if stripeError}}
+                <p class="error">{{stripeError.message}}</p>
+              {{/if}}
+              <div class="flex justify-end mt-2">
+                <button class="btn" {{action "hideCardInput"}}>Cancel</button>
+                <button class="btn btn-primary btn-shadow-purple ml-1" {{action 'updateCreditCard' stripeElement planData.id}} disabled={{if (not shouldShowSubmit) "disabled"}}>Update Card</button>
+              </div>
+            {{/stripe-card}}
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
   </div>
 {{/unless}}

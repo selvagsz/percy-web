@@ -55,10 +55,9 @@
     {{#each subscriptionData.PLANS as |planData|}}
       {{organizations/subscription-list-item
         planData=planData
-        plan=plan
+        existingPlan=plan
         organization=organization
-        handleSelection=changingSubscription
-        isSaving=isSaving
+        isActivePlan=(eq plan.id planData.id)
       }}
     {{/each}}
 
@@ -72,7 +71,7 @@
       buttonText="Contact Us"
       plan=plan
       organization=organization
-      handleSelection=transitionToEnterpriseForm
+      transitionToEnterpriseForm=transitionToEnterpriseForm
     }}
 
   </div>

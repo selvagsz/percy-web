@@ -21,6 +21,7 @@ describe('ApplicationRoute', function() {
   });
 
   beforeEach(function() {
+    sessionStorage.clear();
     subject = this.subject();
   });
 

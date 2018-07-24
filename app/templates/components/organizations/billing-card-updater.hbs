@@ -4,7 +4,9 @@
     isSaveSuccessful=isSaveSuccessful
   }}
 {{else if shouldShowCardInput}}
+
   {{#stripe-card
+    data-test-billing-card-updater-stripe-card
     options=options
     change=(action 'checkCard')
     as |stripeElement stripeError|}}
@@ -12,9 +14,9 @@
       <p class="error">{{stripeError.message}}</p>
     {{/if}}
     <div class="flex justify-end mt-2">
-      <button class="btn btn-primary btn-shadow-purple" {{action 'updateCreditCard' stripeElement}} disabled={{if (not shouldShowSubmit) "disabled"}}>Update Card</button>
+      <button class="btn btn-primary btn-shadow-purple" {{action 'updateCreditCard' stripeElement planId}} disabled={{if (not shouldShowSubmit) "disabled"}} data-test-submit-card-button>Update Card</button>
     </div>
   {{/stripe-card}}
 {{else}}
-  <button class="btn btn-primary btn-shadow-purple" onclick={{action 'showCardInput'}}>Update Credit Card</button>
+  <button class="btn btn-primary btn-shadow-purple" {{action 'showCardInput'}} data-test-open-card-form>Update Credit Card</button>
 {{/if}}

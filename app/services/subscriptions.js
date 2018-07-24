@@ -3,13 +3,13 @@ import Service, {inject as service} from '@ember/service';
 export default Service.extend({
   store: service(),
   flashMessages: service(),
-  changeSubscription(organization, plan, token) {
+  changeSubscription(organization, planId, token) {
     // Always create a new POST request to change subscription, don't modify the subscription
     // object directly unless just changing attributes.
     let subscription = this.get('store').createRecord('subscription', {
       organization: organization,
       billingEmail: organization.get('subscription.billingEmail'),
-      plan: plan,
+      plan: this._get_or_create_plan(planId),
       token: token && token.id,
     });
     let savingPromise = subscription.save();
@@ -30,5 +30,18 @@ export default Service.extend({
       },
     );
     return savingPromise;
+  },
+
+  _get_or_create_plan(planId) {
+    let plan = this.get('store').peekRecord('plan', planId);
+    if (!plan) {
+      plan = this.get('store').push({
+        data: {
+          id: planId,
+          type: 'plan',
+        },
+      });
+    }
+    return plan;
   },
 });
