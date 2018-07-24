@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import {describe, it, beforeEach} from 'mocha';
 import {setupComponentTest} from 'ember-mocha';
 import {make} from 'ember-data-factory-guy';
+import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import IntegrationItem from 'percy-web/tests/pages/components/integration-item';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
@@ -28,6 +29,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
         organization=organization}}`);
 
       expect(IntegrationItem.hasInstallButton).to.equal(true);
+      percySnapshot(this.test);
     });
 
     it('shows the contact us button for github enterprise', function() {
@@ -36,6 +38,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
         organization=organization}}`);
 
       expect(IntegrationItem.hasContactButton).to.equal(true);
+      percySnapshot(this.test);
     });
 
     it('shows the contact us button for gitlab', function() {
@@ -44,10 +47,11 @@ describe('Integration | Component | organizations/integrations/integration-item'
         organization=organization}}`);
 
       expect(IntegrationItem.hasContactButton).to.equal(true);
+      percySnapshot(this.test);
     });
 
     it('links to the github enterprise form', function() {
-      const formLink = 'https://percy.io/docs/integrations/github-enterprise';
+      const formLink = 'https://docs.percy.io/docs/github-enterprise';
 
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="github_enterprise"
@@ -57,7 +61,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
     });
 
     it('links to the gitlab form', function() {
-      const formLink = 'https://percy.io/docs/integrations/gitlab';
+      const formLink = 'https://docs.percy.io/docs/gitlab';
 
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="gitlab"
@@ -74,12 +78,12 @@ describe('Integration | Component | organizations/integrations/integration-item'
       expect(IntegrationItem.hasBetaBadge).to.equal(false);
     });
 
-    it('shows the beta badge for github enterprise', function() {
+    it('does not show the beta badge for github enterprise', function() {
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="github_enterprise"
         organization=organization}}`);
 
-      expect(IntegrationItem.hasBetaBadge).to.equal(true);
+      expect(IntegrationItem.hasBetaBadge).to.equal(false);
     });
 
     it('shows the beta badge for gitlab', function() {
@@ -103,6 +107,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
 
     it('shows the edit settings button', function() {
       expect(IntegrationItem.hasEditButton).to.equal(true);
+      percySnapshot(this.test);
     });
   });
 
@@ -118,6 +123,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
 
     it('shows the contact us button', function() {
       expect(IntegrationItem.hasContactButton).to.equal(true);
+      percySnapshot(this.test);
     });
   });
 
@@ -133,6 +139,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
 
     it('shows the contact us button', function() {
       expect(IntegrationItem.hasContactButton).to.equal(true);
+      percySnapshot(this.test);
     });
   });
 });

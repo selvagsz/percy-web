@@ -19,7 +19,7 @@ const INTEGRATIONS_LOOKUP = {
   [GITHUB_ENTERPRISE_INTEGRATION_TYPE]: {
     textName: 'GitHub Enterprise',
     isBeta: true,
-    betaLink: 'https://percy.io/docs/integrations/github-enterprise',
+    betaLink: 'https://docs.percy.io/docs/github-enterprise',
     iconName: 'github-icon-lg',
     organizationModelAttribute: 'isGithubEnterpriseIntegrated',
     settingsRouteSlug: 'github-enterprise',
@@ -27,7 +27,7 @@ const INTEGRATIONS_LOOKUP = {
   [GITLAB_INTEGRATION_TYPE]: {
     textName: 'GitLab',
     isBeta: true,
-    betaLink: 'https://percy.io/docs/integrations/gitlab',
+    betaLink: 'https://docs.percy.io/docs/gitlab',
     iconName: 'gitlab-icon-lg',
     organizationModelAttribute: 'isGitlabIntegrated',
     settingsRouteSlug: 'gitlab',
@@ -45,6 +45,12 @@ export default Component.extend({
   routeSlug: lookup('integrationName', INTEGRATIONS_LOOKUP, 'settingsRouteSlug'),
   iconName: lookup('integrationName', INTEGRATIONS_LOOKUP, 'iconName'),
   betaLink: lookup('integrationName', INTEGRATIONS_LOOKUP, 'betaLink'),
+
+  isGHEnterprise: computed.equal('integrationName', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
+
+  hasBetaBadge: computed('isBeta', function() {
+    return this.get('isBeta') && !this.get('isGHEnterprise') ? true : false;
+  }),
 
   organizationModelAttribute: lookup(
     'integrationName',
