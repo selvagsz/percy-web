@@ -8,4 +8,5 @@ export default Contentful.extend({
   question: attr(),
   answer: attr(),
   page: attr(),
+  order: attr(),
 });

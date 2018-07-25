@@ -56,6 +56,8 @@ export default Route.extend(ResetScrollMixin, {
   },
 
   _getFaqData() {
-    return this.store.query('faq', {'fields.page': 'Pricing'});
+    return this.store.query('faq', {'fields.page': 'Pricing'}).then(faqs => {
+      return faqs.sortBy('order');
+    });
   },
 });
