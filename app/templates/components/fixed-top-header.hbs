@@ -9,7 +9,11 @@
     {{else}}
       {{#link-to "index"}}
         <figure class="svg-container">
-          {{inline-svg "percy-full-horizontal-on-dark" class="mr-3"}}
+          {{#if isTransparentHeader}}
+            {{inline-svg "percy-full-horizontal-on-light" class="mr-3"}}
+          {{else}}
+            {{inline-svg "percy-full-horizontal-on-dark" class="mr-3"}}
+          {{/if}}
         </figure>
       {{/link-to}}
     {{/if}}
