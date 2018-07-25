@@ -108,18 +108,6 @@ describe('Acceptance: Organization', function() {
       });
     });
 
-    it('can select pricing', async function() {
-      await visit('/login');
-      await visit('/pricing');
-      expect(currentPath()).to.equal('pricing');
-
-      await percySnapshot(this.test);
-      await click('a:contains("Jump to organization for billing")');
-      expect(currentPath()).to.equal('pricing');
-
-      await percySnapshot(this.test.fullTitle() + '| select organization');
-    });
-
     describe('organization is on trial account', function() {
       setupSession(function(server) {
         this.organization = server.create('organization', 'withAdminUser', 'withTrial');

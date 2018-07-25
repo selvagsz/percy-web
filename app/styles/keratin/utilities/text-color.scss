@@ -17,10 +17,20 @@
   }
 }
 
-.link-dark {
+.link-dark,
+.link-dark a {
   color: var(--gray-700) !important;
 
   &:hover {
     color: var(--gray-700) !important;
+  }
+}
+
+.link-white,
+.link-white a {
+  color: var(--white) !important;
+
+  &:hover {
+    color: var(--white) !important;
   }
 }

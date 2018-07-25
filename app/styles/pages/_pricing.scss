@@ -1,0 +1,17 @@
+.animated-pricing-header > div {
+  opacity: 0;
+  animation: fade-in-up 1.5s ease-in-out;
+  animation-fill-mode: forwards;
+
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: ($i * 200) * 1ms;
+    }
+  }
+}
+
+.pricing-feature-table {
+  tr:nth-child(odd) {
+    background: var(--purple-100);
+  }
+}

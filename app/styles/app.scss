@@ -85,10 +85,8 @@
   "components/note",
   "components/organizations/billing_section",
   "components/organizations/github_settings",
-  "components/organizations/jump_to_billing",
   "components/organizations/settings_nav_wrapper",
   "components/organizations/switcher_nav",
-  "components/pricing_section",
   "components/progress_bar",
   "components/project_list_sidebar",
   "components/projects/diff_base_settings",
@@ -106,5 +104,6 @@
 @import
   "pages/changelog",
   "pages/home",
+  "pages/pricing",
   "pages/settings",
   "pages/team";

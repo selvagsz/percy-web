@@ -39,7 +39,8 @@ module.exports = function(environment) {
         projectsCollection: '/api/v1/organizations/%@/projects',
         projectBuilds: '/api/v1/projects/%@/builds',
         organizationUsers: '/api/v1/organizations/%@/organization-users',
-        organizationVersionControlIntegrations: '/api/v1/organizations/%@/version-control-integrations',
+        organizationVersionControlIntegrations:
+          '/api/v1/organizations/%@/version-control-integrations',
         subscription: '/api/v1/organizations/%@/subscription',
         invites: '/api/v1/organizations/%@/invites',
         user: '/api/v1/user',
@@ -135,6 +136,7 @@ module.exports = function(environment) {
       dsn: 'https://1234567890@sentry.io/123456789',
       development: true,
     };
+    ENV.contentful.usePreviewApi = true;
   }
 
   if (environment === 'production') {

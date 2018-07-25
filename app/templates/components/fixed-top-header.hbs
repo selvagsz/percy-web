@@ -1,4 +1,4 @@
-<div class="Header Header--dark flex justify-between items-center w-full">
+<div class="Header flex justify-between items-center w-full {{if isTransparentHeader "" "Header--dark"}}">
   <div class="flex items-center">
     {{#if session.isAuthenticated}}
       {{#link-to "index"}}
@@ -15,7 +15,7 @@
     {{/if}}
 
     {{#if session.isAuthenticated}}
-      {{organizations/switcher-nav currentOrganization=currentOrganization}}
+      {{organizations/switcher-nav currentOrganization=currentOrganization isTransparentHeader=isTransparentHeader}}
     {{/if}}
     {{#if currentOrganization}}
       {{#if (eq "admin" currentOrganization.currentUserMembership.role)}}
@@ -27,8 +27,8 @@
   {{trial-bar organization=currentOrganization type="is-on-dark"}}
 
   {{#if session.isAuthenticated}}
-    {{nav-menu user=session.currentUser currentOrganization=currentOrganization}}
+    {{nav-menu user=session.currentUser currentOrganization=currentOrganization isTransparentHeader=isTransparentHeader}}
   {{else}}
-    {{nav-menu}}
+    {{nav-menu isTransparentHeader=isTransparentHeader}}
   {{/if}}
 </div>

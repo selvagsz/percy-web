@@ -1,0 +1,26 @@
+<td class="font-semibold p-1 pl-2">{{rowTitle}}</td>
+<td class="text-center text-gray-500 p-1">
+  {{#if anyStartupPlanIsTrue}}
+    {{inline-svg "check-startup"}}
+  {{else}}
+  -
+  {{/if}}
+</td>
+<td class="text-center text-gray-500 p-1">
+  {{#if (eq (get plans.businessPlan field) true)}}
+    {{inline-svg "check-business"}}
+  {{else if (get plans.businessPlan field)}}
+    {{get plans.businessPlan field}}
+  {{else}}
+  -
+  {{/if}}
+</td>
+<td class="text-center text-gray-500 p-1">
+  {{#if (eq (get plans.enterprisePlan field) true)}}
+    {{inline-svg "check-enterprise"}}
+  {{else if (get plans.enterprisePlan field)}}
+    {{get plans.enterprisePlan field}}
+  {{else}}
+  -
+  {{/if}}
+</td>

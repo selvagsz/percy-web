@@ -4,7 +4,11 @@
   {{else}}
     Jump to org<span class="u-hide-on-mobile">anization</span>
   {{/if}}
-  {{inline-svg "dropdown-light-icon" class="ml-sm"}}
+  {{#if isTransparentHeader}}
+    {{inline-svg "dropdown-icon" class="ml-sm"}}
+  {{else}}
+    {{inline-svg "dropdown-light-icon" class="ml-sm"}}
+  {{/if}}
 </div>
 {{#if isExpanded}}
   <div class="PageClickOverlay" {{action "hideSwitcher"}}></div>

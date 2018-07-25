@@ -40,6 +40,8 @@ export default {
   'red-800': '#911f12',
   'red-900': '#6d170d',
 
+  'orange-500': '#ff7b2f',
+
   'yellow-000': '#fffbeb',
   'yellow-100': '#fff2c2',
   'yellow-200': '#ffe999',

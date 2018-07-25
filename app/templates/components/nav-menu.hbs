@@ -1,8 +1,8 @@
-<div class="flex items-center">
+<div class="flex items-center {{if isTransparentHeader "link-dark"}}">
   {{#link-to "docs.index" class="hide-on-tablet"}}Docs{{/link-to}}
   {{#link-to "docs.page" "tutorials/example-apps" class="ml-3 hide-on-tablet"}}Tutorials{{/link-to}}
   {{#if session.isAuthenticated}}
-    {{user-menu user=user class="ml-3"}}
+    {{user-menu user=user class="link-white ml-3"}}
   {{else}}
     <a href="https://blog.percy.io" class="ml-3">Blog</a>
     {{#link-to "pricing" class="ml-3"}}Pricing{{/link-to}}

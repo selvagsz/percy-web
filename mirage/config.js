@@ -5,6 +5,8 @@ export default function() {
   // this.logging = true;
 
   this.passthrough('http://api.amplitude.com');
+  this.passthrough('https://cdn.contentful.com/**');
+  this.passthrough('https://preview.contentful.com/**');
 
   this.get('/api/auth/session', function() {
     return {state: 'foo'};

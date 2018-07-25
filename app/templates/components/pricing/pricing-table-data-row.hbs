@@ -1,0 +1,13 @@
+<td class="font-semibold p-1 pl-2">{{rowTitle}}</td>
+<td class="text-center text-gray-500 p-1">
+  {{#if consolidate}}
+    {{get plans.startupPlans.firstObject field}}
+  {{else}}
+    {{#each plans.startupPlans as |plan|}}
+      <div><strong>{{plan.name}}</strong>: {{get plan field}}</div>
+    {{/each}}
+  {{/if}}
+</td>
+<td class="text-center text-gray-500 p-1">{{get plans.businessPlan field}}</td>
+<td class="text-center text-gray-500 p-1">{{get plans.enterprisePlan field}}</td>
+
