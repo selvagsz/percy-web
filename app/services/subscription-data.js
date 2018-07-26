@@ -15,7 +15,7 @@ export default Service.extend({
     },
     {
       id: 'v2-small',
-      name: 'Starter',
+      name: 'Small',
       monthlyPrice: 149,
       numDiffs: 10000,
       extraDiffPrice: 0.01,
@@ -25,7 +25,7 @@ export default Service.extend({
     },
     {
       id: 'v2-medium',
-      name: 'Growth',
+      name: 'Medium',
       monthlyPrice: 399,
       numDiffs: 50000,
       extraDiffPrice: 0.008,
@@ -35,7 +35,7 @@ export default Service.extend({
     },
     {
       id: 'v2-large',
-      name: 'Business',
+      name: 'Large',
       monthlyPrice: 849,
       numDiffs: 200000,
       extraDiffPrice: 0.006,

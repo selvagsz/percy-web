@@ -6,7 +6,7 @@ const SELECTORS = {
   STRIPE_CARD_COMPONENT: '[data-test-subscription-list-item-stripe-card]',
 };
 
-export const GithubEnterpriseSettings = {
+export const SubscriptionListItem = {
   scope: SELECTORS.SUBSCRIPTION_LIST_ITEM,
 
   clickSelectPlanButton: clickable(SELECTORS.SELECT_PLAN_BUTTON),
@@ -15,4 +15,4 @@ export const GithubEnterpriseSettings = {
   isStripeCardComponentVisible: isVisible(SELECTORS.STRIPE_CARD_COMPONENT),
 };
 
-export default create(GithubEnterpriseSettings);
+export default create(SubscriptionListItem);

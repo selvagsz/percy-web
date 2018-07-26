@@ -8,4 +8,12 @@ export default Component.extend({
 
   subscription: readOnly('organization.subscription'),
   plan: readOnly('subscription.plan'),
+
+  actions: {
+    openIntercom() {
+      const messageText = "Hi! I'd like to learn more about upgrading to a larger plan.";
+
+      window.Intercom('showNewMessage', messageText);
+    },
+  },
 });

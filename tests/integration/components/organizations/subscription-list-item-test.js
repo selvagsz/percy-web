@@ -24,17 +24,6 @@ describe('Integration: SubscriptionListItem', function() {
     historyLimitTitle: '1 year history',
   };
 
-  const customPlanData = {
-    id: 'fake-plan',
-    name: 'Best plan',
-    monthlyPrice: 950,
-    numDiffs: 9876543,
-    extraDiffPrice: 0.333,
-    numTeamMembersTitle: 'All the members',
-    numWorkersTitle: 'So many renderers',
-    historyLimitTitle: '1 billion years',
-  };
-
   beforeEach(function() {
     window.Stripe = StripeMock;
     setupFactoryGuy(this.container);
@@ -57,12 +46,10 @@ describe('Integration: SubscriptionListItem', function() {
 
     describe('Button text', function() {
       beforeEach(function() {
-        this.set('buttonText', null);
         this.render(hbs`{{organizations/subscription-list-item
           planData=planData
           organization=organization
           isActivePlan=isActivePlan
-          buttonText=buttonText
         }}`);
       });
 
@@ -76,14 +63,6 @@ describe('Integration: SubscriptionListItem', function() {
         this.set('isActivePlan', true);
 
         expect(SubscriptionListItem.selectPlanButtonText).to.equal('Selected Plan');
-      });
-
-      it('displays passed in text when text is passed in', function() {
-        this.set('isActivePlan', true);
-        const text = 'I passed this text in';
-        this.set('buttonText', text);
-
-        expect(SubscriptionListItem.selectPlanButtonText).to.equal(text);
       });
     });
 
@@ -106,22 +85,6 @@ describe('Integration: SubscriptionListItem', function() {
         }}`);
 
         expect(SubscriptionListItem.isSelectPlanButtonDisabled).to.equal(false);
-      });
-
-      it('fires transitionToEnterpriseForm if plan is custom', async function() {
-        const transitionToEnterpriseStub = sinon.stub();
-        this.set('transitionToEnterpriseStub', transitionToEnterpriseStub);
-        this.set('planData', customPlanData);
-        this.render(hbs`{{organizations/subscription-list-item
-          planData=planData
-          organization=organization
-          isActivePlan=false
-          transitionToEnterpriseForm=transitionToEnterpriseStub
-        }}`);
-
-        await SubscriptionListItem.clickSelectPlanButton();
-
-        expect(transitionToEnterpriseStub).to.have.been.called;
       });
 
       describe('when org is not a customer', function() {

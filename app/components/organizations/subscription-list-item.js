@@ -18,14 +18,8 @@ export default Component.extend(BillingUpdater, {
 
   isNotSaving: not('isSaving'),
 
-  subscriptionButtonText: computed('buttonText', 'isActivePlan', function() {
-    if (this.get('buttonText')) {
-      return this.get('buttonText');
-    } else if (this.get('isActivePlan')) {
-      return 'Selected Plan';
-    } else {
-      return 'Select Plan';
-    }
+  subscriptionButtonText: computed('isActivePlan', function() {
+    return this.get('isActivePlan') ? 'Selected Plan' : 'Select Plan';
   }),
 
   showCardUpdater() {
@@ -38,10 +32,7 @@ export default Component.extend(BillingUpdater, {
 
   actions: {
     handleSubscriptionSelection() {
-      this.get('organization.subscription');
-      if (this.get('isCustom')) {
-        return this.get('transitionToEnterpriseForm')();
-      } else if (this.get('organization.subscription.isCustomer')) {
+      if (this.get('organization.subscription.isCustomer')) {
         return this.updateExistingSubscription();
       } else {
         this.showCardUpdater();

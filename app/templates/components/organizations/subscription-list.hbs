@@ -51,7 +51,7 @@
     </div>
   {{/if}}
 
-  <div class="pt-2 bg-gray-000 rounded border">
+  <div class="bg-gray-000 rounded border">
     {{#each subscriptionData.PLANS as |planData|}}
       {{organizations/subscription-list-item
         planData=planData
@@ -61,21 +61,22 @@
       }}
     {{/each}}
 
-    {{organizations/subscription-list-item
-      planData=(hash
-        name="Enterprise"
-        numTeamMembersTitle="Unlimited team members"
-        numWorkersTitle="Custom concurrent renderers"
-        numDiffsTitle="Custom"
-      )
-      buttonText="Contact Us"
-      plan=plan
-      organization=organization
-      transitionToEnterpriseForm=transitionToEnterpriseForm
-    }}
+    <div class="flex p-2" data-test-subscription-enterprise-item>
+      <div class="pr-2 flex-1 text-xl font-semibold self-center">
+        Need more?
+      </div>
 
+      <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end self-center">
+        {{#if (eq "admin" organization.currentUserMembership.role)}}
+          <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{eq plan.id planData.id}} {{action "openIntercom"}} data-test-subscription-list-choose-enterprise>
+            Contact Us
+          </button>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </div>
+
 
 <div class="rounded border p-2 mb-2">
   <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
