@@ -119,7 +119,7 @@
 </section>
 
 <section class="container-lg text-center f4 font-semibold mb-8">
-  Just need Percy for a small project? <a href="#">Sign up for a free personal account.</a>
+  Just need Percy for a small project? <a {{action "redirectToDefaultOrganization"}} class="cursor-pointer" data-test-free-personal-account>Sign up for a free personal account.</a>
 </section>
 
 <section class="container-lg mb-8">
@@ -145,7 +145,7 @@
       {{pricing/pricing-table-boolean-row plans=tableData rowTitle="Leading rendering engine with snapshot stabilization" field="snapshotStabilization"}}
       {{pricing/pricing-table-boolean-row plans=tableData rowTitle="Responsive visual testing" field="responsiveTesting"}}
       {{pricing/pricing-table-boolean-row plans=tableData rowTitle="Cross-browser support" field="crossBrowserSupport"}}
-      {{pricing/pricing-table-boolean-row plans=tableData rowTitle="Percy Evergreen: Automatic browser upgrading" field="evergreen"}}
+      {{pricing/pricing-table-boolean-row plans=tableData rowTitle="Modern browser versions" field="evergreen"}}
       {{pricing/pricing-table-data-row plans=tableData rowTitle="Concurrent renderers" field='concurrentRenderers'}}
 
       {{pricing/pricing-table-section-row name="Integrations"}}

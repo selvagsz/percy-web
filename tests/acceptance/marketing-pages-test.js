@@ -35,6 +35,11 @@ describe('Acceptance: Marketing pages', function() {
         await click('[data-test-large-pricing-card-cta]');
         expect(currentPath()).to.equal('enterprise');
       });
+      it('can select "Sign up for a free personal account."', async function() {
+        await click('[data-test-free-personal-account]');
+        const expectedPath = authenticated ? 'organizations.new' : 'login';
+        expect(currentPath()).to.equal(expectedPath);
+      });
     });
     it('can visit /team', async function() {
       await visit('/team');

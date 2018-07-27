@@ -1,7 +1,9 @@
 <td class="font-semibold p-1 pl-2">{{rowTitle}}</td>
 <td class="text-center text-gray-500 p-1">
-  {{#if anyStartupPlanIsTrue}}
+  {{#if (eq (get plans.startupPlans.firstObject field) true)}}
     {{inline-svg "check-startup"}}
+  {{else if (get plans.startupPlans.firstObject field)}}
+    {{get plans.startupPlans.firstObject field}}
   {{else}}
   -
   {{/if}}
