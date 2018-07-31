@@ -136,7 +136,15 @@ module.exports = function(environment) {
       dsn: 'https://1234567890@sentry.io/123456789',
       development: true,
     };
-    ENV.contentful.usePreviewApi = true;
+
+    ENV.contentful = {
+      // There's no way to specify the environment currently in ember-contentful,
+      // so to hit the test environment compose the correct API url here.
+      space: 'k62me4xboi1l/environments/test',
+      accessToken: '483582fe6383c4a834784cf70006eeaf0cb0d0ec44bb37d6f5250182c9cd77b8',
+      previewAccessToken: '54994b3af44e1943a0ce65bd5557bf5699f180efe3443d286630faf8318570d9',
+      usePreviewApi: true,
+    };
   }
 
   if (environment === 'production') {

@@ -9,15 +9,14 @@ describe('Acceptance: Marketing pages', function() {
       expect(currentPath()).to.equal('index');
       await percySnapshot(this.test);
     });
-    // TODO: unskip pricing page tests when contentful environments are sorted
-    it.skip('can visit /pricing', async function() {
+    it('can visit /pricing', async function() {
       await visit('/pricing');
       expect(currentPath()).to.equal('pricing');
       if (takeSnapshot) {
         await percySnapshot(this.test);
       }
     });
-    describe.skip('pricing page', function() {
+    describe('pricing page', function() {
       beforeEach(async function() {
         await visit('/pricing');
       });
@@ -36,6 +35,7 @@ describe('Acceptance: Marketing pages', function() {
         expect(currentPath()).to.equal('enterprise');
       });
       it('can select "Sign up for a free personal account."', async function() {
+        stubLockModal(this.application);
         await click('[data-test-free-personal-account]');
         const expectedPath = authenticated ? 'organizations.new' : 'login';
         expect(currentPath()).to.equal(expectedPath);
