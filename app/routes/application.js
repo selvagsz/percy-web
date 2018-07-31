@@ -7,12 +7,15 @@ import {DO_NOT_FORWARD_REDIRECT_ROUTES} from 'percy-web/router';
 import EnsureStatefulLogin from 'percy-web/mixins/ensure-stateful-login';
 import isDevWithProductionAPI from 'percy-web/lib/dev-auth';
 import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/router';
+import {resolve} from 'rsvp';
+import {task} from 'ember-concurrency';
 
 export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   session: service(),
   flashMessages: service(),
   raven: service(),
   currentUser: alias('session.currentUser'),
+  launchDarkly: service(),
 
   beforeModel(transition) {
     this._super(...arguments);
@@ -27,6 +30,32 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
       }
     }
     return this._loadCurrentUser();
+  },
+
+  _loadLaunchDarkly: task(function*(currentUser) {
+    try {
+      const organizations = yield currentUser.get('organizations');
+      return this.get('launchDarkly').identify({
+        key: this.get('currentUser.userHash'),
+        name: this.get('currentUser.name'),
+        custom: {
+          organizations: organizations.mapBy('id'),
+        },
+      });
+    } catch (e) {
+      // If anything goes wrong with the launch darkly identification, don't crash the app,
+      // just return a resolved promise so the app can keep loading.
+      return resolve();
+    }
+  }),
+
+  model() {
+    if (this.get('currentUser')) {
+      return this.get('_loadLaunchDarkly').perform(this.get('currentUser'));
+    } else {
+      // If there's not a signed in user, let the app continue loading.
+      return resolve();
+    }
   },
 
   sessionAuthenticated() {

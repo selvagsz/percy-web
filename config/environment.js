@@ -27,6 +27,11 @@ module.exports = function(environment) {
       preventDuplicates: true,
     },
 
+    launchDarkly: {
+      clientSideId: '5b453a435b18c32c7440a5bd',
+      local: false,
+    },
+
     APP: {
       // Don't use these directly; use utils.buildApiUrl instead.
       apiUrls: {
