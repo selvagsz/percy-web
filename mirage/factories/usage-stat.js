@@ -38,4 +38,5 @@ export default Factory.extend({
       [moment('2020-02-14').toJSON(), 0],
     ];
   },
+  currentCost: 25000,
 });

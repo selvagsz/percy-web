@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import AdminMode from 'percy-web/lib/admin-mode';
 import {computed} from '@ember/object';
-import {equal, readOnly} from '@ember/object/computed';
+import {equal, empty, readOnly} from '@ember/object/computed';
 import {inject as service} from '@ember/service';
 
 export default Component.extend({
@@ -33,6 +33,8 @@ export default Component.extend({
   }),
 
   isUserOrgAdmin: equal('organization.currentUserMembership.role', 'admin'),
+
+  isCurrentUsageStatsLoading: empty('subscription.currentUsageStats'),
 
   actions: {
     changingSubscription(savingPromise) {

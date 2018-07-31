@@ -41,7 +41,6 @@
         {{organizations/billing-usage-graph organization=organization}}
       </div>
 
-
       {{#if organization.billingLocked}}
         <div class="active">
           <div class="row">
@@ -54,25 +53,31 @@
           </div>
         </div>
       {{else}}
-        <h1 class="text-xl font-semibold mb-sm">
-          Total monthly usage
-          {{#if subscription.isCustomer}}
-            {{!-- TODO: remove this, show billing period always after legacy capped monthly users are migrated. --}}
-            {{#if subscription.plan.allowOverages}}
-              <span>
-                {{moment-format subscription.currentPeriodStart 'MMMM D'}} to
-                {{moment-format subscription.currentPeriodEndDisplayed 'MMMM D'}}
-              </span>
+        <div class="bg-white rounded shadow-1 p-2 mb-2">
+          <h2 class="text-xl font-semibold mb-1">Current billing period</h2>
+          <div class="rounded border py-2 bg-gray-000">
+            {{#if isCurrentUsageStatsLoading}}
+              <div class="flex justify-center px-2">
+                <figure class="svg-container">
+                  {{inline-svg "loader-icon"}}
+                </figure>
+              </div>
+            {{else}}
+              <div class="border-b pb-2 px-2 font-semibold">
+                <span class="text-2xl">
+                  {{format-currency subscription.currentUsageStats.currentCostDollars}}
+                </span>
+                <span class="text-lg text-gray-300">
+                  current estimated costs
+                </span>
+              </div>
+              <div class="flex items-center pt-2 px-2 font-semibold">
+                {{inline-svg "comparison-icon" class="mr-1"}}
+                <span class="text-base mr-sm">{{subscription.currentUsageStats.total}}</span>
+                <span class="text-gray-300">current snapshots</span> {{snapshot-explanation-tooltip}}
+              </div>
             {{/if}}
-          {{/if}}
-        </h1>
-        <div class="text-gray-400 w-3/4">
-          Current usage:
-          {{#if subscription.currentUsageStats}}
-            <strong class="text-gray-700">{{format-number subscription.currentUsageStats.total}} snapshots {{snapshot-explanation-tooltip}}</strong>
-          {{else}}
-            ...
-          {{/if}}
+          </div>
         </div>
 
         {{organizations/subscription-list
