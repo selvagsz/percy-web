@@ -197,6 +197,7 @@ describe('Acceptance: Build', function() {
       finishedAt: moment().subtract(10, 'seconds'),
       totalSnapshotsUnreviewed: 1,
       totalSnapshots: 1,
+      baseBuild: server.create('build'),
     });
 
     await BuildPage.visitBuild(urlParams);

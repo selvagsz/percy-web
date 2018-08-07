@@ -23,7 +23,7 @@ describe('Integration: BuildContainer', function() {
 
   describe('snapshot display during different build states', function() {
     beforeEach(function() {
-      const build = make('build', {buildNumber: 1});
+      const build = make('build', 'withBaseBuild', {buildNumber: 1});
       const snapshotsChanged = [make('snapshot', 'withComparisons', {build})];
       const allChangedBrowserSnapshotsSorted = {firefox: snapshotsChanged};
       const browser = make('browser');
@@ -59,7 +59,7 @@ describe('Integration: BuildContainer', function() {
     });
 
     it('does not display snapshots when build is failed', function() {
-      const failedBuild = make('build', 'failed');
+      const failedBuild = make('build', 'withBaseBuild', 'failed');
       this.set('build', failedBuild);
 
       percySnapshot(this.test.fullTitle());
@@ -75,7 +75,7 @@ describe('Integration: BuildContainer', function() {
   });
 
   it('does not display snapshots when isSnapshotsLoading is true', function() {
-    const build = make('build', 'finished');
+    const build = make('build', 'withBaseBuild', 'finished');
     const snapshotsChanged = DS.PromiseArray.create({promise: defer().promise});
     const allChangedBrowserSnapshotsSorted = {'firefox-id': snapshotsChanged};
 
@@ -93,7 +93,7 @@ describe('Integration: BuildContainer', function() {
   });
 
   it('displays snapshots when build is finished', function() {
-    const build = make('build', 'finished');
+    const build = make('build', 'withBaseBuild', 'finished');
     const diffSnapshot = make('snapshot', 'withComparisons', {build});
     const allChangedBrowserSnapshotsSorted = {'firefox-id': [diffSnapshot]};
     const stub = sinon.stub();
@@ -117,7 +117,7 @@ describe('Integration: BuildContainer', function() {
 
   it('shows loading indicator while fetching unchanged diffs', function() {
     const stub = sinon.stub();
-    const build = make('build', 'finished');
+    const build = make('build', 'withBaseBuild', 'finished');
     const allChangedBrowserSnapshotsSorted = {'firefox-id': []};
 
     mockSnapshotQueryService(this, defer().promise);
@@ -140,7 +140,7 @@ describe('Integration: BuildContainer', function() {
 
   it('gets snapshots with no diffs after expanding no diffs section', function() {
     const stub = sinon.stub();
-    const build = make('build', 'finished');
+    const build = make('build', 'withBaseBuild', 'finished');
     const allChangedBrowserSnapshotsSorted = {'firefox-id': []};
     const numSnapshotsUnchanged = 3;
     const snapshotsUnchanged = makeList('snapshot', numSnapshotsUnchanged, 'withNoDiffs', {build});
@@ -168,7 +168,7 @@ describe('Integration: BuildContainer', function() {
 
   describe('when a build has more than one browser', function() {
     beforeEach(function() {
-      const build = make('build', 'finished', 'withTwoBrowsers');
+      const build = make('build', 'withBaseBuild', 'finished', 'withTwoBrowsers');
       const comparisonWithBigDiffInFirefox = make('comparison', {
         build,
         diffRatio: 0.9,

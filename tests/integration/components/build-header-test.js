@@ -19,19 +19,19 @@ describe('Integration: BuildHeader', function() {
   });
 
   const states = [
-    ['pending'],
-    ['processing'],
-    ['finished'],
+    ['pending', 'withBaseBuild'],
+    ['processing', 'withBaseBuild'],
+    ['finished', 'withBaseBuild'],
     ['finished', 'withBaseBuild', 'noDiffs'],
-    ['finished', 'withUpgradedBrowser'],
-    ['finished', 'withTwoUpgradedBrowsers'],
-    ['failed', 'missingResources'],
-    ['failed', 'missingParallelBuilds'],
-    ['failed', 'noSnapshots'],
-    ['failed', 'renderTimeout'],
+    ['finished', 'withBaseBuild', 'withUpgradedBrowser'],
+    ['finished', 'withBaseBuild', 'withTwoUpgradedBrowsers'],
+    ['failed', 'withBaseBuild', 'missingResources'],
+    ['failed', 'withBaseBuild', 'missingParallelBuilds'],
+    ['failed', 'withBaseBuild', 'noSnapshots'],
+    ['failed', 'withBaseBuild', 'renderTimeout'],
     // This snapshot should not show any browser upgrade notice.
-    ['failed', 'withTwoUpgradedBrowsers'],
-    ['expired'],
+    ['failed', 'withBaseBuild', 'withTwoUpgradedBrowsers'],
+    ['expired', 'withBaseBuild'],
   ];
 
   states.forEach(state => {
@@ -51,7 +51,7 @@ describe('Integration: BuildHeader', function() {
   });
 
   it('sends showSupport action when clicking "reach out" on timed out build', function() {
-    const build = make('build', 'failed', 'renderTimeout');
+    const build = make('build', 'withBaseBuild', 'failed', 'renderTimeout');
     const showSupportStub = sinon.stub();
     this.set('actions', {
       showSupport: showSupportStub,
@@ -67,7 +67,7 @@ describe('Integration: BuildHeader', function() {
   });
 
   it('sends showSupport action when clicking "reach out" when missing parallel builds', function() {
-    const build = make('build', 'failed', 'missingParallelBuilds');
+    const build = make('build', 'withBaseBuild', 'failed', 'missingParallelBuilds');
     const showSupportStub = sinon.stub();
     this.set('actions', {
       showSupport: showSupportStub,

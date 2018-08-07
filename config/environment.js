@@ -150,6 +150,10 @@ module.exports = function(environment) {
       previewAccessToken: '54994b3af44e1943a0ce65bd5557bf5699f180efe3443d286630faf8318570d9',
       usePreviewApi: true,
     };
+
+    ENV.moment = {
+      allowEmpty: true,
+    };
   }
 
   if (environment === 'production') {

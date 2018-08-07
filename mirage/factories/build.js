@@ -27,12 +27,14 @@ export default Factory.extend({
     state: BUILD_STATES.FINISHED,
     reviewState: 'approved',
     reviewStateReason: 'all_snapshots_approved',
+    approvedAt: moment(),
   }),
 
   approvedPreviously: trait({
     state: BUILD_STATES.FINISHED,
     reviewState: 'approved',
     reviewStateReason: 'all_snapshots_approved_previously',
+    approvedAt: moment(),
   }),
 
   approvedWithNoDiffs: trait({
@@ -40,12 +42,14 @@ export default Factory.extend({
     reviewState: 'approved',
     reviewStateReason: 'no_diffs',
     totalComparisonsDiff: 0,
+    approvedAt: moment(),
   }),
 
   approvedAutoBranch: trait({
     state: BUILD_STATES.FINISHED,
     reviewState: 'approved',
     reviewStateReason: 'auto_approved_branch',
+    approvedAt: moment(),
     afterCreate(build, server) {
       server.create('snapshot', 'autoApprovedBranch', {build});
     },
