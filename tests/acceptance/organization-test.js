@@ -5,6 +5,7 @@ import setupAcceptance, {
 import freezeMoment from '../helpers/freeze-moment';
 import AdminMode from 'percy-web/lib/admin-mode';
 import {beforeEach, afterEach} from 'mocha';
+import moment from 'moment';
 
 describe('Acceptance: Organization', function() {
   setupAcceptance();
@@ -110,13 +111,18 @@ describe('Acceptance: Organization', function() {
 
     describe('organization is on trial account', function() {
       setupSession(function(server) {
-        this.organization = server.create('organization', 'withAdminUser', 'withTrial');
+        server.create('subscription', 'withTrialPlan', {
+          organization: this.organization,
+          trialStart: moment(),
+          trialEnd: moment()
+            .add(14, 'days')
+            .add(1, 'hour'),
+        });
       });
 
       it('can view billing page', async function() {
         await visit(`/organizations/${this.organization.slug}/billing`);
         expect(currentPath()).to.equal('organizations.organization.billing');
-
         await percySnapshot(this.test);
       });
     });
@@ -140,6 +146,7 @@ describe('Acceptance: Organization', function() {
 
     it('shows billing page with warning message', async function() {
       await visit(`/organizations/${organization.slug}/billing`);
+      expect(currentPath()).to.equal('organizations.organization.billing');
       await percySnapshot(this.test.fullTitle() + ' | setup');
     });
   });

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {Factory} from 'ember-cli-mirage';
+import {Factory, association, trait} from 'ember-cli-mirage';
 
 export default Factory.extend({
   billingEmail(i) {
@@ -21,4 +21,12 @@ export default Factory.extend({
       subscription.update({plan});
     }
   },
+
+  withTrialPlan: trait({
+    trialStart: moment(),
+    trialEnd: moment()
+      .add(14, 'days')
+      .add(1, 'hour'),
+    plan: association('trial'),
+  }),
 });

@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import AdminMode from 'percy-web/lib/admin-mode';
 
 export default function() {
   // Enable this to see verbose request logging from mirage:
@@ -27,18 +28,7 @@ export default function() {
     if (user) {
       return user;
     } else {
-      return new Mirage.Response(
-        401,
-        {},
-        {
-          errors: [
-            {
-              status: 'unauthorized',
-              detail: 'Authentication required.',
-            },
-          ],
-        },
-      );
+      return _error401;
     }
   });
 
@@ -53,7 +43,7 @@ export default function() {
   this.get('/user/identities', function(schema) {
     let user = schema.users.findBy({_currentLoginInTest: true});
     if (!user) {
-      return {errors: [{status: '403', title: 'unauthorized'}]};
+      return _error401;
     }
     return schema.identities.where({userId: user.id});
   });
@@ -68,30 +58,9 @@ export default function() {
 
   this.post('/user/identities', function(schema, request) {
     if (request.requestBody.match(/password%5D=passwordStrengthError!123$/)) {
-      return new Mirage.Response(
-        400,
-        {},
-        {
-          errors: [
-            {
-              status: 'bad_request',
-              detail: 'PasswordStrengthError: Password is too weak',
-            },
-          ],
-        },
-      );
+      return _error400({statusDetail: 'PasswordStrengthError: Password is too weak'});
     } else if (request.requestBody.match(/password%5D=badRequestWithNoDetail!123$/)) {
-      return new Mirage.Response(
-        400,
-        {},
-        {
-          errors: [
-            {
-              status: 'bad_request',
-            },
-          ],
-        },
-      );
+      return _error400();
     } else {
       return new Mirage.Response(201, {}, {success: true});
     }
@@ -111,48 +80,29 @@ export default function() {
     if (request.params['*'] === 'goodCode') {
       return new Mirage.Response(200, {}, {success: true});
     } else {
-      return new Mirage.Response(
-        400,
-        {},
-        {
-          errors: [
-            {
-              status: 'bad_request',
-              detail: 'it did not work',
-            },
-          ],
-        },
-      );
+      return _error400({statusDetail: 'it did not work'});
     }
   });
 
   this.get('/organizations/:slug', function(schema, request) {
-    return schema.organizations.findBy({slug: request.params.slug});
+    const user = schema.users.findBy({_currentLoginInTest: true});
+    if (_isOrgAllowed(schema, user, request.params.slug)) {
+      return schema.organizations.findBy({slug: request.params.slug});
+    } else {
+      return _error401;
+    }
   });
 
   this.patch('/organizations/:slug', function(schema, request) {
     let attrs = this.normalizedRequestAttrs();
     if (!attrs.slug.match(/^[a-zA-Z][a-zA-Z_]*[a-zA-Z]$/)) {
-      return new Mirage.Response(
-        400,
-        {},
-        {
-          errors: [
-            {
-              status: 'bad_request',
-            },
-            {
-              source: {
-                pointer: '/data/attributes/slug',
-              },
-              detail:
-                'Slug must only contain letters, numbers, dashes,' +
-                ' and cannot begin or end with a dash.',
-            },
-          ],
-        },
-      );
+      return _error400({
+        pointer: '/data/attributes/slug',
+        sourceDetail:
+          'Slug must only contain letters, numbers, dashes, and cannot begin or end with a dash.',
+      });
     }
+
     let organization = schema.organizations.findBy({slug: request.params.slug});
     organization.update(attrs);
     return organization;
@@ -184,23 +134,10 @@ export default function() {
 
     // Mimic backend email validation.
     if (!attrs.billingEmail.match(/^[a-zA-Z0-9_]+@[a-zA-Z0-9_.]+$/)) {
-      return new Mirage.Response(
-        400,
-        {},
-        {
-          errors: [
-            {
-              status: 'bad_request',
-            },
-            {
-              source: {
-                pointer: '/data/attributes/billing-email',
-              },
-              detail: 'Billing email is invalid',
-            },
-          ],
-        },
-      );
+      return _error400({
+        pointer: '/data/attributes/billing-email',
+        sourceDetail: 'Billing email is invalid',
+      });
     }
     subscription.update(attrs);
     return subscription;
@@ -255,8 +192,14 @@ export default function() {
   });
 
   this.get('/projects/:full_slug/', function(schema, request) {
-    let fullSlug = decodeURIComponent(request.params.full_slug);
-    return schema.projects.findBy({fullSlug: fullSlug});
+    const user = schema.users.findBy({_currentLoginInTest: true});
+    const fullSlug = decodeURIComponent(request.params.full_slug);
+    const project = schema.projects.findBy({fullSlug: fullSlug});
+    if (_isProjectAllowed(schema, user, project)) {
+      return schema.projects.findBy({fullSlug: request.params.full_slug});
+    } else {
+      return _error401;
+    }
   });
 
   this.get('/projects/:organization_slug/:project_slug/tokens', function(schema, request) {
@@ -277,6 +220,10 @@ export default function() {
     let invite = schema.invites.find(request.params.id);
     let attrs = this.normalizedRequestAttrs();
     invite.update(attrs);
+
+    const currentUser = schema.users.findBy({_currentLoginInTest: true});
+    schema.organizationUsers.create({userId: currentUser.id, organizationId: attrs.organizationId});
+
     return invite;
   });
 
@@ -313,4 +260,84 @@ export default function() {
   this.get('/builds/:build_id/comparisons');
   this.get('/repos/:id');
   this.post('/reviews');
+
+  function _isOrgAllowed(schema, user, orgSlug) {
+    // Check if organization has a public project
+    const organization = schema.organizations.findBy({slug: orgSlug});
+    if (_areAnyOrgProjectsPublic(organization)) {
+      return true;
+    }
+
+    // if no public projects in org, AND there's no logged in user, don't show the org.
+    if (!user) {
+      return false;
+    }
+
+    if (AdminMode.isAdmin()) {
+      return true;
+    }
+
+    // If there's no public projects, but a user, check if the user has access to the org.
+    return _isUserInOrg(schema, orgSlug, user);
+  }
+
+  function _isProjectAllowed(schema, user, project) {
+    const org = project.organization;
+    const isProjectPublic = project.publiclyReadable;
+    const isOrgReadableByUser = _isOrgAllowed(schema, user, org.slug) && user;
+    return isProjectPublic || isOrgReadableByUser;
+  }
+
+  function _areAnyOrgProjectsPublic(organization) {
+    return organization.projects.models.any(project => {
+      return project.publiclyReadable;
+    });
+  }
+
+  function _isUserInOrg(schema, orgSlug, user) {
+    const organizationUsers = schema.organizationUsers.where({userId: user.id});
+    const userOrgIds = organizationUsers.models.map(obj => obj.organizationId);
+    const allowedOrganizations = userOrgIds.map(id => schema.organizations.find(id));
+    const allowedOrganizationSlugs = allowedOrganizations.map(org => org.slug);
+
+    return allowedOrganizationSlugs.includes(orgSlug);
+  }
+}
+
+const _error401 = new Mirage.Response(
+  401,
+  {},
+  {
+    errors: [
+      {
+        status: 'unauthorized',
+        detail: 'Authentication required.',
+      },
+    ],
+  },
+);
+
+function _error400({statusDetail = '', pointer = ' ', sourceDetail = ''} = {}) {
+  const errorsStatus = {status: 'bad_request'};
+  const errorsSource = {};
+  if (status) {
+    errorsStatus.status = status;
+  }
+  if (statusDetail) {
+    errorsStatus.detail = statusDetail;
+  }
+  if (pointer) {
+    errorsStatus.source = {pointer};
+  }
+  if (sourceDetail) {
+    errorsStatus.detail = sourceDetail;
+  }
+
+  return new Mirage.Response(
+    400,
+    {},
+    {
+      errors: [errorsStatus, errorsSource],
+    },
+  );
 }
