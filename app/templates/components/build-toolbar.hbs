@@ -38,10 +38,13 @@
       </button>
     {{/if}}
 
-    {{approval-section
-      build=build
-      createReview=createReview
-      approvableSnapshots=approvableSnapshots
-    }}
+    {{#if build.isFinished}}
+      {{build-approval-button
+        build=build
+        createReview=createReview
+        approvableSnapshots=approvableSnapshots
+      }}
+    {{/if}}
+
   </div>
 </header>
