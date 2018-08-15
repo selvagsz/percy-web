@@ -7,8 +7,10 @@ import {resolve, reject} from 'rsvp';
 import sinon from 'sinon';
 import utils from 'percy-web/lib/utils';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 
 describe('SessionService', function() {
+  SetupLocalStorageSandbox();
   setupTest('service:session', {
     needs: ['service:analytics', 'model:user', 'service:raven', 'model:identity'],
   });

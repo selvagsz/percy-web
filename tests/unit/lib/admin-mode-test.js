@@ -2,8 +2,10 @@ import {expect} from 'chai';
 import {describe, beforeEach, it} from 'mocha';
 import AdminMode, {ADMIN_MODE_KEY, ADMIN_MODE_VALUE} from 'percy-web/lib/admin-mode';
 import localStorageProxy from 'percy-web/lib/localstorage';
+import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 
 describe('admin-mode', function() {
+  SetupLocalStorageSandbox();
   beforeEach(() => {
     localStorage.clear();
   });

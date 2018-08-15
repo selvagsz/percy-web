@@ -3,6 +3,7 @@ import startApp from 'percy-web/tests/helpers/start-app';
 import destroyApp from 'percy-web/tests/helpers/destroy-app';
 import seedFaker from './seed-faker';
 import {authenticateSession} from 'percy-web/tests/helpers/ember-simple-auth';
+import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 
 // Import mocha helpers so that they will be included for all tests.
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "it|describe" }]*/
@@ -11,6 +12,7 @@ import {expect} from 'chai';
 import StubClient from 'ember-launch-darkly/test-support/helpers/launch-darkly-client-test';
 
 export default function setupAcceptance({authenticate = true} = {}) {
+  SetupLocalStorageSandbox();
   beforeEach(function() {
     this.application = startApp();
     window.localStorage.clear();

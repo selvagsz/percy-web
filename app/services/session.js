@@ -67,7 +67,6 @@ export default SessionService.extend({
     this._clearSentry();
     this._clearAnalytics();
     this._clearIntercom();
-    localStorageProxy.removeKeysWithString('auth');
   },
 
   _setupSentry(user) {

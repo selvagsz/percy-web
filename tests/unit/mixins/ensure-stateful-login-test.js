@@ -9,8 +9,11 @@ import lockOptions from 'percy-web/lib/lock-settings';
 import {all} from 'rsvp';
 import localStorageProxy from 'percy-web/lib/localstorage';
 import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/router';
+import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 
 describe('EnsureStatefulLoginMixin', function() {
+  SetupLocalStorageSandbox();
+
   let subject;
   let fakeMethod;
   let getLockInstanceStub;
