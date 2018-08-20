@@ -43,12 +43,12 @@ describe('Integration | Component | organizations/integrations/integration-item'
       percySnapshot(this.test);
     });
 
-    it('shows the contact us button for gitlab', function() {
+    it('shows the install button for gitlab', function() {
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="gitlab"
         organization=organization}}`);
 
-      expect(IntegrationItem.hasContactButton).to.equal(true);
+      expect(IntegrationItem.hasInstallButton).to.equal(true);
       percySnapshot(this.test);
     });
 
@@ -57,16 +57,6 @@ describe('Integration | Component | organizations/integrations/integration-item'
 
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="github_enterprise"
-        organization=organization}}`);
-
-      expect(IntegrationItem.contactButtonLink).to.equal(formLink);
-    });
-
-    it('links to the gitlab form', function() {
-      const formLink = 'https://docs.percy.io/docs/gitlab';
-
-      this.render(hbs`{{organizations/integrations/integration-item
-        integrationName="gitlab"
         organization=organization}}`);
 
       expect(IntegrationItem.contactButtonLink).to.equal(formLink);
@@ -86,14 +76,6 @@ describe('Integration | Component | organizations/integrations/integration-item'
         organization=organization}}`);
 
       expect(IntegrationItem.hasBetaBadge).to.equal(false);
-    });
-
-    it('shows the beta badge for gitlab', function() {
-      this.render(hbs`{{organizations/integrations/integration-item
-        integrationName="gitlab"
-        organization=organization}}`);
-
-      expect(IntegrationItem.hasBetaBadge).to.equal(true);
     });
   });
 
@@ -139,8 +121,8 @@ describe('Integration | Component | organizations/integrations/integration-item'
         organization=organization}}`);
     });
 
-    it('shows the contact us button', function() {
-      expect(IntegrationItem.hasContactButton).to.equal(true);
+    it('shows the edit settings button', function() {
+      expect(IntegrationItem.hasEditButton).to.equal(true);
       percySnapshot(this.test);
     });
   });

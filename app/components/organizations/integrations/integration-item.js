@@ -26,7 +26,7 @@ const INTEGRATIONS_LOOKUP = {
   },
   [GITLAB_INTEGRATION_TYPE]: {
     textName: 'GitLab',
-    isBeta: true,
+    isBeta: false,
     betaLink: 'https://docs.percy.io/docs/gitlab',
     iconName: 'gitlab-icon-lg',
     organizationModelAttribute: 'isGitlabIntegrated',
