@@ -1,28 +1,34 @@
-collectors:
+version: 2
+dependencies:
+- type: js
+  path: ./
+  settings:
 
-- type: js-npm
-  path: /
-  actors:
-  # pull requests for updates to our minor version
-  - type: js-npm
-    versions: "L.Y.0"
-    dependencies_not_matching: "ember-cli$|ember-data$|ember-source$|ember-cli-mirage$"
-    settings:
-      # an optional prefix to add to all commit messages, be sure to add a space at the end if you want one
-      commit_message_prefix: "[DEPENDENCY BOT]: "
-      # false by default, set to true if you want all dependency updates in a single PR
-      batch_mode: true
-      github_labels:
-      - dependencies
-      github_assignees:  # list of usernames
-      - cadeparade
-      - maprules1000
+    # by default we'll collect the package.json versions under the "latest" dist-tag (default npm behavior)
+    # if you want to follow a specific dist-tag (like "next" or "unstable"), then you
+    # can specify that here by the package name
+    # default: none
+    dist_tags:
+      semantic-release: next
 
-  # create issues for new major versions
-  - type: repo-issue
-    versions: "Y.0.0"
-    dependencies_not_matching: "ember-cli$|ember-data$|ember-source$|ember-cli-mirage$"
-    settings:
-      github_assignees:
-        - cadeparade
-        - maprules1000
+    # github options
+    github_labels:  # list of label names
+    - dependencies
+
+    github_assignees:  # list of usernames
+    - cadeparade
+    - maprules1000
+
+    related_pr_behavior: close
+
+  manifest_updates:
+    filters:
+    - name: "ember-cli$|ember-data$|ember-source$|ember-cli-mirage$"
+      enabled: false
+    - name: ".*"
+      versions: "L.Y.0"
+
+  manifest_updates:
+    filters:
+      - name: ".*"
+        versions: "Y.0.0"
