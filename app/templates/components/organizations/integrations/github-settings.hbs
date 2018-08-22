@@ -25,6 +25,7 @@
 
           <label>
             <input
+              data-test-github-app-access
               type="radio"
               name="github-integration-setting"
               value="github-integration"
@@ -36,7 +37,7 @@
           </label>
 
           {{#if (eq changeset.githubAuthMechanism "github-integration")}}
-            {{organizations/github-integrator organization=organization showSupport="showSupport"}}
+            {{organizations/github-integrator organization=organization}}
           {{/if}}
 
           {{#if changeset.errors}}

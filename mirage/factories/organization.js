@@ -27,9 +27,23 @@ export default Factory.extend({
     },
   }),
 
+  withNonGithubUser: trait({
+    afterCreate(organization, server) {
+      let user = server.create('user');
+      server.create('organizationUser', {user, organization, role: 'member'});
+    },
+  }),
+
   withAdminUser: trait({
     afterCreate(organization, server) {
       let user = server.create('user');
+      server.create('organizationUser', {user, organization, role: 'admin'});
+    },
+  }),
+
+  withAdminGithubUser: trait({
+    afterCreate(organization, server) {
+      let user = server.create('user', 'withGithubIdentity');
       server.create('organizationUser', {user, organization, role: 'admin'});
     },
   }),

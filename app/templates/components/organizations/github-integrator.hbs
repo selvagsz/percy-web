@@ -8,7 +8,13 @@
     }}
   {{else}}
     <p>
-      <a {{action "triggerInstallation"}} href="{{githubIntegrationUrl}}" class="Button Button--primary Button--withLeftIcon" target="_blank" rel="noopener">
+      <a
+        data-test-github-app-install-button
+        href="{{githubIntegrationUrl}}"
+        class="Button Button--primary Button--withLeftIcon"
+        target="_blank"
+        rel="noopener"
+        {{action "triggerInstallation"}}>
         {{fa-icon "github" classNames="fa--left"}}
         Install GitHub App
       </a>

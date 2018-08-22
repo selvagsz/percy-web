@@ -1,5 +1,5 @@
 {{#if currentIntegration}}
-  <div class="flex items-center justify-between pl-3 mb-2">
+  <div data-test-github-app-install-success class="flex items-center justify-between pl-3 mb-2">
     <div class="flex items-center">
       {{inline-svg 'percy-logo-on-light' class="mr-2"}}
       <div class="text-xl font-semibold">Installed!</div>
@@ -15,10 +15,16 @@
   </div>
 
 {{else if organization.githubIntegrationRequest}}
-  <div class="OrganizationsGithubIntegration-actions">
-    <a href="#" class="Button" {{action "cancelIntegrationRequest"}}>Cancel</a>
+  <div data-test-github-app-install-loading class="flex items-center justify-between pl-2 mb-2">
+    <div class="flex items-center">
+      {{fa-icon "fa-spinner fa-pulse" size="2" classNames="mr-2"}}
+      <div class="text-xl font-semibold">Waiting for installation...</div>
+    </div>
+    <div class="OrganizationsGithubIntegration-actions">
+      <a href="#" class="btn" {{action "cancelIntegrationRequest"}}>Cancel</a>
+    </div>
   </div>
-  {{fa-icon "fa-spinner fa-pulse" classNames="OrganizationsGithubIntegration-leftAvatar"}}
-  <header>Waiting for installation...</header>
-  Waiting for <strong>{{organization.githubIntegrationRequest.createdBy.login}}</strong> to install Percy in GitHub.
+  <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+    Waiting for <strong>{{organization.githubIntegrationRequest.createdBy.name}}</strong> to install Percy in GitHub.
+  </div>
 {{/if}}

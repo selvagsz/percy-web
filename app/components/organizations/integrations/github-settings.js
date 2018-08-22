@@ -42,9 +42,6 @@ export default Component.extend({
   classNames: ['OrganizationsGithubSettings'],
   classNameBindings: ['classes'],
   actions: {
-    showSupport() {
-      this.sendAction('showSupport');
-    },
     changeSelection() {
       let newSelection = this.$('input[name="github-integration-setting"]:checked').val();
       this.get('changeset').rollback();

@@ -48,8 +48,5 @@ export default Component.extend(PollingMixin, {
         return;
       });
     },
-    showSupport() {
-      this.sendAction('showSupport');
-    },
   },
 });
