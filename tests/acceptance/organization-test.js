@@ -68,7 +68,6 @@ describe('Acceptance: Organization', function() {
 
       await click('[data-test-sidenav] a:contains("Users")');
       expect(currentPath()).to.equal('organizations.organization.users.index');
-
       await percySnapshot(this.test.fullTitle() + ' | Users settings');
       await click('[data-test-user-card]');
       expect(currentPath()).to.equal('organizations.organization.users.index');
@@ -107,6 +106,16 @@ describe('Acceptance: Organization', function() {
         );
         return percySnapshot(this.test.fullTitle() + ' | invalid modification');
       });
+    });
+
+    it('displays users page', async function() {
+      const users = server.createList('user', 5);
+      users.map(user => {
+        return server.create('organizationUser', {user, organization: this.organization});
+      });
+
+      await visit(`/organizations/${this.organization.slug}/users`);
+      await percySnapshot(this.test.fullTitle());
     });
 
     describe('organization is on trial account', function() {

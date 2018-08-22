@@ -1,9 +1,5 @@
-{{#if organization.organizationUsers.isPending}}
-  {{loading-page}}
-{{/if}}
-
 <div class="rounded border">
-  {{#each organization.organizationUsers as |organizationUser|}}
+  {{#each organizationUsers as |organizationUser|}}
     {{organizations/user-card organizationUser=organizationUser}}
   {{/each}}
 </div>
