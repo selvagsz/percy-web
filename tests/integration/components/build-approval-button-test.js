@@ -116,4 +116,31 @@ describe('Integration: BuildApprovalButton', function() {
     BuildApprovalButton.clickButton();
     percySnapshot(this.test);
   });
+
+  it('is enabled when isDisabled is false', function() {
+    let createReviewStub = sinon.stub().returns(resolve({then: sinon.stub()}));
+    this.set('createReviewStub', createReviewStub);
+    this.render(hbs`{{build-approval-button
+      build=build
+      createReview=createReviewStub
+      isDisabled=false
+    }}`);
+
+    expect(BuildApprovalButton.isDisabled).to.equal(false);
+    BuildApprovalButton.clickButton();
+    expect(createReviewStub).to.have.been.called;
+  });
+
+  it('is disabled when isDisabled is true', function() {
+    let createReviewStub = sinon.stub().returns(resolve({then: sinon.stub()}));
+    this.set('createReview', createReviewStub);
+    this.render(hbs`{{build-approval-button
+      build=build
+      createReview=createReviewStub
+      isDisabled=true
+    }}`);
+    expect(BuildApprovalButton.isDisabled).to.equal(true);
+    BuildApprovalButton.clickButton();
+    expect(createReviewStub).to.not.have.been.called;
+  });
 });

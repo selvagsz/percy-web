@@ -1,6 +1,13 @@
-<div class="flex items-center text-xl md:text-2xl leading-none font-semibold">
-  <div class="text-gray-400">
-    Build <span class="font-mono text-gray-700 mr-1">{{build.buildNumber}}</span>
+<div class="{{if (not isBuildApprovable) "mr-2"}}">
+  <div class="flex items-center text-xl md:text-2xl leading-none font-semibold">
+    <div class="text-gray-400">
+      Build <span class="font-mono text-gray-700 mr-1">{{build.buildNumber}}</span>
+    </div>
+    {{build-info-dropdown build=build}}
   </div>
-  {{build-info-dropdown build=build}}
+  {{#unless isBuildApprovable}}
+    <div class="mt-sm">
+      {{public-project-notice viewedObject="build"}}
+    </div>
+  {{/unless}}
 </div>

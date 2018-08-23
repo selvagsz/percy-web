@@ -29,7 +29,7 @@ describe('Integration: BuildOverviewInfoComponent', function() {
       let build = make.apply(this, ['build'].concat(state));
       this.set('build', build);
 
-      this.render(hbs`{{build-overview-info build=build}}`);
+      this.render(hbs`{{build-overview-info build=build isBuildApprovable=true}}`);
       percySnapshot(this.test);
     });
   });

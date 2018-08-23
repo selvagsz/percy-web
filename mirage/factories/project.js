@@ -2,7 +2,6 @@ import {Factory, trait} from 'ember-cli-mirage';
 
 export default Factory.extend({
   isEnabled: true,
-  publiclyReadable: false,
   name(i) {
     return `The Project That We All Adore And Love Working On ${i}`;
   },
@@ -16,8 +15,6 @@ export default Factory.extend({
   afterCreate(project, server) {
     server.create('token', {project});
   },
-
-  public: trait({publiclyReadable: true}),
 
   withChrome: trait({
     afterCreate(project, server) {

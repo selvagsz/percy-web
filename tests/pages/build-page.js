@@ -10,6 +10,7 @@ const SELECTORS = {
   SHOW_SUPPORT_LINK: '[data-test-build-overview-show-support]',
   TOGGLE_DIFFS_BUTTON: '[data-test-toggle-diffs-button]',
   PROJECT_LINK: '[data-test-build-toolbar-project-link]',
+  PUBLIC_BUILD_NOTICE: '[data-test-public-project-notice]',
 };
 
 const BuildPage = {
@@ -66,6 +67,8 @@ const BuildPage = {
 
   clickToggleDiffsButton: clickable(SELECTORS.TOGGLE_DIFFS_BUTTON),
   isDiffsVisibleForAllSnapshots: alias('snapshotList.isDiffsVisibleForAllSnapshots'),
+
+  isPublicBuildNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 };
 
 export default create(BuildPage);

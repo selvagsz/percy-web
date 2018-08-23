@@ -8,7 +8,7 @@
     <div class="flex items-center bg-purple-300 text-sm rounded px-1 py-sm hide-on-mobile">
       {{#link-to "organization" organization class="font-mono text-purple-600 truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
       <span class="font-semibold mx-sm hide-on-tablet">/</span>
-      {{#link-to "organization.project" organization project class="font-mono text-purple-600 truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
+      {{#link-to "organization.project" organization.slug project class="font-mono text-purple-600 truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
     </div>
   </div>
 
@@ -39,12 +39,14 @@
     {{/if}}
 
     {{#if build.isFinished}}
-      {{build-approval-button
-        build=build
-        createReview=createReview
-        approvableSnapshots=approvableSnapshots
-      }}
+      <div class="{{if (not isBuildApprovable) "hint--left hint--rounded hint--bounce"}}" aria-label="{{if (not isBuildApprovable) "You can't approve this build because you are not a member of this build's organization or are not logged in"}}">
+        {{build-approval-button
+          build=build
+          createReview=createReview
+          approvableSnapshots=approvableSnapshots
+          isDisabled=(not isBuildApprovable)
+        }}
+      </div>
     {{/if}}
-
   </div>
 </header>

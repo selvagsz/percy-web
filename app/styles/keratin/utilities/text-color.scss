@@ -34,3 +34,12 @@
     color: var(--white) !important;
   }
 }
+
+.link-blue,
+.link-blue a {
+  color: var(--blue-500) !important;
+
+  &:hover {
+    color: var(--blue-500) !important;
+  }
+}

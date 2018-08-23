@@ -9,7 +9,17 @@
     {{/if}}
   </div>
 {{else if hasDiffsInBrowser}}
-  <button type="button" class="btn btn-success {{if isLoading 'is-loading'}}" {{action "approveSnapshot"}} data-test-SnapshotViewerHeader-approve>Approve</button>
+  <div class="{{if isDisabled "hint--left hint--rounded hint--bounce"}}"
+    aria-label="{{if isDisabled "You can't approve this build because you are not a member of this build's organization or are not logged in"}}">
+    <button
+      {{action "approveSnapshot"}}
+      type="button"
+      class="btn btn-success
+        {{if isLoading 'is-loading'}}"
+      disabled="{{if isDisabled "disabled"}}"
+      data-test-SnapshotViewerHeader-approve
+    >Approve</button>
+  </div>
 {{else}}
   <div class="status-pill" data-test-no-changes-in-browser>
     No changes in {{inline-svg (concat activeBrowser.familySlug "-browser-icon") class="opacity-25 ml-1"}}

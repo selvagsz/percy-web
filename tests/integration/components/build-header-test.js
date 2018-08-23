@@ -45,7 +45,12 @@ describe('Integration: BuildHeader', function() {
       });
       this.setProperties({build});
 
-      this.render(hbs`{{build-header build=build showSupport=(action "showSupport")}}`);
+      this.render(hbs`{{
+        build-header
+        build=build
+        showSupport=(action "showSupport")
+        isBuildApprovable=true
+      }}`);
       percySnapshot(this.test);
     });
   });
@@ -60,7 +65,11 @@ describe('Integration: BuildHeader', function() {
       build,
       showSupport: showSupportStub,
     });
-    this.render(hbs`{{build-header build=build showSupport=(action "showSupport")}}`);
+    this.render(hbs`{{build-header
+      build=build
+      showSupport=(action "showSupport")
+      isBuildApprovable=true
+    }}`);
 
     this.$('[data-test-build-overview-show-support]').click();
     expect(showSupportStub).to.have.been.called; // eslint-disable-line
@@ -76,7 +85,11 @@ describe('Integration: BuildHeader', function() {
       build,
       showSupport: showSupportStub,
     });
-    this.render(hbs`{{build-header build=build showSupport=(action "showSupport")}}`);
+    this.render(hbs`{{build-header
+      build=build
+      showSupport=(action "showSupport")
+      isBuildApprovable=true
+    }}`);
 
     this.$('[data-test-build-overview-show-support]').click();
     expect(showSupportStub).to.have.been.called; // eslint-disable-line

@@ -1,5 +1,4 @@
 import Mirage from 'ember-cli-mirage';
-import AdminMode from 'percy-web/lib/admin-mode';
 
 export default function() {
   // Enable this to see verbose request logging from mirage:
@@ -85,12 +84,8 @@ export default function() {
   });
 
   this.get('/organizations/:slug', function(schema, request) {
-    const user = schema.users.findBy({_currentLoginInTest: true});
-    if (_isOrgAllowed(schema, user, request.params.slug)) {
-      return schema.organizations.findBy({slug: request.params.slug});
-    } else {
-      return _error401;
-    }
+    const org = schema.organizations.findBy({slug: request.params.slug});
+    return org ? org : _error401;
   });
 
   this.patch('/organizations/:slug', function(schema, request) {
@@ -192,14 +187,9 @@ export default function() {
   });
 
   this.get('/projects/:full_slug/', function(schema, request) {
-    const user = schema.users.findBy({_currentLoginInTest: true});
     const fullSlug = decodeURIComponent(request.params.full_slug);
     const project = schema.projects.findBy({fullSlug: fullSlug});
-    if (_isProjectAllowed(schema, user, project)) {
-      return schema.projects.findBy({fullSlug: request.params.full_slug});
-    } else {
-      return _error401;
-    }
+    return project ? project : _error401;
   });
 
   this.get('/projects/:organization_slug/:project_slug/tokens', function(schema, request) {
@@ -260,48 +250,6 @@ export default function() {
   this.get('/builds/:build_id/comparisons');
   this.get('/repos/:id');
   this.post('/reviews');
-
-  function _isOrgAllowed(schema, user, orgSlug) {
-    // Check if organization has a public project
-    const organization = schema.organizations.findBy({slug: orgSlug});
-    if (_areAnyOrgProjectsPublic(organization)) {
-      return true;
-    }
-
-    // if no public projects in org, AND there's no logged in user, don't show the org.
-    if (!user) {
-      return false;
-    }
-
-    if (AdminMode.isAdmin()) {
-      return true;
-    }
-
-    // If there's no public projects, but a user, check if the user has access to the org.
-    return _isUserInOrg(schema, orgSlug, user);
-  }
-
-  function _isProjectAllowed(schema, user, project) {
-    const org = project.organization;
-    const isProjectPublic = project.publiclyReadable;
-    const isOrgReadableByUser = _isOrgAllowed(schema, user, org.slug) && user;
-    return isProjectPublic || isOrgReadableByUser;
-  }
-
-  function _areAnyOrgProjectsPublic(organization) {
-    return organization.projects.models.any(project => {
-      return project.publiclyReadable;
-    });
-  }
-
-  function _isUserInOrg(schema, orgSlug, user) {
-    const organizationUsers = schema.organizationUsers.where({userId: user.id});
-    const userOrgIds = organizationUsers.models.map(obj => obj.organizationId);
-    const allowedOrganizations = userOrgIds.map(id => schema.organizations.find(id));
-    const allowedOrganizationSlugs = allowedOrganizations.map(org => org.slug);
-
-    return allowedOrganizationSlugs.includes(orgSlug);
-  }
 }
 
 const _error401 = new Mirage.Response(

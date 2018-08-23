@@ -1,24 +1,31 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import {inject as service} from '@ember/service';
+import isUserMemberPromise from 'percy-web/lib/is-user-member-of-org';
+import {hash} from 'rsvp';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend({
   snapshotQuery: service(),
   reviews: service(),
 
   model(params) {
-    // Note: passing {reload: true} here to ensure a full reload including all sideloaded data.
-    return this.store.findRecord('build', params.build_id, {reload: true});
+    const org = this.modelFor('organization');
+    return hash({
+      // Note: passing {reload: true} here to ensure a full reload including all sideloaded data.
+      build: this.store.findRecord('build', params.build_id, {reload: true}),
+      isUserMember: isUserMemberPromise(org),
+    });
   },
+
   afterModel(model) {
     const controller = this.controllerFor(this.routeName);
-    controller.set('build', model);
+    const build = model.build;
+    controller.set('build', build);
 
-    if (model && model.get('isFinished')) {
+    if (build && build.get('isFinished')) {
       controller.set('isSnapshotsLoading', true);
 
       this.get('snapshotQuery')
-        .getChangedSnapshots(model)
+        .getChangedSnapshots(build)
         .then(() => {
           return this._initializeSnapshotOrdering();
         });
@@ -27,7 +34,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, model) {
     this._super(...arguments);
-    controller.set('build', model);
+    controller.set('build', model.build);
+    controller.set('isBuildApprovable', model.isUserMember);
   },
 
   _initializeSnapshotOrdering() {

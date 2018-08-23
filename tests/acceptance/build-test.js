@@ -397,12 +397,14 @@ describe('Acceptance: Fullscreen Snapshot', function() {
     await BuildPage.visitFullPageSnapshot(urlParams);
     await BuildPage.snapshotFullscreen.clickToggleFullScreen();
     await percySnapshot(this.test);
+    expect(BuildPage.snapshots().count).to.equal(2);
   });
 
   it("fetches the build's snapshots when the fullscreen view of snapshot with no diff is closed", async function() { // eslint-disable-line
     urlParams.snapshotId = noDiffSnapshot.id;
     await BuildPage.visitFullPageSnapshot(urlParams);
     await BuildPage.snapshotFullscreen.clickToggleFullScreen();
+    expect(BuildPage.snapshots().count).to.equal(2);
     await percySnapshot(this.test);
   });
 

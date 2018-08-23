@@ -273,4 +273,31 @@ describe('Integration: BuildContainer', function() {
       expect(BuildPage.browserSwitcher.firefoxButton.isActive).to.equal(false);
     });
   });
+
+  describe('when isBuildApprovable is false', function() {
+    beforeEach(function() {
+      const build = make('build', 'withBaseBuild', 'finished');
+      const diffSnapshot = make('snapshot', 'withComparisons', {build});
+      const allChangedBrowserSnapshotsSorted = {'firefox-id': [diffSnapshot]};
+      const stub = sinon.stub();
+      const isBuildApprovable = false;
+      this.setProperties({
+        build,
+        stub,
+        allChangedBrowserSnapshotsSorted,
+        isBuildApprovable,
+      });
+
+      this.render(hbs`{{build-container
+        build=build
+        allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
+        createReview=stub
+        isBuildApprovable=isBuildApprovable
+      }}`);
+    });
+    it('displays notice that build is public', function() {
+      expect(BuildPage.isPublicBuildNoticeVisible).to.equal(true);
+      percySnapshot(this.test);
+    });
+  });
 });

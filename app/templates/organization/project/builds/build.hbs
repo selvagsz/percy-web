@@ -1,6 +1,6 @@
-{{title model.buildTitle}}
+{{title model.build.buildTitle}}
 {{build-container
-  build=model
+  build=model.build
   isSnapshotsLoading=isSnapshotsLoading
   openSnapshotFullModal='openSnapshotFullModal'
   isHidingBuildContainer=isHidingBuildContainer
@@ -9,5 +9,6 @@
   initializeSnapshotOrdering=(route-action "initializeSnapshotOrdering")
   isUnchangedSnapshotsVisible=isUnchangedSnapshotsVisible
   showSupport=(route-action "showSupport")
+  isBuildApprovable=isBuildApprovable
 }}
 {{outlet}}

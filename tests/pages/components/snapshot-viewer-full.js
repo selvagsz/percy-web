@@ -1,4 +1,4 @@
-import {create, attribute, triggerable, clickable} from 'ember-cli-page-object';
+import {create, attribute, isVisible, triggerable, clickable} from 'ember-cli-page-object';
 import {SnapshotViewerHeader} from 'percy-web/tests/pages/components/snapshot-viewer-header';
 import {alias} from 'ember-cli-page-object/macros';
 
@@ -16,6 +16,7 @@ const SELECTORS = {
   COMPARISON_MODE_SWITCHER: '[data-test-comparison-mode-switcher]',
   DIFF_IMAGE: '[data-test-comparison-viewer-full-diff-image-overlay] img',
   DIFF_IMAGE_BOX: '[data-test-comparison-viewer-diff-image-container] img',
+  PUBLIC_BUILD_NOTICE: '[data-test-public-project-notice]',
 };
 
 export const SnapshotViewerFull = {
@@ -47,6 +48,8 @@ export const SnapshotViewerFull = {
   clickToggleFullScreen: alias('header.clickToggleFullscreen'),
 
   clickApprove: alias('header.clickApprove'),
+
+  isPublicBuildNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 };
 
 export default create(SnapshotViewerFull);

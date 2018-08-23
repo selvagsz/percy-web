@@ -18,6 +18,7 @@ export default Component.extend(PollingMixin, {
   allDiffsShown: true,
   updateActiveBrowser: null,
   isUnchangedSnapshotsVisible: false,
+  isBuildApprovable: true,
 
   snapshotsChanged: computed('allChangedBrowserSnapshotsSorted', 'activeBrowser.id', function() {
     if (!this.get('allChangedBrowserSnapshotsSorted')) return;

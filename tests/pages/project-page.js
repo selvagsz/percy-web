@@ -7,6 +7,8 @@ const SELECTORS = {
   GITHUB_LOGO: 'svg[data-test-github-icon]',
   GITLAB_LOGO: 'svg[data-test-gitlab-icon]',
   QUICKSTART_BUTTON: '[data-test-quickstart-button]',
+  NO_BUILDS_PANEL: '[data-test-status-panel]',
+  PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
 };
 
 const ProjectPage = {
@@ -39,6 +41,9 @@ const ProjectPage = {
   },
 
   clickQuickstartButton: clickable(SELECTORS.QUICKSTART_BUTTON),
+
+  isNoBuildsPanelVisible: isVisible(SELECTORS.NO_BUILDS_PANEL),
+  isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 };
 
 export default create(ProjectPage);

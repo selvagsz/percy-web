@@ -9,11 +9,14 @@
   activeBrowser=activeBrowser
   updateActiveBrowser=(action 'updateActiveBrowser')
   isSnapshotsLoading=isSnapshotsLoading
+  isBuildApprovable=isBuildApprovable
 }}
+
 <div class="BuildContainer-body w-full">
   {{build-header
     build=build
     showSupport=showSupport
+    isBuildApprovable=isBuildApprovable
   }}
 
   {{#if isSnapshotsLoading}}
@@ -33,6 +36,7 @@
       toggleUnchangedSnapshotsVisible=(action "toggleUnchangedSnapshotsVisible")
       snapshotsUnchanged=snapshotsUnchanged
       isUnchangedSnapshotsLoading=isUnchangedSnapshotsLoading
+      isBuildApprovable=isBuildApprovable
     }}
   {{/if}}
 </div>

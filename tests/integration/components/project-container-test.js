@@ -33,6 +33,7 @@ describe('Integration: ProjectContainer', function() {
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
+        isUserMember=true
       }}`);
     });
 
@@ -60,6 +61,7 @@ describe('Integration: ProjectContainer', function() {
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
+        isUserMember=true
       }}`);
     });
 
@@ -91,6 +93,7 @@ describe('Integration: ProjectContainer', function() {
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
+        isUserMember=true
       }}`);
     });
 
@@ -126,6 +129,7 @@ describe('Integration: ProjectContainer', function() {
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
+        isUserMember=true
       }}`);
     });
 
@@ -159,6 +163,7 @@ describe('Integration: ProjectContainer', function() {
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
+        isUserMember=true
       }}`);
     });
 
@@ -174,6 +179,28 @@ describe('Integration: ProjectContainer', function() {
         true,
       );
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
+    });
+  });
+
+  describe('when user is not member of org', function() {
+    beforeEach(function() {
+      const project = make('project', 'withGithubRepo');
+      const builds = makeList('build', 1);
+      const stub = sinon.stub();
+      this.setProperties({project, builds, stub});
+
+      this.render(hbs`{{project-container
+        project=project
+        builds=builds
+        pollRefresh=stub
+        toggleSidebar=stub
+        isUserMember=false
+      }}`);
+    });
+
+    it('displays notice that build is public', function() {
+      expect(ProjectPage.isPublicProjectNoticeVisible).to.equal(true);
+      percySnapshot(this.test);
     });
   });
 });

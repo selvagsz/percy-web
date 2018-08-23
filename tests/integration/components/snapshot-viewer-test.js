@@ -44,6 +44,7 @@ describe('Integration: SnapshotViewer', function() {
       userSelectedWidth: null,
       showSnapshotFullModalTriggered: showSnapshotFullModalTriggeredStub,
       createReview: createReviewStub,
+      isBuildApprovable: true,
     });
   });
 
@@ -55,6 +56,7 @@ describe('Integration: SnapshotViewer', function() {
       userSelectedWidth=userSelectedWidth
       createReview=createReview
       activeBrowser=browser
+      isBuildApprovable=isBuildApprovable
     }}`);
 
     expect(SnapshotViewerPO.header.isTitleVisible, 'title should be visible').to.equal(true);
@@ -72,6 +74,7 @@ describe('Integration: SnapshotViewer', function() {
       userSelectedWidth=userSelectedWidth
       activeBrowser=browser
       createReview=createReview
+      isBuildApprovable=isBuildApprovable
     }}`);
 
     percySnapshot(this.test);
@@ -86,6 +89,7 @@ describe('Integration: SnapshotViewer', function() {
         userSelectedWidth=userSelectedWidth
         activeBrowser=browser
         createReview=createReview
+        isBuildApprovable=isBuildApprovable
       }}`);
     });
 
@@ -114,6 +118,7 @@ describe('Integration: SnapshotViewer', function() {
         userSelectedWidth=userSelectedWidth
         activeBrowser=browser
         createReview=createReview
+        isBuildApprovable=isBuildApprovable
       }}`);
 
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(0).isActive).to.equal(false);
@@ -131,6 +136,7 @@ describe('Integration: SnapshotViewer', function() {
         userSelectedWidth=userSelectedWidth
         activeBrowser=browser
         createReview=createReview
+        isBuildApprovable=isBuildApprovable
       }}`);
 
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(0).isActive).to.equal(false);
@@ -147,6 +153,7 @@ describe('Integration: SnapshotViewer', function() {
         createReview=createReview
         activeBrowser=browser
         updateActiveSnapshotId=stub
+        isBuildApprovable=isBuildApprovable
       }}`);
 
       SnapshotViewerPO.header.widthSwitcher.buttons(0).click();
@@ -177,6 +184,7 @@ describe('Integration: SnapshotViewer', function() {
         createReview=createReview
         updateActiveSnapshotId=stub
         activeBrowser=browser
+        isBuildApprovable=isBuildApprovable
       }}`);
     });
 
@@ -209,6 +217,7 @@ describe('Integration: SnapshotViewer', function() {
         activeSnapshotId=activeSnapshotId
         updateActiveSnapshotId=stub
         activeBrowser=browser
+        isBuildApprovable=isBuildApprovable
       }}`);
     });
 
@@ -260,6 +269,7 @@ describe('Integration: SnapshotViewer', function() {
         createReview=createReview
         updateActiveSnapshotId=stub
         activeBrowser=browser
+        isBuildApprovable=isBuildApprovable
       }}`);
     });
 

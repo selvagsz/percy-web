@@ -1,23 +1,32 @@
 <header class="sticky pin-t bg-white z-1">
   <div class="flex flex-wrap justify-between items-center py-3 px-4">
-    <div class="flex items-center">
-      {{menu-icon
-        class="mr-2 cursor-pointer show-on-tablet"
-        toggleSidebar=toggleSidebar
-        isSidebarVisible=isSidebarVisible
-      }}
-      <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
-      {{#if project.isDisabled}}
-        <div class="label">disabled</div>
-      {{/if}}
-      {{#link-to "organization.project.settings" project.organization.slug project.slug class="mr-2" data-test-settings-icon=true}}
-        <figure class="svg-container">
-          {{inline-svg "settings-icon"}}
-        </figure>
-      {{/link-to}}
-      <button {{action "refresh"}} class="btn-icon-only {{if isRefreshing 'animate-rotate-360'}}">
-        {{inline-svg "refresh-icon"}}
-      </button>
+    <div>
+      <div class="flex items-center">
+        {{menu-icon
+          class="mr-2 cursor-pointer show-on-tablet"
+          toggleSidebar=toggleSidebar
+          isSidebarVisible=isSidebarVisible
+        }}
+        <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
+        {{#if project.isDisabled}}
+          <div class="label">disabled</div>
+        {{/if}}
+        {{#if isUserMember}}
+          {{#link-to "organization.project.settings" project.organization.slug project.slug class="mr-2" data-test-settings-icon=true}}
+            <figure class="svg-container">
+              {{inline-svg "settings-icon"}}
+            </figure>
+          {{/link-to}}
+        {{/if}}
+        <button {{action "refresh"}} class="btn-icon-only {{if isRefreshing 'animate-rotate-360'}}">
+          {{inline-svg "refresh-icon"}}
+        </button>
+      </div>
+      {{#unless isUserMember}}
+        <div class="w-3/4 mt-sm">
+          {{public-project-notice viewedObject="project"}}
+        </div>
+      {{/unless}}
     </div>
 
     <div data-test-project-container-project-repo-linked>
@@ -55,31 +64,39 @@
   {{else}}
     <div class="container-full p-8">
       {{#if project.isEnabled}}
-        <div class="Alert Alert--warning">
-          <strong>Waiting for first snapshot:</strong> complete setup below to generate first snapshot.
-        </div>
-        <h5>Getting started</h5>
-        <p>Here's an overview of how to get started:</p>
+        {{#if isUserMember}}
+          <div class="Alert Alert--warning">
+            <strong>Waiting for first snapshot:</strong> complete setup below to generate first snapshot.
+          </div>
+          <h5>Getting started</h5>
+          <p>Here's an overview of how to get started:</p>
 
-        <ol>
-        <li>Set <code>PERCY_TOKEN</code> and <code>PERCY_PROJECT</code> environment variables in your CI environment.</li>
-        <li>Integrate Percy's client library to take snapshots in your test suite.</li>
-        <li>Run your tests in CI or create a GitHub PR.</li>
-        </ol>
+          <ol>
+          <li>Set <code>PERCY_TOKEN</code> and <code>PERCY_PROJECT</code> environment variables in your CI environment.</li>
+          <li>Integrate Percy's client library to take snapshots in your test suite.</li>
+          <li>Run your tests in CI or create a GitHub PR.</li>
+          </ol>
 
-        <p>
-          {{#link-to "docs.index" class="Button"}}View setup documentation{{/link-to}}
-        </p>
+          <p>
+            {{#link-to "docs.index" class="Button"}}View setup documentation{{/link-to}}
+          </p>
 
-        <h5>Environment variables</h5>
-        {{projects/env-vars project=project}}
+          <h5>Environment variables</h5>
+          {{projects/env-vars project=project}}
 
-        <h5>Just want to see a demo?</h5>
-        <p>
-          {{quickstart-button showQuickstart=showQuickstart}}
-        </p>
-        {{#if showQuickstart}}
-          {{projects/quickstart-code project=project}}
+          <h5>Just want to see a demo?</h5>
+          <p>
+            {{quickstart-button showQuickstart=showQuickstart}}
+          </p>
+          {{#if showQuickstart}}
+            {{projects/quickstart-code project=project}}
+          {{/if}}
+        {{else}}
+          {{status-panel
+            inlineSvgName="refresh-icon"
+            mainText="This project doesn't have any builds yet."
+            secondaryText="The owners of this project are working hard to get some diffs ready for you to see!"
+          }}
         {{/if}}
       {{else}}
         <p>No builds yet, and this project is disabled.</p>

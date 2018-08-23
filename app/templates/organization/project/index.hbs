@@ -1,3 +1,8 @@
 {{fixed-top-header currentOrganization=model.organization}}
-{{project-page project=model.project sortedProjects=model.sortedProjects builds=model.builds}}
+{{project-page
+  project=model.project
+  sortedProjects=model.sortedProjects
+  builds=model.builds
+  isUserMember=model.isUserMemberOfOrg
+}}
 {{main-footer}}

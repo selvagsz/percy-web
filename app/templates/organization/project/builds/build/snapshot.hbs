@@ -1,6 +1,6 @@
 {{#modal-dialog wrapperClass="SnapshotViewerFullModalWrapper"}}
   {{snapshot-viewer-full
-    snapshot=model
+    snapshot=model.snapshot
     snapshotSelectedWidth=snapshotSelectedWidth
     comparisonMode=comparisonMode
     updateComparisonMode=(route-action 'updateComparisonMode')
@@ -9,5 +9,6 @@
     createReview=(route-action "createReview")
     activeBrowser=activeBrowser
     updateActiveBrowser=(route-action 'updateActiveBrowser')
+    isBuildApprovable=isBuildApprovable
   }}
 {{/modal-dialog}}

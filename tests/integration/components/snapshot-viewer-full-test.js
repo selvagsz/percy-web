@@ -54,6 +54,7 @@ describe('Integration: SnapshotViewerFull', function() {
       closeSnapshotFullModal: closeSnapshotFullModalStub,
       updateComparisonMode: updateComparisonModeStub,
       createReview: createReviewStub,
+      isBuildApprovable: true,
       stub: sinon.stub(),
     });
 
@@ -66,6 +67,7 @@ describe('Integration: SnapshotViewerFull', function() {
       closeSnapshotFullModal=closeSnapshotFullModal
       createReview=createReview
       activeBrowser=browser
+      isBuildApprovable=isBuildApprovable
     }}`);
   });
 
@@ -159,6 +161,18 @@ describe('Integration: SnapshotViewerFull', function() {
     it('does not display when build is not finished', function() {
       this.set('snapshot.build.isFinished', false);
       expect(FullSnapshotPage.header.snapshotApprovalButton.isVisible).to.equal(false);
+    });
+
+    it('is disabled when isBuildApprovable is false', function() {
+      this.set('isBuildApprovable', false);
+      expect(FullSnapshotPage.header.snapshotApprovalButton.isDisabled).to.equal(true);
+    });
+  });
+
+  describe('public build notice', function() {
+    it('displays when isBuildApprovable is false', function() {
+      this.set('isBuildApprovable', false);
+      expect(FullSnapshotPage.isPublicBuildNoticeVisible).to.equal(true);
     });
   });
 });

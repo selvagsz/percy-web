@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
 import {inject as service} from '@ember/service';
+import isUserMemberPromise from 'percy-web/lib/is-user-member-of-org';
+import {hash} from 'rsvp';
 
-export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
+export default Route.extend(ResetScrollMixin, {
   store: service(),
   flashMessages: service(),
   params: {},
@@ -13,13 +14,17 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   },
   model(params /*transition*/) {
     this.set('params', params);
-    return this.store.findRecord('snapshot', params.snapshot_id);
+    const organization = this.modelFor('organization');
+    return hash({
+      snapshot: this.store.findRecord('snapshot', params.snapshot_id),
+      isUserMember: isUserMemberPromise(organization),
+    });
   },
 
-  setupController(controller) {
+  setupController(controller, model) {
     this._super(...arguments);
     const params = this.get('params');
-    const build = this.modelFor('organization.project.builds.build');
+    const build = this.modelFor('organization.project.builds.build').build;
     const activeBrowser = this.get('store')
       .peekAll('browser')
       .findBy('familySlug', params.activeBrowserFamilySlug);
@@ -30,6 +35,7 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
       controller.setProperties({
         build,
         activeBrowser,
+        isBuildApprovable: model.isUserMember,
         snapshotId: params.snapshot_id,
         snapshotSelectedWidth: params.width,
         comparisonMode: params.comparisonMode,
@@ -63,7 +69,7 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   },
 
   _track(actionName, extraProps) {
-    let build = this.modelFor('organization.project.builds.build');
+    let build = this.modelFor('organization.project.builds.build').build;
     const genericProps = {
       project_id: build.get('project.id'),
       project_slug: build.get('project.slug'),
@@ -100,7 +106,7 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
 
   _updateQueryParams(params) {
     const controller = this.controllerFor(this.routeName);
-    const snapshot = this.modelFor(this.routeName);
+    const snapshot = this.modelFor(this.routeName).snapshot;
     const comparisonMode = params.comparisonMode || controller.get('comparisonMode');
     const browser = params.newBrowserSlug || controller.get('activeBrowser.familySlug');
     const width = params.newWidth || controller.get('snapshotSelectedWidth') || this.params.width;

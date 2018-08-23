@@ -339,6 +339,13 @@ button,
     background-size: 20px 20px;
     animation: loading 4s linear infinite;
   }
+
+  &[disabled] {
+    color: var(--lightest-gray);
+    cursor: default;
+    background: var(--green-500);
+    border: var(--green);
+  }
 }
 
 .btn-alt-success {

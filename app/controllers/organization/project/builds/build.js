@@ -22,11 +22,11 @@ export default Controller.extend({
   // allChangedBrowserSnapshotsSorted.
   initializeSnapshotOrdering() {
     const orderedBrowserSnapshots = {};
+
     // Get snapshots without making new request
-    const buildSnapshotsWithDiffs =
-      this.get('build')
-        .hasMany('snapshots')
-        .value() || [];
+    const buildSnapshotsWithDiffs = this.get('store')
+      .peekAll('snapshot')
+      .filterBy('build.id', this.get('build.id'));
 
     const browsers = this.get('build.browsers');
 

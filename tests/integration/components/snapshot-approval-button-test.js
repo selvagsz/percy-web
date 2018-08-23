@@ -86,4 +86,30 @@ describe('Integration: SnapshotApprovalButton', function() {
 
     percySnapshot(this.test);
   });
+
+  it('is enabled when isDisabled is false', function() {
+    this.render(hbs`{{snapshot-approval-button
+      snapshot=snapshot
+      createReview=createReview
+      activeBrowser=activeBrowser
+      hasDiffsInBrowser=hasDiffsInBrowser
+      isDisabled=false
+    }}`);
+    expect(SnapshotApprovalButton.isDisabled).to.equal(false);
+    SnapshotApprovalButton.clickButton();
+    expect(createReview).to.have.been.calledWith([snapshot]);
+  });
+
+  it('is disabled when isDisabled is true', function() {
+    this.render(hbs`{{snapshot-approval-button
+      snapshot=snapshot
+      createReview=createReview
+      activeBrowser=activeBrowser
+      hasDiffsInBrowser=hasDiffsInBrowser
+      isDisabled=true
+    }}`);
+    expect(SnapshotApprovalButton.isDisabled).to.equal(true);
+    SnapshotApprovalButton.clickButton();
+    expect(createReview).to.not.have.been.called;
+  });
 });

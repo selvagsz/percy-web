@@ -11,9 +11,16 @@
   createReview=(action createReview)
   activeBrowser=activeBrowser
   updateActiveBrowser=updateActiveBrowser
+  isBuildApprovable=isBuildApprovable
 }}
 
 <div class="SnapshotViewerFull-body">
+  {{#unless isBuildApprovable}}
+    <div class="flex justify-center mb-1 px-2">
+      {{public-project-notice viewedObject="build"}}
+    </div>
+  {{/unless}}
+
   {{#if selectedComparison}}
     {{comparison-viewer-full
       comparison=selectedComparison

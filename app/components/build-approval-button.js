@@ -9,10 +9,11 @@ export default Component.extend({
   approvableSnapshots: null,
   isApproved: alias('build.isApproved'),
   isLoading: false,
+  isDisabled: false,
   tagName: 'button',
   classNames: ['build-approval-button btn btn-md btn-success ml-2 px-2 flex items-center'],
-  classNameBindings: ['classes', 'isLoading:is-loading', 'isApproved:is-approved'],
-  attributeBindings: ['data-test-build-approval-button'],
+  classNameBindings: ['isLoading:is-loading', 'isApproved:is-approved'],
+  attributeBindings: ['data-test-build-approval-button', 'isDisabled:disabled'],
   'data-test-build-approval-button': true,
 
   click() {

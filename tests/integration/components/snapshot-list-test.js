@@ -48,6 +48,7 @@ describe('Integration: SnapshotList', function() {
         activeBrowser=browser
         shouldDeferRendering=shouldDeferRendering
         toggleUnchangedSnapshotsVisible=stub
+        isBuildApprovable=true
       }}`);
     });
 
@@ -90,6 +91,7 @@ describe('Integration: SnapshotList', function() {
         toggleUnchangedSnapshotsVisible=stub
         isUnchangedSnapshotsVisible=isUnchangedSnapshotsVisible
         snapshotsUnchanged=snapshotsUnchanged
+        isBuildApprovable=true
       }}`);
     });
 

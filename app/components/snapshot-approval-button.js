@@ -1,9 +1,10 @@
-import {alias} from '@ember/object/computed';
 import Component from '@ember/component';
+import {alias} from '@ember/object/computed';
 
 export default Component.extend({
   isApproved: alias('snapshot.isApproved'),
   isLoading: false,
+  isDisabled: false,
   tagName: '',
 
   actions: {
