@@ -4,8 +4,9 @@ import {inject as service} from '@ember/service';
 import {readOnly} from '@ember/object/computed';
 import {task} from 'ember-concurrency';
 import handleOptionalAuthGetError from 'percy-web/lib/handle-optionally-authenticated-fetch-error';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend({
+export default Route.extend(AuthenticatedRouteMixin, {
   session: service(),
   store: service(),
   currentUser: readOnly('session.currentUser'),

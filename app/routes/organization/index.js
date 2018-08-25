@@ -1,7 +1,8 @@
 import Route from '@ember/routing/route';
 import localStorageProxy from 'percy-web/lib/localstorage';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend({
+export default Route.extend(AuthenticatedRouteMixin, {
   redirect() {
     this.send('redirectToDefaultOrganization');
   },

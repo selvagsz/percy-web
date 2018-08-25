@@ -4,7 +4,7 @@ import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
 import SnapshotViewerFull from 'percy-web/tests/pages/components/snapshot-viewer-full';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 
-describe('Acceptance: Publicly viewable projects', function() {
+describe.skip('Acceptance: Publicly viewable projects', function() {
   describe('when user is not logged in', function() {
     setupAcceptance({authenticate: false});
 
@@ -176,7 +176,7 @@ describe('Acceptance: Publicly viewable projects', function() {
   });
 });
 
-describe('Acceptance: Publicly viewable organizations', function() {
+describe.skip('Acceptance: Publicly viewable organizations', function() {
   describe('when a user is not logged in', function() {
     setupAcceptance({authenticate: false});
 
