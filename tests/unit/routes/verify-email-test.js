@@ -13,7 +13,7 @@ describe('VerifyEmailRoute', function() {
   const fakeCode = 'codezzz';
 
   setupTest('route:verify-email', {
-    needs: ['service:session'],
+    needs: ['service:session', 'service:headTags'],
   });
 
   beforeEach(function() {

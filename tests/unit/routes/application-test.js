@@ -18,6 +18,7 @@ describe('ApplicationRoute', function() {
       'service:analytics',
       'service:raven',
       'service:launch-darkly',
+      'service:headTags',
     ],
   });
 

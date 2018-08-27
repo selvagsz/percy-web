@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import ResetScrollMixin from '../mixins/reset-scroll';
 import {hash} from 'rsvp';
+import metaTagLookup from 'percy-web/lib/meta-tags';
 
 export default Route.extend(ResetScrollMixin, {
   model() {
@@ -20,6 +21,8 @@ export default Route.extend(ResetScrollMixin, {
       faqs: resolvedModel.faqData,
     });
   },
+
+  headTags: metaTagLookup('pricing'),
 
   actions: {
     didTransition() {
