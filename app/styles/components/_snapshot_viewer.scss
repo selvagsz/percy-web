@@ -31,9 +31,6 @@
 }
 
 .SnapshotViewer-header-full {
-  position: fixed;
-  top: 0;
-  width: 100vw;
   z-index: 1;
   grid-template-columns: 1fr auto 1fr;
 }

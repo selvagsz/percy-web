@@ -1,26 +1,24 @@
-{{snapshot-viewer-header
-  fullscreen=true
-  snapshot=snapshot
-  snapshotSelectedWidth=snapshotSelectedWidth
-  selectedComparison=selectedComparison
-  toggleViewMode=(action closeSnapshotFullModal)
-  updateSelectedWidth=(action "updateSelectedWidth")
+<div>
+  {{snapshot-viewer-header
+    fullscreen=true
+    snapshot=snapshot
+    snapshotSelectedWidth=snapshotSelectedWidth
+    selectedComparison=selectedComparison
+    toggleViewMode=(action closeSnapshotFullModal)
+    updateSelectedWidth=(action "updateSelectedWidth")
 
-  updateComparisonMode=updateComparisonMode
-  comparisonMode=comparisonMode
-  createReview=(action createReview)
-  activeBrowser=activeBrowser
-  updateActiveBrowser=updateActiveBrowser
-  isBuildApprovable=isBuildApprovable
-}}
-
+    updateComparisonMode=updateComparisonMode
+    comparisonMode=comparisonMode
+    createReview=(action createReview)
+    activeBrowser=activeBrowser
+    updateActiveBrowser=updateActiveBrowser
+    isBuildApprovable=isBuildApprovable
+  }}
+</div>
 <div class="SnapshotViewerFull-body">
   {{#unless isBuildApprovable}}
-    <div class="flex justify-center mb-1 px-2">
-      {{public-project-notice viewedObject="build"}}
-    </div>
+    {{public-project-notice viewedObject="build"}}
   {{/unless}}
-
   {{#if selectedComparison}}
     {{comparison-viewer-full
       comparison=selectedComparison

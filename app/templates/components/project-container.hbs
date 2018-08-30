@@ -1,4 +1,7 @@
 <header class="sticky pin-t bg-white z-1">
+  {{#unless isUserMember}}
+    {{public-project-notice viewedObject="project"}}
+  {{/unless}}
   <div class="flex flex-wrap justify-between items-center py-3 px-4">
     <div>
       <div class="flex items-center">
@@ -22,11 +25,6 @@
           {{inline-svg "refresh-icon"}}
         </button>
       </div>
-      {{#unless isUserMember}}
-        <div class="w-3/4 mt-sm">
-          {{public-project-notice viewedObject="project"}}
-        </div>
-      {{/unless}}
     </div>
 
     <div data-test-project-container-project-repo-linked>

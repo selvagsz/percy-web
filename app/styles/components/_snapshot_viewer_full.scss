@@ -40,9 +40,7 @@
     z-index: 1001;
 
     .SnapshotViewerFull-body {
-      --snapshot-header-height: 58px;
       height: 100vh;
-      padding-top: var(--snapshot-header-height);
       padding-bottom: 40px;
       text-align: center;
       cursor: pointer;
@@ -54,6 +52,11 @@
         display: inline-block;
         width: 100%;
         line-height: normal;
+      }
+
+      .ComparisonViewerFull {
+        --snapshot-header-padding: 8px;
+        padding-top: var(--snapshot-header-padding);
       }
     }
   }

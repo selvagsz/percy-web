@@ -1,13 +1,16 @@
-<div class="text-white bg-gray-300 font-semibold px-2 py-1 rounded" data-test-public-project-notice>
-  You're viewing a public {{viewedObject}}. You can look around
+<div class="p-2 bg-gray-000 border border-gray-100 u-text-left" data-test-public-project-notice>
+  <strong>
+    You're viewing a public {{viewedObject}}.
+  </strong>
+  You can look around,
     {{#if (not currentUser)}}
-    , but you'll need to
-      <a href="#" {{action "showLoginModal"}} style="color: var(--blue-700)">
+    but you'll need to
+      <a href="#" {{action "showLoginModal"}} class="link-blue">
         Sign in
       </a>
     to
   {{else}}
-    but you'll not be able to
+    but you won't be able to
   {{/if}}
   approve anything.
 </div>
