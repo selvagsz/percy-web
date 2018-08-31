@@ -21,11 +21,11 @@ export default {
   '2xs': '8px',
      xs: '10px',
      sm: '12px',
-   base: '14px',
-     lg: '16px',
+   base: '16px',
+     lg: '18px',
      xl: '20px',
   '2xl': '24px',
   '3xl': '32px',
-  '4xl': '40px',
+  '4xl': '42px',
   '5xl': '48px'
 };

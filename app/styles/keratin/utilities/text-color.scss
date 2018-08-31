@@ -1,10 +1,13 @@
+/* stylelint-disable selector-no-qualifying-type */
+
 .text-white a {
   color: var(--white);
 }
 
 /* Link colors */
 
-.link-gray {
+.link-gray,
+.link-gray a {
   color: var(--gray-300) !important;
 
   &:hover {

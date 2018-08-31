@@ -53,6 +53,7 @@ Router.map(function() {
   this.route('security');
   this.route('admin');
   this.route('changelog');
+  this.route('features');
   this.route('settings', function() {
     this.route('profile');
     this.route('connected-accounts');

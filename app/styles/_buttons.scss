@@ -218,8 +218,9 @@ button,
 
 .btn-md {
   height: 42px;
-  padding: 10px 32px;
+  padding: 10px var(--spacing-3);
   font-size: 14px;
+  font-weight: var(--keratin-font-weight-bold);
 }
 
 .btn-primary {
