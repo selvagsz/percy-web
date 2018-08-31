@@ -1,4 +1,8 @@
-import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import {or} from '@ember/object/computed';
+import GitlabCommon from 'percy-web/routes/organizations/organization/integrations/gitlab-common';
+import {GITLAB_INTEGRATION_TYPE} from 'percy-web/models/version-control-integration';
 
-export default Route.extend(AuthenticatedRouteMixin, {});
+export default GitlabCommon.extend({
+  currentIntegrationType: GITLAB_INTEGRATION_TYPE,
+  currentGitlabIntegration: or('currentOrganization.gitlabIntegration', 'newGitlabIntegration'),
+});

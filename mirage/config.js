@@ -155,21 +155,31 @@ export default function() {
       let newAttrs = Object.assign({}, attrs, {gitlabIntegrationId: 1234});
       let versionControlIntegration = schema.versionControlIntegrations.create(newAttrs);
       return versionControlIntegration;
+    } else if (request.requestBody.match(/"integration-type":"gitlab_self_hosted"/)) {
+      let attrs = this.normalizedRequestAttrs();
+      let versionControlIntegration = schema.versionControlIntegrations.create(attrs);
+      return versionControlIntegration;
     } else {
       return new Mirage.Response(422, {}, {});
     }
   });
 
   this.patch('/version-control-integrations/:id', function(schema, request) {
-    let tokenMatch = request.requestBody.match(/"gitlab-personal-access-token":"(\w{20})"/);
-    if (tokenMatch) {
-      let orgId = request.requestBody.match(/{"type":"organizations","id":"(\d+)"}/)[1];
+    if (request.requestBody.match(/"integration-type":"gitlab"/)) {
       let attrs = this.normalizedRequestAttrs();
-      let organization = schema.db.organizations.findBy({id: orgId});
-      let botUserId = organization.organizationUserIds.firstObject;
       let newAttrs = Object.assign({}, attrs, {
         gitlabIntegrationId: 1234,
-        gitlabBotUserId: botUserId,
+        isGitlabPersonalAccessTokenPresent: true,
+      });
+      let versionControlIntegration = schema.versionControlIntegrations.findBy({
+        id: request.params.id,
+      });
+      versionControlIntegration.update(newAttrs);
+      return versionControlIntegration;
+    } else if (request.requestBody.match(/"integration-type":"gitlab_self_hosted"/)) {
+      let attrs = this.normalizedRequestAttrs();
+      let newAttrs = Object.assign({}, attrs, {
+        gitlabHost: attrs['gitlabHost'],
         isGitlabPersonalAccessTokenPresent: true,
       });
       let versionControlIntegration = schema.versionControlIntegrations.findBy({

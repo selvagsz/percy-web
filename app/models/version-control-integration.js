@@ -5,6 +5,7 @@ import DS from 'ember-data';
 export const GITHUB_ENTERPRISE_INTEGRATION_TYPE = 'github_enterprise';
 export const GITHUB_INTEGRATION_TYPE = 'github';
 export const GITLAB_INTEGRATION_TYPE = 'gitlab';
+export const GITLAB_SELF_HOSTED_INTEGRATION_TYPE = 'gitlab_self_hosted';
 
 export default DS.Model.extend({
   organization: DS.belongsTo('organization'),
@@ -17,7 +18,7 @@ export default DS.Model.extend({
   githubEnterpriseInstallationId: DS.attr(),
   githubEnterpriseIntegrationId: DS.attr(),
   gitlabIntegrationId: DS.attr(),
-  gitlabBotUserId: DS.attr(),
+  gitlabHost: DS.attr(),
   gitlabPersonalAccessToken: DS.attr(),
   isGitlabPersonalAccessTokenPresent: DS.attr('boolean'),
 
@@ -29,4 +30,5 @@ export default DS.Model.extend({
   isGithubIntegration: equal('integrationType', GITHUB_INTEGRATION_TYPE),
   isGithubEnterpriseIntegration: equal('integrationType', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
   isGitlabIntegration: equal('integrationType', GITLAB_INTEGRATION_TYPE),
+  isGitlabSelfHostedIntegration: equal('integrationType', GITLAB_SELF_HOSTED_INTEGRATION_TYPE),
 });

@@ -60,9 +60,9 @@ export default Factory.extend({
     },
   }),
 
-  withCompleteGitlabIntegration: trait({
+  withGitlabSelfHostedIntegration: trait({
     afterCreate(organization, server) {
-      server.create('versionControlIntegration', 'gitlab', 'personalAccessToken', {organization});
+      server.create('versionControlIntegration', 'gitlabSelfHosted', {organization});
     },
   }),
 });

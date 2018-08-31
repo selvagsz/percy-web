@@ -5,6 +5,7 @@ import {
   GITHUB_INTEGRATION_TYPE,
   GITHUB_ENTERPRISE_INTEGRATION_TYPE,
   GITLAB_INTEGRATION_TYPE,
+  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
 } from 'percy-web/models/version-control-integration';
 
 export default Route.extend(AuthenticatedRouteMixin, {
@@ -15,6 +16,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       githubIntegrationName: GITHUB_INTEGRATION_TYPE,
       githubEnterpriseIntegrationName: GITHUB_ENTERPRISE_INTEGRATION_TYPE,
       gitlabIntegrationName: GITLAB_INTEGRATION_TYPE,
+      gitlabSelfHostedIntegrationName: GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
     });
   },
 });

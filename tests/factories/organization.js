@@ -44,12 +44,39 @@ FactoryGuy.define('organization', {
         return makeList('repo', 2, 'gitlab');
       },
     },
-    withMultipleIntegrations: {
+    withNewGitlabIntegration: {
       versionControlIntegrations: () => {
-        return makeList('version-control-integration', 'github', 'githubEnterprise', 'gitlab');
+        return makeList('version-control-integration', ['newGitlab']);
+      },
+    },
+    withGitlabSelfHostedIntegration: {
+      versionControlIntegrations: () => {
+        return makeList('version-control-integration', ['gitlabSelfHosted']);
       },
       repos: () => {
-        return makeList('repo', 'github', 'gitlab', ['githubEnterprise', {hostname: 'foo.com'}]);
+        return makeList('repo', 2, 'gitlabSelfHosted');
+      },
+    },
+    withNewGitlabSelfHostedIntegration: {
+      versionControlIntegrations: () => {
+        return makeList('version-control-integration', ['newGitlabSelfHosted']);
+      },
+    },
+    withMultipleIntegrations: {
+      versionControlIntegrations: () => {
+        return makeList(
+          'version-control-integration',
+          'github',
+          'gitlab',
+          'gitlabSelfHosted',
+          'githubEnterprise',
+        );
+      },
+      repos: () => {
+        return makeList('repo', 'github', 'gitlab', 'gitlabSelfHosted', [
+          'githubEnterprise',
+          {hostname: 'foo.com'},
+        ]);
       },
     },
     withStaleRepoData: {
@@ -71,6 +98,7 @@ FactoryGuy.define('organization', {
     withRepos: {repos: () => makeList('repo', 3)},
     withGithubRepos: {repos: () => makeList('repo', 3, 'github')},
     withGitlabRepos: {repos: () => makeList('repo', 3, 'gitlab')},
+    withGitlabSelfHostedRepos: {repos: () => makeList('repo', 3, 'gitlabSelfHosted')},
     withGithubEnterpriseRepos: {repos: () => makeList('repo', 3, 'githubEnterprise')},
     withProjects: {projects: () => makeList('project', 5)},
   },

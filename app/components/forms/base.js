@@ -1,5 +1,5 @@
 import {on} from '@ember/object/evented';
-import {computed, get} from '@ember/object';
+import {computed, get, trySet} from '@ember/object';
 import {inject as service} from '@ember/service';
 import Component from '@ember/component';
 import Changeset from 'ember-changeset';
@@ -42,7 +42,7 @@ export default Component.extend({
           this.set('isSaving', false);
           this.set('isSaveSuccessful', true);
           later(() => {
-            this.set('isSaveSuccessful', null);
+            trySet(this, 'isSaveSuccessful', null);
           }, this.get('_successIndicatorTimeout'));
         },
         errors => {
@@ -52,6 +52,7 @@ export default Component.extend({
             this.set('errorMessage', errors.errors[0].detail);
           } else {
             this.set('errorMessage', 'An unhandled error occured');
+            throw errors;
           }
         },
       );
@@ -101,14 +102,20 @@ export default Component.extend({
       }
     },
     delete(confirmationMessage) {
-      let store = this.get('store');
       let model = this.get('model');
+      let store = this.get('store');
+      let afterDeleteCallback = this.get('afterDelete');
       // Delete the record on the server
       // and remove the associated record from the store
       if (confirmationMessage && !utils.confirmMessage(confirmationMessage)) {
         return;
       }
-      model.destroyRecord().then(() => store.unloadRecord(model));
+      return model.destroyRecord().then(() => {
+        store.unloadRecord(model);
+        if (afterDeleteCallback) {
+          afterDeleteCallback();
+        }
+      });
     },
   },
 });

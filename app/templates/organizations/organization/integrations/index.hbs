@@ -45,6 +45,12 @@
           organization=model
         }}
       {{/if}}
+      {{#if (not model.isGitlabSelfHostedIntegrated)}}
+        {{organizations/integrations/integration-item
+          integrationName=gitlabSelfHostedIntegrationName
+          organization=model
+        }}
+      {{/if}}
     </div>
   </section>
 {{/if}}

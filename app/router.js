@@ -76,6 +76,7 @@ Router.map(function() {
         this.route('github-enterprise');
         this.route('github');
         this.route('gitlab');
+        this.route('gitlab-self-hosted');
       });
     });
   });

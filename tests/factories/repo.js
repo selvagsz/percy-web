@@ -23,5 +23,9 @@ FactoryGuy.define('repo', {
       source: 'gitlab',
       hostname: 'gitlab.com',
     },
+    gitlabSelfHosted: {
+      source: 'gitlab_self_hosted',
+      hostname: 'gitlab.example.com',
+    },
   },
 });

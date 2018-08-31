@@ -14,13 +14,15 @@ export default Factory.extend({
       integration.update({
         integrationType: 'gitlab',
         gitlabIntegrationId: `${integration.id}`,
+        isGitlabPersonalAccessTokenPresent: true,
       });
     },
   }),
-  personalAccessToken: trait({
+  gitlabSelfHosted: trait({
     afterCreate(integration) {
       integration.update({
-        gitlabBotUserId: 1,
+        integrationType: 'gitlab_self_hosted',
+        gitlabHost: 'https://gitlab.percy.town',
         isGitlabPersonalAccessTokenPresent: true,
       });
     },

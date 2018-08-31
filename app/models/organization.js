@@ -32,6 +32,10 @@ export default DS.Model.extend({
     return this.get('versionControlIntegrations').findBy('gitlabIntegrationId');
   }),
 
+  gitlabSelfHostedIntegration: computed('versionControlIntegrations.@each.gitlabHost', function() {
+    return this.get('versionControlIntegrations').findBy('gitlabHost');
+  }),
+
   githubIntegrationRequest: DS.belongsTo('github-integration-request', {
     async: false,
   }),
@@ -53,6 +57,7 @@ export default DS.Model.extend({
   isGithubIntegrated: bool('githubIntegration'),
   isGithubEnterpriseIntegrated: bool('githubEnterpriseIntegration'),
   isGitlabIntegrated: bool('gitlabIntegration'),
+  isGitlabSelfHostedIntegrated: bool('gitlabSelfHostedIntegration'),
   isVersionControlIntegrated: bool('versionControlIntegrations.length'),
 
   githubAuthMechanism: computed('githubIntegration', function() {
@@ -75,6 +80,7 @@ export default DS.Model.extend({
   githubRepos: filterBy('repos', 'source', 'github'),
   githubEnterpriseRepos: filterBy('repos', 'source', 'github_enterprise'),
   gitlabRepos: filterBy('repos', 'source', 'gitlab'),
+  gitlabSelfHostedRepos: filterBy('repos', 'source', 'gitlab_self_hosted'),
   repoSources: mapBy('repos', 'source'),
   uniqueRepoSources: uniq('repoSources'),
 

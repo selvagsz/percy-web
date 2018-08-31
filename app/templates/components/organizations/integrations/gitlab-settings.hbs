@@ -7,37 +7,16 @@
 
 <section class="px-2">
   <div data-test-gitlab-settings class="bg-white rounded shadow-1 p-2 mb-2">
-    {{#if isGitlabIntegrated}}
-      {{#organizations/require-role role="admin" organization=organization}}
-        {{forms/gitlab-settings-edit
-          model=gitlabIntegration
-          organization=organization
-          isGitlabPersonalAccessTokenPresent=isGitlabPersonalAccessTokenPresent
-          gitlabPersonalAccessTokenLabel=gitlabPersonalAccessTokenLabel
-          gitlabPersonalAccessTokenPlaceholder=gitlabPersonalAccessTokenPlaceholder
-        }}
-      {{/organizations/require-role}}
-    {{else}}
-    <div class="p-2 rounded border text-gray-400 mb-2" data-test-gitlab-settings-status>
-      The GitLab integration is not installed.
-    </div>
-    <div class="flex justify-end">
-      <div class="btn-toolbar">
-        {{#link-to
-          'organizations.organization.integrations'
-          organization.slug
-          class="btn"
-        }}
-          Back
-        {{/link-to}}
-        <button data-test-gitlab-settings-connect-button class="btn btn-primary shadow-purple-lg ml-1" {{action "createGitlabIntegration"}}>
-          Connect to GitLab
-        </button>
-      </div>
-    </div>
-    {{/if}}
+    {{#organizations/require-role role="admin" organization=organization}}
+      {{forms/gitlab-settings-edit
+        organization=organization
+        currentGitlabIntegration=currentGitlabIntegration
+        isNewRecord=isNewRecord
+        afterDelete=afterDelete
+      }}
+    {{/organizations/require-role}}
   </div>
-  {{#if isGitlabIntegrated}}
+  {{#if (not isNewRecord)}}
     <div class="rounded bg-yellow-000 border border-yellow-100 p-2 mb-2">
       <strong>Reminder:</strong> Each project must be linked to a GitLab repository for <strong>{{#link-to "docs.page" "integrations/gitlab"}}Merge Request integration{{/link-to}}</strong> to work. You can verify the link in each project's settings.
     </div>

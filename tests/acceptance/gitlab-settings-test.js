@@ -1,83 +1,192 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import GitlabSettings from 'percy-web/tests/pages/components/gitlab-settings';
+import IntegrationItem from 'percy-web/tests/pages/components/integration-item';
 import sinon from 'sinon';
 import utils from 'percy-web/lib/utils';
 import {afterEach} from 'mocha';
 
-describe('Acceptance: Gitlab Settings', function() {
+describe('Acceptance: GitLab Integration Settings', function() {
   setupAcceptance();
+  let urlParams = (organization, integrationType) => {
+    return {
+      orgSlug: organization.slug,
+      integrationType: integrationType,
+    };
+  };
 
   describe('with a standard user', function() {
-    let organization;
-    setupSession(function(server) {
-      organization = server.create('organization', 'withUser', 'withGitlabIntegration');
+    describe('with a gitlab integration', function() {
+      let organization;
+      let integrationType;
+      setupSession(function(server) {
+        organization = server.create('organization', 'withUser', 'withGitlabIntegration');
+        integrationType = 'gitlab';
+      });
+
+      it('does not show gitlab settings', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, integrationType));
+        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
+        expect(GitlabSettings.integrationSettings.personalAccessTokenField.isVisible).to.equal(
+          false,
+        );
+        await percySnapshot(this.test.fullTitle());
+      });
     });
 
-    it('does not show gitlab settings', async function() {
-      await visit(`/organizations/${organization.slug}/integrations/gitlab`);
-      expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
-      expect(GitlabSettings.integrationSettings.personalAccessTokenField.isVisible).to.equal(false);
-      await percySnapshot(this.test.fullTitle());
+    describe('with a gitlab self-hosted integration', function() {
+      let organization;
+      setupSession(function(server) {
+        organization = server.create('organization', 'withUser', 'withGitlabSelfHostedIntegration');
+      });
+
+      it('does not show gitlab self-hosted settings', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+        expect(GitlabSettings.statusIsHidden).to.equal(true);
+        await percySnapshot(this.test.fullTitle());
+      });
     });
   });
 
   describe('with an admin user', function() {
-    describe('without a gitlab integration', function() {
-      let organization;
-      setupSession(function(server) {
-        organization = server.create('organization', 'withAdminUser');
-      });
+    let organization;
+    setupSession(function(server) {
+      organization = server.create('organization', 'withAdminUser');
+    });
 
+    describe('without an existing gitlab integration', function() {
       it('allows the integration to be installed', async function() {
-        await visit(`/organizations/${organization.slug}/integrations/gitlab`);
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
         expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
-        await GitlabSettings.install();
 
-        expect(
-          GitlabSettings.integrationSettings.personalAccessTokenField.inputPlaceholder,
-        ).to.equal('Personal access token');
-        expect(GitlabSettings.integrationSettings.personalAccessTokenField.text).to.equal(
-          'Personal access token (not installed)',
+        await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
+          'xxxxxxxxxxxxxxxxxxxx',
         );
-
+        await GitlabSettings.integrationSettings.toolbar.save();
+        expect(GitlabSettings.isErrorPresent).to.equal(false, 'There were errors with the form');
         await percySnapshot(this.test.fullTitle());
       });
     });
 
     describe('with a gitlab integration', function() {
-      let organization;
       setupSession(function(server) {
-        organization = server.create('organization', 'withAdminUser', 'withGitlabIntegration');
+        server.create('versionControlIntegration', 'gitlab', {organization});
       });
 
       it('allows editing gitlab settings', async function() {
-        await visit(`/organizations/${organization.slug}/integrations/gitlab`);
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
         expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
-        GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('xx');
-        await GitlabSettings.integrationSettings.toolbar.save();
-        await percySnapshot(this.test.fullTitle() + ' with an invalid token');
 
-        GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('xxxxxxxxxxxxxxxxxxxx');
-        await GitlabSettings.integrationSettings.toolbar.save();
-
-        expect(GitlabSettings.integrationSettings.personalAccessTokenField.text).to.equal(
-          'Personal access token (installed by you)',
+        await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
+          'xxxxxxxxxxxxxxxxxxxx',
         );
-        await percySnapshot(this.test.fullTitle() + ' with a valid token');
+        await GitlabSettings.integrationSettings.toolbar.save();
+        expect(GitlabSettings.isErrorPresent).to.equal(false, 'There were errors with the form');
+        await percySnapshot(this.test.fullTitle());
+        await GitlabSettings.integrationSettings.toolbar.back();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+      });
+
+      it('can return to the index page', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
+        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
 
         await GitlabSettings.integrationSettings.toolbar.back();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
       });
     });
 
-    describe('with a gitlab integration and personal access token', function() {
+    describe('with an existing gitlab integration', function() {
+      let windowStub;
+      setupSession(function(server) {
+        server.create('versionControlIntegration', 'gitlab', {organization});
+        windowStub = sinon.stub(utils, 'confirmMessage').returns(true);
+      });
+
+      afterEach(function() {
+        windowStub.restore();
+      });
+
+      it('allows deleting the integration', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
+        expect(
+          GitlabSettings.integrationSettings.personalAccessTokenField.inputPlaceholder,
+        ).to.equal('••••••••••••••••••••', 'Personal access token not installed');
+
+        await GitlabSettings.delete();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+
+        await percySnapshot(this.test.fullTitle());
+      });
+    });
+
+    describe('without a gitlab self-hosted integration', function() {
+      let organization;
+      setupSession(function(server) {
+        organization = server.create('organization', 'withAdminUser');
+      });
+
+      it('allows the integration to be installed', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+
+        expect(
+          GitlabSettings.integrationSettings.personalAccessTokenField.inputPlaceholder,
+        ).to.equal('Personal access token', 'A personal access token has already been installed');
+        await GitlabSettings.integrationSettings.gitlabHostField.fillIn('https://gitlab.percy.io');
+        await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
+          'xxxxxxxxxxxxxxxxxxxx',
+        );
+        await GitlabSettings.integrationSettings.toolbar.save();
+        expect(GitlabSettings.isErrorPresent).to.equal(false, 'There were errors with the form');
+
+        await percySnapshot(this.test.fullTitle());
+      });
+    });
+
+    describe('with a gitlab self-hosted integration', function() {
+      let organization;
+      setupSession(function(server) {
+        organization = server.create(
+          'organization',
+          'withAdminUser',
+          'withGitlabSelfHostedIntegration',
+        );
+      });
+
+      it('allows editing settings', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+
+        expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
+        await GitlabSettings.integrationSettings.gitlabHostField.fillIn('https://gitlab.percy.io');
+        await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
+          'xxxxxxxxxxxxxxxxxxxx',
+        );
+        await GitlabSettings.integrationSettings.toolbar.save();
+        expect(GitlabSettings.isErrorPresent).to.equal(false, 'There were errors with the form');
+        await percySnapshot(this.test.fullTitle());
+
+        await GitlabSettings.integrationSettings.toolbar.back();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+      });
+    });
+
+    describe('with a gitlab self-hosted integration', function() {
       let organization;
       let windowStub;
       setupSession(function(server) {
         organization = server.create(
           'organization',
           'withAdminUser',
-          'withCompleteGitlabIntegration',
+          'withGitlabSelfHostedIntegration',
         );
         windowStub = sinon.stub(utils, 'confirmMessage').returns(true);
       });
@@ -87,17 +196,43 @@ describe('Acceptance: Gitlab Settings', function() {
       });
 
       it('allows deleting the integration', async function() {
-        await visit(`/organizations/${organization.slug}/integrations/gitlab`);
-        expect(GitlabSettings.integrationSettings.personalAccessTokenField.text).to.equal(
-          'Personal access token (installed by you)',
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+        expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
+        expect(GitlabSettings.isGitlabHostFieldVisible).to.equal(
+          true,
+          'Gitlab Host field is not visible',
         );
         await GitlabSettings.delete();
-        expect(GitlabSettings.integrationSettings.personalAccessTokenField.isVisible).to.equal(
-          false,
-        );
-        expect(GitlabSettings.integrationButton.isVisible).to.equal(true);
-        expect(GitlabSettings.integrationButton.text).to.equal('Connect to GitLab');
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+
+        IntegrationItem.scope = '[data-test-integration-item="gitlab-self-hosted"]';
+        expect(IntegrationItem.hasContactButton).to.equal(true);
+
         await percySnapshot(this.test.fullTitle());
+      });
+    });
+
+    describe('with a gitlab self-hosted integration', function() {
+      let organization;
+      setupSession(function(server) {
+        organization = server.create(
+          'organization',
+          'withAdminUser',
+          'withGitlabSelfHostedIntegration',
+        );
+      });
+
+      it('can return to the index page', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+
+        await GitlabSettings.integrationSettings.toolbar.back();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
       });
     });
   });

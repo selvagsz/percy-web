@@ -6,6 +6,7 @@ import {
   GITHUB_INTEGRATION_TYPE,
   GITHUB_ENTERPRISE_INTEGRATION_TYPE,
   GITLAB_INTEGRATION_TYPE,
+  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
 } from 'percy-web/models/version-control-integration';
 
 const INTEGRATIONS_LOOKUP = {
@@ -31,6 +32,14 @@ const INTEGRATIONS_LOOKUP = {
     iconName: 'gitlab-icon-lg',
     organizationModelAttribute: 'isGitlabIntegrated',
     settingsRouteSlug: 'gitlab',
+  },
+  [GITLAB_SELF_HOSTED_INTEGRATION_TYPE]: {
+    textName: 'GitLab Self-Hosted',
+    isBeta: true,
+    betaLink: 'https://docs.percy.io/docs/gitlab',
+    iconName: 'gitlab-icon-lg',
+    organizationModelAttribute: 'isGitlabSelfHostedIntegrated',
+    settingsRouteSlug: 'gitlab-self-hosted',
   },
 };
 

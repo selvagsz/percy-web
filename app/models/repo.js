@@ -4,6 +4,7 @@ import {
   GITHUB_INTEGRATION_TYPE,
   GITHUB_ENTERPRISE_INTEGRATION_TYPE,
   GITLAB_INTEGRATION_TYPE,
+  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
 } from 'percy-web/models/version-control-integration';
 
 export default DS.Model.extend({
@@ -22,4 +23,5 @@ export default DS.Model.extend({
   isGithubEnterpriseRepo: equal('source', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
   isGithubRepoFamily: or('isGithubRepo', 'isGithubEnterpriseRepo'),
   isGitlabRepo: equal('source', GITLAB_INTEGRATION_TYPE),
+  isGitlabSelfHostedRepo: equal('source', GITLAB_SELF_HOSTED_INTEGRATION_TYPE),
 });

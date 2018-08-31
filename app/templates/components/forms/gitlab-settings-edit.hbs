@@ -1,15 +1,36 @@
 <form action="javascript:;" class="Form mb-0" data-test-gitlab-settings-edit-form>
   <div class="flex items-center mb-2">
     {{inline-svg "gitlab-icon-lg" class="mr-1"}}
-    <h2 class="text-xl font-semibold m-0">GitLab Integration</h2>
+    <h2 class="text-xl font-semibold m-0">
+      {{#if isSelfHosted}}
+        GitLab Self-Hosted Integration
+      {{else}}
+        GitLab Integration
+      {{/if}}
+    </h2>
   </div>
   <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{#if errorMessage}}
+    <div class="Form-errors">
+      {{errorMessage}}
+    </div>
+    {{/if}}
+    {{#if isSelfHosted}}
+      {{form-fields/input
+        data-test-gitlab-host-field
+        type="input"
+        property="gitlabHost"
+        title="GitLab Host"
+        changeset=changeset
+        placeholder="https://gitlab.example.com"
+      }}
+    {{/if}}
     {{form-fields/input
       data-test-gitlab-personal-access-token-field
       type="password"
       autocomplete="new-password-gitlab"
       property="gitlabPersonalAccessToken"
-      title=gitlabPersonalAccessTokenLabel
+      title="Personal access token"
       changeset=changeset
       placeholder=gitlabPersonalAccessTokenPlaceholder
     }}
@@ -18,7 +39,7 @@
     </div>
   </div>
   <div data-test-gitlab-settings-edit-form-toolbar class="flex justify-between">
-    <button type="button" data-test-gitlab-settings-delete class="btn btn-danger" {{action "delete" "Are you sure you want to remove this project's GitLab integration?"}}>Remove Integration</button>
+    <button type="button" disabled={{if isNewRecord true false}} data-test-gitlab-settings-delete class="btn btn-danger" {{action "delete" "Are you sure you want to remove this project's GitLab integration?"}}>Remove Integration</button>
     <div class="flex align-center">
       {{#link-to
         "organizations.organization.integrations"
@@ -31,7 +52,7 @@
         value="Save"
         isSaving=isSaving
         isSaveSuccessful=isSaveSuccessful
-        disabled=changeset.isPristine
+        disabled=isSubmitDisabled
         classes="btn btn-primary shadow-purple-lg mb-0 ml-1"
         submit=(action "save")
       }}
