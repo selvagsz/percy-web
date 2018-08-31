@@ -1,6 +1,7 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import {beforeEach} from 'mocha';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
+import 'ember-launch-darkly/test-support/helpers/with-variation';
 
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
@@ -9,6 +10,19 @@ describe('Acceptance: Marketing pages', function() {
       expect(currentPath()).to.equal('index');
       await percySnapshot(this.test);
     });
+
+    it('can visit /features', async function() {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
+        await visit('/features');
+        expect(currentPath()).to.equal('features');
+        await percySnapshot(this.test);
+      } else {
+        await visit('/features');
+        expect(currentPath()).to.equal('index');
+      }
+    });
+
     it('can visit /pricing', async function() {
       await visit('/pricing');
       expect(currentPath()).to.equal('pricing');
@@ -41,6 +55,7 @@ describe('Acceptance: Marketing pages', function() {
         expect(currentPath()).to.equal(expectedPath);
       });
     });
+
     it('can visit /team', async function() {
       await visit('/team');
       expect(currentPath()).to.equal('team');
