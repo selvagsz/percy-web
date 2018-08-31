@@ -9,21 +9,22 @@ TAG="$BUILDKITE_COMMIT"
 echo "Building: $IMAGE:$TAG"
 
 # Make sure parent baseimage is available locally and up to date.
-gcloud docker -- pull "$(grep '^FROM' Dockerfile | grep -o ' .*' | tr -d ' ')"
+gcloud auth configure-docker
+docker pull "$(grep '^FROM' Dockerfile | grep -o ' .*' | tr -d ' ')"
 
 # Build assets in the container, then copy them into dist/.
 # We have to do this with "docker cp" and not a mounted volume due to CI constraints.
-docker build --build-arg version="$BUILDKITE_COMMIT" -t $IMAGE:$TAG .
+docker build --build-arg version="$BUILDKITE_COMMIT" -t "$IMAGE":"$TAG" .
 
 # Run container temporarily, then cleanup on exit or error.
-CONTAINER_ID=$(docker run -d -i $IMAGE:$TAG)
+CONTAINER_ID=$(docker run -d -i "$IMAGE":"$TAG")
 function cleanup() {
-  docker stop $CONTAINER_ID
+  docker stop "$CONTAINER_ID"
   echo 'Done.'
 }
 trap cleanup EXIT
 
-docker cp $CONTAINER_ID:/app/src/dist/ dist/
+docker cp "$CONTAINER_ID":/app/src/dist/ dist/
 
 # Upload new assets to GCS.
 gsutil -m -h "Cache-Control: public,max-age=2678400" cp \
@@ -33,7 +34,7 @@ gsutil -m -h "Cache-Control: public,max-age=2678400" cp \
   -n dist/assets dist/images dist/fonts \
   gs://percy-public-static/static/
 
-gcloud docker -- push $IMAGE:$TAG
+docker push "$IMAGE":"$TAG"
 
 echo "Deployed $IMAGE:$TAG"
 
@@ -44,11 +45,15 @@ echo 'Publishing sourcemaps to Sentry...'
 docker pull getsentry/sentry-cli
 docker run \
   --rm \
-  -v $(pwd)/dist/assets:/mnt/data \
+  -v "$(pwd)/dist/assets:/mnt/data" \
   -e SENTRY_AUTH_TOKEN \
+  --entrypoint /bin/sh \
   -it getsentry/sentry-cli \
-  sh -c "
-    sentry-cli releases -o $SENTRY_ORG new -p $SENTRY_PROJECT $BUILDKITE_COMMIT;
+  -c "
+    sentry-cli releases \
+      -o $SENTRY_ORG new \
+      -p $SENTRY_PROJECT \
+      $BUILDKITE_COMMIT;
     sentry-cli releases \
       -o $SENTRY_ORG \
       -p $SENTRY_PROJECT \
