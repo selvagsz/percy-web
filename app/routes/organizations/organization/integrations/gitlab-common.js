@@ -4,6 +4,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Route.extend(AuthenticatedRouteMixin, {
   newGitlabIntegration: computed('currentIntegration', function() {
+    // This computed property relies on currentIntegration, because the current integration can
+    // change between routes, therefore requiring to recompute the property
     return this.store.createRecord('version-control-integration', {
       integrationType: this.get('currentIntegrationType'),
       organization: this.modelFor(this.routeName),

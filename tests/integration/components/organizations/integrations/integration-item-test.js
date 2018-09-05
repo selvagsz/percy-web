@@ -52,6 +52,15 @@ describe('Integration | Component | organizations/integrations/integration-item'
       percySnapshot(this.test);
     });
 
+    it('shows the contact us button for gitlab self-hosted', function() {
+      this.render(hbs`{{organizations/integrations/integration-item
+        integrationName="gitlab_self_hosted"
+        organization=organization}}`);
+
+      expect(IntegrationItem.hasContactButton).to.equal(true);
+      percySnapshot(this.test);
+    });
+
     it('links to the github enterprise form', function() {
       const formLink = 'https://docs.percy.io/docs/github-enterprise';
 

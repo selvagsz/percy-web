@@ -1,7 +1,7 @@
 <form action="javascript:;" class="Form mb-0" data-test-gitlab-settings-edit-form>
   <div class="flex items-center mb-2">
     {{inline-svg "gitlab-icon-lg" class="mr-1"}}
-    <h2 class="text-xl font-semibold m-0">
+    <h2 data-test-gitlab-settings-integration-name class="text-xl font-semibold m-0">
       {{#if isSelfHosted}}
         GitLab Self-Hosted Integration
       {{else}}

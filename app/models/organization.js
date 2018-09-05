@@ -1,6 +1,7 @@
 import {computed} from '@ember/object';
 import {filterBy, alias, bool, mapBy, uniq} from '@ember/object/computed';
 import DS from 'ember-data';
+import {INTEGRATION_TYPES} from 'percy-web/lib/integration-types';
 
 const DISPLAY_NAMES = {
   github: 'GitHub',
@@ -60,6 +61,17 @@ export default DS.Model.extend({
   isGitlabIntegrated: bool('gitlabIntegration'),
   isGitlabSelfHostedIntegrated: bool('gitlabSelfHostedIntegration'),
   isVersionControlIntegrated: bool('versionControlIntegrations.length'),
+
+  availableIntegrations: computed('versionControlIntegrations.[]', function() {
+    let integrations = [];
+    for (const key of Object.keys(INTEGRATION_TYPES)) {
+      let item = INTEGRATION_TYPES[key];
+      if (this.get(`${item.organizationModelAttribute}`) != true) {
+        integrations.push(key);
+      }
+    }
+    return integrations;
+  }),
 
   githubAuthMechanism: computed('githubIntegration', function() {
     if (this.get('githubIntegration')) {

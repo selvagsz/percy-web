@@ -1,7 +1,7 @@
-<div class="integration-item flex justify-between items-center p-2 border-b" data-test-integration-item={{routeSlug}}>
+<div class="integration-item flex justify-between items-center p-2 border-b" data-test-integration-item>
   <div class="grid col-auto gap-1 text-xl font-semibold">
     <div class="flex items-center">{{inline-svg iconName}}</div>
-    <div class="flex items-center leading-none" data-test-integration-name>
+    <div class="flex items-center leading-none" data-test-integration-name="{{routeSlug}}">
       {{textName}}
       {{#if hasBetaBadge}}
         <span class="badge" data-test-integration-beta-badge>Beta</span>
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  {{#if (is-admin)}}
+  {{#if isEnabled}}
     {{#link-to integrationSettingsRoute orgSlug class=buttonClasses}}
       {{buttonText}}
     {{/link-to}}
@@ -30,9 +30,5 @@
     >
       Contact Us
     </a>
-  {{else}}
-    {{#link-to integrationSettingsRoute orgSlug class=buttonClasses}}
-      {{buttonText}}
-    {{/link-to}}
   {{/if}}
 </div>

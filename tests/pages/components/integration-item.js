@@ -1,6 +1,6 @@
 import {create, text, isPresent, attribute} from 'ember-cli-page-object';
 
-const SELECTORS = {
+export const SELECTORS = {
   INSTALL_BUTTON: '.data-test-integration-button-install',
   EDIT_BUTTON: '.data-test-integration-button-edit',
   CONTACT_BUTTON: '[data-test-integration-button-contact-us]',

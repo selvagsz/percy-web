@@ -1,47 +1,11 @@
 import Component from '@ember/component';
 import {lookup} from 'percy-web/lib/computed/objectLookup';
 import {computed} from '@ember/object';
+import AdminMode from 'percy-web/lib/admin-mode';
 
-import {
-  GITHUB_INTEGRATION_TYPE,
-  GITHUB_ENTERPRISE_INTEGRATION_TYPE,
-  GITLAB_INTEGRATION_TYPE,
-  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
-} from 'percy-web/models/version-control-integration';
+import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/models/version-control-integration';
 
-const INTEGRATIONS_LOOKUP = {
-  [GITHUB_INTEGRATION_TYPE]: {
-    textName: 'GitHub',
-    isBeta: false,
-    iconName: 'github-icon-lg',
-    organizationModelAttribute: 'isGithubIntegrated',
-    settingsRouteSlug: 'github',
-  },
-  [GITHUB_ENTERPRISE_INTEGRATION_TYPE]: {
-    textName: 'GitHub Enterprise',
-    isBeta: true,
-    betaLink: 'https://docs.percy.io/docs/github-enterprise',
-    iconName: 'github-icon-lg',
-    organizationModelAttribute: 'isGithubEnterpriseIntegrated',
-    settingsRouteSlug: 'github-enterprise',
-  },
-  [GITLAB_INTEGRATION_TYPE]: {
-    textName: 'GitLab',
-    isBeta: false,
-    betaLink: 'https://docs.percy.io/docs/gitlab',
-    iconName: 'gitlab-icon-lg',
-    organizationModelAttribute: 'isGitlabIntegrated',
-    settingsRouteSlug: 'gitlab',
-  },
-  [GITLAB_SELF_HOSTED_INTEGRATION_TYPE]: {
-    textName: 'GitLab Self-Hosted',
-    isBeta: true,
-    betaLink: 'https://docs.percy.io/docs/gitlab-self-hosted',
-    iconName: 'gitlab-icon-lg',
-    organizationModelAttribute: 'isGitlabSelfHostedIntegrated',
-    settingsRouteSlug: 'gitlab-self-hosted',
-  },
-};
+import {INTEGRATION_TYPES as INTEGRATIONS_LOOKUP} from 'percy-web/lib/integration-types';
 
 export default Component.extend({
   tagName: '',
@@ -54,6 +18,7 @@ export default Component.extend({
   routeSlug: lookup('integrationName', INTEGRATIONS_LOOKUP, 'settingsRouteSlug'),
   iconName: lookup('integrationName', INTEGRATIONS_LOOKUP, 'iconName'),
   betaLink: lookup('integrationName', INTEGRATIONS_LOOKUP, 'betaLink'),
+  isGeneralAvailability: lookup('integrationName', INTEGRATIONS_LOOKUP, 'isGeneralAvailability'),
 
   isGHEnterprise: computed.equal('integrationName', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
 
@@ -66,6 +31,18 @@ export default Component.extend({
     INTEGRATIONS_LOOKUP,
     'organizationModelAttribute',
   ),
+
+  integrationItems: INTEGRATIONS_LOOKUP,
+
+  isEnabled: computed('integrationName', function() {
+    let isGeneralAvailability = this.get('isGeneralAvailability');
+    let isAdminModeEnabled = AdminMode.isAdmin();
+    if (isAdminModeEnabled || isGeneralAvailability) {
+      return true;
+    } else {
+      return false;
+    }
+  }),
 
   isInstalled: computed('integrationName', function() {
     return this.get(`organization.${this.get('organizationModelAttribute')}`);
@@ -81,8 +58,8 @@ export default Component.extend({
 
   buttonClasses: computed('isInstalled', function() {
     return this.get('isInstalled')
-      ? 'btn data-test-integration-button-edit'
-      : 'btn data-test-integration-button-install btn-primary btn-shadow-purple';
+      ? 'data-test-integration-button-edit btn'
+      : 'data-test-integration-button-install btn btn-primary shadow-purple-lg m-0';
   }),
 
   actions: {

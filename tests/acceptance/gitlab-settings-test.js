@@ -1,12 +1,14 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import GitlabSettings from 'percy-web/tests/pages/components/gitlab-settings';
-import IntegrationItem from 'percy-web/tests/pages/components/integration-item';
+import IntegrationsIndexPage from 'percy-web/tests/pages/integrations-index-page';
 import sinon from 'sinon';
 import utils from 'percy-web/lib/utils';
 import {afterEach} from 'mocha';
+import AdminMode from 'percy-web/lib/admin-mode';
 
 describe('Acceptance: GitLab Integration Settings', function() {
   setupAcceptance();
+
   let urlParams = (organization, integrationType) => {
     return {
       orgSlug: organization.slug,
@@ -207,9 +209,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
         );
         await GitlabSettings.delete();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
-
-        IntegrationItem.scope = '[data-test-integration-item="gitlab-self-hosted"]';
-        expect(IntegrationItem.hasContactButton).to.equal(true);
+        expect(IntegrationsIndexPage.gitlabSelfHostedIntegration.hasContactButton).to.equal(true);
 
         await percySnapshot(this.test.fullTitle());
       });
@@ -233,6 +233,43 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
         await GitlabSettings.integrationSettings.toolbar.back();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
+      });
+    });
+
+    describe('without any integrations', function() {
+      let organization;
+
+      setupSession(function(server) {
+        organization = server.create('organization', 'withAdminUser');
+      });
+
+      it('allows navigation between integrations', async function() {
+        await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
+        let previouslyWasAdmin = AdminMode.isAdmin();
+        AdminMode.setAdminMode();
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+
+        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Hosted Integration');
+        await GitlabSettings.integrationSettings.toolbar.back();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+
+        await IntegrationsIndexPage.gitlabIntegration.install();
+        expect(GitlabSettings.integrationName).to.equal('GitLab Integration');
+
+        await GitlabSettings.integrationSettings.toolbar.back();
+        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+
+        await IntegrationsIndexPage.gitlabSelfHostedIntegration.install();
+        expect(currentPath()).to.equal(
+          'organizations.organization.integrations.gitlab-self-hosted',
+        );
+        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Hosted Integration');
+
+        if (previouslyWasAdmin === false) {
+          AdminMode.clear();
+        }
       });
     });
   });

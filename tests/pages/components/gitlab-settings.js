@@ -50,15 +50,19 @@ export const GitlabSettings = {
       back: clickable('a.back'),
       delete: clickable('button[data-test-gitlab-settings-delete]'),
     },
-    formErorr: {
+    formError: {
       text: text('.Form-errors'),
       isErrorPresent: isVisible('.Form-errors'),
+    },
+    integrationName: {
+      text: text('[data-test-gitlab-settings-integration-name]'),
     },
   },
   delete: alias('integrationSettings.toolbar.delete'),
   isDeleteButtonDisabled: alias('integrationSettings.toolbar.isDeleteDisabled'),
-  isErrorPresent: alias('integrationSettings.formErorr.isErrorPresent'),
-  errorText: alias('integrationSettings.formErorr.text'),
+  isErrorPresent: alias('integrationSettings.formError.isErrorPresent'),
+  errorText: alias('integrationSettings.formError.text'),
+  integrationName: alias('integrationSettings.integrationName.text'),
   statusIsHidden: isHidden(SELECTORS.GITLAB_INTEGRATION),
   visitSettings: visitable('/organizations/:orgSlug/integrations/:integrationType'),
   isPersonalAccessTokenFieldVisible: alias(
