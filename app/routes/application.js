@@ -18,9 +18,8 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
 
   beforeModel(transition) {
     this._super(...arguments);
+    this._storeTargetTransition(transition);
     if (!this.get('session.isAuthenticated')) {
-      this._storeTargetTransition(transition);
-
       // When running our development environment with a production API, we need to shortcut the
       // auth flow otherwise you'll get CSRF detected errors from Auth0. This is somewhat of a hack
       // and means you won't be able to log out or test login functionality in this mode.
