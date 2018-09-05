@@ -6,6 +6,7 @@ const DISPLAY_NAMES = {
   github: 'GitHub',
   githubEnterprise: 'GitHub Enterprise',
   gitlab: 'GitLab',
+  gitlabSelfHosted: 'GitLab Self-Hosted',
 };
 
 export default DS.Model.extend({
@@ -93,6 +94,7 @@ export default DS.Model.extend({
     'githubRepos.[]',
     'githubEnterpriseRepos.[]',
     'gitlabRepos.[]',
+    'gitlabSelfHostedRepos.[]',
     'uniqueRepoSources.[]',
     function() {
       const groups = [];

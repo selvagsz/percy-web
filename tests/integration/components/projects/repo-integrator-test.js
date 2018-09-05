@@ -72,6 +72,36 @@ describe('Integration: RepoIntegratorComponent', function() {
     });
   });
 
+  describe('with a gitlab self-hosted integration', function() {
+    beforeEach(function() {
+      const project = make('project');
+      const organization = make(
+        'organization',
+        'withGitlabSelfHostedIntegration',
+        'withGitlabSelfHostedRepos',
+      );
+      project.set('organization', organization);
+
+      this.setProperties({project});
+      repoRefreshServiceStub(this, null, null);
+      this.render(hbs`{{projects/repo-integrator project=project}}`);
+    });
+
+    it('renders powerselect closed', function() {
+      expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
+
+      percySnapshot(this.test.fullTitle());
+    });
+
+    it('renders powerselect open', function() {
+      clickTrigger();
+      expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
+      expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Hosted');
+
+      percySnapshot(this.test.fullTitle());
+    });
+  });
+
   describe('with a github enterprise integration', function() {
     beforeEach(function() {
       const project = make('project');
@@ -122,7 +152,8 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
       expect(RepoIntegrator.dropdown.groups(1).name).to.eq('GitLab');
-      expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitHub Enterprise');
+      expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Hosted');
+      expect(RepoIntegrator.dropdown.groups(3).name).to.eq('GitHub Enterprise');
       percySnapshot(this.test.fullTitle());
     });
   });
