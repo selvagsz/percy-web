@@ -1,31 +1,35 @@
-<footer class="main-footer container-full grid justify-center py-3">
-  <div class="grid col-auto gap-3 items-center justify-center main-footer-link-set-left">
-    {{#link-to "docs" class="main-footer-item"}}Docs{{/link-to}}
-    <a href="https://blog.percy.io" class="main-footer-item">Blog</a>
-    {{#link-to "pricing" class="main-footer-item"}}Pricing{{/link-to}}
-    <a href="https://status.percy.io/" class="main-footer-item">Status</a>
-  </div>
-  <div class="grid col-auto gap-3 items-center justify-center mx-1 main-footer-icons">
-    <a href="https://twitter.com/percy_io" target="_blank" rel="noopener" class="light-icon">
-      <figure class="svg-container">
-        {{inline-svg "twitter-icon" class="light-icon"}}
-      </figure>
-    </a>
-    <a href="https://percy.io">
-      <figure class="svg-container">
-        {{inline-svg "percy-logo-small-on-light"}}
-      </figure>
-    </a>
-    <a href="https://github.com/percy" target="_blank" rel="noopener" class="light-icon">
-      <figure class="svg-container">
-        {{inline-svg "github-icon" class="light-icon"}}
-      </figure>
-    </a>
-  </div>
-  <div class="grid col-auto gap-3 items-center justify-center main-footer-link-set-right">
-    {{#link-to "security" class="main-footer-item"}}Security{{/link-to}}
-    {{#link-to "terms" class="main-footer-item"}}Legal{{/link-to}}
-    {{#link-to "changelog" class="main-footer-item"}}Changelog{{/link-to}}
-    {{#link-to "team" class="main-footer-item"}}Team{{/link-to}}
-  </div>
-</footer>
+{{#if (variation "updated-marketing-site")}}
+  {{marketing/marketing-footer}}
+{{else}}
+  <footer class="main-footer container-full grid justify-center py-3">
+    <div class="grid col-auto gap-3 items-center justify-center main-footer-link-set-left">
+      {{#link-to "docs" class="main-footer-item"}}Docs{{/link-to}}
+      <a href="https://blog.percy.io" class="main-footer-item">Blog</a>
+      {{#link-to "pricing" class="main-footer-item"}}Pricing{{/link-to}}
+      <a href="https://status.percy.io/" class="main-footer-item">Status</a>
+    </div>
+    <div class="grid col-auto gap-3 items-center justify-center mx-1 main-footer-icons">
+      <a href="https://twitter.com/percy_io" target="_blank" rel="noopener" class="light-icon">
+        <figure class="svg-container">
+          {{inline-svg "twitter-icon" class="light-icon"}}
+        </figure>
+      </a>
+      <a href="https://percy.io">
+        <figure class="svg-container">
+          {{inline-svg "percy-logo-small-on-light"}}
+        </figure>
+      </a>
+      <a href="https://github.com/percy" target="_blank" rel="noopener" class="light-icon">
+        <figure class="svg-container">
+          {{inline-svg "github-icon" class="light-icon"}}
+        </figure>
+      </a>
+    </div>
+    <div class="grid col-auto gap-3 items-center justify-center main-footer-link-set-right">
+      {{#link-to "security" class="main-footer-item"}}Security{{/link-to}}
+      {{#link-to "terms" class="main-footer-item"}}Legal{{/link-to}}
+      {{#link-to "changelog" class="main-footer-item"}}Changelog{{/link-to}}
+      {{#link-to "team" class="main-footer-item"}}Team{{/link-to}}
+    </div>
+  </footer>
+{{/if}}

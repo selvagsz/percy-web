@@ -1,51 +1,19 @@
 <footer class="bg-gray-700 text-white container-full py-8">
   <div class="container-lg grid col-4 mb-8">
-    <div>
-      <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
-        Product
+    {{#each (await footerGroups) as |column|}}
+      <div>
+        <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
+          {{column.category}}
+        </div>
+        <div class="font-semibold link-gray">
+          {{#each (sort-by "order" column.items) as |item|}}
+            <a href="{{item.textLink}}" class="block mb-sm">{{item.text}}</a>
+          {{/each}}
+        </div>
       </div>
-      <div class="font-semibold link-gray">
-        <a href="#" class="block mb-sm">Visual Testing</a>
-        <a href="#" class="block mb-sm">Features</a>
-        <a href="#" class="block mb-sm">Integrations</a>
-        <a href="#" class="block mb-sm">Pricing</a>
-        <a href="#" class="block mb-sm">Enterprise</a>
-      </div>
-    </div>
-    <div>
-      <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
-        Resources
-      </div>
-      <div class="font-semibold link-gray">
-        <a href="#" class="block mb-sm">Customers</a>
-        <a href="#" class="block mb-sm">Guides</a>
-        <a href="#" class="block mb-sm">Blog</a>
-        <a href="#" class="block mb-sm">FAQ's</a>
-      </div>
-    </div>
-    <div>
-      <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
-        Development
-      </div>
-      <div class="font-semibold link-gray">
-        <a href="#" class="block mb-sm">Documentation</a>
-        <a href="#" class="block mb-sm">Changelog</a>
-        <a href="#" class="block mb-sm">Open Source</a>
-        <a href="#" class="block mb-sm">Status</a>
-      </div>
-    </div>
-    <div>
-      <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
-        Company
-      </div>
-      <div class="font-semibold link-gray">
-        <a href="#" class="block mb-sm">About</a>
-        <a href="#" class="block mb-sm">Privacy</a>
-        <a href="#" class="block mb-sm">Security</a>
-        <a href="#" class="block mb-sm">Terms</a>
-      </div>
-    </div>
+    {{/each}}
   </div>
+
   <div class="container-lg flex justify-between">
     <div class="flex items-center">
       <a href="https://percy.io" class="mr-2">

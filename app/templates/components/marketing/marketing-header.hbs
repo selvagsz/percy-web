@@ -1,0 +1,17 @@
+<header class="bg-gray-pattern primary-hero pb-2 mb-9">
+  <div class="container container-xl">
+    <div class="flex justify-between items-center mb-9">
+      {{inline-svg "percy-full-horizontal-on-light"}}
+      <div class="flex justify-end pt-2 mb-2 text-gray font-semibold">
+        {{#if session.isAuthenticated}}
+          {{nav-menu user=session.currentUser}}
+        {{else}}
+          <div class="flex justify-end pt-2 mb-4">
+            {{nav-menu}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{yield}}
+</header>

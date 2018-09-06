@@ -18,6 +18,10 @@
   background: url("/images/pattern-on-purple.svg"), var(--purple-gradient);
 }
 
+.bg-light-purple-gradient-pattern {
+  background: url("/images/pattern-on-purple.svg"), var(--light-purple-gradient);
+}
+
 .bg-white-pattern {
   background: url("/images/pattern-on-white.svg");
   background-color: var(--white);

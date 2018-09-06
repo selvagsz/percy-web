@@ -1,0 +1,73 @@
+<section class="border-b border-purple-300 mb-9 pb-9">
+  <div class="container container-lg">
+    <div class="grid {{if (not (eq block.imagePosition "Center")) "col-2"}}">
+      {{#if (and block.mainImage (eq block.imagePosition "Left"))}}
+        <div>
+          <img src="{{block.mainImage.file.url}}" alt={{block.mainImage.description}}>
+        </div>
+      {{/if}}
+      <div class="grid content-center">
+        <div>
+          {{#if (and block.mainImage (eq block.imagePosition "Center"))}}
+            <img src="{{block.mainImage.file.url}}" alt={{block.mainImage.description}} style="height: 416px;">
+          {{/if}}
+          {{#if block.superheader}}
+            <h6 class="uppercase half-underline inline-block py-sm mb-2 text-sm font-bold text-gray-300 tracking-wide border-t">
+              {{block.superheader}}
+            </h6>
+          {{/if}}
+
+          {{#if block.header}}
+            <h3 class="text-4xl font-bold leading-none">
+              {{block.header}}
+            </h3>
+          {{/if}}
+
+          {{#if block.subheader}}
+            <p class="">
+              {{md-text text=block.subheader}}
+            </p>
+          {{/if}}
+
+          {{#if block.bodyText}}
+            <p class="">
+              {{md-text text=block.bodyText}}
+            </p>
+          {{/if}}
+        </div>
+      </div>
+      {{#if (and block.mainImage (eq block.imagePosition "Right"))}}
+        <div>
+          <img src="{{block.mainImage.file.url}}" alt={{block.mainImage.description}}>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="grid col-3 gap-4 {{if (not block.mainImage) "mt-4"}}">
+      {{#each block.supportingTextSections as |supportingText|}}
+
+        <div class="content-block-supporting-text-section">
+          {{#if supportingText.supportingContentImageIcon.file.url}}
+            <img src="{{supportingText.supportingContentImageIcon.file.url}}">
+          {{/if}}
+
+          {{#if supportingText.header}}
+            <div class="font-semibold text-lg">
+              {{supportingText.header}}
+            </div>
+          {{/if}}
+
+          {{#if supportingText.bodyText}}
+              {{md-text text=supportingText.bodyText}}
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if (and block.callToActionText block.callToActionLink)}}
+      <div class="grid content-center mb-9">
+        <a href="{{block.callToActionLink}}">{{block.callToActionText}}</a>
+      </div>
+    {{/if}}
+  </div>
+</section>

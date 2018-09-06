@@ -1,0 +1,29 @@
+<section class="bg-light-purple-gradient-pattern text-white py-8 border-t">
+  <div class="flex items-center justify-between container-lg">
+    <div class="flex items-center">
+      <div>
+        {{#if content.largerText}}
+          <div class="text-lg font-semibold">
+            {{content.largerText}}
+          </div>
+        {{/if}}
+
+        {{#if content.smallerText}}
+          <p class="mb-0 text-white">
+            {{content.smallerText}}
+          </p>
+        {{/if}}
+      </div>
+    </div>
+    <div class="btn-toolbar">
+      <button class="btn btn-alt btn-md shadow-purple-xl font-bold" type="button" name="button">
+        {{content.primaryButtonText}}
+      </button>
+      {{#if (and content.secondaryButtonText content.secondaryButtonLink)}}
+        <button class="btn btn-primary btn-md shadow-purple-xl text-gray-700 font-bold" type="button" name="button">
+          {{content.secondaryButtonText}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</section>
