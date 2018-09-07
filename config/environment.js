@@ -104,6 +104,7 @@ module.exports = function(environment) {
     ENV.APP.AMPLITUDE_USERS_PROJECT_ID = '5a8c0499760103fcd2754fe7d5756214';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_INSTANCE_NAME = 'Organizations';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_PROJECT_ID = '89f8fae9aab3fccc0740237f17e43745';
+    ENV.APP.SEGMENT_WRITE_KEY = 'ypNsNdxRnWaHy0WsIbOa8koEZxBRTvA5';
 
     ENV.sentry = {
       dsn: 'https://9745b9952dd74a14bf9ff4fd2cf154a3@sentry.io/1216596',
@@ -165,6 +166,7 @@ module.exports = function(environment) {
     ENV.APP.AMPLITUDE_USERS_PROJECT_ID = 'bdf4d18bc5e905549e63455b54ab40f2';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_INSTANCE_NAME = 'Organizations';
     ENV.APP.AMPLITUDE_ORGANIZATIONS_PROJECT_ID = '43ed24c6891251bbbdddc310a5371afd';
+    ENV.APP.SEGMENT_WRITE_KEY = 'E4wLYeCSYiNWdIGEbLPwMHkQataZAe4j';
 
     ENV.sentry = {
       dsn: 'https://4c28a8c59c934d729d261b988d6187c3@sentry.io/235025',

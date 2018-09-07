@@ -21,13 +21,19 @@ const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
-  notifyGoogleAnalytics: on('didTransition', function() {
+  notifyAnalytics: on('didTransition', function() {
     if (window.ga) {
       window.ga('send', 'pageview', {page: this.get('url')});
     }
+
     if (window.Intercom) {
       window.Intercom('update');
     }
+
+    if (window.analytics) {
+      window.analytics.page();
+    }
+
     return true;
   }),
 });

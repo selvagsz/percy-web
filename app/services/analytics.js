@@ -36,6 +36,8 @@ export default Service.extend({
       null,
       amplitudeConfigurationOptions,
     );
+
+    window.analytics.load(config.APP.SEGMENT_WRITE_KEY);
   },
 
   isEnabled() {
@@ -52,6 +54,8 @@ export default Service.extend({
 
     this.organizationInstance.setUserId(null);
     this.organizationInstance.regenerateDeviceId();
+
+    window.analytics.reset();
   },
 
   identifyUser(user) {
@@ -66,10 +70,13 @@ export default Service.extend({
 
     this.userInstance.setUserId(user.get('id'));
     this.userInstance.setUserProperties(userProperties);
+
+    window.analytics.identify(user.get('id'), userProperties);
   },
 
   track(eventName, organization, eventProperties = {}) {
     // window.console.log('Analytics track called:', eventName, organization, eventProperties);
+
     if (!this.isEnabled()) {
       return;
     }
@@ -98,5 +105,14 @@ export default Service.extend({
       );
       this.organizationInstance.logEvent(eventName, organizationEventProperties);
     }
+
+    if (organization) {
+      window.analytics.group(organization.get('id'), {
+        name: organization.get('name'),
+        slug: organization.get('slug'),
+      });
+    }
+
+    window.analytics.track(eventName, userEventProperties);
   },
 });
