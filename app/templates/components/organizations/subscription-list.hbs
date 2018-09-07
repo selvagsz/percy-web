@@ -25,8 +25,8 @@
           <div class="flex-1 pr-2">
             <div>
               <strong>
-                {{plan.workerLimit}} concurrent renderers
-                {{format-number plan.usageIncluded}} snapshots
+                {{plan.workerLimit}} concurrent renderers<br>
+                {{format-number plan.usageIncluded}} snapshots / month
               </strong>
             </div>
             <div>
@@ -37,7 +37,7 @@
             </div>
             {{#unless plan.isTrial}}
               <div class="mt-2">
-                You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions before changing plans below.
+                You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions.
               </div>
             {{/unless}}
           </div>
@@ -48,32 +48,32 @@
         </div>
       </div>
     </div>
-  {{/if}}
+  {{else}}
+    <div class="bg-gray-000 rounded border">
+      {{#each subscriptionData.PLANS as |planData|}}
+        {{organizations/subscription-list-item
+          planData=planData
+          existingPlan=plan
+          organization=organization
+          isActivePlan=(eq plan.id planData.id)
+        }}
+      {{/each}}
 
-  <div class="bg-gray-000 rounded border">
-    {{#each subscriptionData.PLANS as |planData|}}
-      {{organizations/subscription-list-item
-        planData=planData
-        existingPlan=plan
-        organization=organization
-        isActivePlan=(eq plan.id planData.id)
-      }}
-    {{/each}}
+      <div class="flex p-2" data-test-subscription-enterprise-item>
+        <div class="pr-2 flex-1 text-xl font-semibold self-center">
+          Need more?
+        </div>
 
-    <div class="flex p-2" data-test-subscription-enterprise-item>
-      <div class="pr-2 flex-1 text-xl font-semibold self-center">
-        Need more?
-      </div>
-
-      <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end self-center">
-        {{#if (eq "admin" organization.currentUserMembership.role)}}
-          <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{eq plan.id planData.id}} {{action "openIntercom"}} data-test-subscription-list-choose-enterprise>
-            Contact Us
-          </button>
-        {{/if}}
+        <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end self-center">
+          {{#if (eq "admin" organization.currentUserMembership.role)}}
+            <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{eq plan.id planData.id}} {{action "openIntercom"}} data-test-subscription-list-choose-enterprise>
+              Contact Us
+            </button>
+          {{/if}}
+        </div>
       </div>
     </div>
-  </div>
+  {{/if}}
 </div>
 
 

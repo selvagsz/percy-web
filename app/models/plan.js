@@ -16,7 +16,8 @@ export default DS.Model.extend({
   isTrial: DS.attr('boolean'),
   isFree: DS.attr('boolean'),
 
-  isCustom: computed('id', function() {
-    return this.get('subscriptionData.PLAN_IDS').indexOf(this.get('id')) === -1;
+  isCustom: computed('id', 'isTrial', function() {
+    const isTrial = this.get('isTrial');
+    return !isTrial && this.get('subscriptionData.PLAN_IDS').indexOf(this.get('id')) === -1;
   }),
 });

@@ -118,7 +118,7 @@ describe('Acceptance: Organization', function() {
       await percySnapshot(this.test.fullTitle());
     });
 
-    describe('organization is on trial account', function() {
+    describe('organization is on trial plan', function() {
       setupSession(function(server) {
         server.create('subscription', 'withTrialPlan', {
           organization: this.organization,
@@ -127,6 +127,42 @@ describe('Acceptance: Organization', function() {
             .add(14, 'days')
             .add(1, 'hour'),
         });
+      });
+
+      it('can view billing page', async function() {
+        await visit(`/organizations/${this.organization.slug}/billing`);
+        expect(currentPath()).to.equal('organizations.organization.billing');
+        await percySnapshot(this.test);
+      });
+    });
+
+    describe('organization is on trial expired plan', function() {
+      setupSession(function(server) {
+        server.create('subscription', {organization: this.organization});
+      });
+
+      it('can view billing page', async function() {
+        await visit(`/organizations/${this.organization.slug}/billing`);
+        expect(currentPath()).to.equal('organizations.organization.billing');
+        await percySnapshot(this.test);
+      });
+    });
+
+    describe('organization is on a standard plan', function() {
+      setupSession(function(server) {
+        server.create('subscription', 'withStandardPlan', {organization: this.organization});
+      });
+
+      it('can view billing page', async function() {
+        await visit(`/organizations/${this.organization.slug}/billing`);
+        expect(currentPath()).to.equal('organizations.organization.billing');
+        await percySnapshot(this.test);
+      });
+    });
+
+    describe('organization is on custom plan', function() {
+      setupSession(function(server) {
+        server.create('subscription', 'withCustomPlan', {organization: this.organization});
       });
 
       it('can view billing page', async function() {

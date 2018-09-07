@@ -41,18 +41,7 @@
         {{organizations/billing-usage-graph organization=organization}}
       </div>
 
-      {{#if organization.billingLocked}}
-        <div class="active">
-          <div class="row">
-            <div class="three columns">
-              {{subscription.plan.name}}
-            </div>
-            <div class="nine columns">
-              You are on a custom billing plan, please <a href="#" {{action "showSupport"}}>reach out</a> with any questions about changing your billing plan.
-            </div>
-          </div>
-        </div>
-      {{else}}
+      {{#unless (or organization.billingLocked organization.subscription.plan.isCustom)}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
           <h2 class="text-xl font-semibold mb-1">Current billing period</h2>
           <div class="rounded border py-2 bg-gray-000">
@@ -79,26 +68,25 @@
             {{/if}}
           </div>
         </div>
+      {{/unless}}
 
-        {{organizations/subscription-list
-          organization=organization
-        }}
+      {{organizations/subscription-list
+        organization=organization
+      }}
 
-        {{!-- TODO: #billingadmins --}}
+      {{!-- TODO: #billingadmins --}}
+      <div class="bg-white rounded shadow-1 p-2 mb-2">
+        <h2 class="text-xl font-semibold mb-1">Invoice Settings</h2>
+        {{forms/billing-edit subscription=subscription}}
+      </div>
+
+      {{#if subscription.isCustomer}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
-          <h2 class="text-xl font-semibold mb-1">Invoice Settings</h2>
-          {{forms/billing-edit subscription=subscription}}
+          <h2 class="text-xl font-semibold mb-1">Billing Details</h2>
+          {{organizations/billing-card-updater
+            organization=organization
+          }}
         </div>
-
-        {{#if subscription.isCustomer}}
-          <div class="bg-white rounded shadow-1 p-2 mb-2">
-            <h2 class="text-xl font-semibold mb-1">Billing Details</h2>
-            {{organizations/billing-card-updater
-              organization=organization
-            }}
-          </div>
-        {{/if}}
-
       {{/if}}
     </section>
   {{/unless}}

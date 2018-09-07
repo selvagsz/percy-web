@@ -29,4 +29,12 @@ export default Factory.extend({
       .add(1, 'hour'),
     plan: association('trial'),
   }),
+
+  withStandardPlan: trait({
+    plan: association('standard'),
+  }),
+
+  withCustomPlan: trait({
+    plan: association('custom'),
+  }),
 });
