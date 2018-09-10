@@ -1,4 +1,4 @@
-{{#each page.pageBlocks as |block|}}
+{{#each page.blocks as |block|}}
   {{#if block.isContentBlock}}
     {{marketing/content-block block=block.contentBlock}}
   {{else if block.isQuoteGroup}}

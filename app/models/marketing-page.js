@@ -5,5 +5,7 @@ export default Contentful.extend({
   contentType: 'marketingPage',
 
   pageName: DS.attr(),
+  blocks: DS.hasMany('block'),
+  // deprecated
   pageBlocks: DS.hasMany('page-block'),
 });
