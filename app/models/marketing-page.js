@@ -6,6 +6,4 @@ export default Contentful.extend({
 
   pageName: DS.attr(),
   blocks: DS.hasMany('block'),
-  // deprecated
-  pageBlocks: DS.hasMany('page-block'),
 });
