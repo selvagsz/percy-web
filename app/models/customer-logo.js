@@ -6,7 +6,6 @@ export default Contentful.extend({
   contentType: 'customerLogo',
 
   customerName: attr(),
-  logo: attr(),
+  logo: belongsTo('contentful-asset'), // model here: https://bit.ly/2MoN7fD
   type: attr(),
-  image: belongsTo('contentful-asset'), // model here: https://bit.ly/2MoN7fD
 });
