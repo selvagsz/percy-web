@@ -1,10 +1,12 @@
 import Route from '@ember/routing/route';
 import ResetScrollMixin from '../mixins/reset-scroll';
-import {variation} from 'ember-launch-darkly';
+import {inject as service} from '@ember/service';
 
 export default Route.extend(ResetScrollMixin, {
+  launchDarkly: service(),
+
   beforeModel() {
-    if (!variation('updated-marketing-site')) {
+    if (!this.get('launchDarkly').variation('updated-marketing-site')) {
       this.transitionTo('/');
     }
   },

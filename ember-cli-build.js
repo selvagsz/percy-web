@@ -5,9 +5,6 @@ const nodeSass = require('node-sass');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    babel: {
-      comments: false,
-    },
     'ember-cli-babel': {
       includePolyfill: true,
     },
