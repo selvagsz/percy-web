@@ -118,7 +118,8 @@
     "node": ">= 6.9.1"
   },
   "resolutions": {
-    "eslint-scope": "3.7.1"
+    "eslint-scope": "3.7.1",
+    "eslint-plugin-prettier": "2.6.0"
   },
   "private": true
 }
