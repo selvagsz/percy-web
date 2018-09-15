@@ -1,0 +1,18 @@
+<div class="flex">
+  <div class="self-center mr-7">
+    <div class="rounded-full quote-block-headshot" style="background-image: url('{{quote.headshot.file.url}}');">
+    </div>
+    {{#if quote.logo.file.url}}
+      <img src="{{quote.logo.file.url}}" class="quote-logo p-1 bg-white border rounded-full" alt="{{quote.logo.description}}">
+    {{else}}
+      <div class="quote-logo"></div>
+    {{/if}}
+  </div>
+
+  <div class="self-center">
+    <p class="customer-quote-content font-mono">{{quote.customerQuote}}</p>
+    <div class="font-semibold mt-3">
+      {{quote.quoteAttribution}}
+    </div>
+  </div>
+</div>

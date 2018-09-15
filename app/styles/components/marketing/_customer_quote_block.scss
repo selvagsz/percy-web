@@ -1,0 +1,25 @@
+.quote-block-headshot {
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+
+}
+
+.customer-quote-content::before {
+  content: "\f10d";
+  position: absolute;
+  top: 28px;
+  margin-left: -34px;
+  font-family: FontAwesome;
+  font-size: 2.5rem;
+  line-height: 0;
+  color: var(--lightest-purple);
+}
+
+.quote-logo {
+  position: relative;
+  bottom: 38px;
+  left: 105px;
+  width: 60px;
+  height: 60px;
+}
