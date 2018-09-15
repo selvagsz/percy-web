@@ -72,11 +72,6 @@ yarn run test:server
 PERCY_TOKEN=... PERCY_PROJECT=percy/percy-web yarn test
 ```
 
-## Update to new percy-docs version
-```bash
-yarn upgrade git+https://github.com/percy/percy-docs.git#<COMMIT SHA>
-```
-
 ## Update to a new ember.js version
 - Determine the version of Ember Percy's is currently using from the `ember-cli` package version in yarn.lock.
 
