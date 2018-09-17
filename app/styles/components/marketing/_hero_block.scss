@@ -1,0 +1,12 @@
+.marketing-hero-dark {
+  background-color: var(--darkest-gray);
+
+  .hero-block-header {
+    color: white;
+  }
+
+  .hero-block-superheader,
+  .hero-block-subheader {
+    color: var(--light-gray);
+  }
+}

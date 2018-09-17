@@ -1,4 +1,4 @@
-<section class="border-b border-purple-300 py-16">
+<section class="border-b border-purple-300 py-16 {{block.classes}}">
   <div class="container-lg">
     <div class="md:flex items-center {{if block.isImageRightAligned "flex-row-reverse"}} {{if block.isImageCentered "flex-col"}}">
       {{#if block.isImagePresent}}
@@ -8,7 +8,7 @@
       {{/if}}
       <div class="flex-1">
         {{#if block.superheader}}
-          <div class="text-center">
+          <div class="text-center content-block-superheader">
             <h6 class="uppercase half-underline inline-block py-sm mb-2 text-sm font-bold text-gray-300 tracking-wide border-t">
               {{block.superheader}}
             </h6>
@@ -16,25 +16,25 @@
         {{/if}}
 
         {{#if block.header}}
-          <h3 class="text-center text-4xl font-bold leading-none mb-2">
+          <h3 class="text-center text-4xl font-bold leading-none mb-2 content-block-header">
             {{block.header}}
           </h3>
         {{/if}}
 
         {{#if block.subheader}}
-          <p class="text-center mb-2">
+          <div class="text-center mb-2 content-block-subheader">
             {{md-text text=block.subheader}}
-          </p>
+          </div>
         {{/if}}
 
         {{#if block.bodyText}}
-          <div class="text-sm text-gray-500 marketing-markdown">
+          <div class="text-sm text-gray-500 marketing-markdown content-block-bodytext">
             {{md-text text=block.bodyText}}
           </div>
         {{/if}}
 
         {{#if block.isFullCTAPresent}}
-          <div class="{{if block.isNoImagePresent "text-center"}}">
+          <div class="content-block-cta {{if block.isNoImagePresent "text-center"}}">
             <a
               class="
                 rounded
@@ -66,13 +66,15 @@
             {{/if}}
 
             {{#if supportingText.header}}
-              <div class="font-semibold text-lg">
+              <div class="font-semibold text-lg content-block-supporting-text-header">
                 {{supportingText.header}}
               </div>
             {{/if}}
 
             {{#if supportingText.bodyText}}
-              {{md-text text=supportingText.bodyText}}
+              <div class="content-block-supporting-text-body">
+                {{md-text text=supportingText.bodyText}}
+              </div>
             {{/if}}
           </div>
         {{/each}}

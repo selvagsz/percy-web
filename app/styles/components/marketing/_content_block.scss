@@ -8,3 +8,24 @@
     margin-bottom: var(--spacing-1);
   }
 }
+
+.marketing-content-block-dark {
+  background-color: var(--darkest-gray);
+
+  .content-block-superheader,
+  .content-block-subheader,
+  .content-block-bodytext,
+  .content-block-supporting-text,
+  .content-block-supporting-text-body {
+    color: var(--light-gray);
+
+    p {
+      color: var(--light-gray);
+    }
+  }
+
+  .content-block-header,
+  .content-block-supporting-text-header {
+    color: white;
+  }
+}
