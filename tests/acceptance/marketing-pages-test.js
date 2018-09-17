@@ -6,9 +6,16 @@ import 'ember-launch-darkly/test-support/helpers/with-variation';
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
     it('can visit /', async function() {
-      await visit('/');
-      expect(currentPath()).to.equal('index');
-      await percySnapshot(this.test);
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
+        await visit('/');
+        expect(currentPath()).to.equal('index');
+        await percySnapshot(`${this.test.fullTitle()} - new index`);
+      } else {
+        await visit('/');
+        expect(currentPath()).to.equal('index');
+        await percySnapshot(this.test.fullTitle());
+      }
     });
 
     it('can visit /features', async function() {
@@ -16,10 +23,35 @@ describe('Acceptance: Marketing pages', function() {
         withVariation('updated-marketing-site', true); // eslint-disable-line
         await visit('/features');
         expect(currentPath()).to.equal('features');
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       } else {
         await visit('/features');
         expect(currentPath()).to.equal('index');
+      }
+    });
+
+    it('can visit /how-it-works', async function() {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
+        await visit('/how-it-works');
+        expect(currentPath()).to.equal('how-it-works');
+        await percySnapshot(this.test.fullTitle());
+      } else {
+        await visit('/how-it-works');
+        expect(currentPath()).to.equal('index');
+      }
+    });
+
+    it('can visit enterprise', async function() {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); //eslint-disable-line
+        await visit('enterprise');
+        expect(currentPath()).to.equal('enterprise');
+        await percySnapshot(`${this.test.fullTitle()} - new enterprise`);
+      } else {
+        await visit('enterprise');
+        expect(currentPath()).to.equal('enterprise');
+        await percySnapshot(this.test.fullTitle());
       }
     });
 
@@ -27,7 +59,7 @@ describe('Acceptance: Marketing pages', function() {
       await visit('/pricing');
       expect(currentPath()).to.equal('pricing');
       if (takeSnapshot) {
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       }
     });
     describe('pricing page', function() {
@@ -60,28 +92,28 @@ describe('Acceptance: Marketing pages', function() {
       await visit('/team');
       expect(currentPath()).to.equal('team');
       if (takeSnapshot) {
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /security', async function() {
       await visit('/security');
       expect(currentPath()).to.equal('security');
       if (takeSnapshot) {
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /terms', async function() {
       await visit('/terms');
       expect(currentPath()).to.equal('terms');
       if (takeSnapshot) {
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /privacy', async function() {
       await visit('/privacy');
       expect(currentPath()).to.equal('privacy');
       if (takeSnapshot) {
-        await percySnapshot(this.test);
+        await percySnapshot(this.test.fullTitle());
       }
     });
   }

@@ -1,45 +1,17 @@
 {{#each page.blocks as |block|}}
   {{#if block.isContentBlock}}
     {{marketing/content-block block=block.contentBlock}}
-  {{else if block.isQuoteGroup}}
-    {{#each block.quoteGroup.quotes as |quote|}}
-      {{quote.customerQuote}}
-    {{/each}}
+  {{else if block.isQuoteBlock}}
+    {{marketing/customer-quote-block quoteBlock=block.quoteBlock}}
   {{else if block.isFooter}}
     {{marketing/footer-cta content=block.footerCta}}
   {{else if block.isHero}}
-    {{#marketing/marketing-header}}
+    {{#marketing/marketing-header image=block.hero.mainImage}}
       {{marketing/hero-block content=block.hero}}
     {{/marketing/marketing-header}}
   {{else if block.isFAQGroup}}
-
-    {{#if block.faqs.length}}
-      <section class="bg-purple-000 py-8">
-        <div class="container-lg grid content-center">
-          <h3 class="text-4xl font-bold leading-none">
-            FAQs
-          </h3>
-        </div>
-        <div class="container-lg grid col-2 gap-4">
-          {{#each model.faqs as |faq|}}
-            <div>
-              <h4 class="mb-1 text-xl">{{faq.question}}</h4>
-              <p class="f4 text-gray-500">{{faq.answer}}</p>
-            </div>
-          {{/each}}
-        </div>
-      </section>
-    {{/if}}
-
-  {{else if block.isLogoGroup}}
-    <div class="container container-lg mt-5 mb-9">
-      <div class="flex flex-wrap">
-        {{#each block.logoGroup.logos as |customerLogo|}}
-          <div class="w-1/5 px-4">
-            <img src="{{customerLogo.logo.file.url}}" alt="{{customerLogo.logo.description}}">
-          </div>
-        {{/each}}
-      </div>
-    </div>
+    {{marketing/faq-block faqs=block.faqBlock.faqs}}
+  {{else if block.isLogoBlock}}
+    {{marketing/logo-block logos=block.logoBlock.customerLogos}}
   {{/if}}
 {{/each}}

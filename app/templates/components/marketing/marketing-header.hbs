@@ -1,8 +1,20 @@
-<header class="bg-gray-pattern primary-hero pb-2 mb-9">
-  <div class="container container-xl">
-    <div class="flex justify-between items-center mb-9">
+<header class="bg-purple-000 border-b border-purple-300">
+  <div class="relative container-xl pb-8">
+    <div style="bottom: -48px; left: -48px;"class="absolute">
+      {{inline-svg "marketing/bubbles-1"}}
+    </div>
+    <div style="top: 64px; left: 128px;"class="absolute">
+      {{inline-svg "marketing/bubbles-2" class="absolute pin-t"}}
+    </div>
+    <div style="top: 128px; right: 128px;"class="absolute">
+      {{inline-svg "marketing/bubbles-3" class="absolute pin-r"}}
+    </div>
+    <div style="bottom: -48px; right: -48px;"class="absolute">
+      {{inline-svg "marketing/bubbles-4"}}
+    </div>
+    <div class="flex justify-between items-center py-2 mb-8">
       {{inline-svg "percy-full-horizontal-on-light"}}
-      <div class="flex justify-end pt-2 mb-2 text-gray font-semibold">
+      {{!-- <div class="flex justify-end pt-2 mb-2 text-gray font-semibold">
         {{#if session.isAuthenticated}}
           {{nav-menu user=session.currentUser}}
         {{else}}
@@ -10,8 +22,12 @@
             {{nav-menu}}
           </div>
         {{/if}}
-      </div>
+      </div> --}}
     </div>
+    {{yield}}
   </div>
-  {{yield}}
 </header>
+
+<div style="margin-top: -128px;" class="relative container-lg">
+  <img src="{{image.file.url}}">
+</div>

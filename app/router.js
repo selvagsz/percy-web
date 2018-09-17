@@ -60,6 +60,8 @@ Router.map(function() {
   this.route('admin');
   this.route('changelog');
   this.route('features');
+  this.route('how-it-works');
+  this.route('visual-testing');
   this.route('settings', function() {
     this.route('profile');
     this.route('connected-accounts');

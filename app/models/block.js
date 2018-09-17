@@ -8,17 +8,20 @@ export default Contentful.extend({
   contentBlock: lookupContentfulModel('id', 'content-block'),
   isContentBlock: bool('contentBlock'),
 
-  quoteGroup: lookupContentfulModel('id', 'customer-quote-group'),
-  isQuoteGroup: bool('quoteGroup'),
+  quoteBlock: lookupContentfulModel('id', 'customer-quote-block'),
+  isQuoteBlock: bool('quoteBlock'),
 
-  logoGroup: lookupContentfulModel('id', 'logo-group'),
-  isLogoGroup: bool('logoGroup'),
+  logoBlock: lookupContentfulModel('id', 'customer-logo-block'),
+  isLogoBlock: bool('logoBlock'),
 
   footerCta: lookupContentfulModel('id', 'footer-cta'),
   isFooter: bool('footerCta'),
 
   hero: lookupContentfulModel('id', 'hero-block'),
   isHero: bool('hero'),
+
+  faqBlock: lookupContentfulModel('id', 'faq'),
+  isFaqBlock: bool('faqBlock'),
 });
 
 function lookupContentfulModel(idKey, modelName) {
