@@ -55,6 +55,18 @@ describe('Acceptance: Marketing pages', function() {
       }
     });
 
+    it('can visit /schedule-demo', async function() {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
+        await visit('/schedule-demo');
+        expect(currentPath()).to.equal('schedule-demo');
+        await percySnapshot(this.test);
+      } else {
+        await visit('/schedule-demo');
+        expect(currentPath()).to.equal('index');
+      }
+    });
+
     it('can visit /pricing', async function() {
       await visit('/pricing');
       expect(currentPath()).to.equal('pricing');
