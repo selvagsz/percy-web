@@ -1,19 +1,5 @@
 /* stylelint-disable selector-max-specificity */
 
-.primary-hero {
-  @media screen and (max-width: 767px /* var(--width-md) */) {
-    .w-1\/2 {
-      width: 75% !important;
-    }
-  }
-
-  @media screen and (max-width: 1012px /* var(--width-lg) */) {
-    .w-3\/4 {
-      width: 100% !important;
-    }
-  }
-}
-
 .Header {
   position: relative;
   height: 60px;

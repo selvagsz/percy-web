@@ -1,0 +1,17 @@
+{{#if faqs.length}}
+  <section class="bg-purple-000 py-8">
+    <div class="container-lg grid content-center">
+      <h3 class="text-4xl font-bold leading-none">
+        FAQs
+      </h3>
+    </div>
+    <div class="container-lg grid col-2 gap-4">
+      {{#each faqs as |faq|}}
+        <div>
+          <h4 class="mb-1 text-xl">{{faq.question}}</h4>
+          <p class="f4 text-gray-500">{{faq.answer}}</p>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+{{/if}}
