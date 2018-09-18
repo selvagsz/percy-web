@@ -8,7 +8,7 @@
   "scripts": {
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "build-test": "ember build --environment=test -o dist",
-    "build-production": "yarn run clean && ember build --environment=production",
+    "build-production": "yarn run clean && EMBER_ENV=production ember build --environment=production",
     "clean": "rm -rf dist/ tmp/",
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint:fix": "./node_modules/eslint/bin/eslint.js . --fix",
