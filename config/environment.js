@@ -64,6 +64,24 @@ module.exports = function(environment) {
     'ember-simple-auth': {
       auth0: {
         logoutReturnToURL: '/',
+        silentAuth: {
+          // Automatically renew token every 30 minutes:
+          renewSeconds: 1800,
+
+          // Automatically renew token when trying to restore an expired session (on app load):
+          onSessionRestore: true,
+
+          // Automatically renew token when token expiration time is hit (during app use):
+          onSessionExpire: true,
+
+          // Options to pass to checkSession when doing automatic silent auth.
+          options: {
+            redirectPath: '/api/auth/auth0/callback',
+            responseType: 'token id_token',
+            // scope: 'openid profile email',
+            timeout: 5000,
+          },
+        },
       },
     },
   };
@@ -111,8 +129,8 @@ module.exports = function(environment) {
       development: true,
     };
 
-    ENV['ember-simple-auth']['auth0'].clientID = '1W3CbZu2iYnvJsilsVV2QG3DCTAcUpp3';
-    ENV['ember-simple-auth']['auth0'].domain = 'login-dev.percy.io';
+    ENV['ember-simple-auth'].auth0.clientID = '1W3CbZu2iYnvJsilsVV2QG3DCTAcUpp3';
+    ENV['ember-simple-auth'].auth0.domain = 'login-dev.percy.io';
 
     ENV.contentful.usePreviewApi = true;
   }
@@ -135,8 +153,8 @@ module.exports = function(environment) {
     ENV.percy = {
       defaultWidths: [375, 1280],
     };
-    ENV['ember-simple-auth']['auth0'].clientID = 'foo';
-    ENV['ember-simple-auth']['auth0'].domain = 'percy-io-test.auth0.com';
+    ENV['ember-simple-auth'].auth0.clientID = 'foo';
+    ENV['ember-simple-auth'].auth0.domain = 'percy-io-test.auth0.com';
 
     ENV.sentry = {
       dsn: 'https://1234567890@sentry.io/123456789',
@@ -173,8 +191,8 @@ module.exports = function(environment) {
       development: false,
     };
 
-    ENV['ember-simple-auth']['auth0'].clientID = '9oRqSsl0iEbVK4Zh5AGHeC7pu3ACmnN3';
-    ENV['ember-simple-auth']['auth0'].domain = 'login.percy.io';
+    ENV['ember-simple-auth'].auth0.clientID = '9oRqSsl0iEbVK4Zh5AGHeC7pu3ACmnN3';
+    ENV['ember-simple-auth'].auth0.domain = 'login.percy.io';
 
     if (process.env.VERSION) {
       ENV.APP.VERSION = process.env.VERSION;

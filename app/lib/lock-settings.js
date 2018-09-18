@@ -1,8 +1,12 @@
+import config from 'percy-web/config/environment';
+
 export default {
   configurationBaseUrl: 'https://cdn.auth0.com',
   auth: {
     redirect: true,
-    redirectUrl: `${window.location.origin}/api/auth/auth0/callback`,
+    redirectUrl: `${window.location.origin}${
+      config['ember-simple-auth'].auth0.silentAuth.options.redirectPath
+    }`,
     responseType: 'code',
     params: {},
   },
