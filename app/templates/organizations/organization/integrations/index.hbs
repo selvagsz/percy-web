@@ -15,6 +15,7 @@
           {{#each model.versionControlIntegrations as |integration|}}
             {{organizations/integrations/integration-item
               integrationName=integration.integrationType
+              integrationStatus=integration.status
               organization=model
             }}
           {{/each}}

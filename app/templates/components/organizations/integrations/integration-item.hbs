@@ -6,6 +6,9 @@
       {{#if hasBetaBadge}}
         <span class="badge" data-test-integration-beta-badge>Beta</span>
       {{/if}}
+      {{#if isIntegrationDisabled}}
+        <span class="status-pill mx-1" data-test-integration-disabled-badge>Disabled</span>
+      {{/if}}
     </div>
   </div>
 

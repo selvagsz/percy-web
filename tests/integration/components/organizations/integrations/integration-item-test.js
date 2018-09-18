@@ -135,4 +135,21 @@ describe('Integration | Component | organizations/integrations/integration-item'
       percySnapshot(this.test);
     });
   });
+
+  describe('as an unauthorized gitlab integration item', function() {
+    beforeEach(function() {
+      const organization = make('organization', 'withUnauthorizedGitlabIntegration');
+      this.set('organization', organization);
+
+      this.render(hbs`{{organizations/integrations/integration-item
+        integrationName="gitlab"
+        integrationStatus="unauthorized"
+        organization=organization}}`);
+    });
+
+    it('has a badge to signify the integration is disabled', function() {
+      expect(IntegrationItem.hasDisabledBadge).to.equal(true);
+      percySnapshot(this.test);
+    });
+  });
 });

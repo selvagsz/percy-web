@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import {lookup} from 'percy-web/lib/computed/objectLookup';
 import {computed} from '@ember/object';
+import {equal} from '@ember/object/computed';
 import AdminMode from 'percy-web/lib/admin-mode';
 
 import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/models/version-control-integration';
@@ -10,6 +11,7 @@ import {INTEGRATION_TYPES as INTEGRATIONS_LOOKUP} from 'percy-web/lib/integratio
 export default Component.extend({
   tagName: '',
   integrationName: null, // required
+  integrationStatus: null,
 
   orgSlug: computed.readOnly('organization.slug'),
 
@@ -19,8 +21,9 @@ export default Component.extend({
   iconName: lookup('integrationName', INTEGRATIONS_LOOKUP, 'iconName'),
   betaLink: lookup('integrationName', INTEGRATIONS_LOOKUP, 'betaLink'),
   isGeneralAvailability: lookup('integrationName', INTEGRATIONS_LOOKUP, 'isGeneralAvailability'),
+  isIntegrationDisabled: equal('integrationStatus', 'unauthorized'),
 
-  isGHEnterprise: computed.equal('integrationName', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
+  isGHEnterprise: equal('integrationName', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
 
   hasBetaBadge: computed('isBeta', function() {
     return this.get('isBeta') && !this.get('isGHEnterprise') ? true : false;

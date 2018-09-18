@@ -21,6 +21,7 @@ export default DS.Model.extend({
   gitlabHost: DS.attr(),
   gitlabPersonalAccessToken: DS.attr(),
   isGitlabPersonalAccessTokenPresent: DS.attr('boolean'),
+  status: DS.attr(),
 
   isSyncing: DS.attr(),
   lastUpdatedAt: DS.attr(),

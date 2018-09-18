@@ -44,6 +44,14 @@ FactoryGuy.define('organization', {
         return makeList('repo', 2, 'gitlab');
       },
     },
+    withUnauthorizedGitlabIntegration: {
+      versionControlIntegrations: () => {
+        return makeList('version-control-integration', ['gitlab'], 'disabled');
+      },
+      repos: () => {
+        return makeList('repo', 2, 'gitlab');
+      },
+    },
     withNewGitlabIntegration: {
       versionControlIntegrations: () => {
         return makeList('version-control-integration', ['newGitlab']);
