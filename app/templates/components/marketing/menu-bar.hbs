@@ -1,0 +1,59 @@
+<div class="flex justify-between items-center mb-8">
+  {{inline-svg "percy-full-horizontal-on-light"}}
+  <div class="flex items-center justify-end pt-2 mb-2 font-semibold">
+
+    {{#link-to "visual-testing" class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800"}}Visual Testing{{/link-to}}
+
+    {{#basic-dropdown horizontalPosition="auto-left" preventScroll=true as |dropdown|}}
+      <div class="dropdown">
+        {{#dropdown.trigger}}
+          <a class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800 dropdown-toggle">
+            Product
+          </a>
+        {{/dropdown.trigger}}
+        {{#dropdown.content class="shadow-purple-lg mt-2"}}
+          <ul class="list-reset mb-0 w-64">
+            {{marketing/menu-bar-dropdown-item
+              tagName=""
+              text="How it works"
+              linkRoute="how-it-works"
+              icon="marketing/green-tag-page"
+              linkColor="text-green-600"
+            }}
+            {{marketing/menu-bar-dropdown-item
+              tagName=""
+              text="Features"
+              linkRoute="features"
+              icon="marketing/conveyor"
+              linkColor="text-purple-600"
+            }}
+            {{!-- {{marketing/menu-bar-dropdown-item
+              tagName=""
+              text="Integrations"
+              linkRoute="integrations"
+              icon="marketing/git"
+            }} --}}
+            {{marketing/menu-bar-dropdown-item
+              tagName=""
+              text="Docs"
+              linkRoute="docs"
+              icon="marketing/red-stack"
+              linkColor="text-red-400"
+            }}
+
+          </ul>
+        {{/dropdown.content}}
+      </div>
+    {{/basic-dropdown}}
+
+    {{#link-to "pricing" class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800"}}Pricing{{/link-to}}
+    {{#link-to "enterprise" class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800"}}Enterprise{{/link-to}}
+    {{!-- {{#link-to "customers" class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800"}}Customers{{/link-to}} --}}
+    {{#if session.isAuthenticated}}
+      {{user-menu user=session.currentUser class="link-white ml-3"}}
+    {{else}}
+      <a class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800 cursor-pointer" {{action "clickLogin"}}>Login</a>
+      <a class="btn btn-primary ml-3" {{action "clickSignup"}}>Start Free Trial</a>
+    {{/if}}
+  </div>
+</div>

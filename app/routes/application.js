@@ -80,6 +80,10 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
       window.Intercom('show');
     },
 
+    showSignupModal() {
+      this.showSignUpModal();
+    },
+
     showLoginModal() {
       this.showLoginModalEnsuringState();
     },

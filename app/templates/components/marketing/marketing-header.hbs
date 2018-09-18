@@ -12,18 +12,7 @@
     <div style="bottom: -48px; right: -48px;"class="absolute">
       {{inline-svg "marketing/bubbles-4"}}
     </div>
-    <div class="flex justify-between items-center py-2 mb-8">
-      {{inline-svg "percy-full-horizontal-on-light"}}
-      {{!-- <div class="flex justify-end pt-2 mb-2 text-gray font-semibold">
-        {{#if session.isAuthenticated}}
-          {{nav-menu user=session.currentUser}}
-        {{else}}
-          <div class="flex justify-end pt-2 mb-4">
-            {{nav-menu}}
-          </div>
-        {{/if}}
-      </div> --}}
-    </div>
+    {{marketing/menu-bar}}
     {{yield}}
   </div>
 </header>

@@ -1,0 +1,12 @@
+<li class="font-semibold flex justify-between items-center cursor-pointer font-semibold py-2 pl-2 pr-1 mb-0 hover:bg-purple-100 border-b border-purple-300">
+  {{#link-to linkRoute classNames="hover:no-underline"}}
+    <div class="w-full flex flex-between items-center">
+      <div class="mr-2 w-10">
+        {{inline-svg icon}}
+      </div>
+      <div class="font-semibold {{linkColor}}">
+        {{text}}
+      </div>
+    </div>
+  {{/link-to}}
+</li>

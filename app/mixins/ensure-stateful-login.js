@@ -85,6 +85,13 @@ var EnsureStatefulLogin = Mixin.create({
     this.get('flashMessages').success("We've sent an email to the address you've entered.");
   },
 
+  showSignUpModal() {
+    lockOptions.initialScreen = 'signUp';
+    this.showLoginModalEnsuringState().then(() => {
+      this.resetLockOptionsToDefault();
+    });
+  },
+
   showConnectToGithubPurchaseModal(githubPlanId) {
     const originalRedirectUrl = lockOptions.auth.redirectUrl;
     lockOptions.auth.redirectUrl = `${lockOptions.auth.redirectUrl}?github_plan_id=${githubPlanId}`;
