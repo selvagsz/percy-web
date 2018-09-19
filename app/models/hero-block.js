@@ -10,5 +10,6 @@ export default Contentful.extend({
   header: attr(),
   subheadText: attr(),
   mainImage: DS.belongsTo('contentful-asset'), // model here: https://bit.ly/2MoN7fD
+  logomark: DS.belongsTo('contentful-asset'), // model here: https://bit.ly/2MoN7fD
   classes: attr(),
 });

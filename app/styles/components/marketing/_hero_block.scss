@@ -9,4 +9,19 @@
   .hero-block-subheader {
     color: var(--light-gray);
   }
+
+  .marketing-menu-bar {
+    a {
+      color: white;
+    }
+  }
+
+  .ember-basic-dropdown-trigger:focus,
+  .ember-basic-dropdown-trigger:focus:active {
+    background-color: var(--darkest-gray);
+  }
+}
+
+.menu-bar-logomark {
+  min-width: 143px;
 }

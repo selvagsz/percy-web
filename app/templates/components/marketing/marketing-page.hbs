@@ -6,7 +6,10 @@
   {{else if block.isFooter}}
     {{marketing/footer-cta content=block.footerCta}}
   {{else if block.isHero}}
-    {{#marketing/marketing-header image=block.hero.mainImage classes=block.hero.classes}}
+    {{#marketing/marketing-header
+      logomark=block.hero.logomark
+      image=block.hero.mainImage
+      classes=block.hero.classes}}
       {{marketing/hero-block content=block.hero}}
     {{/marketing/marketing-header}}
   {{else if block.isFAQGroup}}
