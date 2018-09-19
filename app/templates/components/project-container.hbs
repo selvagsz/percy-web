@@ -70,7 +70,7 @@
           <p>Here's an overview of how to get started:</p>
 
           <ol>
-          <li>Set <code>PERCY_TOKEN</code> and <code>PERCY_PROJECT</code> environment variables in your CI environment.</li>
+          <li>Set the <code>PERCY_TOKEN</code> environment variable in your CI environment.</li>
           <li>Integrate Percy's client library to take snapshots in your test suite.</li>
           <li>Run your tests in CI or create a GitHub PR.</li>
           </ol>
@@ -79,7 +79,7 @@
             {{#link-to "docs.index" class="Button"}}View setup documentation{{/link-to}}
           </p>
 
-          <h5>Environment variables</h5>
+          <h5>Project token</h5>
           {{projects/env-vars project=project}}
 
           <h5>Just want to see a demo?</h5>

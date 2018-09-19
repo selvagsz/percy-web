@@ -21,10 +21,8 @@ bundle install
   {{#code-block}}<em>Loading...</em>{{/code-block}}
 {{/if}}
 {{#with project.writeOnlyToken.token as |token|}}
-  {{#code-block lang="nohighlight"}}
-PERCY_TOKEN={{token}} \
-  PERCY_PROJECT={{project.fullSlug}} \
-  bundle exec ruby visual-tests.rb
+  {{#code-block lang="nohighlight"}}PERCY_TOKEN={{token}} \
+bundle exec ruby visual-tests.rb
   {{/code-block}}
 {{/with}}
 

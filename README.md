@@ -69,7 +69,7 @@ yarn run test:server
 ## Run tests locally with Percy enabled
 
 ```bash
-PERCY_TOKEN=... PERCY_PROJECT=percy/percy-web yarn test
+PERCY_TOKEN=... PERCY_BRANCH=local yarn test
 ```
 
 ## Update to a new ember.js version
