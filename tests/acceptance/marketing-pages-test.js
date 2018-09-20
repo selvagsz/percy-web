@@ -68,9 +68,14 @@ describe('Acceptance: Marketing pages', function() {
     });
 
     it('can visit /pricing', async function() {
-      await visit('/pricing');
-      expect(currentPath()).to.equal('pricing');
-      if (takeSnapshot) {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); //eslint-disable-line
+        await visit('pricing');
+        expect(currentPath()).to.equal('pricing');
+        await percySnapshot(`${this.test.fullTitle()} - new pricing`);
+      } else {
+        await visit('pricing');
+        expect(currentPath()).to.equal('pricing');
         await percySnapshot(this.test.fullTitle());
       }
     });

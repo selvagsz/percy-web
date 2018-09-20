@@ -7,6 +7,7 @@ export default function() {
   this.passthrough('http://api.amplitude.com');
 
   this.passthrough('https://preview.contentful.com/spaces/:space_id/environments/test/entries');
+  this.passthrough('https://preview.contentful.com/spaces/:space_id/environments/test/entries/**');
 
   this.get('/api/auth/session', function() {
     return {state: 'foo'};

@@ -1,12 +1,18 @@
 {{title "Pricing"}}
-<header class="bg-gradient-pattern border-b border-purple-300 pb-9" style="margin-bottom: -144px">
-  {{fixed-top-header class="mb-9" isTransparentHeader=true}}
-  <div class="container container-sm mb-9 text-center">
-    <div class="mb-9">
-      <h1 class="text-4xl font-bold mb-3">Visual coverage that scales with your business</h1>
+{{#if (variation "updated-marketing-site")}}
+  {{#marketing/marketing-header logomark=heroBlock.logomark}}
+    {{marketing/hero-block content=heroBlock class="mb-9"}}
+  {{/marketing/marketing-header}}
+{{else}}
+  <header class="bg-gradient-pattern border-b border-purple-300 pb-9" style="margin-bottom: -144px">
+    {{fixed-top-header class="mb-9" isTransparentHeader=true}}
+    <div class="container container-sm mb-9 text-center">
+      <div class="mb-9">
+        <h1 class="text-4xl font-bold mb-3">Visual coverage that scales with your business</h1>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+{{/if}}
 
 <section class="{{if (not (is-test-env)) "animated-pricing-header"}} md:flex md:items-center container container-lg mb-8">
   <div class="flex-1 md:mr-1 mb-2 md:pt-3">

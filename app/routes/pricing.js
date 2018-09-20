@@ -6,6 +6,7 @@ import metaTagLookup from 'percy-web/lib/meta-tags';
 export default Route.extend(ResetScrollMixin, {
   model() {
     return hash({
+      heroBlock: this._getHeroBlock(),
       cardData: this._getPricingCardData(),
       tableData: this._getFeatureTablePlans(),
       faqData: this._getFaqData(),
@@ -14,6 +15,7 @@ export default Route.extend(ResetScrollMixin, {
 
   setupController(controller, resolvedModel) {
     controller.setProperties({
+      heroBlock: resolvedModel.heroBlock,
       tableData: resolvedModel.tableData,
       smallCard: resolvedModel.cardData.smallCard,
       mediumCard: resolvedModel.cardData.mediumCard,
@@ -31,6 +33,19 @@ export default Route.extend(ResetScrollMixin, {
       // TODO: Add organization tracking
       this.analytics.track('Pricing Viewed');
     },
+  },
+
+  _getHeroBlock() {
+    return this.get('store')
+      .queryRecord('marketing-page', {
+        'fields.pageName': 'Pricing',
+      })
+      .then(marketingPage => {
+        return marketingPage
+          .get('blocks')
+          .findBy('isHero')
+          .get('hero');
+      });
   },
 
   _getPricingCardData() {
