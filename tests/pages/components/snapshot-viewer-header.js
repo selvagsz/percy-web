@@ -9,8 +9,7 @@ import {
 } from 'ember-cli-page-object';
 import {SnapshotApprovalButton} from 'percy-web/tests/pages/components/snapshot-approval-button';
 import {alias} from 'ember-cli-page-object/macros';
-import {clickTrigger} from 'ember-basic-dropdown/test-support/helpers';
-import $ from 'jquery';
+import clickDropdownTrigger from 'percy-web/tests/pages/helpers/click-basic-dropdown-trigger';
 
 const SELECTORS = {
   HEADER: '[data-test-SnapshotViewer-header]',
@@ -65,17 +64,8 @@ export const SnapshotViewerHeader = {
   clickDiffComparisonMode: clickable(SELECTORS.COMPARISON_MODE_SWITCHER_DIFF),
   clickHeadComparisonMode: clickable(SELECTORS.COMPARISON_MODE_SWITCHER_HEAD),
 
-  // This will probably have to be adapted to work with acceptance tests eventually
-  clickDropdownToggle(selector) {
-    clickTrigger(selector);
-    // Dropdown content panel is positioned offscreen due to how the addon
-    // calculates its positioning. Move the dropdown to on screen and to approximately
-    // the right position so we can take percy snapshots.
-    const dropdownContent = $('.ember-basic-dropdown-content');
-    dropdownContent.css({
-      top: '48px',
-      right: '60px',
-    });
+  clickDropdownToggle() {
+    clickDropdownTrigger();
   },
   isDropdownToggleVisible: isVisible(SELECTORS.DROPDOWN_TOGGLE),
   isDropdownPaneVisible: isPresent(SELECTORS.DROPDOWN_PANE, {

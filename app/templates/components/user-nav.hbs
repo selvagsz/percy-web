@@ -1,0 +1,18 @@
+{{#basic-dropdown horizontalPosition="auto-left" preventScroll=true as |dropdown|}}
+  <div class="dropdown">
+    {{#dropdown.trigger}}
+      {{user-avatar user=user class="dropdown-toggle"}}
+    {{/dropdown.trigger}}
+
+    {{#dropdown.content class="shadow-purple-lg mt-2"}}
+      <ul class="list-reset mb-0 w-48">
+        <li class="border-b border-purple-300 mb-0">
+          {{#link-to "settings.profile" class="text-purple-600 font-semibold cursor-pointer py-2 pl-2 pr-1 mb-0 hover:bg-purple-100 hover:text-purple-700 hover:no-underline block"}}
+            Profile
+          {{/link-to}}
+        </li>
+        <li class="border-b border-purple-300 mb-0"><a href="#" {{action "logout"}} class="text-purple-600 font-semibold cursor-pointer py-2 pl-2 pr-1 mb-0 hover:bg-purple-100 hover:text-purple-700 hover:no-underline block">Logout</a></li>
+      </ul>
+    {{/dropdown.content}}
+  </div>
+{{/basic-dropdown}}
