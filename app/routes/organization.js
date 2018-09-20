@@ -5,9 +5,8 @@ import localStorageProxy from 'percy-web/lib/localstorage';
 import {task} from 'ember-concurrency';
 import handleOptionalAuthGetError from 'percy-web/lib/handle-optionally-authenticated-fetch-error';
 import isUserMemberPromise from 'percy-web/lib/is-user-member-of-org';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend({
   intercom: service(),
   session: service(),
   store: service(),

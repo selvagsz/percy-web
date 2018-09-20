@@ -7,7 +7,7 @@ import {DO_NOT_FORWARD_REDIRECT_ROUTES} from 'percy-web/router';
 import EnsureStatefulLogin from 'percy-web/mixins/ensure-stateful-login';
 import isDevWithProductionAPI from 'percy-web/lib/dev-auth';
 import {AUTH_REDIRECT_LOCALSTORAGE_KEY} from 'percy-web/router';
-import {resolve} from 'rsvp';
+import {resolve, reject} from 'rsvp';
 
 export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   session: service(),
@@ -32,6 +32,19 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
 
   model() {
     return this._loadLaunchDarkly(this.get('currentUser'));
+  },
+
+  // Special case: turn off ember-simple-auth-auth0's application-route-mixin expiration timer.
+  // This fixes a specific "mixed auth state" bug where the frontend session can be expired
+  // while the backend API session still exists. This bug can only happen when both 1) the user has
+  // third-party cookies disabled which breaks Silent Auth, and 2) they have a long-lived tab open
+  // which triggers this session expiration.
+  //
+  // Preventing the frontend session from being cleared in the current tab ensures that,
+  // on refresh or next page load, the user will go through a full invalidateAndLogout flow so both
+  // frontend/backend sessions will be in sync. See authenticators/auth0-url-hash.js for more info.
+  beforeSessionExpired() {
+    return reject();
   },
 
   async _loadLaunchDarkly(currentUser) {

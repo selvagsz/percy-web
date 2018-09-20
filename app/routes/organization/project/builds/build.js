@@ -2,9 +2,8 @@ import Route from '@ember/routing/route';
 import {inject as service} from '@ember/service';
 import isUserMemberPromise from 'percy-web/lib/is-user-member-of-org';
 import {hash} from 'rsvp';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend({
   snapshotQuery: service(),
   reviews: service(),
 

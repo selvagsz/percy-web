@@ -2,9 +2,8 @@ import Route from '@ember/routing/route';
 import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
 import {hash} from 'rsvp';
 import isUserMemberPromise from 'percy-web/lib/is-user-member-of-org';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
+export default Route.extend(ResetScrollMixin, {
   model() {
     const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
