@@ -1,5 +1,7 @@
 <div class="flex justify-between items-center mb-8 marketing-menu-bar">
-  <img src="{{logomark.file.url}}" class="menu-bar-logomark">
+  {{#link-to "index"}}
+    <img src="{{logomark.file.url}}" class="menu-bar-logomark">
+  {{/link-to}}
   <div class="flex items-center justify-end pt-2 mb-2 font-semibold">
 
     {{#link-to "visual-testing" class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800"}}Visual Testing{{/link-to}}
