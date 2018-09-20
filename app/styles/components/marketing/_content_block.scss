@@ -29,3 +29,17 @@
     color: white;
   }
 }
+
+/* stylelint-disable selector-max-compound-selectors */
+.marketing-index .content-block-bodytext {
+  p {
+    text-align: center;
+  }
+
+  p img {
+    max-width: 100px;
+    max-height: 100px;
+    padding: 0 8px;
+  }
+}
+/* stylelint-enable */
