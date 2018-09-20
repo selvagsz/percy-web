@@ -1,6 +1,9 @@
 {{title "Pricing"}}
 {{#if (variation "updated-marketing-site")}}
-  {{#marketing/marketing-header logomark=heroBlock.logomark}}
+  {{#marketing/marketing-header
+    logomark=heroBlock.logomark
+    redirectToDefaultOrganization=(route-action "redirectToDefaultOrganization")
+  }}
     {{marketing/hero-block content=heroBlock class="mb-9"}}
   {{/marketing/marketing-header}}
 {{else}}

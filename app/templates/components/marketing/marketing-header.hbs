@@ -12,7 +12,10 @@
     <div style="bottom: -48px; right: -48px;"class="absolute">
       {{inline-svg "marketing/bubbles-4"}}
     </div>
-    {{marketing/menu-bar logomark=logomark}}
+    {{marketing/menu-bar
+      logomark=logomark
+      redirectToDefaultOrganization=(route-action "redirectToDefaultOrganization")
+    }}
     {{yield}}
   </div>
 </header>
