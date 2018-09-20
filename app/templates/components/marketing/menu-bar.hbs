@@ -8,12 +8,18 @@
 
     {{#basic-dropdown horizontalPosition="auto-left" preventScroll=true as |dropdown|}}
       <div class="dropdown">
-        {{#dropdown.trigger}}
+        {{#dropdown.trigger
+          onMouseDown=(action "prevent")
+          onMouseEnter=(action "open")
+          onMouseLeave=(action "closeLater")}}
           <a class="ml-3 text-purple-600 hover:no-underline hover:text-purple-800 dropdown-toggle">
             Product
           </a>
         {{/dropdown.trigger}}
-        {{#dropdown.content class="shadow-purple-lg mt-2"}}
+        {{#dropdown.content
+           onMouseEnter=(action "open")
+           onMouseLeave=(action "closeLater")
+           class="shadow-purple-lg mt-2"}}
           <ul class="list-reset mb-0 w-64">
             {{marketing/menu-bar-dropdown-item
               tagName=""
