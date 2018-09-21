@@ -66,9 +66,15 @@
           Starting at <span class="text-purple-600 text-2xl">{{mediumCard.startingPrice}}</span>/mo
         </div>
       </div>
-      {{#link-to 'enterprise'}}
-        <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
-      {{/link-to}}
+      {{#if (variation "updated-marketing-site")}}
+        {{#link-to 'schedule-demo'}}
+          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'enterprise'}}
+          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
+        {{/link-to}}
+      {{/if}}
     </div>
   </div>
 
@@ -81,9 +87,15 @@
           <div class="font-semibold {{if (eq feature largeCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
         {{/each}}
       </div>
-      {{#link-to 'enterprise'}}
-        <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
-      {{/link-to}}
+      {{#if (variation "updated-marketing-site")}}
+        {{#link-to 'schedule-demo'}}
+          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
+        {{/link-to}}
+      {{else}}
+        {{#link-to 'enterprise'}}
+          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
+        {{/link-to}}
+      {{/if}}
     </div>
   </div>
 </section>

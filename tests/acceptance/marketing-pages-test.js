@@ -81,6 +81,7 @@ describe('Acceptance: Marketing pages', function() {
     });
     describe('pricing page', function() {
       beforeEach(async function() {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
         await visit('/pricing');
       });
       it('can select startup plan', async function() {
@@ -91,11 +92,11 @@ describe('Acceptance: Marketing pages', function() {
       });
       it('can select business plan', async function() {
         await click('[data-test-medium-pricing-card-cta]');
-        expect(currentPath()).to.equal('enterprise');
+        expect(currentPath()).to.equal('schedule-demo');
       });
       it('can select enterprise plan', async function() {
         await click('[data-test-large-pricing-card-cta]');
-        expect(currentPath()).to.equal('enterprise');
+        expect(currentPath()).to.equal('schedule-demo');
       });
       it('can select "Sign up for a free personal account."', async function() {
         stubLockModal(this.application);
