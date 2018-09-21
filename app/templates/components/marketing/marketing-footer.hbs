@@ -1,13 +1,13 @@
-<footer class="bg-gray-700 text-white container-full py-8">
+<footer class="marketing-footer bg-gray-700 text-white container-full py-8">
   <div class="container-lg grid col-4 mb-8">
     {{#each (await footerGroups) as |column|}}
       <div>
         <div class="inline-block half-underline half-underline-on-dark text-lg font-semibold leading-loosest mb-2">
           {{column.category}}
         </div>
-        <div class="font-semibold link-gray">
+        <div class="font-semibold">
           {{#each (sort-by "order" column.items) as |item|}}
-            <a href="{{item.textLink}}" class="block mb-sm">{{item.text}}</a>
+            <a href="{{item.textLink}}" class="block mb-sm no-underline">{{item.text}}</a>
           {{/each}}
         </div>
       </div>

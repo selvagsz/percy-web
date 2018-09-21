@@ -11,8 +11,11 @@
   }
 
   .marketing-menu-bar {
-    a {
-      color: white;
+    a,
+    .lg\:text-purple-600 {
+      @media (min-width: 1012px) {
+        color: white;
+      }
     }
   }
 
@@ -24,4 +27,41 @@
 
 .menu-bar-logomark {
   min-width: 143px;
+}
+
+@media (min-width: 1012px) {
+  .menu-bar-dropdown {
+    transform: translateX(-50%);
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 45%;
+      height: 1px;
+      background: var(--purple-600);
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.menu-bar-dropdown-item:last-child {
+  border: 0;
+}
+
+.menu-bar-item:hover > .menu-bar-dropdown {
+  display: block;
+}
+
+.order-first {
+  order: -1;
+
+}
+
+@media (min-width: 1012px) {
+  .lg\:order-normal {
+    order: 0;
+  }
 }

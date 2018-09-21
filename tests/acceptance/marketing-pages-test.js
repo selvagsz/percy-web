@@ -135,6 +135,29 @@ describe('Acceptance: Marketing pages', function() {
     });
   }
 
+  describe('menu bar', function() {
+    setupAcceptance({authenticate: true});
+    setupSession(function(server) {
+      server.create('user');
+    });
+
+    it('opens dropdown when product is clicked on light background', async function() {
+      withVariation('updated-marketing-site', true); // eslint-disable-line
+      await visit('/');
+
+      await click('[data-test-responsive-nav-toggle]');
+      percySnapshot(`${this.test.fullTitle()} -- small screen dropdown`, {widths: [375]});
+    });
+
+    it('opens dropdown when product is clicked on dark background', async function() {
+      withVariation('updated-marketing-site', true); // eslint-disable-line
+      await visit('enterprise');
+
+      await click('[data-test-responsive-nav-toggle]');
+      percySnapshot(`${this.test.fullTitle()} -- small screen dropdown`, {widths: [375]});
+    });
+  });
+
   describe('user is unauthenticated', function() {
     setupAcceptance({authenticate: false});
 

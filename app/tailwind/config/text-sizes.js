@@ -27,5 +27,6 @@ export default {
   '2xl': '24px',
   '3xl': '32px',
   '4xl': '42px',
-  '5xl': '48px'
+  '5xl': '48px',
+  'nav': '14px'
 };
