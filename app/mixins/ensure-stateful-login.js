@@ -85,9 +85,9 @@ var EnsureStatefulLogin = Mixin.create({
     this.get('flashMessages').success("We've sent an email to the address you've entered.");
   },
 
-  showSignUpModal() {
+  showSignUpModal({onCloseDestinationRoute = null} = {}) {
     lockOptions.initialScreen = 'signUp';
-    this.showLoginModalEnsuringState().then(() => {
+    this.showLoginModalEnsuringState({onCloseDestinationRoute}).then(() => {
       this.resetLockOptionsToDefault();
     });
   },

@@ -8,6 +8,7 @@ const VERIFY_EMAIL_ROUTE = 'verify-email';
 const VERIFICATION_REQUIRED_ROUTE = 'email-verification-required';
 const PASSWORD_UPDATED_ROUTE = 'password-updated';
 const LOGIN_ROUTE = 'login';
+const SIGNUP_ROUTE = 'signup';
 
 export const DO_NOT_FORWARD_REDIRECT_ROUTES = [
   AUTH_CALLBACK_ROUTE,
@@ -15,6 +16,7 @@ export const DO_NOT_FORWARD_REDIRECT_ROUTES = [
   VERIFICATION_REQUIRED_ROUTE,
   PASSWORD_UPDATED_ROUTE,
   LOGIN_ROUTE,
+  SIGNUP_ROUTE,
 ];
 
 const Router = EmberRouter.extend({
@@ -50,6 +52,7 @@ Router.map(function() {
     this.route('page', {path: '*path'});
   });
   this.route(LOGIN_ROUTE);
+  this.route(SIGNUP_ROUTE);
   this.route('pricing');
   this.route('enterprise');
   this.route('team');
