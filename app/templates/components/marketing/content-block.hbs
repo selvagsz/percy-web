@@ -35,7 +35,16 @@
 
         {{#if (and block.isFullCTAPresent (is-empty block.supportingTextSections))}}
           <div class="content-block-cta text-center {{if block.isImagePresent "lg:text-left"}}">
-            <a class="btn btn-md" href="{{block.callToActionLink}}">
+            <a class="rounded
+                border
+                border-purple-300
+                px-2
+                py-1
+                text-purple-600
+                font-bold
+                hover:bg-purple-100
+                hover:text-purple-600
+                hover:no-underline" href="{{block.callToActionLink}}">
               {{block.callToActionText}}
             </a>
           </div>
@@ -70,7 +79,17 @@
 
     {{#if (and block.isFullCTAPresent (not (is-empty block.supportingTextSections)))}}
       <div class="content-block-cta text-center {{if block.isImagePresent "lg:text-left"}}">
-        <a class="btn btn-md" href="{{block.callToActionLink}}">
+        <a class="rounded
+                border
+                border-purple-300
+                px-2
+                py-1
+                text-purple-600
+                text-sm
+                font-bold
+                hover:bg-purple-100
+                hover:text-purple-600
+                hover:no-underline" href="{{block.callToActionLink}}">
           {{block.callToActionText}}
         </a>
       </div>

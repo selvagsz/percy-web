@@ -29,6 +29,9 @@ module.exports = function(environment) {
 
     launchDarkly: {
       clientSideId: '5b453a435b18c32c7440a5bd',
+      localFeatureFlags: {
+        'updated-marketing-site': true,
+      },
     },
 
     APP: {
