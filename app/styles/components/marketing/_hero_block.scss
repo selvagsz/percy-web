@@ -41,7 +41,7 @@
 
 @media (min-width: 1012px) {
   .hero-main-image {
-    margin-top: -172px;
+    margin-top: -150px;
   }
 
   .menu-bar-dropdown {
@@ -77,5 +77,11 @@
 @media (min-width: 1012px) {
   .lg\:order-normal {
     order: 0;
+  }
+}
+
+.hero-mb-negative {
+  .hero-main-image {
+    margin-bottom: -100px;
   }
 }
