@@ -14,6 +14,11 @@
   .hero-block-superheader,
   .hero-block-subheader {
     color: var(--light-gray);
+    border-color: var(--gray-500);
+
+    &::after {
+      background: var(--gray-500);
+    }
   }
 
   .marketing-menu-bar {
