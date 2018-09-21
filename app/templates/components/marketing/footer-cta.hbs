@@ -1,6 +1,6 @@
 <section class="bg-light-purple-gradient-pattern text-white py-8 border-t">
-  <div class="flex items-center justify-between container-lg">
-    <div class="flex items-center">
+  <div class="lg:flex container-lg">
+    <div class="flex-1 items-center">
       <div>
         {{#if content.largerText}}
           <div class="text-lg font-semibold">
@@ -15,7 +15,7 @@
         {{/if}}
       </div>
     </div>
-    <div class="btn-toolbar">
+    <div class="flex-1 lg:text-right mt-3 lg:mt-0">
       <button class="btn btn-alt btn-md shadow-purple-xl font-bold" type="button" name="button">
         {{content.primaryButtonText}}
       </button>

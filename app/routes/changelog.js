@@ -1,8 +1,7 @@
-import Route from '@ember/routing/route';
-import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
+import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
 import metaTagLookup from 'percy-web/lib/meta-tags';
 
-export default Route.extend(ResetScrollMixin, {
+export default MarketingPageBaseRoute.extend({
   headTags: metaTagLookup('changelog'),
   model() {
     return this.store.findAll('changelog-post').then(posts => {

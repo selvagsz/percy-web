@@ -1,7 +1,6 @@
-import Route from '@ember/routing/route';
-import ResetScrollMixin from '../mixins/reset-scroll';
+import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
 
-export default Route.extend(ResetScrollMixin, {
+export default MarketingPageBaseRoute.extend({
   actions: {
     didTransition() {
       this._super.apply(this, arguments);

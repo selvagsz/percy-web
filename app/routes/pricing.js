@@ -1,9 +1,8 @@
-import Route from '@ember/routing/route';
-import ResetScrollMixin from '../mixins/reset-scroll';
+import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
 import {hash} from 'rsvp';
 import metaTagLookup from 'percy-web/lib/meta-tags';
 
-export default Route.extend(ResetScrollMixin, {
+export default MarketingPageBaseRoute.extend({
   model() {
     return hash({
       heroBlock: this._getHeroBlock(),

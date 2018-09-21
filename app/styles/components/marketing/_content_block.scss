@@ -1,11 +1,12 @@
-.marketing-markdown {
-  ul {
-    padding-left: var(--spacing-2);
-    list-style-position: outside;
-  }
+.content-block-header,
+.content-block-subheader {
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-  li {
-    margin-bottom: var(--spacing-1);
+.content-block-subheader {
+  p {
+    font-size: 18px;
   }
 }
 
@@ -31,7 +32,7 @@
 }
 
 /* stylelint-disable selector-max-compound-selectors */
-.marketing-index .content-block-bodytext {
+.content-block-bodytext {
   p {
     text-align: center;
   }
@@ -40,6 +41,30 @@
     max-width: 100px;
     max-height: 100px;
     padding: 0 8px;
+  }
+
+  ul {
+    height: 100%;
+    padding-left: 25px;
+    font-size: 16px;
+    list-style: none;
+
+    li {
+      margin-left: 6px;
+    }
+
+    li::before {
+      content: "";
+      display: block;
+      position: relative;
+      top: 1em;
+      left: -1em;
+      width: 0;
+      height: 0;
+      border-color: transparent var(--purple-600);
+      border-style: solid;
+      border-width: 0.35em 0 0.35em 0.45em;
+    }
   }
 }
 /* stylelint-enable */

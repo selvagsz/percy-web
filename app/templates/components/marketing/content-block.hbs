@@ -1,4 +1,4 @@
-<section class="border-b border-purple-300 py-16 {{block.classes}}">
+<section class="border-b border-purple-300 sm:py-4 md:py-16 px-4 {{block.classes}}">
   <div class="container-lg">
     <div class="md:flex items-center {{if block.isImageRightAligned "flex-row-reverse"}} {{if block.isImageCentered "flex-col"}}">
       {{#if block.isImagePresent}}
@@ -22,33 +22,20 @@
         {{/if}}
 
         {{#if block.subheader}}
-          <div class="text-center mb-2 content-block-subheader">
+          <div class="content-block-subheader text-gray-400 text-center mb-2 pt-2">
             {{md-text text=block.subheader}}
           </div>
         {{/if}}
 
         {{#if block.bodyText}}
-          <div class="text-sm text-gray-500 marketing-markdown content-block-bodytext">
+          <div class="content-block-bodytext">
             {{md-text text=block.bodyText}}
           </div>
         {{/if}}
 
-        {{#if block.isFullCTAPresent}}
-          <div class="content-block-cta {{if block.isNoImagePresent "text-center"}}">
-            <a
-              class="
-                rounded
-                border
-                border-purple-300
-                px-2
-                py-1
-                text-purple-600
-                text-sm
-                font-bold
-                hover:bg-purple-100
-                hover:text-purple-600
-                hover:no-underline"
-              href="{{block.callToActionLink}}">
+        {{#if (and block.isFullCTAPresent (is-empty block.supportingTextSections))}}
+          <div class="content-block-cta text-center {{if block.isImagePresent "lg:text-left"}}">
+            <a class="btn btn-md" href="{{block.callToActionLink}}">
               {{block.callToActionText}}
             </a>
           </div>
@@ -57,7 +44,7 @@
     </div>
 
     {{#if block.supportingTextSections}}
-      <div class="flex flex-wrap items-start justify-center mb-9 {{if (not block.mainImage) "mt-4"}}">
+      <div class="flex flex-wrap items-start justify-center mb-1 {{if (not block.mainImage) "mt-4"}}">
         {{#each block.supportingTextSections as |supportingText|}}
 
           <div class="md:w-1/3 px-2">
@@ -78,6 +65,14 @@
             {{/if}}
           </div>
         {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if (and block.isFullCTAPresent (not (is-empty block.supportingTextSections)))}}
+      <div class="content-block-cta text-center {{if block.isImagePresent "lg:text-left"}}">
+        <a class="btn btn-md" href="{{block.callToActionLink}}">
+          {{block.callToActionText}}
+        </a>
       </div>
     {{/if}}
 

@@ -1,10 +1,6 @@
-import Route from '@ember/routing/route';
-import ResetScrollMixin from '../mixins/reset-scroll';
-import {inject as service} from '@ember/service';
+import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
 
-export default Route.extend(ResetScrollMixin, {
-  launchDarkly: service(),
-
+export default MarketingPageBaseRoute.extend({
   beforeModel() {
     if (!this.get('launchDarkly').variation('updated-marketing-site')) {
       this.transitionTo('/');

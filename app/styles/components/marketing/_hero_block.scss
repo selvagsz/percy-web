@@ -1,3 +1,9 @@
+.hero-block-superheader,
+.hero-block-subheader {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .marketing-hero-dark {
   background-color: var(--darkest-gray);
 
@@ -29,7 +35,16 @@
   min-width: 143px;
 }
 
+.hero-main-image {
+  min-height: 200px;
+  margin-top: -94px;
+}
+
 @media (min-width: 1012px) {
+  .hero-main-image {
+    margin-top: -172px;
+  }
+
   .menu-bar-dropdown {
     transform: translateX(-50%);
 
