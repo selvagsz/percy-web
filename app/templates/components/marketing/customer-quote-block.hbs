@@ -1,17 +1,14 @@
-<div class="bg-gray-pattern mb-9 p-4">
-  <div class="py-3"></div>
+<div class="bg-gray-pattern mb-9 pt-8 sm:pt-16 pb-4 sm:pb-8">
   <div class="flex">
-    <div class="siema container-lg ">
+    <div class="siema container-lg mb-4">
       {{#each quoteBlock.customerQuotes as |quote|}}
         {{marketing/customer-quote quote=quote}}
       {{/each}}
     </div>
   </div>
-  <div class="flex justify-center">
+  <div class="flex items-center justify-center mb-4">
     {{#each quoteBlock.customerQuotes as |quote index|}}
-      <span class="text-3xl px-1 cursor-pointer {{if (eq index currentSlide) "text-gray-600" "text-gray-200"}}" {{action "switchToSlide" index}} data-test-quote-block-dot>
-        •
-      </span>
+      <div class="bg-purple-600 rounded-full mx-sm w-1 h-1 cursor-pointer {{if (eq index currentSlide) "w-2 h-2" "opacity-50"}}" {{action "switchToSlide" index}} data-test-quote-block-dot></div>
     {{/each}}
   </div>
 </div>

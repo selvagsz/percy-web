@@ -1,17 +1,19 @@
-<div class="flex">
-  <div class="self-center mr-7">
-    <div class="rounded-full quote-block-headshot" style="background-image: url('{{quote.headshot.file.url}}');">
+<div class="sm:flex items-center">
+  <div>
+    <div class="quote-block-headshot relative rounded-full mx-auto mb-4 sm:mb-0 sm:mr-9" style="background-image: url('{{quote.headshot.file.url}}');">
+      {{#if quote.logo.file.url}}
+        <img src="{{quote.logo.file.url}}" class="quote-logo absolute pin-b p-1 bg-white border rounded-full" alt="{{quote.logo.description}}">
+        {{/if}}
     </div>
-    {{#if quote.logo.file.url}}
-      <img src="{{quote.logo.file.url}}" class="quote-logo p-1 bg-white border rounded-full" alt="{{quote.logo.description}}">
-    {{else}}
-      <div class="quote-logo"></div>
-    {{/if}}
   </div>
-
-  <div class="self-center">
-    <p class="customer-quote-content font-mono">{{quote.customerQuote}}</p>
-    <div class="font-semibold mt-3 text-xl">
+  <div>
+    <p class="relative font-mono">
+      <div style="left: -40px;" class="hidden absolute pin-t sm:block">
+        {{inline-svg "quotes"}}
+      </div>
+      {{quote.customerQuote}}
+    </p>
+    <div class="font-semibold mt-3 text-lg">
       {{quote.quoteAttribution}}
     </div>
   </div>
