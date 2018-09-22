@@ -42,6 +42,18 @@ describe('Acceptance: Marketing pages', function() {
       }
     });
 
+    it('can visit /visual-testing', async function() {
+      if (authenticated) {
+        withVariation('updated-marketing-site', true); // eslint-disable-line
+        await visit('/visual-testing');
+        expect(currentPath()).to.equal('visual-testing');
+        await percySnapshot(this.test.fullTitle());
+      } else {
+        await visit('/visual-testing');
+        expect(currentPath()).to.equal('index');
+      }
+    });
+
     it('can visit enterprise', async function() {
       if (authenticated) {
         withVariation('updated-marketing-site', true); //eslint-disable-line
