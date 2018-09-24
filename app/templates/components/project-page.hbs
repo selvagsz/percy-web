@@ -10,12 +10,14 @@
         </li>
       {{/each}}
     </ul>
-    {{#link-to "organizations.organization.projects.new" project.organization.slug classNames="btn btn-sm btn-alt w-full mb-2 text-center"}}
-      New Project
-    {{/link-to}}
-    {{#link-to "organizations.organization.users.invite" project.organization.slug classNames="btn btn-sm btn-alt w-full mb-2 text-center"}}
-      Invite Team Members
-    {{/link-to}}
+    {{#if isUserMember}}
+      {{#link-to "organizations.organization.projects.new" project.organization.slug classNames="btn btn-sm btn-alt w-full mb-2 text-center"}}
+        New Project
+      {{/link-to}}
+      {{#link-to "organizations.organization.users.invite" project.organization.slug classNames="btn btn-sm btn-alt w-full mb-2 text-center"}}
+        Invite Team Members
+      {{/link-to}}
+    {{/if}}
   </aside>
   {{project-container
     project=project
