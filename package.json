@@ -18,7 +18,7 @@
     "start-production-for-testing": "ember server --environment=production",
     "test": "ember test",
     "test:node_debug": "node debug node_modules/ember-cli/bin/ember test --server",
-    "test:parallel": "PERCY_PARALLEL_TOTAL=4 EMBER_ENV=test ember exam --environment=test --path dist --split=4 --parallel",
+    "test:parallel": "EMBER_ENV=test percy-agent exec -- ember exam --environment=test --path dist --split=4 --parallel",
     "test:server": "ember test --server"
   },
   "lint-staged": {
@@ -81,7 +81,7 @@
     "ember-modal-dialog": "^2.4.0",
     "ember-moment": "^7.7.0",
     "ember-page-title": "^4.0.0",
-    "ember-percy": "^1.5.0",
+    "ember-percy": "percy/ember-percy.git#agentified",
     "ember-power-select": "^1.10.4",
     "ember-promise-helpers": "^1.0.3",
     "ember-remarkable": "^3.6.1",
