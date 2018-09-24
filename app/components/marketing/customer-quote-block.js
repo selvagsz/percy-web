@@ -12,9 +12,22 @@ export default Component.extend({
     });
 
     this.set('carosel', carosel);
+    this._autoAdvanceSlide();
   },
 
   actions: {
+    next() {
+      this.get('carosel').next();
+      this._setCurrentSlide();
+      this._clearInterval();
+    },
+
+    previous() {
+      this.get('carosel').prev();
+      this._setCurrentSlide();
+      this._clearInterval();
+    },
+
     switchToSlide(index) {
       this.get('carosel').goTo(index);
       this._setCurrentSlide();
@@ -23,5 +36,18 @@ export default Component.extend({
 
   _setCurrentSlide() {
     this.set('currentSlide', this.get('carosel').currentSlide);
+  },
+
+  _autoAdvanceSlide() {
+    const intervalId = setInterval(() => this.get('carosel').next(), 6000);
+    this.set('intervalId', intervalId);
+  },
+
+  _clearInterval() {
+    clearInterval(this.get('intervalId'));
+  },
+
+  willDestroyElement() {
+    this._clearInterval();
   },
 });
