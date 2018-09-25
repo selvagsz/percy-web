@@ -8,6 +8,7 @@ export default Component.extend({
     // Siema is imported in ember-cli-build.js
     const carosel = new Siema({ // eslint-disable-line
       loop: true,
+      draggable: false,
       onChange: this._setCurrentSlide.bind(this),
     });
 
@@ -31,6 +32,7 @@ export default Component.extend({
     switchToSlide(index) {
       this.get('carosel').goTo(index);
       this._setCurrentSlide();
+      this._clearInterval();
     },
   },
 

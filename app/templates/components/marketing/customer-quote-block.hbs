@@ -7,13 +7,13 @@
     </div>
   </div>
   <div class="flex items-center justify-center mb-4">
-    <figure class="svg-container">
+    <figure class="svg-container" {{action "previous"}}>
       {{inline-svg "gallery-left" class="cursor-pointer mr-2"}}
     </figure>
     {{#each quoteBlock.customerQuotes as |quote index|}}
       <div class="bg-purple-600 rounded-full mx-sm w-1 h-1 cursor-pointer {{if (eq index currentSlide) "w-2 h-2" "opacity-50"}}" {{action "switchToSlide" index}} data-test-quote-block-dot></div>
     {{/each}}
-    <figure class="svg-container">
+    <figure class="svg-container" {{action "next"}}>
       {{inline-svg "gallery-right" class="cursor-pointer ml-2"}}
     </figure>
   </div>
