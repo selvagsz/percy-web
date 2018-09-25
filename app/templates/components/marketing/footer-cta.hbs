@@ -16,14 +16,14 @@
       </div>
     </div>
     <div class="btn-toolbar flex flex-1 lg:justify-end">
-      <a href="{{content.primaryButtonLink}}" class="btn-md flex items-center justify-center border border-purple-600 rounded link-white">
-        {{content.primaryButtonText}}
-      </a>
       {{#if (and content.secondaryButtonText content.secondaryButtonLink)}}
-        <a class="btn btn-white btn-md flex items-center text-center border border-purple-100 px-2 py-1" href="{{content.secondaryButtonLink}}">
+        <a href="{{content.secondaryButtonLink}}" class="btn-md flex items-center justify-center border border-purple-600 rounded link-white">
           {{content.secondaryButtonText}}
         </a>
       {{/if}}
+      <a href="{{content.primaryButtonLink}}" class="btn btn-white btn-md flex items-center text-center border border-purple-100 px-2 py-1">
+        {{content.primaryButtonText}}
+      </a>
     </div>
   </div>
 </section>
