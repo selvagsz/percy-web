@@ -519,6 +519,16 @@ button,
   }
 }
 
+.btn-white,
+a.btn-white {
+  color: var(--gray-700);
+  background: var(--white);
+
+  &:hover {
+    color: var(--purple-600);
+  }
+}
+
 .btn-green,
 .btn-purple,
 .btn-orange {
