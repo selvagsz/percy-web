@@ -56,6 +56,7 @@ Router.map(function() {
   this.route('pricing');
   this.route('enterprise');
   this.route('team');
+  this.route('testzz');
   this.route('about'); // Redirects to team in route.
   this.route('terms');
   this.route('privacy');
