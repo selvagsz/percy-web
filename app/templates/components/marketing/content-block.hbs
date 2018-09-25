@@ -56,13 +56,15 @@
       <div class="flex flex-wrap items-start justify-center mb-1 {{if (not block.mainImage) "mt-4"}}">
         {{#each block.supportingTextSections as |supportingText|}}
 
-          <div class={{concat "px-2 md:w-1/" numSupportingTextColumns}}>
+          <div class="{{concat "px-2 md:w-1/" numSupportingTextColumns}}">
             {{#if supportingText.supportingContentImageIcon.file.url}}
-              <img src="{{supportingText.supportingContentImageIcon.file.url}}">
+              <div class="content-block-supporting-image">
+                <img src="{{supportingText.supportingContentImageIcon.file.url}}">
+              </div>
             {{/if}}
 
             {{#if supportingText.header}}
-              <div class="font-semibold text-lg content-block-supporting-text-header">
+              <div class="font-semibold text-xl content-block-supporting-text-header">
                 {{supportingText.header}}
               </div>
             {{/if}}

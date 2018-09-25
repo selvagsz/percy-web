@@ -31,7 +31,6 @@
   }
 }
 
-/* stylelint-disable selector-max-compound-selectors */
 .content-block-bodytext {
   p {
     text-align: center;
@@ -42,7 +41,11 @@
     max-height: 100px;
     padding: 0 8px;
   }
+}
 
+/* stylelint-disable selector-max-compound-selectors */
+.content-block-bodytext,
+.content-block-supporting-text-body {
   ul {
     height: 100%;
     padding-left: 25px;
@@ -64,6 +67,23 @@
       border-color: transparent var(--purple-600);
       border-style: solid;
       border-width: 0.35em 0 0.35em 0.45em;
+    }
+  }
+}
+
+.content-block-supporting-text-body {
+  ul {
+    padding-left: 16px;
+  }
+}
+
+.marketing-content-block-dark {
+  .content-block-bodytext,
+  .content-block-supporting-text-body {
+    ul {
+      li::before {
+        border-color: transparent var(--gray-100);
+      }
     }
   }
 }
