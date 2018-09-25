@@ -1,4 +1,4 @@
-<section class="border-b border-purple-300 sm:py-4 md:py-16 px-4 {{block.classes}}">
+<section class="border-b border-purple-300 pt-8 pb-4 md:py-16 {{block.classes}}">
   <div class="container-lg">
     <div class="md:flex items-center {{if block.isImageRightAligned "flex-row-reverse"}} {{if block.isImageCentered "flex-col"}}">
       {{#if block.isImagePresent}}
@@ -6,7 +6,7 @@
           <img src="{{block.imageUrl}}" alt={{block.imageDescription}}>
         </div>
       {{/if}}
-      <div class="flex-1">
+      <div class="flex-1 mb-6 md:mb-0">
         {{#if block.superheader}}
           <div class="text-center content-block-superheader">
             <h6 class="uppercase half-underline inline-block py-sm mb-2 text-sm font-bold text-gray-300 tracking-wide border-t">
@@ -34,8 +34,9 @@
         {{/if}}
 
         {{#if (and block.isFullCTAPresent (is-empty block.supportingTextSections))}}
-          <div class="content-block-cta text-center {{if block.isImagePresent "lg:text-left"}}">
-            <a class="rounded
+          <div class="content-block-cta text-center mb-4 {{if block.isImagePresent "lg:text-left"}}">
+            <a class="
+                rounded
                 border
                 border-purple-300
                 px-2
@@ -53,10 +54,10 @@
     </div>
 
     {{#if block.supportingTextSections}}
-      <div class="flex flex-wrap items-start justify-center mb-1 {{if (not block.mainImage) "mt-4"}}">
+      <div class="flex flex-wrap justify-center mb-1 {{if (not block.mainImage) "mt-4"}}">
         {{#each block.supportingTextSections as |supportingText|}}
 
-          <div class="{{concat "px-2 md:w-1/" numSupportingTextColumns}}">
+          <div class="mb-3 {{concat "px-2 md:w-1/" numSupportingTextColumns}}">
             {{#if supportingText.supportingContentImageIcon.file.url}}
               <div class="content-block-supporting-image">
                 <img src="{{supportingText.supportingContentImageIcon.file.url}}">

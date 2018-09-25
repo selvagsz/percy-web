@@ -20,6 +20,8 @@
   </div>
 </header>
 
-<div class="hero-main-image relative container-lg">
-  <img src="{{image.file.url}}">
-</div>
+{{#if image.file.url}}
+  <div class="hero-main-image flex items-center relative container-lg">
+    <img src="{{image.file.url}}">
+  </div>
+{{/if}}
