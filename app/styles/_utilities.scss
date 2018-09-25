@@ -18,8 +18,8 @@
   background: url("/images/pattern-on-purple.svg"), var(--purple-gradient);
 }
 
-.bg-light-purple-gradient-pattern {
-  background: url("/images/pattern-on-purple.svg"), var(--light-purple-gradient);
+.bg-purple-pattern {
+  background: url("/images/pattern-on-purple.svg"), var(--purple-600);
 }
 
 .bg-white-pattern {
@@ -72,4 +72,3 @@
 .trans-opacity {
   transition-property: opacity;
 }
-
