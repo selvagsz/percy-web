@@ -1,11 +1,14 @@
-<li class="menu-bar-dropdown-item lg:border-b border-purple-300 mb-0">
-  {{#link-to linkRoute classNames="hover:no-underline"}}
+<li class="menu-bar-dropdown-item lg:border-b border-purple-300 mb-1 lg:mb-0">
+  {{#link-to linkRoute classNames="hover:no-underline" target=target}}
     <div class="w-full flex items-center flex items-center cursor-pointer font-semibold py-sm lg:py-2 lg:px-2 lg:hover:bg-purple-100">
-      <div class="mr-2 w-10">
+      <div class="flex items-center mr-2 w-10">
         {{inline-svg icon}}
       </div>
-      <div class="font-semibold {{linkColor}}">
+      <div class="flex items-center font-semibold {{linkColor}}">
         {{text}}
+        {{#if isExternal}}
+          {{fa-icon "external-link" style="top: 1px;" class="relative text-gray-200 ml-1"}}
+        {{/if}}
       </div>
     </div>
   {{/link-to}}
