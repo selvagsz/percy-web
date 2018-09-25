@@ -41,7 +41,7 @@ export default Component.extend({
   },
 
   _autoAdvanceSlide() {
-    const intervalId = setInterval(() => this.get('carosel').next(), 6000);
+    const intervalId = setInterval(() => this.get('carosel').next(), 10000);
     this.set('intervalId', intervalId);
   },
 

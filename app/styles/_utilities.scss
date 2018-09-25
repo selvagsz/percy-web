@@ -73,16 +73,3 @@
   transition-property: opacity;
 }
 
-.half-underline::after {
-  content: "";
-  display: block;
-  position: relative;
-  top: 2px;
-  width: 50%;
-  height: 1px;
-  background: var(--purple-300);
-}
-
-.half-underline-on-dark::after {
-  background: var(--gray-500);
-}
