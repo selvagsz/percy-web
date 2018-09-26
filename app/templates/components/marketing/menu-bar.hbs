@@ -9,7 +9,7 @@
       <div style="top: 100%;" class="absolute lg:static pin-r pin-l bg-white lg:bg-transparent rounded shadow-purple-xl lg:shadow-none lg:items-center font-semibold flex flex-col lg:flex-row">
         {{#link-to "visual-testing" class="block p-2 lg:px-2 lg:py-1 text-purple-600 text-lg lg:text-nav border-b border-purple-300 lg:border-none hover:no-underline hover:text-purple-800"}}Visual Testing{{/link-to}}
         <div class="menu-bar-item order-first lg:order-normal cursor-pointer relative p-2 lg:px-2 lg:py-1 text-purple-600 border-b border-purple-300 lg:border-none lg:hover:text-purple-800">
-          {{#link-to "features" class="block text-lg lg:text-nav text-gray-700 lg:text-purple-600 hover:text-purple-800 mb-1 lg:mb-0 hover:no-underline"}}Product{{/link-to}}
+          {{#link-to "features" class="block text-lg lg:text-nav text-purple-600 hover:text-purple-800 mb-1 lg:mb-0 hover:no-underline"}}Product{{/link-to}}
           <ul style="top: 100%; left: 50%;" class="menu-bar-dropdown lg:shadow-purple-xl lg:w-64 lg:absolute lg:hidden list-reset mb-0 bg-white rounded">
             {{marketing/menu-bar-dropdown-item
               tagName=""
@@ -51,16 +51,18 @@
 
     <div class="flex items-center">
       {{#if session.isAuthenticated}}
-        <a class="btn btn-primary px-2" {{action redirectToDefaultOrganization}}>Go to app</a>
+        <a class="btn btn-primary px-2 ml-2" {{action redirectToDefaultOrganization}}>Go to app</a>
       {{else}}
         <a class="px-2 text-purple-600 font-semibold hover:no-underline hover:text-purple-800 cursor-pointer" {{action "clickLogin"}}>Login</a>
         <a class="btn btn-primary ml-1" {{action "clickSignup"}}>Start Free Trial</a>
       {{/if}}
-      <div class="block lg:hidden ml-2 menu-icon cursor-pointer" {{action "toggleIsNavHidden"}} data-test-responsive-nav-toggle>
-        <div class="menu-icon-line"></div>
-        <div class="menu-icon-line"></div>
-        <div class="menu-icon-line"></div>
-        <div class="menu-icon-line"></div>
+      <div class="menu-icon p-2 -my-2 -mr-2 cursor-pointer lg:hidden" {{action "toggleIsNavHidden"}} data-test-responsive-nav-toggle>
+        <div style="width: 16px; height: 14px;">
+          <div class="menu-icon-line"></div>
+          <div class="menu-icon-line"></div>
+          <div class="menu-icon-line"></div>
+          <div class="menu-icon-line"></div>
+        </div>
       </div>
     </div>
   </div>

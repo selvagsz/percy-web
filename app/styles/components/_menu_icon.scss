@@ -1,9 +1,6 @@
 // stylelint-disable selector-max-specificity
 
 .menu-icon {
-  width: 16px;
-  height: 14px;
-
   &.is-closeable {
     .menu-icon-line {
       width: 8px;
