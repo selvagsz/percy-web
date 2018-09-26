@@ -58,22 +58,22 @@
   <div class="flex-1 md:mx-1 mb-2">
     <div class="bg-white-gradient-pattern rounded p-2 shadow-purple-2">
       <div class="pt-2 px-2">
-        <h3 class="font-semibold mb-0 text-xl text-purple-600">{{mediumCard.name}}</h3>
+        <h3 class="font-semibold mb-0 text-xl text-orange-500">{{mediumCard.name}}</h3>
         <p>{{mediumCard.description}}</p>
         {{#each mediumCard.featureList as |feature|}}
           <div class="font-semibold {{if (eq feature mediumCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
         {{/each}}
         <div class="font-semibold text-gray-500 text-right">
-          Starting at <span class="text-purple-600 text-2xl">{{mediumCard.startingPrice}}</span>/mo
+          Starting at <span class="text-orange-500 text-2xl">{{mediumCard.startingPrice}}</span>/mo
         </div>
       </div>
       {{#if (variation "updated-marketing-site")}}
         {{#link-to 'schedule-demo'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
+          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
         {{/link-to}}
       {{else}}
         {{#link-to 'enterprise'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
+          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
         {{/link-to}}
       {{/if}}
     </div>
@@ -82,7 +82,7 @@
   <div class="flex-1 md:ml-1 mb-2">
     <div class="bg-white-gradient-pattern rounded p-2 shadow-purple-2">
       <div class="pt-2 px-2">
-        <h3 class="font-semibold mb-0 text-xl text-orange-500">{{largeCard.name}}</h3>
+        <h3 class="font-semibold mb-0 text-xl text-purple-600">{{largeCard.name}}</h3>
         <p>{{largeCard.description}}</p>
         {{#each largeCard.featureList as |feature|}}
           <div class="font-semibold {{if (eq feature largeCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
@@ -90,11 +90,11 @@
       </div>
       {{#if (variation "updated-marketing-site")}}
         {{#link-to 'schedule-demo'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
+          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
         {{/link-to}}
       {{else}}
         {{#link-to 'enterprise'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
+          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
         {{/link-to}}
       {{/if}}
     </div>
@@ -150,8 +150,8 @@
       <tr>
         <th class="sticky bg-white py-1"></th>
         <th class="sticky bg-white py-1 text-green-500">Growth</th>
-        <th class="sticky bg-white py-1 text-purple-600">Business</th>
-        <th class="sticky bg-white py-1 text-orange-500">Enterprise</th>
+        <th class="sticky bg-white py-1 text-orange-500">Business</th>
+        <th class="sticky bg-white py-1 text-purple-600">Enterprise</th>
       </tr>
     </thead>
     <tbody class="pricing-feature-table">

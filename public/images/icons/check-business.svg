@@ -1,11 +1,11 @@
 <svg width="24" height="24" viewBox="0 0 24 24">
-<g id="Canvas" transform="translate(324 -980)">
-<g id="Group 8.3">
+<g id="Canvas" transform="translate(133 -980)">
+<g id="Group 8.4">
 <g id="Oval">
-<use xlink:href="#path0_fill" transform="translate(-324 980)" fill="#9E66BF"/>
+<use xlink:href="#path0_fill" transform="translate(-133 980)" fill="#FF7B2F"/>
 </g>
 <g id="Path 2">
-<use xlink:href="#path1_stroke" transform="translate(-317 989)" fill="#FFFFFF"/>
+<use xlink:href="#path1_stroke" transform="translate(-126 989)" fill="#FFFFFF"/>
 </g>
 </g>
 </g>
