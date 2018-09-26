@@ -1,12 +1,7 @@
-import {inject as service} from '@ember/service';
-import Route from '@ember/routing/route';
-import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 import EnsureStatefulLogin from 'percy-web/mixins/ensure-stateful-login';
+import UnauthenticatedBaseRoute from 'percy-web/routes/unauthenticated-base';
 
-// UnauthenticatedRouteMixin makes this route _inaccessible_
-// when the user is logged in
-export default Route.extend(UnauthenticatedRouteMixin, EnsureStatefulLogin, {
-  session: service(),
+export default UnauthenticatedBaseRoute.extend(EnsureStatefulLogin, {
   afterModel() {
     this.showSignUpModal({onCloseDestinationRoute: '/'});
   },
