@@ -93,7 +93,7 @@ describe('SessionService', function() {
       beforeEach(function() {
         subject.set('isAuthenticated', true);
         store.queryRecord = sinon.stub().returns(reject());
-        windowStub = sinon.stub(utils, 'setWindowLocation');
+        windowStub = sinon.stub(utils, 'replaceWindowLocation');
       });
 
       afterEach(function() {

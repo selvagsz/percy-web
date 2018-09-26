@@ -58,7 +58,23 @@ export default {
     }
   },
 
+  /**
+   * Add to the current window location with the URL passed. This
+   * will add to the browser history.
+   *
+   * @param {string} url
+   */
   setWindowLocation(url) {
+    window.location = url;
+  },
+
+  /**
+   * Replace the current window location with the URL passed. This
+   * will not add to the browser history.
+   *
+   * @param {string} url
+   */
+  replaceWindowLocation(url) {
     window.location.replace(url);
   },
 

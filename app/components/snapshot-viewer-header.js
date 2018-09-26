@@ -66,14 +66,14 @@ export default Component.extend({
       const options = {includePercyMode: true};
       const url = utils.buildApiUrl(`${type}Asset`, snapshot.get('id'), options);
 
-      utils.setWindowLocation(url);
+      utils.replaceWindowLocation(url);
     },
 
     downloadDiff(selectedComparison) {
       const options = {includePercyMode: true};
       const url = utils.buildApiUrl('snapshotSourceDiff', selectedComparison.get('id'), options);
 
-      utils.setWindowLocation(url);
+      utils.replaceWindowLocation(url);
     },
   },
 });

@@ -41,7 +41,7 @@ export default SessionService.extend({
   invalidateAndLogout() {
     this.invalidate().then(() => {
       this._clearThirdPartyUserContext();
-      utils.setWindowLocation('/api/auth/logout');
+      utils.replaceWindowLocation('/api/auth/logout');
     });
   },
 
