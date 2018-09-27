@@ -31,7 +31,15 @@
 }
 
 .menu-bar-logomark {
-  min-width: 143px;
+  width: 53px;
+
+  @media screen and (min-width: $width-sm) {
+    width: 143px;
+  }
+
+  img {
+    max-width: none;
+  }
 }
 
 .hero-main-image {
@@ -93,8 +101,7 @@
 }
 
 .pricing-header {
-  .marketing-alt-header {
-    height: 450px;
+  .marketing-header {
     margin-bottom: -64px;
   }
 }

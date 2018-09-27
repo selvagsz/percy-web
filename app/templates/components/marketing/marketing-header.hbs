@@ -1,4 +1,4 @@
-<header class="bg-purple-000 border-b border-purple-300 overflow-hidden lg:overflow-visible {{classes}} {{if image.file.url "marketing-header" "marketing-alt-header -mb-4 lg:-mb-6"}}">
+<header class="marketing-header bg-purple-000 border-b border-purple-300 overflow-hidden lg:overflow-visible {{classes}} {{unless image.file.url "-mb-4 lg:-mb-6"}}">
   <div class="relative container-xl pb-8">
     <div style="bottom: -128px; left: -48px;" class="absolute">
       {{inline-svg "marketing/bubbles-1"}}
