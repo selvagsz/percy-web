@@ -25,6 +25,7 @@
               </div>
               <div class="text-sm text-gray-400 font-semibold">
                 Snapshots since {{moment-format subscription.currentPeriodStart 'MMMM D'}}
+                <sup class="hint--top hint--rounded hint--bounce" aria-label="Daily Snapshot count is perfomed in UTC and may be delayed">{{fa-icon "info-circle" class="text-gray-300"}}</sup>
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@
               </div>
               <div class="flex items-center pt-2 px-2 font-semibold">
                 {{inline-svg "comparison-icon" class="mr-1"}}
-                <span class="text-base mr-sm">{{subscription.currentUsageStats.total}}</span>
+                <span class="text-base mr-sm">{{format-number subscription.currentUsageStats.total}}</span>
                 <span class="text-gray-300">current snapshots</span> {{snapshot-explanation-tooltip}}
               </div>
             {{/if}}
