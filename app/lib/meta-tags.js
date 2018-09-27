@@ -12,6 +12,24 @@ const headTags = {
       'Powered by cross-browser testing, responsive visual testing, and smart visual regression testing, Percy helps teams design, develop, and deploy software with confidence.',
     ),
   ],
+  features: [
+    metaTitle('Visual testing product features | Percy'),
+    metaDescription(
+      'Learn more about Percy’s product features including smart diff technology, efficient visual reviews, leading rendering engine, and effortless integrations.',
+    ),
+  ],
+  howItWorks: [
+    metaTitle('Comprehensive guide to visual testing | Percy'),
+    metaDescription(
+      'Percy makes it easy to integrate snapshots, run visual tests, and review visual diffs. Get started with visual testing and start deploying with confidence.',
+    ),
+  ],
+  visualTesting: [
+    metaTitle('What is visual testing? | Percy'),
+    metaDescription(
+      'Learn why teams are replacing manual QA with automated visual testing to ensure their websites and applications are pixel-perfect.',
+    ),
+  ],
   pricing: [
     metaTitle('Visual Testing Plans and Pricing | Percy'),
     metaDescription(
@@ -34,6 +52,12 @@ const headTags = {
     metaTitle('Visual Testing Platform Changelog | Percy'),
     metaDescription(
       'See what team Percy is building to make automated visual testing more efficient and accessible to all. Stay up to date with new Percy features, integrations, and updates.',
+    ),
+  ],
+  scheduleDemo: [
+    metaTitle('Request a visual testing demo | Percy'),
+    metaDescription(
+      'Contact Percy with any questions about how visual testing works, to learn more about our visual testing plans, or to schedule a product demo.',
     ),
   ],
 };
