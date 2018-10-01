@@ -2,10 +2,11 @@ import Route from '@ember/routing/route';
 import {inject as service} from '@ember/service';
 
 export default Route.extend({
+  redirects: service(),
   session: service(),
-  beforeModel(transition) {
+  beforeModel() {
     if (this.get('session.isAuthenticated')) {
-      return transition.send('redirectToDefaultOrganization');
+      return this.get('redirects').redirectToDefaultOrganization();
     } else {
       return this._super(...arguments);
     }

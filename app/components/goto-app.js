@@ -3,6 +3,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   session: service(),
+  redirects: service(),
   tagName: 'button',
   attributeBindings: ['tabindex'],
   tabindex: 0,
@@ -13,7 +14,7 @@ export default Component.extend({
   classNameBindings: ['classes'],
 
   click() {
-    this.sendAction('redirectToDefaultOrganization');
+    this.get('redirects').redirectToDefaultOrganization();
   },
 
   keyDown(event) {

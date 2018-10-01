@@ -2,7 +2,6 @@
 {{#if (variation "updated-marketing-site")}}
   {{#marketing/marketing-header
     logomark=heroBlock.logomark
-    redirectToDefaultOrganization=(route-action "redirectToDefaultOrganization")
     class="pricing-header"
   }}
     {{marketing/hero-block content=heroBlock class="mb-9"}}
@@ -48,7 +47,7 @@
           Starting at <span class="text-green-500 text-2xl">{{smallCard.startingPrice}}</span>/mo
         </div>
       </div>
-      <button type="button" name="button" class="btn btn-md btn-scale btn-green shadow-green-lg w-full" {{action "redirectToDefaultOrganization"}} data-test-small-pricing-card-cta>{{smallCard.callToAction}}</button>
+      {{#link-to "most-recent-org" class="btn btn-md btn-scale btn-green shadow-green-lg w-full text-center data-test-small-pricing-card-cta" }}{{smallCard.callToAction}}{{/link-to}}
     </div>
     <div class="text-gray-300 text-center text-sm">
       14-day free trial. No credit card required.
@@ -141,7 +140,7 @@
 </section>
 
 <section class="container-lg text-center f4 font-semibold mb-8">
-  Just need Percy for a small project? <a {{action "redirectToDefaultOrganization"}} class="cursor-pointer" data-test-free-personal-account>Sign up for a free personal account.</a>
+  Just need Percy for a small project? {{#link-to 'most-recent-org' class="data-test-free-personal-account"}}Sign up for a free personal account.{{/link-to}}
 </section>
 
 <section class="container-lg mb-8">

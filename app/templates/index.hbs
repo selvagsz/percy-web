@@ -21,10 +21,7 @@
       </div>
       <div class="mb-2">
         {{#if session.isAuthenticated}}
-          {{goto-app
-            redirectToDefaultOrganization="redirectToDefaultOrganization"
-            data-test-index-goto-app=true
-          }}
+          {{goto-app data-test-index-goto-app=true}}
         {{else}}
           {{login-button showLoginModal="showLoginModal"}}
         {{/if}}
@@ -232,10 +229,7 @@
           </p>
           <p>
             {{#if session.isAuthenticated}}
-              {{goto-app
-                redirectToDefaultOrganization="redirectToDefaultOrganization"
-                data-test-index-goto-app=true
-              }}
+              {{goto-app data-test-index-goto-app=true}}
             {{else}}
               {{login-button showLoginModal="showLoginModal" text="Start free trial" showIcon=false}}
             {{/if}}

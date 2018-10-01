@@ -15,6 +15,7 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   raven: service(),
   currentUser: alias('session.currentUser'),
   launchDarkly: service(),
+  redirects: service(),
 
   beforeModel(transition) {
     this._super(...arguments);
@@ -101,10 +102,6 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
       this.get('session').invalidateAndLogout();
     },
 
-    redirectToDefaultOrganization() {
-      this._redirectToDefaultOrganization();
-    },
-
     transitionTo(path) {
       this.transitionTo(path);
     },
@@ -148,27 +145,6 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
     },
   },
 
-  _redirectToDefaultOrganization() {
-    if (!this.get('currentUser')) {
-      return this.transitionTo('/login');
-    }
-
-    let lastOrganizationSlug = localStorageProxy.get('lastOrganizationSlug');
-    if (lastOrganizationSlug) {
-      this.transitionTo('organization.index', lastOrganizationSlug);
-    } else {
-      this.get('currentUser.organizations').then(orgs => {
-        let org = orgs.get('firstObject');
-        if (org) {
-          this.transitionTo('organization.index', org.get('slug'));
-        } else {
-          // User has no organizations.
-          this.transitionTo('organizations.new');
-        }
-      });
-    }
-  },
-
   _storeTargetTransition(transition) {
     const attemptedRoute = transition.targetName;
     if (!DO_NOT_FORWARD_REDIRECT_ROUTES.includes(attemptedRoute)) {
@@ -185,13 +161,13 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
     });
     if (redirectAddress) {
       if (redirectAddress === '/') {
-        this._redirectToDefaultOrganization();
+        this.get('redirects').redirectToDefaultOrganization();
       } else {
         localStorageProxy.removeItem(AUTH_REDIRECT_LOCALSTORAGE_KEY, {useSessionStorage: true});
         this.transitionTo(redirectAddress);
       }
     } else {
-      this._redirectToDefaultOrganization();
+      this.get('redirects').redirectToDefaultOrganization();
     }
   },
 

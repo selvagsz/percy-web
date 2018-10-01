@@ -73,7 +73,7 @@ export default function() {
     }
     let organizationUsers = schema.organizationUsers.where({userId: user.id});
     let organizationIds = organizationUsers.models.map(obj => obj.organizationId);
-    return schema.organizations.where({id: organizationIds});
+    return schema.organizations.find(organizationIds);
   });
 
   this.patch('/email-verifications/**', function(schema, request) {

@@ -73,6 +73,8 @@ Router.map(function() {
   this.route('setup', {path: '/setup'}, function() {
     this.route('github-app');
   });
+  this.route('default-org');
+  this.route('most-recent-org');
   this.route('organizations', {path: '/organizations'}, function() {
     this.route('new');
     this.route('organization', {path: '/:organization_id'}, function() {

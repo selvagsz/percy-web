@@ -51,7 +51,7 @@
 
     <div class="flex items-center">
       {{#if session.isAuthenticated}}
-        <a class="btn btn-primary px-2 ml-2" {{action redirectToDefaultOrganization}}>Go to app</a>
+        {{#link-to 'most-recent-org' class="btn btn-primary px-2 ml-2"}}Go to app{{/link-to}}
       {{else}}
         <a class="px-2 text-purple-600 font-semibold hover:no-underline hover:text-purple-800 cursor-pointer" {{action "clickLogin"}}>Login</a>
         <a class="btn btn-primary ml-1" {{action "clickSignup"}}>Start Free Trial</a>

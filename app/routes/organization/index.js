@@ -1,9 +1,12 @@
 import Route from '@ember/routing/route';
 import localStorageProxy from 'percy-web/lib/localstorage';
+import {inject as service} from '@ember/service';
 
 export default Route.extend({
+  redirects: service(),
+
   redirect() {
-    this.send('redirectToDefaultOrganization');
+    return this.get('redirects').redirectToDefaultOrganization();
   },
   afterModel(model) {
     return model

@@ -98,7 +98,7 @@ describe('Acceptance: Marketing pages', function() {
       });
       it('can select startup plan', async function() {
         stubLockModal(this.application);
-        await click('[data-test-small-pricing-card-cta]');
+        await click('.data-test-small-pricing-card-cta');
         const expectedPath = authenticated ? 'organizations.new' : 'login';
         expect(currentPath()).to.equal(expectedPath);
       });
@@ -112,7 +112,7 @@ describe('Acceptance: Marketing pages', function() {
       });
       it('can select "Sign up for a free personal account."', async function() {
         stubLockModal(this.application);
-        await click('[data-test-free-personal-account]');
+        await click('.data-test-free-personal-account');
         const expectedPath = authenticated ? 'organizations.new' : 'login';
         expect(currentPath()).to.equal(expectedPath);
       });
