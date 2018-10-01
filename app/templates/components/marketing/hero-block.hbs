@@ -1,15 +1,15 @@
 <div class="text-center py-3 mx-auto max-w-lg">
-  {{#if content.superheader}}
+  {{#if @content.superheader}}
     <h2 class="uppercase inline-block py-sm mb-1 text-sm font-bold text-gray-300 tracking-wide border-b hero-block-superheader">
-      {{content.superheader}}
+      {{@content.superheader}}
     </h2>
   {{/if}}
 
-  <h1 class="hero-block-header text-3xl md:text-4xl lg:text-5xl font-bold mb-1">{{content.header}}</h1>
+  <h1 class="hero-block-header text-3xl md:text-4xl lg:text-5xl font-bold mb-1">{{@content.header}}</h1>
 
-  {{#if content.subheadText}}
+  {{#if @content.subheadText}}
     <div class="hero-block-subheader text-lg sm:text-xl text-gray-400 mb-1" >
-      {{content.subheadText}}
+      {{@content.subheadText}}
     </div>
   {{/if}}
 </div>

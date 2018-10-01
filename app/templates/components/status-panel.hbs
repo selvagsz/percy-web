@@ -1,11 +1,11 @@
 <div class="container-xs animate-fade-in-up" data-test-status-panel>
   <div class="bg-white rounded shadow-l p-4 text-center">
     <figure class="svg-container mb-2 animate-tada">
-      {{inline-svg inlineSvgName class="mx-auto"}}
+      {{inline-svg @inlineSvgName class="mx-auto"}}
     </figure>
-    <h2 class="font-normal text-xl md:text-2xl mb-2">{{mainText}}</h2>
+    <h2 class="font-normal text-xl md:text-2xl mb-2">{{@mainText}}</h2>
     <p class="alt-p text-gray-400">
-      {{{secondaryText}}}
+      {{{@secondaryText}}}
     </p>
     {{yield}}
   </div>

@@ -1,6 +1,6 @@
-<div class="browser-switcher-diff-count text-center absolute bg-white font-weight-semibold px-sm leading-none z-1 {{if isActive "text-white shadow-purple-lg bg-purple-600" "text-purple-600"}} {{if (and (eq unnapprovedSnapshotCount 0) isActive) "bg-green-500 shadow-green-lg"}}" data-test-browser-switcher-diff-count>
-  {{#if unnapprovedSnapshotCount}}
-    {{unnapprovedSnapshotCount}}
+<div class="browser-switcher-diff-count text-center absolute bg-white font-weight-semibold px-sm leading-none z-1 {{if @isActive "text-white shadow-purple-lg bg-purple-600" "text-purple-600"}} {{if (and (eq @unnapprovedSnapshotCount 0) @isActive) "bg-green-500 shadow-green-lg"}}" data-test-browser-switcher-diff-count>
+  {{#if @unnapprovedSnapshotCount}}
+    {{@unnapprovedSnapshotCount}}
   {{else}}
   <div data-test-browser-switcher-diff-count-all-approved>
     {{inline-svg "check-icon"}}

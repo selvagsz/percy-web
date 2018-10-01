@@ -8,31 +8,22 @@
     <div class="{{if isNavHidden "hidden lg:block"}}">
       <div style="top: 100%;" class="absolute lg:static pin-r pin-l bg-white lg:bg-transparent rounded shadow-purple-xl lg:shadow-none lg:items-center font-semibold flex flex-col lg:flex-row">
         {{#link-to "visual-testing" class="block p-2 lg:px-2 lg:py-1 text-purple-600 text-lg lg:text-nav border-b border-purple-300 lg:border-none hover:no-underline hover:text-purple-800"}}Visual Testing{{/link-to}}
-        <div class="menu-bar-item order-first lg:order-normal cursor-pointer relative p-2 lg:px-2 lg:py-1 text-purple-600 border-b border-purple-300 lg:border-none lg:hover:text-purple-800">
+        <div class="menu-bar-item order-first lg:order-normal cursor-pointer relative p-2 lg:px-2 lg:py-1 border-b border-purple-300 lg:border-none lg:hover:text-purple-800">
           {{#link-to "features" class="block text-lg lg:text-nav text-purple-600 hover:text-purple-800 mb-1 lg:mb-0 hover:no-underline"}}Product{{/link-to}}
           <ul style="top: 100%; left: 50%;" class="menu-bar-dropdown lg:shadow-purple-xl lg:w-64 lg:absolute lg:hidden list-reset mb-0 bg-white rounded">
             {{marketing/menu-bar-dropdown-item
-              tagName=""
               text="Features"
               linkRoute="features"
               icon="marketing/conveyor"
               linkColor="text-purple-600"
             }}
             {{marketing/menu-bar-dropdown-item
-              tagName=""
               text="How it works"
               linkRoute="how-it-works"
               icon="marketing/green-tag-page"
               linkColor="text-green-600"
             }}
-            {{!-- {{marketing/menu-bar-dropdown-item
-              tagName=""
-              text="Integrations"
-              linkRoute="integrations"
-              icon="marketing/git"
-            }} --}}
             {{marketing/menu-bar-dropdown-item
-              tagName=""
               text="Docs"
               linkRoute="docs"
               icon="marketing/red-stack"

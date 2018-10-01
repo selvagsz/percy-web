@@ -6,8 +6,7 @@
     <div>
       <div class="flex items-center">
         {{menu-icon
-          class="mr-2 cursor-pointer show-on-tablet"
-          toggleSidebar=toggleSidebar
+          toggleSidebar=(action toggleSidebar)
           isSidebarVisible=isSidebarVisible
         }}
         <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
