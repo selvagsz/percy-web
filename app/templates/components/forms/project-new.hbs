@@ -1,21 +1,21 @@
 {{title "Create a new project"}}
-<p>
-  Projects are how we group related builds in Percy. Usually, you'll want to use the name of your repository or the name of your site.
-</p>
-<form action="javascript:;">
-  {{form-fields/input
-      property="name"
-      title="Project name"
-      changeset=changeset
-      validateProperty=(action "validateProperty" changeset "name")
-      autofocus=true
-      placeholder="widgets-web-app"
-  }}
-  {{#if organization.isVersionControlIntegrated}}
-    <strong>Link a repository</strong>
-    {{projects/repo-integrator project=model}}
-  {{/if}}
 
-  <br>
-  {{form-fields/submit value="Create Project" classes="Button Button--primary" submit=(action "save")}}
+<form action="javascript:;">
+  <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
+        property="name"
+        title="Project name"
+        changeset=changeset
+        validateProperty=(action "validateProperty" changeset "name")
+        autofocus=true
+        placeholder="widgets-web-app"
+    }}
+    {{#if organization.isVersionControlIntegrated}}
+      <strong>Link a repository</strong>
+      {{projects/repo-integrator project=model}}
+    {{/if}}
+  </div>
+  <div class="flex justify-end">
+    {{form-fields/submit value="Create Project" classes="btn btn-primary shadow-purple-lg mb-0" submit=(action "save")}}
+  </div>
 </form>

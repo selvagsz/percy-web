@@ -1,9 +1,16 @@
-<div class="container container--fixedWidth container--forContent">
-  <div class="row">
-    <div class="twelve columns">
-      <h2>Create a new project</h2>
-
-      {{forms/project-new organization=model saveSuccess="projectCreated"}}
+<div class="flex h-screen-header">
+  <div class="flex flex-1 items-center md:max-w-sm bg-white border-r">
+    <div>
+      <section class="px-4">
+        <h2 class="text-xl font-semibold mb-sm">Create a new project</h2>
+        <p class="text-gray-400">
+          Projects are how we group related builds in Percy. Usually, you'll want to use the name of your repository or the name of your site.
+        </p>
+        {{forms/project-new organization=model saveSuccess="projectCreated"}}
+      </section>
     </div>
+  </div>
+  <div class="hidden md:flex flex-1 items-center justify-center bg-gray-000 bg-white-pattern">
+    {{inline-svg "percy-logo-lg-on-light"}}
   </div>
 </div>
