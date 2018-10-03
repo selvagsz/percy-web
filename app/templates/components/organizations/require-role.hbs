@@ -1,4 +1,4 @@
-{{#if (eq @role @organization.currentUserMembership.role)}}
+{{#if (eq role organization.currentUserMembership.role)}}
   {{yield}}
 {{else}}
   <div class="px-2">

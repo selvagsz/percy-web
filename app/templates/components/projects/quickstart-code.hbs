@@ -17,10 +17,10 @@ bundle install
   the <a href="https://github.com/percy/percy-capybara">percy-capybara client</a>.
 </p>
 
-{{#if @project.tokens.isPending}}
+{{#if project.tokens.isPending}}
   {{#code-block}}<em>Loading...</em>{{/code-block}}
 {{/if}}
-{{#with @project.writeOnlyToken.token as |token|}}
+{{#with project.writeOnlyToken.token as |token|}}
   {{#code-block lang="nohighlight"}}PERCY_TOKEN={{token}} \
 bundle exec ruby visual-tests.rb
   {{/code-block}}

@@ -2,15 +2,15 @@
   <tr>
     <td>Commit</td>
     <td>
-      {{#if @build.isRepoLinked}}
-        <code><a href="{{build.repo.htmlUrl}}/tree/{{build.branch}}">{{@build.branch}}</a></code>
+      {{#if build.isRepoLinked}}
+        <code><a href="{{build.repo.htmlUrl}}/tree/{{build.branch}}">{{build.branch}}</a></code>
         @
-        <a href="{{build.repo.htmlUrl}}/commit/{{commit.sha}}">{{@commit.shaShort}}</a>
+        <a href="{{build.repo.htmlUrl}}/commit/{{commit.sha}}">{{commit.shaShort}}</a>
       {{else}}
-        {{@build.branch}} @ {{@commit.shaShort}}
+        {{build.branch}} @ {{commit.shaShort}}
       {{/if}}
     </td>
   </tr>
-  <tr><td>Committer</td><td>{{@commit.authorName}}</td></tr>
-  <tr><td>Message</td><td class="BuildInfoDropdown-commitMessage">{{@commit.message}}</td></tr>
+  <tr><td>Committer</td><td>{{commit.authorName}}</td></tr>
+  <tr><td>Message</td><td class="BuildInfoDropdown-commitMessage">{{commit.message}}</td></tr>
 </table>
