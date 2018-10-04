@@ -1,3 +1,4 @@
+import {computed} from '@ember/object';
 import {equal, or} from '@ember/object/computed';
 import DS from 'ember-data';
 import {
@@ -24,4 +25,20 @@ export default DS.Model.extend({
   isGithubRepoFamily: or('isGithubRepo', 'isGithubEnterpriseRepo'),
   isGitlabRepo: equal('source', GITLAB_INTEGRATION_TYPE),
   isGitlabSelfHostedRepo: equal('source', GITLAB_SELF_HOSTED_INTEGRATION_TYPE),
+  branchUrlFragment: computed('source', function() {
+    let source = this.get('source');
+    if (source === 'bitbucket') {
+      return 'src';
+    } else {
+      return 'tree';
+    }
+  }),
+  commitUrlFragment: computed('source', function() {
+    let source = this.get('source');
+    if (source === 'bitbucket') {
+      return 'commits';
+    } else {
+      return 'commit';
+    }
+  }),
 });

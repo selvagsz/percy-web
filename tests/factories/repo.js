@@ -4,7 +4,7 @@ import faker from 'faker';
 FactoryGuy.define('repo', {
   default: {
     name: () => faker.lorem.slug(20),
-    htmlUrl: () => faker.internet.url(),
+    htmlUrl: f => `https://${f.hostname}/org/repo`,
     slug: () => faker.lorem.slug(),
     source: 'none',
     hostname: '',
@@ -26,6 +26,10 @@ FactoryGuy.define('repo', {
     gitlabSelfHosted: {
       source: 'gitlab_self_hosted',
       hostname: 'gitlab.example.com',
+    },
+    bitbucket: {
+      source: 'bitbucket',
+      hostname: 'bitbucket.com',
     },
   },
 });

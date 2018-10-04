@@ -1,11 +1,11 @@
-<table>
+<table data-test-commit-table>
   <tr>
     <td>Commit</td>
     <td>
-      {{#if build.isRepoLinked}}
-        <code><a href="{{build.repo.htmlUrl}}/tree/{{build.branch}}">{{build.branch}}</a></code>
+      {{#if isRepoLinked}}
+        <code><a data-test-commit-table-branch-url href="{{branchUrl}}">{{@build.branch}}</a></code>
         @
-        <a href="{{build.repo.htmlUrl}}/commit/{{commit.sha}}">{{commit.shaShort}}</a>
+        <a data-test-commit-table-commit-url href="{{commitUrl}}">{{@commit.shaShort}}</a>
       {{else}}
         {{build.branch}} @ {{commit.shaShort}}
       {{/if}}

@@ -23,7 +23,9 @@ FactoryGuy.define('build', {
     withRepo: {repo: FactoryGuy.belongsTo('repo')},
     withGithubRepo: {repo: FactoryGuy.belongsTo('repo', 'github')},
     withGitlabRepo: {repo: FactoryGuy.belongsTo('repo', 'gitlab')},
+    withGitlabSelfHostedRepo: {repo: FactoryGuy.belongsTo('repo', 'gitlabSelfHosted')},
     withGithubEnterpriseRepo: {repo: FactoryGuy.belongsTo('repo', 'githubEnterprise')},
+    withBitbucketRepo: {repo: FactoryGuy.belongsTo('repo', 'bitbucket')},
     finished: {
       state: 'finished',
       finishedAt: () =>
