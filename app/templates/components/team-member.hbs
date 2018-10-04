@@ -1,43 +1,17 @@
 <div class="team-member mb-7" style={{setGridItemOrder}}>
-  <img src="{{img}}" alt="team-member-photo" class="team-member-photo">
+  <img src="{{profile.img.file.url}}" alt="team-member-photo" class="team-member-photo">
   <div class="social-toolbar flex justify-center">
     <div class="social-toolbar-items flex items-center px-1">
-      {{#if social-twitter}}
-        <a href="http://www.twitter.com/{{social-twitter}}" class="social-toolbar-item">
-          {{inline-svg "twitter-icon"}}
-        </a>
-      {{/if}}
-      {{#if social-instagram}}
-        <a href="http://www.instagram.com/{{social-instagram}}" class="social-toolbar-item">
-          {{inline-svg "instagram-icon"}}
-        </a>
-      {{/if}}
-      {{#if social-github}}
-        <a href="http://www.github.com/{{social-github}}" class="social-toolbar-item">
-          {{inline-svg "github-icon"}}
-        </a>
-      {{/if}}
-      {{#if social-linkedin}}
-        <a href="http://www.linkedin.com/in/{{social-linkedin}}" class="social-toolbar-item">
-          {{inline-svg "linkedin-icon"}}
-        </a>
-      {{/if}}
-      {{#if social-website}}
-        <a href="http://www.{{social-website}}" class="social-toolbar-item">
-          {{inline-svg "website-icon"}}
-        </a>
-      {{/if}}
-      {{#if social-photos}}
-        <a href="{{social-photos}}" class="social-toolbar-item">
-          {{inline-svg "photos-icon"}}
-        </a>
-      {{/if}}
+      {{#each profile.iconLinks as |iconLink|}}
+        <a href="{{iconLink.url}}" class="social-toolbar-item">
+        <img src="{{iconLink.icon.file.url}}" alt="{{iconLink.icon.description}}"></a>
+      {{/each}}
     </div>
   </div>
-  <div class="team-member-name text-lg font-semibold text-center">{{name}}</div>
-  <div class="team-member-title text-gray-400 text-center mb-1">{{title}}</div>
+  <div class="team-member-name text-lg font-semibold text-center">{{profile.name}}</div>
+  <div class="team-member-title text-gray-400 text-center mb-1">{{profile.title}}</div>
   <div class="label-container pr-4">
-    {{#each labels as |label|}}
+    {{#each profile.labels as |label|}}
       <div class="label mr-sm mb-sm">{{label}}</div>
     {{/each}}
   </div>

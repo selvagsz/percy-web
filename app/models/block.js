@@ -22,6 +22,9 @@ export default Contentful.extend({
 
   faqBlock: lookupContentfulModel('id', 'faq'),
   isFaqBlock: bool('faqBlock'),
+
+  profileBlock: lookupContentfulModel('id', 'profile-block'),
+  isProfileBlock: bool('profileBlock'),
 });
 
 function lookupContentfulModel(idKey, modelName) {
