@@ -1,3 +1,6 @@
+{{#unless isBuildApprovable}}
+  {{public-project-notice}}
+{{/unless}}
 <div>
   {{snapshot-viewer-header
     fullscreen=true
@@ -16,9 +19,6 @@
   }}
 </div>
 <div class="SnapshotViewerFull-body">
-  {{#unless isBuildApprovable}}
-    {{public-project-notice viewedObject="build"}}
-  {{/unless}}
   {{#if selectedComparison}}
     {{comparison-viewer-full
       comparison=selectedComparison

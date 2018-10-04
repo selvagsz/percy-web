@@ -1,6 +1,6 @@
 <div class="build-header" data-test-build-header>
   {{#unless isBuildApprovable}}
-    {{public-project-notice viewedObject="build"}}
+    {{public-project-notice}}
   {{/unless}}
   <div class="build-header-state relative flex justify-between items-center py-3 pr-2 pl-3 is-{{dasherize build.state}} is-{{if build.isFinished (dasherize build.reviewState)}} border-b border-gray-000">
     {{#unless build.isFinished}}

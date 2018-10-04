@@ -1,16 +1,11 @@
-<div class="p-2 bg-gray-000 border border-gray-100 u-text-left" data-test-public-project-notice>
-  <strong>
-    You're viewing a public {{viewedObject}}.
-  </strong>
-  You can look around,
-    {{#if (not currentUser)}}
-    but you'll need to
-      <a href="#" {{action "showLoginModal"}} class="link-blue">
-        Sign in
-      </a>
-    to
+<div class="public-project-notice p-2 border border-gray-100 flex items-center justify-start md:justify-between flex-wrap md:flex-no-wrap" >
+  <div class="flex items-center">
+    {{fa-icon "globe" class="fa-2x text-blue-200 mr-2"}}
+    {{displayText}}
+  </div>
+  {{#if currentUser}}
+    {{#link-to "default-org" class="btn btn-primary mr-2 mt-2 ml-5 md:ml-0 md:mt-0"}}{{btnText}}{{/link-to}}
   {{else}}
-    but you won't be able to
+    <a href="#" {{action "showLoginModal"}} class="btn btn-primary mt-2 ml-5 md:ml-0 md:mt-0">{{btnText}}</a>
   {{/if}}
-  approve anything.
 </div>
