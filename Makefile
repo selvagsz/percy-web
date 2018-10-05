@@ -9,7 +9,7 @@ build-test: _pull_parent_image
 	docker-compose build --build-arg testing="true" web
 
 test: _pull_parent_image
-	docker-compose run web yarn test:parallel
+	docker-compose run web yarn test:parallel | tee build.log | fgrep --invert-match '35mpercy'
 
 publish:
 	@utils/publish

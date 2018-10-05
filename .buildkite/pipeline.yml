@@ -4,6 +4,8 @@ steps:
       - "make build-test"
       - "make test"
     timeout_in_minutes: 20
+    artifact_paths:
+      - "build.log"
 
   - label: ":percy::hamster: publish"
     branches: "master"
