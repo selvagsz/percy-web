@@ -74,6 +74,12 @@ FactoryGuy.define('build', {
       pullRequestHtmlUrl: f => `http://example.com/pull/${f.pullRequestNumber}`,
       pullRequestTitle: () => faker.lorem.sentence(5),
     },
+    hasMergeRequest: {
+      isPullRequest: true,
+      pullRequestNumber: 123,
+      pullRequestHtmlUrl: f => `http://example.com/merge_requests/${f.pullRequestNumber}`,
+      pullRequestTitle: () => faker.lorem.sentence(5),
+    },
     hasPullRequestWithoutTitle: {
       isPullRequest: true,
       pullRequestHtmlUrl: f => `http://example.com/pull/${f.pullRequestNumber}`,

@@ -4,7 +4,7 @@ export function repoLogo([repo]) {
   if (repo) {
     if (repo.get('isGithubRepoFamily')) {
       return 'github-icon';
-    } else if (repo.get('isGitlabRepo')) {
+    } else if (repo.get('isGitlabRepoFamily')) {
       return 'gitlab-icon';
     }
   }

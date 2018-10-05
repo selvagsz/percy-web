@@ -85,4 +85,44 @@ describe('Integration: BuildInfoDropdownComponent', function() {
 
     percySnapshot(this.test);
   });
+
+  describe('with a gitlab self-hosted repo', function() {
+    beforeEach(function() {
+      const build = make('build', 'withGitlabSelfHostedRepo', 'hasMergeRequest', {buildNumber: 1});
+      this.setProperties({build});
+
+      this.render(hbs`{{build-info-dropdown
+        build=build
+        isShowingModal=true
+        renderInPlace=true
+      }}`);
+    });
+
+    it('has the correct pull request label', function() {
+      expect(BuildInfoDropdown.pullRequestLabel.text, 'pull request label is incorrect').to.equal(
+        'Merge Request',
+      );
+      percySnapshot(this.test.fullTitle(), {widths: [450]});
+    });
+  });
+
+  describe('with a github repo', function() {
+    beforeEach(function() {
+      const build = make('build', 'withGithubRepo', 'hasPullRequest', {buildNumber: 1});
+      this.setProperties({build});
+
+      this.render(hbs`{{build-info-dropdown
+        build=build
+        isShowingModal=true
+        renderInPlace=true
+      }}`);
+    });
+
+    it('has the correct pull request label', function() {
+      expect(BuildInfoDropdown.pullRequestLabel.text, 'pull request label is incorrect').to.equal(
+        'Pull Request',
+      );
+      percySnapshot(this.test.fullTitle(), {widths: [450]});
+    });
+  });
 });

@@ -209,7 +209,10 @@ describe('Acceptance: GitLab Integration Settings', function() {
         );
         await GitlabSettings.delete();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
-        expect(IntegrationsIndexPage.gitlabSelfHostedIntegration.hasContactButton).to.equal(true);
+        expect(
+          IntegrationsIndexPage.gitlabSelfHostedIntegration.hasInstallButton,
+          'Install button is mising',
+        ).to.equal(true);
 
         await percySnapshot(this.test.fullTitle());
       });

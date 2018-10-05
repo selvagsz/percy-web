@@ -148,4 +148,33 @@ describe('Integration: BuildCard', function() {
       );
     });
   });
+
+  describe('with a gitlab self-hosted repo', function() {
+    beforeEach(function() {
+      const build = make('build', 'withGitlabSelfHostedRepo', 'hasMergeRequest', {buildNumber: 1});
+      this.setProperties({build});
+
+      this.render(hbs`{{build-card
+        build=build
+      }}`);
+    });
+
+    it('has a pull request URL', function() {
+      expect(
+        BuildCard.commitDetails.pullRequestUrl.link,
+        'pull request link is incorrect',
+      ).to.equal('http://example.com/merge_requests/123');
+    });
+
+    it('shows the gitlab logo', function() {
+      percySnapshot(this.test.fullTitle());
+      expect(
+        BuildCard.sourceCodeMetadata.gitlabLogo.isVisible,
+        'gitlab logo is not visible',
+      ).to.equal(true);
+      expect(BuildCard.sourceCodeMetadata.githubLogo.isVisible, 'github logo is visible').to.equal(
+        false,
+      );
+    });
+  });
 });

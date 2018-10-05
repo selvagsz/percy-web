@@ -38,19 +38,19 @@
         </tr>
       {{/if}}
 
-      {{#if build.isGithubPullRequest}}
+      {{#if build.isPullRequestPresent}}
         <tr>
-          <td>Pull Request</td>
+          <td data-test-pull-request-label>{{build.pullRequestLabel}}</td>
           <td>
             {{#if build.pullRequestTitle}}
-              <a href="{{build.repo.htmlUrl}}/pull/{{build.pullRequestNumber}}">{{build.pullRequestTitle}}</a>
+              <a href="{{build.pullRequestHtmlUrl}}">{{build.pullRequestTitle}}</a>
             {{/if}}
             {{#if build.pullRequestNumber}}
               <span class="BuildOverviewInfo-prNumber">
                 {{#if build.pullRequestTitle}}
                   #{{build.pullRequestNumber}}
                 {{else}}
-                  <a href="{{build.repo.htmlUrl}}/pull/{{build.pullRequestNumber}}">#{{build.pullRequestNumber}}</a>
+                  <a href="{{build.pullRequestHtmlUrl}}">#{{build.pullRequestNumber}}</a>
                 {{/if}}
               </span>
             {{/if}}

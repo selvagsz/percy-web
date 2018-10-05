@@ -57,7 +57,8 @@ describe('Integration | Component | organizations/integrations/integration-item'
         integrationName="gitlab_self_hosted"
         organization=organization}}`);
 
-      expect(IntegrationItem.hasContactButton).to.equal(true);
+      expect(IntegrationItem.hasInstallButton, 'Install button is mising').to.equal(true);
+
       percySnapshot(this.test);
     });
 

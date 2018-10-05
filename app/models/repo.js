@@ -25,6 +25,7 @@ export default DS.Model.extend({
   isGithubRepoFamily: or('isGithubRepo', 'isGithubEnterpriseRepo'),
   isGitlabRepo: equal('source', GITLAB_INTEGRATION_TYPE),
   isGitlabSelfHostedRepo: equal('source', GITLAB_SELF_HOSTED_INTEGRATION_TYPE),
+  isGitlabRepoFamily: or('isGitlabRepo', 'isGitlabSelfHostedRepo'),
   branchUrlFragment: computed('source', function() {
     let source = this.get('source');
     if (source === 'bitbucket') {

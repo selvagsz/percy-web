@@ -28,7 +28,7 @@ export default DS.Model.extend({
   // Check isRepoLinked before accessing repo.
   isRepoLinked: bool('repo'),
 
-  isGithubPullRequest: and('isRepoLinked', 'isPullRequest'),
+  isPullRequestPresent: and('isRepoLinked', 'isPullRequest'),
   repoSource: alias('repo.source'),
   isGithubRepo: alias('repo.isGithubRepo'),
   isGithubRepoFamily: alias('repo.isGithubRepoFamily'),
@@ -160,6 +160,13 @@ export default DS.Model.extend({
   pullRequestNumber: DS.attr('number'),
   pullRequestHtmlUrl: DS.attr(),
   pullRequestTitle: DS.attr(),
+  pullRequestLabel: computed('repo.source', function() {
+    if (this.get('repo.isGitlabRepoFamily')) {
+      return 'Merge Request';
+    } else {
+      return 'Pull Request';
+    }
+  }),
 
   finishedAt: DS.attr('date'),
   approvedAt: DS.attr('date'),

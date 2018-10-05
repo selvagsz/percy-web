@@ -62,7 +62,7 @@
         {{else}}
           Changes from
         {{/if}}
-        {{#if build.isPullRequest}}
+        {{#if build.isPullRequestPresent}}
           <a href="{{build.pullRequestHtmlUrl}}" class="font-semibold truncate ml-sm">#{{build.pullRequestNumber}} - {{build.pullRequestTitle}}</a>
         {{else}}
           <code class="ml-sm truncate">
