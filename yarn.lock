@@ -639,9 +639,9 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-1.0.3.tgz#da9f3481a0e386abd36ac7c0d2fe6e1d8c1058f7"
 
-"@percy/agent@0.0.43":
-  version "0.0.43"
-  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.0.43.tgz#17836eee7da859de14bd3e44d8d3a9047637b29f"
+"@percy/agent@0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.0.44.tgz#09735ff19c4215f58435958eef8b19ecbb904dd4"
   dependencies:
     "@oclif/command" "^1"
     "@oclif/config" "^1"
@@ -749,8 +749,8 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.32.tgz#1b64134f630b30c9cda4810aa4a94fc2d4141dbd"
 
 "@types/puppeteer@^1.6.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.8.0.tgz#b414871bfeaf7a20976b955f3a7546b81091d0b4"
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.9.0.tgz#9a4bcca1902259e2cea6e6be7b4a540aad13785e"
   dependencies:
     "@types/node" "*"
 
@@ -766,8 +766,8 @@
     "@types/mime" "*"
 
 "@types/sinon@^5.0.1":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-5.0.3.tgz#2b1840122f372350c563e3ceda2f447b55f3a927"
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-5.0.4.tgz#a765b390b373cf01a3b19b0c97f9eb4bb2a168b1"
 
 "@webassemblyjs/ast@1.7.8":
   version "1.7.8"
@@ -5158,9 +5158,9 @@ ember-page-title@^4.0.0:
 
 ember-percy@percy/ember-percy.git#agentified:
   version "1.4.1"
-  resolved "https://codeload.github.com/percy/ember-percy/tar.gz/71edfde942d3330a294ee7142f34e4a6ddfe1775"
+  resolved "https://codeload.github.com/percy/ember-percy/tar.gz/212c994aa02aa55953182226624d45a5a2a3402e"
   dependencies:
-    "@percy/agent" "0.0.43"
+    "@percy/agent" "0.0.44"
     ember-cli-babel "^6.10.0"
 
 ember-power-select@^1.10.4:
