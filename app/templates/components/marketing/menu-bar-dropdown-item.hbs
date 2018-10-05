@@ -7,7 +7,7 @@
       <div class="flex items-center font-semibold {{linkColor}}">
         {{text}}
         {{#if isExternal}}
-          {{fa-icon "external-link" style="top: 1px;" class="relative text-gray-200 ml-1"}}
+          {{fa-icon "external-link" style=(html-safe "top: 1px;") class="relative text-gray-200 ml-1"}}
         {{/if}}
       </div>
     </div>
