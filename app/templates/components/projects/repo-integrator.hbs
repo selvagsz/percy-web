@@ -1,5 +1,8 @@
 {{#if organization.isVersionControlIntegrated}}
-  <p class="text-gray-400 mb-2">You can optionally link this project to a repository. This enables {{#link-to "docs.page" "integrations/overview" class="font-semibold"}}Pull Request integration{{/link-to}} for this project.</p>
+  <p class="text-gray-400 mb-2">
+    You can optionally link this project to a repository. This enables
+    <a class="font-semibold" href="https://docs.percy.io/docs/github">Pull Request integration</a> for this project.
+  </p>
   <div class='repo-selector flex items-center mb-2'>
     {{#power-select
       selected=selectedRepo

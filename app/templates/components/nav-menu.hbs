@@ -1,6 +1,6 @@
 <div class="flex items-center {{if isTransparentHeader "link-dark"}}">
   {{#link-to "docs.index" class="hide-on-tablet"}}Docs{{/link-to}}
-  {{#link-to "docs.page" "tutorials/example-apps" class="ml-3 hide-on-tablet"}}Tutorials{{/link-to}}
+  <a class="ml-3 hide-on-tablet" href="https://docs.percy.io/docs/example-apps">Tutorials</a>
   {{#if session.isAuthenticated}}
     {{user-menu user=user class="link-white ml-3"}}
   {{else}}
