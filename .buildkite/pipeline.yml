@@ -12,6 +12,10 @@ steps:
     commands:
       - "make publish"
     timeout_in_minutes: 20
+    retry:
+      automatic:
+        exit_status: "*"
+        limit: 2
 
   - wait
 
