@@ -15,7 +15,7 @@ export default Component.extend(EnsureStatefulLogin, {
     if (this.get('currentUser')) {
       return 'You’re viewing a public Percy project. Only members of this organization can approve snapshots.';  // eslint-disable-line
     } else {
-      return 'Welcome to Percy! Sign in to approve snapshots or create an account to start a free trial.'  // eslint-disable-line
+      return 'Welcome to Percy! Sign in to approve snapshots or create an account to start a free visual testing trial.'  // eslint-disable-line
     }
   }),
 
