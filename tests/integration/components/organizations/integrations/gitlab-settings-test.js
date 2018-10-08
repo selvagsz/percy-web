@@ -36,16 +36,15 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-    });
-
-    it('shows the settings form', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
         currentGitlabIntegration=gitlabIntegration
-        afterDelete=(action "redirectToIntegrationsIndex")
       }}`);
+    });
+
+    it('shows the settings form', function() {
       expect(GitlabSettings.isPersonalAccessTokenFieldVisible).to.eq(true);
       expect(GitlabSettings.integrationSettings.personalAccessTokenField.inputPlaceholder).to.equal(
         '••••••••••••••••••••',
@@ -64,14 +63,19 @@ describe('Integration: GitlabSettings', function() {
     });
 
     it('validates the personal access token field', function() {
-      this.render(hbs`{{
-        organizations/integrations/gitlab-settings
-        currentGitlabIntegration=gitlabIntegration
-        currentUser=user
-        organization=organization
-      }}`);
       GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
       percySnapshot(this.test.fullTitle());
+    });
+
+    it('does not show the firewall contact link', function() {
+      expect(
+        GitlabSettings.header.isFirewallNotePresent,
+        'Firewall note should not be present',
+      ).to.equal(false);
+      expect(
+        GitlabSettings.header.isSupportLinkPresent,
+        'Support link is present, should not be',
+      ).to.equal(false);
     });
   });
 
@@ -87,15 +91,15 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-    });
-
-    it('shows the settings form', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
         currentGitlabIntegration=gitlabIntegration
       }}`);
+    });
+
+    it('shows the settings form', function() {
       expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,
@@ -126,15 +130,28 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-    });
-
-    it('shows the settings form', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
         currentGitlabIntegration=gitlabIntegration
       }}`);
+    });
+
+    it('shows the firewall contact link', function() {
+      expect(
+        GitlabSettings.header.isFirewallNotePresent,
+        'Firewall note should be present',
+      ).to.equal(true);
+      expect(GitlabSettings.header.text).to.equal(
+        'If you’re running GitLab behind a firewall, please get in touch.',
+      );
+      expect(GitlabSettings.header.isSupportLinkPresent, 'Support link is not present').to.equal(
+        true,
+      );
+    });
+
+    it('shows the settings form', function() {
       expect(GitlabSettings.isGitlabHostFieldVisible).to.equal(
         true,
         'Gitlab Host field not visible',
@@ -155,24 +172,12 @@ describe('Integration: GitlabSettings', function() {
     });
 
     it('validates the gitlab personal access token field correctly', function() {
-      this.render(hbs`{{
-        organizations/integrations/gitlab-settings
-        currentUser=user
-        organization=organization
-        currentGitlabIntegration=gitlabIntegration
-      }}`);
       expect(GitlabSettings.isGitlabHostFieldVisible, 'Host field is not visible').to.eq(true);
       GitlabSettings.integrationSettings.gitlabHostField.fillIn('httpd://gitlab.percy.io');
       percySnapshot(this.test.fullTitle());
     });
 
     it('validates the gitlab host field correctly', function() {
-      this.render(hbs`{{
-        organizations/integrations/gitlab-settings
-        currentUser=user
-        organization=organization
-        currentGitlabIntegration=gitlabIntegration
-      }}`);
       expect(GitlabSettings.isGitlabHostFieldVisible, 'Host field is not visible').to.eq(true);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,
@@ -196,15 +201,15 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-    });
-
-    it('shows the settings form', function() {
       this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
         currentGitlabIntegration=gitlabIntegration
       }}`);
+    });
+
+    it('shows the settings form', function() {
       expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,

@@ -17,4 +17,14 @@ export default Component.extend({
       return record.get('dirtyType') === 'created';
     }
   }),
+
+  actions: {
+    openIntercom() {
+      const messageText =
+        "Hi! I'd like to run GitLab Self-Managed behind a firewall." +
+        ' Do you have information for me on how to get started?';
+
+      window.Intercom('showNewMessage', messageText);
+    },
+  },
 });

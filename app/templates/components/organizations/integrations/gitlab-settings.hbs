@@ -1,7 +1,15 @@
-<section class="px-2 pt-3">
+<section data-test-integration-header class="px-2 pt-3">
   <div class="w-3/4 pb-3">
     <h1 class="text-xl font-semibold mb-sm">Set up GitLab</h1>
-    <p class="text-gray-400">We’ll need just a bit of information to get Percy set up on your GitLab account. If you need some help, check out our <strong>{{#link-to "docs.page" "integrations/gitlab"}}Percy + GitLab{{/link-to}}</strong> doc to guide you through the set up process.</p>
+    <p class="text-gray-400">
+      We’ll need just a bit of information to get Percy set up on your GitLab account.
+      If you need some help, check out our <strong>{{#link-to "docs.page" "integrations/gitlab"}}Percy + GitLab{{/link-to}}</strong> doc to guide you through the set up process.
+      {{#if currentGitlabIntegration.isGitlabSelfHostedIntegration}}
+        <span data-test-integration-note>
+          If you’re running GitLab behind a firewall, please <a href="#" data-test-integration-contact-support {{action "openIntercom"}}>get in touch</a>.
+        </span>
+      {{/if}}
+    </p>
   </div>
 </section>
 

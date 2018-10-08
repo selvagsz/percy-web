@@ -14,6 +14,9 @@ import {alias} from 'ember-cli-page-object/macros';
 
 const SELECTORS = {
   GITLAB_INTEGRATION: '[data-test-gitlab-settings]',
+  INTEGRATION_HEADER: '[data-test-integration-header]',
+  INTEGRATION_NOTE: '[data-test-integration-note]',
+  CONTACT_SUPPORT: '[data-test-integration-contact-support]',
   INTEGRATION_SETTINGS_FORM: '[data-test-gitlab-settings-edit-form]',
   PERSONAL_ACCESS_TOKEN_INPUT: '[data-test-gitlab-personal-access-token-field]',
   GITLAB_HOST_INPUT: '[data-test-gitlab-host-field]',
@@ -23,7 +26,13 @@ const SELECTORS = {
 };
 
 export const GitlabSettings = {
-  scope: SELECTORS.GITLAB_INTEGRATION,
+  header: {
+    scope: SELECTORS.INTEGRATION_HEADER,
+    isFirewallNotePresent: isVisible(SELECTORS.INTEGRATION_NOTE),
+    text: text(SELECTORS.INTEGRATION_NOTE),
+    contactSupport: clickable(SELECTORS.CONTACT_SUPPORT),
+    isSupportLinkPresent: isVisible(SELECTORS.CONTACT_SUPPORT),
+  },
   integrationSettings: {
     scope: SELECTORS.INTEGRATION_SETTINGS_FORM,
     personalAccessTokenField: {
