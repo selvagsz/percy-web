@@ -24,20 +24,22 @@
         <h3 class="font-semibold mb-0 text-xl text-green-500">{{smallCard.name}}</h3>
         <p>{{smallCard.description}}</p>
         <div class="font-semibold pb-3">
-          <table class="w-3/4 sm:w-1/2 md:w-full mb-3">
+          <table class="w-full">
             <thead class="text-gray-300">
               <tr>
                 <th></th>
-                <th class="text-sm text-left">Snapshots</th>
-                <th class="text-sm text-left">Users</th>
+                <th class="text-sm text-right">Price</th>
+                <th class="text-sm text-right">Snapshots</th>
+                <th class="text-sm text-right">Users</th>
               </tr>
             </thead>
             <tbody>
               {{#each tableData.startupPlans as |plan|}}
                 <tr>
-                  <td>{{plan.name}} <span class="text-gray-300">{{plan.price}}</span></td>
-                  <td>{{plan.monthlySnapshotsIncluded}}</td>
-                  <td>{{plan.users}}</td>
+                  <td class="text-lg">{{plan.name}}</td>
+                  <td class="text-right"><span class="text-gray-300">{{plan.price}}</span></td>
+                  <td class="text-right">{{plan.monthlySnapshotsIncluded}}</td>
+                  <td class="text-right">{{plan.users}}</td>
                 </tr>
               {{/each}}
             </tbody>
@@ -62,9 +64,6 @@
         {{#each mediumCard.featureList as |feature|}}
           <div class="font-semibold {{if (eq feature mediumCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
         {{/each}}
-        <div class="font-semibold text-gray-500 text-right">
-          Starting at <span class="text-orange-500 text-2xl">{{mediumCard.startingPrice}}</span>/mo
-        </div>
       </div>
       {{#if (variation "updated-marketing-site")}}
         {{#link-to 'schedule-demo'}}
@@ -84,7 +83,7 @@
         <h3 class="font-semibold mb-0 text-xl text-purple-600">{{largeCard.name}}</h3>
         <p>{{largeCard.description}}</p>
         {{#each largeCard.featureList as |feature|}}
-          <div class="font-semibold {{if (eq feature largeCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
+          <div class="font-semibold {{if (eq feature largeCard.featureList.lastObject) "mb-6"}}">{{feature}}</div>
         {{/each}}
       </div>
       {{#if (variation "updated-marketing-site")}}

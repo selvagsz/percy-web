@@ -10,6 +10,7 @@ export default Contentful.extend({
   monthlySnapshotsIncluded: attr(),
   extraSnapshotPrice: attr(),
   historicalData: attr(),
+  price: attr(),
 
   snapshotStabilization: attr(),
   responsiveTesting: attr(),
