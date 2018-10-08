@@ -268,7 +268,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
         expect(currentPath()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
-        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Hosted Integration');
+        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Managed Integration');
 
         if (previouslyWasAdmin === false) {
           AdminMode.clear();

@@ -33,7 +33,7 @@ export const INTEGRATION_TYPES = {
     settingsRouteSlug: 'gitlab',
   },
   [GITLAB_SELF_HOSTED_INTEGRATION_TYPE]: {
-    textName: 'GitLab Self-Hosted',
+    textName: 'GitLab Self-Managed',
     isBeta: false,
     isGeneralAvailability: true,
     betaLink: 'https://docs.percy.io/docs/gitlab-self-hosted',

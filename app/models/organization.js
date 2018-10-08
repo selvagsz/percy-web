@@ -7,7 +7,7 @@ const DISPLAY_NAMES = {
   github: 'GitHub',
   githubEnterprise: 'GitHub Enterprise',
   gitlab: 'GitLab',
-  gitlabSelfHosted: 'GitLab Self-Hosted',
+  gitlabSelfHosted: 'GitLab Self-Managed',
 };
 
 export default DS.Model.extend({

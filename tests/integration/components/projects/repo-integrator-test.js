@@ -96,7 +96,7 @@ describe('Integration: RepoIntegratorComponent', function() {
     it('renders powerselect open', function() {
       clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
-      expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Hosted');
+      expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Managed');
 
       percySnapshot(this.test.fullTitle());
     });
@@ -152,7 +152,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
       expect(RepoIntegrator.dropdown.groups(1).name).to.eq('GitLab');
-      expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Hosted');
+      expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Managed');
       expect(RepoIntegrator.dropdown.groups(3).name).to.eq('GitHub Enterprise');
       percySnapshot(this.test.fullTitle());
     });
