@@ -34,7 +34,7 @@ export const INTEGRATION_TYPES = {
   },
   [GITLAB_SELF_HOSTED_INTEGRATION_TYPE]: {
     textName: 'GitLab Self-Hosted',
-    isBeta: true,
+    isBeta: false,
     isGeneralAvailability: true,
     betaLink: 'https://docs.percy.io/docs/gitlab-self-hosted',
     iconName: 'gitlab-icon-lg',
