@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
 import {hash} from 'rsvp';
 import {inject as service} from '@ember/service';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   flashMessages: service(),
   model() {
     const project = this.modelFor('organization.project');
@@ -32,7 +33,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
       projectBrowserTargetForFamily
         .destroyRecord()
         .then(() => {
-          this.get('flashMessages').success(`All builds for this project going forward will not be run with ${familyToRemove.get('name')}.`, {title: 'Oh Well.'}); // eslint-disable-line
+          this.get('flashMessages').success(
+            `All builds for this project going forward will not be run with ${familyToRemove.get(
+              'name',
+            )}.`,
+            {title: 'Oh Well.'},
+          ); // eslint-disable-line
         })
         .catch(() => {
           this.get('flashMessages').danger('Something went wrong. Please try again later');
@@ -50,7 +56,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
       newProjectBrowserTarget
         .save()
         .then(() => {
-          this.get('flashMessages').success(`Great! All builds for this project going forward will be run with ${familyToAdd.get('name')}.`); // eslint-disable-line
+          this.get('flashMessages').success(
+            `Great! All builds for this project going forward will be run with ${familyToAdd.get(
+              'name',
+            )}.`,
+          ); // eslint-disable-line
         })
         .catch(() => {
           this.get('flashMessages').danger('Something went wrong. Please try again later');

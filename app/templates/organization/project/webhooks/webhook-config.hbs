@@ -1,5 +1,6 @@
-{{#organizations/settings-nav-wrapper organization=model}}
+{{fixed-top-header currentOrganization=model.organization}}
 
+{{#organizations/settings-nav-wrapper organization=model.organization}}
   <section class="px-2 pt-3">
     <div class="bg-white rounded shadow-1 p-2 mb-2">
 
@@ -11,7 +12,7 @@
             </figure>
           </div>
           <div style="min-width: 0;" class="font-mono truncate">
-            https://hooks.percy.com/services/as/dfdf/
+            {{model.webhookConfig.url}}
           </div>
         </div>
         <div>
@@ -45,28 +46,28 @@
             <label class="flex mb-sm">
               <input type="checkbox" class="mt-sm">
               <div>
-                <div class="font-semibold">Ping (configuration created/updated)</div>
+                <div class="font-semibold font-mono">ping</div>
                 <div class="text-gray-400">Webhook notification settings have changed</div>
               </div>
             </label>
             <label class="flex mb-sm">
               <input type="checkbox" class="mt-sm">
               <div>
-                <div class="font-semibold">build.created</div>
+                <div class="font-semibold font-mono">build.created</div>
                 <div class="text-gray-400">A build has been created</div>
               </div>
             </label>
             <label class="flex mb-sm">
               <input type="checkbox" class="mt-sm">
               <div>
-                <div class="font-semibold">build.finished</div>
+                <div class="font-semibold font-mono">build.finished</div>
                 <div class="text-gray-400">A build has finished</div>
               </div>
             </label>
             <label class="flex mb-sm">
               <input type="checkbox" class="mt-sm">
               <div>
-                <div class="font-semibold">build.reviewed</div>
+                <div class="font-semibold font-mono">build.reviewed</div>
                 <div class="text-gray-400">A build has been reviewed</div>
               </div>
             </label>
@@ -89,7 +90,9 @@
           </div>
         </div>
         <div class="flex justify-end">
-          <button type="button" class="btn btn-secondary">Back</button>
+          {{#link-to "organization.project.settings" model.project}}
+            <button type="button" class="btn btn-secondary">Back</button>
+          {{/link-to}}
           <input type="submit" class="btn btn-primary shadow-purple-lg mb-0 ml-1" value="Add Webhook">
         </div>
       </form>
@@ -98,3 +101,5 @@
   </section>
 
 {{/organizations/settings-nav-wrapper}}
+
+{{main-footer}}

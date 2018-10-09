@@ -75,24 +75,25 @@
         {{!-- if there are any items --}}
         <div class="mb-2 rounded border">
           {{!-- item for each loop --}}
+          {{#each model.project.webhookConfigs as |webhookConfig|}}
           <div class="p-2 border-b">
             <div class="flex items-center justify-between">
               <div class="flex items-center mr-2">
                 <div style="min-width: 0;" class="font-mono truncate {{if false 'opacity-25'}}">
-                  https://hooks.percy.com/services/as/dfdf/
+                  {{webhookConfig.url}}
                 </div>
-                {{!-- disabled badge --}}
-                {{#if false}}
+                {{#unless webhookConfig.deliveryEnabled}}
                   <div class="ml-1 px-1 rounded bg-gray-100 font-mono text-sm text-gray-500">
                     disabled
                   </div>
-                {{/if}}
-                {{!-- badge end --}}
+                {{/unless}}
               </div>
-              <button type="button" name="button" class="btn btn-secondary">Edit Settings</button>
+              {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
+                <button type="button" name="button" class="btn btn-secondary">Edit Settings</button>
+              {{/link-to}}
             </div>
           </div>
-          {{!-- END each loop --}}
+        {{/each}}
         </div>
         {{!-- END if there are any items --}}
         <div class="flex justify-end">
