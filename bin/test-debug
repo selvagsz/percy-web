@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -euo pipefail
+
+trap 'echo; echo "Stopping..."; kill -TERM $PID; exit' INT
+trap 'echo; echo "Terminating..."; kill -TERM $PID; exit' TERM
+docker-compose run web yarn test:parallel | \
+  tee "test.log" | \
+  grep -F --invert-match '35mpercy'
+PID=$!
+
+wait $PID

@@ -4,6 +4,9 @@
 /dist
 /tmp
 
+# bin/test-debug script output
+test.log
+
 # dependencies
 /node_modules
 /bower_components

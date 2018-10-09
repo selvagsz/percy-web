@@ -72,7 +72,8 @@ export const GitlabSettings = {
   isErrorPresent: alias('integrationSettings.formError.isErrorPresent'),
   errorText: alias('integrationSettings.formError.text'),
   integrationName: alias('integrationSettings.integrationName.text'),
-  statusIsHidden: isHidden(SELECTORS.GITLAB_INTEGRATION),
+  isFormHidden: isHidden(SELECTORS.INTEGRATION_SETTINGS_FORM),
+  integrationText: text(SELECTORS.GITLAB_INTEGRATION),
   visitSettings: visitable('/organizations/:orgSlug/integrations/:integrationType'),
   isPersonalAccessTokenFieldVisible: alias(
     'integrationSettings.personalAccessTokenField.isVisible',

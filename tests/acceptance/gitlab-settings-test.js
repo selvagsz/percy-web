@@ -28,8 +28,9 @@ describe('Acceptance: GitLab Integration Settings', function() {
       it('does not show gitlab settings', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, integrationType));
         expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
-        expect(GitlabSettings.integrationSettings.personalAccessTokenField.isVisible).to.equal(
-          false,
+        expect(GitlabSettings.isFormHidden, 'Expected integration to be hidden').to.equal(true);
+        expect(GitlabSettings.integrationText).to.equal(
+          'This feature requires organization admin permissions.',
         );
         await percySnapshot(this.test.fullTitle());
       });
@@ -46,7 +47,10 @@ describe('Acceptance: GitLab Integration Settings', function() {
         expect(currentPath()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
-        expect(GitlabSettings.statusIsHidden).to.equal(true);
+        expect(GitlabSettings.isFormHidden, 'Expected integration to be hidden').to.equal(true);
+        expect(GitlabSettings.integrationText).to.equal(
+          'This feature requires organization admin permissions.',
+        );
         await percySnapshot(this.test.fullTitle());
       });
     });
@@ -254,7 +258,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
           'organizations.organization.integrations.gitlab-self-hosted',
         );
 
-        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Hosted Integration');
+        expect(GitlabSettings.integrationName).to.equal('GitLab Self-Managed Integration');
         await GitlabSettings.integrationSettings.toolbar.back();
         expect(currentPath()).to.equal('organizations.organization.integrations.index');
 
