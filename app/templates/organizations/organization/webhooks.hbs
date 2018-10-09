@@ -1,0 +1,100 @@
+{{#organizations/settings-nav-wrapper organization=model}}
+
+  <section class="px-2 pt-3">
+    <div class="bg-white rounded shadow-1 p-2 mb-2">
+
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center">
+          <div class="mr-2">
+            <figure class="svg-container">
+              {{inline-svg 'webhook-icon'}}
+            </figure>
+          </div>
+          <div style="min-width: 0;" class="font-mono truncate">
+            https://hooks.percy.com/services/as/dfdf/
+          </div>
+        </div>
+        <div>
+          toggle
+        </div>
+      </div>
+
+      <form action="javascript:;" class="mb-0">
+        <div class="p-2 bg-gray-000 rounded border mb-2">
+          <label class="mb-3">
+            <div class="font-semibold mb-0">Webhook URL</div>
+            <div class="mb-1 text-gray-400">The full URL (including https// or http://) that will recieve the POST requests</div>
+            <input type=text class="form-control">
+          </label>
+
+          <label class="mb-3">
+            <div class="font-semibold mb-0">Authorization Token</div>
+            <div class="mb-1 text-gray-400">This secret token will be sent in the X-Percy-Token HTTP header to allow you to verify authenticity of requests</div>
+            <input type=text class="form-control">
+          </label>
+
+          <label class="mb-3">
+            <div class="font-semibold mb-0">Description <span class="text-gray-300">(optional)</span></div>
+            <div class="mb-1 text-gray-400">A description to help identify this in the future.</div>
+            <input type=text class="form-control">
+          </label>
+
+          <div class="mb-3">
+            <div class="font-semibold mb-0">Events <span class="text-gray-300">(chose at least one)</span></div>
+            <div class="mb-1 text-gray-400">The event name will be sent in the X-Percy-Event HTTP header and event property of the webhook payload. See the webhook documentation for a description of each type of payload.</div>
+            <label class="flex mb-sm">
+              <input type="checkbox" class="mt-sm">
+              <div>
+                <div class="font-semibold">Ping (configuration created/updated)</div>
+                <div class="text-gray-400">Webhook notification settings have changed</div>
+              </div>
+            </label>
+            <label class="flex mb-sm">
+              <input type="checkbox" class="mt-sm">
+              <div>
+                <div class="font-semibold">build.created</div>
+                <div class="text-gray-400">A build has been created</div>
+              </div>
+            </label>
+            <label class="flex mb-sm">
+              <input type="checkbox" class="mt-sm">
+              <div>
+                <div class="font-semibold">build.finished</div>
+                <div class="text-gray-400">A build has finished</div>
+              </div>
+            </label>
+            <label class="flex mb-sm">
+              <input type="checkbox" class="mt-sm">
+              <div>
+                <div class="font-semibold">build.reviewed</div>
+                <div class="text-gray-400">A build has been reviewed</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="font-semibold mb-2">
+            <div class="mb-sm">SSL verification enabled</div>
+            <label class="flex items-center mb-0">
+              <input type="radio" checked="checked" class="mr-1">
+              On
+            </label>
+            <label class="flex items-center">
+              <input type="radio" class="mr-1">
+              Off
+            </label>
+          </div>
+
+          <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+            <strong>Reminder:</strong> SSL verification warning needs text but needs to be a warning here so warning warning warning warning warning warning warning warning.
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button type="button" class="btn btn-secondary">Back</button>
+          <input type="submit" class="btn btn-primary shadow-purple-lg mb-0 ml-1" value="Add Webhook">
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+{{/organizations/settings-nav-wrapper}}

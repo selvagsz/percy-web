@@ -93,6 +93,7 @@ Router.map(function() {
         this.route('gitlab');
         this.route('gitlab-self-hosted');
       });
+      this.route('webhooks');
     });
   });
   this.route('organization', {path: '/:organization_id'}, function() {
