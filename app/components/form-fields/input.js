@@ -4,6 +4,8 @@ import Component from '@ember/component';
 export default Component.extend({
   changeset: null,
   title: null,
+  subtitle: null,
+  hint: null,
   property: null,
   type: 'text',
   autofocus: false,

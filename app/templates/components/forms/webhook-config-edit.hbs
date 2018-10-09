@@ -1,0 +1,96 @@
+<form action="javascript:;" class="mb-0">
+  <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
+      property="url"
+      title="Delivery URL"
+      subtitle="The full URL (including https:// or http://) that will receive webhook events"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "url")
+    }}
+
+    {{form-fields/input
+      property="auth_token"
+      title="Authorization Token"
+      subtitle="Token to send in the X-Percy-Token HTTP header to allow you to verify the authenticity of requests"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "description")
+    }}
+
+    {{form-fields/input
+      property="description"
+      title="Description"
+      subtitle="A description to help identify this in the future"
+      hint="optional"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "description")
+    }}
+
+    {{form-fields/checkbox
+      property="events"
+      checkedValue="admin"
+      title="Events (choose at least one)"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "events")
+    }}
+
+    <div class="mb-3">
+      <div class="font-semibold mb-0">Events <span class="text-gray-300">(chose at least one)</span></div>
+      <div class="mb-1 text-gray-400">The event name will be sent in the X-Percy-Event HTTP header and event property of the webhook payload. See the webhook documentation for a description of each type of payload.</div>
+      <label class="flex mb-sm">
+        <input type="checkbox" class="mt-sm">
+        <div>
+          <div class="font-semibold font-mono">ping</div>
+          <div class="text-gray-400">Webhook notification settings have changed</div>
+        </div>
+      </label>
+      <label class="flex mb-sm">
+        <input type="checkbox" class="mt-sm">
+        <div>
+          <div class="font-semibold font-mono">build.created</div>
+          <div class="text-gray-400">A build has been created</div>
+        </div>
+      </label>
+      <label class="flex mb-sm">
+        <input type="checkbox" class="mt-sm">
+        <div>
+          <div class="font-semibold font-mono">build.finished</div>
+          <div class="text-gray-400">A build has finished</div>
+        </div>
+      </label>
+      <label class="flex mb-sm">
+        <input type="checkbox" class="mt-sm">
+        <div>
+          <div class="font-semibold font-mono">build.reviewed</div>
+          <div class="text-gray-400">A build has been reviewed</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="font-semibold mb-2">
+      <div class="mb-sm">SSL verification enabled</div>
+      <label class="flex items-center mb-0">
+        <input type="radio" checked="checked" class="mr-1">
+        On
+      </label>
+      <label class="flex items-center">
+        <input type="radio" class="mr-1">
+        Off
+      </label>
+    </div>
+
+    <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+      <strong>Reminder:</strong> SSL verification warning needs text but needs to be a warning here so warning warning warning warning warning warning warning warning.
+    </div>
+  </div>
+  <div class="flex justify-end">
+    {{#link-to "organization.project.settings" model.project}}
+      <button type="button" class="btn btn-secondary">Back</button>
+    {{/link-to}}
+
+    {{form-fields/submit
+      value="Update webhook"
+      classes="btn btn-primary shadow-purple-lg mb-0 ml-1"
+      submit=(action "save")
+    }}
+  </div>
+</form>
