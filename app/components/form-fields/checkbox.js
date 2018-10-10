@@ -14,6 +14,7 @@ export default Component.extend({
   shouldBeChecked: computed('changeset.isPristine', 'checkedValue', function() {
     return this.get('changeset.' + this.get('property')) === this.get('checkedValue');
   }),
+
   // Update the checked property if the changeset changes.
   _updateChecked: observer('shouldBeChecked', function() {
     this.$('input').prop('checked', this.get('shouldBeChecked'));

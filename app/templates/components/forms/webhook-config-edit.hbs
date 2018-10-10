@@ -1,4 +1,28 @@
 <form action="javascript:;" class="mb-0">
+  <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center">
+      <div class="mr-2">
+        <figure class="svg-container">
+          {{inline-svg 'webhook-icon'}}
+        </figure>
+      </div>
+      <div style="min-width: 0;" class="font-mono truncate">
+        {{webhookConfig.url}}
+      </div>
+    </div>
+    <div>
+      {{form-fields/checkbox
+        property="deliveryEnabled"
+        changeset=changeset
+        title="Enabled"
+        validateProperty=(action "validateProperty" changeset "deliveryEnabled")
+        checkedValue=true
+        uncheckedValue=false
+        toggle=true
+      }}
+    </div>
+  </div>
+
   <div class="p-2 bg-gray-000 rounded border mb-2">
     {{form-fields/input
       property="url"
@@ -35,17 +59,16 @@
       allValues=allValues
     }}
 
-    <div class="font-semibold mb-2">
-      <div class="mb-sm">SSL verification enabled</div>
-      <label class="flex items-center mb-0">
-        <input type="radio" checked="checked" class="mr-1">
-        On
-      </label>
-      <label class="flex items-center">
-        <input type="radio" class="mr-1">
-        Off
-      </label>
-    </div>
+    {{form-fields/checkbox
+      property="sslVerificationEnabled"
+      changeset=changeset
+      title="SSL verification enabled"
+      subtitle="Whether to verify the SSL certificate presented by the delivery host."
+      validateProperty=(action "validateProperty" changeset "sslVerificationEnabled")
+      checkedValue=true
+      uncheckedValue=false
+      toggle=true
+    }}
 
     <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
       <strong>Reminder:</strong> SSL verification warning needs text but needs to be a warning here so warning warning warning warning warning warning warning warning.

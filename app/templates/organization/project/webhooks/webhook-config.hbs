@@ -1,25 +1,14 @@
 {{fixed-top-header currentOrganization=model.organization}}
 
 {{#organizations/settings-nav-wrapper organization=model.organization}}
-  <section class="px-2 pt-3">
+  <section class="px-2 pt-3 pb-9">
+    <h1 class="text-xl font-semibold mb-sm">Edit webhook</h1>
+
+    {{#link-to "organization.project.settings" model.organization.slug model.project.slug classNames="btn btn-secondary"}}
+      Back to project settings
+    {{/link-to}}
+
     <div class="bg-white rounded shadow-1 p-2 mb-2">
-
-      <div class="flex items-center justify-between mb-2">
-        <div class="flex items-center">
-          <div class="mr-2">
-            <figure class="svg-container">
-              {{inline-svg 'webhook-icon'}}
-            </figure>
-          </div>
-          <div style="min-width: 0;" class="font-mono truncate">
-            {{model.webhookConfig.url}}
-          </div>
-        </div>
-        <div>
-          {{checkbox-toggle-slider}}
-        </div>
-      </div>
-
       {{forms/webhook-config-edit
         webhookConfig=model.webhookConfig
         isSaving=isSaving
@@ -28,7 +17,4 @@
       }}
     </div>
   </section>
-
 {{/organizations/settings-nav-wrapper}}
-
-{{main-footer}}

@@ -11,7 +11,7 @@ export default Component.extend({
   allValues: {},
 
   classes: null,
-  classNames: ['FormFieldsCheckbox'],
+  classNames: ['FormFieldsCheckboxSet'],
   classNameBindings: ['classes'],
 
   propertyValue: computed('changeset.isPristine', function() {
