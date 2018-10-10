@@ -13,7 +13,7 @@
       title="Authorization Token"
       subtitle="Token to send in the X-Percy-Token HTTP header to allow you to verify the authenticity of requests"
       changeset=changeset
-      validateProperty=(action "validateProperty" changeset "description")
+      validateProperty=(action "validateProperty" changeset "authToken")
     }}
 
     {{form-fields/input
@@ -25,40 +25,15 @@
       validateProperty=(action "validateProperty" changeset "description")
     }}
 
-    {{#form-fields/checkbox-set
+    {{form-fields/checkbox-set
+      property="subscribedEvents"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "subscribedEvents")
       title="Events"
       subtitle="The event name will be sent in the X-Percy-Event HTTP header and event property of the webhook payload. See the webhook documentation for a description of each type of payload."
       hint="choose at least one"
+      allValues=allValues
     }}
-      <label class="flex mb-sm">
-        <input type="checkbox" class="mt-sm">
-        <div>
-          <div class="font-semibold font-mono">ping</div>
-          <div class="text-gray-400">Webhook notification settings have changed</div>
-        </div>
-      </label>
-      <label class="flex mb-sm">
-        <input type="checkbox" class="mt-sm">
-        <div>
-          <div class="font-semibold font-mono">build.created</div>
-          <div class="text-gray-400">A build has been created</div>
-        </div>
-      </label>
-      <label class="flex mb-sm">
-        <input type="checkbox" class="mt-sm">
-        <div>
-          <div class="font-semibold font-mono">build.finished</div>
-          <div class="text-gray-400">A build has finished</div>
-        </div>
-      </label>
-      <label class="flex mb-sm">
-        <input type="checkbox" class="mt-sm">
-        <div>
-          <div class="font-semibold font-mono">build.reviewed</div>
-          <div class="text-gray-400">A build has been reviewed</div>
-        </div>
-      </label>
-    {{/form-fields/checkbox-set}}
 
     <div class="font-semibold mb-2">
       <div class="mb-sm">SSL verification enabled</div>

@@ -11,4 +11,11 @@ export default BaseFormComponent.extend({
 
   model: alias('webhookConfig'),
   validator: WebhookConfigEditValidations,
+
+  allValues: {
+    ping: 'Webhook notification settings have been updated',
+    build_created: 'A build has been created',
+    build_approved: 'A build has been approved',
+    build_finished: 'A build has finished',
+  },
 });

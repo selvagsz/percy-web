@@ -1,9 +1,28 @@
-<span class="label-body">
-  {{title}}
-  {{#if hint}}<span class="text-gray-300">({{hint}})</span>{{/if}}
-</span>
-{{#if subtitle}}
-  <div class="mb-1 text-gray-400">{{subtitle}}</div>
-{{/if}}
+<fieldset>
+  <legend>
+    <span class="label-body">
+      {{title}}
+      {{#if hint}}<span class="text-gray-300">({{hint}})</span>{{/if}}
+    </span>
+    {{#if subtitle}}
+      <div class="mb-1 text-gray-400">{{subtitle}}</div>
+    {{/if}}
+  </legend>
 
-{{yield}}
+  {{#each-in allValues as |key value|}}
+    <label class="flex mb-sm">
+      <input
+        name="{{key}}"
+        type="checkbox"
+        checked={{contains propertyValue key}}
+        class="mt-sm {{if fieldErrors 'error'}}"
+        onchange={{action "updateValue"}}
+        onblur={{action validateProperty}}
+      >
+      <div>
+        <div class="font-semibold font-mono">{{key}}</div>
+        <div class="text-gray-400">{{value}}</div>
+      </div>
+    </label>
+  {{/each-in}}
+</fieldset>
