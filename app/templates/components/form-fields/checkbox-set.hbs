@@ -1,0 +1,9 @@
+<span class="label-body">
+  {{title}}
+  {{#if hint}}<span class="text-gray-300">({{hint}})</span>{{/if}}
+</span>
+{{#if subtitle}}
+  <div class="mb-1 text-gray-400">{{subtitle}}</div>
+{{/if}}
+
+{{yield}}

@@ -22,7 +22,9 @@
 
       {{forms/webhook-config-edit
         webhookConfig=model.webhookConfig
-        saveSuccess="projectUpdated"
+        isSaving=isSaving
+        isSaveSuccessful=isSaveSuccessful
+        saveSuccess="webhookConfigUpdated"
       }}
     </div>
   </section>

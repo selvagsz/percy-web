@@ -9,7 +9,7 @@
     }}
 
     {{form-fields/input
-      property="auth_token"
+      property="authToken"
       title="Authorization Token"
       subtitle="Token to send in the X-Percy-Token HTTP header to allow you to verify the authenticity of requests"
       changeset=changeset
@@ -25,17 +25,11 @@
       validateProperty=(action "validateProperty" changeset "description")
     }}
 
-    {{form-fields/checkbox
-      property="events"
-      checkedValue="admin"
-      title="Events (choose at least one)"
-      changeset=changeset
-      validateProperty=(action "validateProperty" changeset "events")
+    {{#form-fields/checkbox-set
+      title="Events"
+      subtitle="The event name will be sent in the X-Percy-Event HTTP header and event property of the webhook payload. See the webhook documentation for a description of each type of payload."
+      hint="choose at least one"
     }}
-
-    <div class="mb-3">
-      <div class="font-semibold mb-0">Events <span class="text-gray-300">(chose at least one)</span></div>
-      <div class="mb-1 text-gray-400">The event name will be sent in the X-Percy-Event HTTP header and event property of the webhook payload. See the webhook documentation for a description of each type of payload.</div>
       <label class="flex mb-sm">
         <input type="checkbox" class="mt-sm">
         <div>
@@ -64,7 +58,7 @@
           <div class="text-gray-400">A build has been reviewed</div>
         </div>
       </label>
-    </div>
+    {{/form-fields/checkbox-set}}
 
     <div class="font-semibold mb-2">
       <div class="mb-sm">SSL verification enabled</div>
