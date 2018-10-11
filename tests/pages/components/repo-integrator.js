@@ -16,7 +16,7 @@ const SELECTORS = {
 export const RepoIntegrator = {
   dropdown: {
     scope: SELECTORS.POWER_SELECT_DROPDOWN,
-    isSelectorOpen: isVisible(SELECTORS.POWER_SELECT_GROUPS, {multiple: true}),
+    isSelectorOpen: isVisible(),
     options: {
       count: count(SELECTORS.POWER_SELECT_OPTIONS),
     },

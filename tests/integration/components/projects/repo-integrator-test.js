@@ -28,7 +28,7 @@ describe('Integration: RepoIntegratorComponent', function() {
 
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      this.render(hbs`{{projects/repo-integrator project=project shouldPollForUpdates=false}}`);
     });
 
     it('renders powerselect closed', function() {
@@ -43,6 +43,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -69,6 +70,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -99,6 +101,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Managed');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -128,6 +131,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub Enterprise');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -155,6 +159,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Managed');
       expect(RepoIntegrator.dropdown.groups(3).name).to.eq('GitHub Enterprise');
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -205,6 +210,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: 20 minutes ago');
       percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
 
     it('refreshes the repo collection', async function() {
@@ -217,8 +223,8 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.options.count).to.eq(expectedRepoCount);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: a minute ago');
-
       percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 });
