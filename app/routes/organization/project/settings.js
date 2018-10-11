@@ -3,16 +3,19 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
 import {hash} from 'rsvp';
 import {inject as service} from '@ember/service';
+import {filterBy} from '@ember/object/computed';
 
 export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   flashMessages: service(),
+
   model() {
     const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
     const projects = this.store.query('project', {organization: organization});
     const browserFamilies = this.get('store').findAll('browserFamily');
+    const webhookConfigs = filterBy('project.webhookConfigs', 'isNew', false);
 
-    return hash({organization, project, projects, browserFamilies});
+    return hash({organization, project, projects, browserFamilies, webhookConfigs});
   },
 
   actions: {

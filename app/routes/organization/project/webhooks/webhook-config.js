@@ -8,10 +8,18 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   flashMessages: service(),
 
   model(params) {
-    const webhookConfig = this.store.findRecord('webhookConfig', params.webhook_config_id);
-    const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
+    const project = this.modelFor('organization.project');
     const projects = this.store.query('project', {organization: organization});
+    let webhookConfig;
+
+    if (params.webhook_config_id == 'new') {
+      webhookConfig = this.store.createRecord('webhookConfig', {
+        project: project,
+      });
+    } else {
+      webhookConfig = this.store.findRecord('webhookConfig', params.webhook_config_id);
+    }
 
     return hash({organization, project, projects, webhookConfig});
   },

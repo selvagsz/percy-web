@@ -72,32 +72,37 @@
         <p class="text-gray-400 mb-2">
           Webhooks are cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool and so cool.
         </p>
-        {{!-- if there are any items --}}
+
+        {{#if model.project.webhookConfigs}}
         <div class="mb-2 rounded border">
-          {{!-- item for each loop --}}
-          {{#each model.project.webhookConfigs as |webhookConfig|}}
-          <div class="p-2 border-b">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center mr-2">
-                <div style="min-width: 0;" class="font-mono truncate {{if false 'opacity-25'}}">
-                  {{webhookConfig.url}}
-                </div>
-                {{#unless webhookConfig.deliveryEnabled}}
-                  <div class="ml-1 px-1 rounded bg-gray-100 font-mono text-sm text-gray-500">
-                    disabled
+            {{#each model.webhookConfigs as |webhookConfig|}}
+            <div class="p-2 border-b">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center mr-2">
+                  <div style="min-width: 0;" class="font-mono truncate {{if false 'opacity-25'}}">
+                    {{webhookConfig.url}}
                   </div>
-                {{/unless}}
+                  {{#unless webhookConfig.deliveryEnabled}}
+                    <div class="ml-1 px-1 rounded bg-gray-100 font-mono text-sm text-gray-500">
+                      disabled
+                    </div>
+                  {{/unless}}
+                </div>
+                {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
+                  <button type="button" name="button" class="btn btn-secondary">Edit Settings</button>
+                {{/link-to}}
               </div>
-              {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
-                <button type="button" name="button" class="btn btn-secondary">Edit Settings</button>
-              {{/link-to}}
             </div>
+          {{/each}}
           </div>
-        {{/each}}
-        </div>
-        {{!-- END if there are any items --}}
+        {{/if}}
+
         <div class="flex justify-end">
-          <button type="button" name="button" class="btn btn-primary shadow-purple-lg mb-0">Add Webhook</button>
+          {{#link-to "organization.project.webhooks.webhook-config" "new"}}
+            <button type="button" name="button" class="btn btn-primary shadow-purple-lg mb-0">
+              Add Webhook
+            </button>
+          {{/link-to}}
         </div>
       </div>
     {{/if}}

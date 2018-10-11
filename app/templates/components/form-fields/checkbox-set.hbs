@@ -14,7 +14,7 @@
       <input
         name="{{key}}"
         type="checkbox"
-        checked={{contains propertyValue key}}
+        checked={{contains key propertyValue}}
         class="mt-sm {{if fieldErrors 'error'}}"
         onchange={{action "updateValue"}}
         onblur={{action validateProperty}}

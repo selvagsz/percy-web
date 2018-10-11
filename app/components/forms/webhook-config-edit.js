@@ -1,4 +1,4 @@
-import {alias} from '@ember/object/computed';
+import {computed} from '@ember/object';
 import BaseFormComponent from './base';
 import WebhookConfigEditValidations from '../../validations/webhook-config-edit';
 
@@ -9,8 +9,12 @@ export default BaseFormComponent.extend({
   classNames: ['FormsWebhookConfigEdit', 'Form'],
   classNameBindings: ['classes'],
 
-  model: alias('webhookConfig'),
+  model: computed.alias('webhookConfig'),
   validator: WebhookConfigEditValidations,
+
+  saveText: computed('changeset.isPristine', function() {
+    return `${this.changeset.get('isNew') ? 'Create' : 'Update'} webhook`;
+  }),
 
   allValues: {
     ping: 'Webhook notification settings have been updated',

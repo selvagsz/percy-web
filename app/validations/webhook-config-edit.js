@@ -1,7 +1,8 @@
-import {validatePresence} from 'ember-changeset-validations/validators';
+import {validatePresence, validateLength} from 'ember-changeset-validations/validators';
 
 export default {
-  description: [validatePresence(true)],
   url: [validatePresence(true)],
   subscribedEvents: [validatePresence(true)],
+  description: [validateLength({max: 64})],
+  authToken: [validateLength({max: 64})],
 };
