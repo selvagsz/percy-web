@@ -6,7 +6,7 @@ import {
   GITHUB_ENTERPRISE_INTEGRATION_TYPE,
   GITLAB_INTEGRATION_TYPE,
   GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
-} from 'percy-web/models/version-control-integration';
+} from 'percy-web/lib/integration-types';
 
 export default DS.Model.extend({
   externalRepoId: DS.attr('number'),

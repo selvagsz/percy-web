@@ -1,9 +1,8 @@
-import {
-  GITHUB_INTEGRATION_TYPE,
-  GITHUB_ENTERPRISE_INTEGRATION_TYPE,
-  GITLAB_INTEGRATION_TYPE,
-  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
-} from 'percy-web/models/version-control-integration';
+// these strings must match what comes down from the api
+export const GITHUB_ENTERPRISE_INTEGRATION_TYPE = 'github_enterprise';
+export const GITHUB_INTEGRATION_TYPE = 'github';
+export const GITLAB_INTEGRATION_TYPE = 'gitlab';
+export const GITLAB_SELF_HOSTED_INTEGRATION_TYPE = 'gitlab_self_hosted';
 
 export const INTEGRATION_TYPES = {
   [GITHUB_INTEGRATION_TYPE]: {

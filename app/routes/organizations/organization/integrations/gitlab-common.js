@@ -33,5 +33,15 @@ export default Route.extend(AuthenticatedRouteMixin, {
         this.store.unloadRecord(model);
       }
     },
+    didTransition() {
+      this._super.apply(this, arguments);
+
+      let organization = this.modelFor(this.routeName);
+      let friendlyName = this.get('currentGitlabIntegration.friendlyName');
+      if (friendlyName) {
+        this.analytics.track(`Integrations ${friendlyName} Viewed`, organization);
+      }
+      return true;
+    },
   },
 });

@@ -1,11 +1,13 @@
 import {equal} from '@ember/object/computed';
 import DS from 'ember-data';
-
-// these strings must match what comes down from the api
-export const GITHUB_ENTERPRISE_INTEGRATION_TYPE = 'github_enterprise';
-export const GITHUB_INTEGRATION_TYPE = 'github';
-export const GITLAB_INTEGRATION_TYPE = 'gitlab';
-export const GITLAB_SELF_HOSTED_INTEGRATION_TYPE = 'gitlab_self_hosted';
+import {computed} from '@ember/object';
+import {
+  GITHUB_INTEGRATION_TYPE,
+  GITHUB_ENTERPRISE_INTEGRATION_TYPE,
+  GITLAB_INTEGRATION_TYPE,
+  GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
+  INTEGRATION_TYPES,
+} from 'percy-web/lib/integration-types';
 
 export default DS.Model.extend({
   organization: DS.belongsTo('organization'),
@@ -32,4 +34,13 @@ export default DS.Model.extend({
   isGithubEnterpriseIntegration: equal('integrationType', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
   isGitlabIntegration: equal('integrationType', GITLAB_INTEGRATION_TYPE),
   isGitlabSelfHostedIntegration: equal('integrationType', GITLAB_SELF_HOSTED_INTEGRATION_TYPE),
+  friendlyName: computed('integrationType', function() {
+    let integrationType = this.get('integrationType');
+    if (integrationType) {
+      let integrationItem = INTEGRATION_TYPES[integrationType];
+      if (integrationItem) {
+        return integrationItem['textName'];
+      }
+    }
+  }),
 });

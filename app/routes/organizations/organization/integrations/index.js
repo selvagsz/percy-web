@@ -12,4 +12,15 @@ export default Route.extend(AuthenticatedRouteMixin, {
       availableIntegrations: model.get('availableIntegrations'),
     });
   },
+  actions: {
+    didTransition() {
+      this._super.apply(this, arguments);
+
+      let organization = this.modelFor(this.routeName);
+      if (organization) {
+        this.analytics.track('Integrations Index Viewed', organization);
+      }
+      return true;
+    },
+  },
 });

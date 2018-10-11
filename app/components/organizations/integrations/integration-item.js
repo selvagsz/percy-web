@@ -4,7 +4,7 @@ import {computed} from '@ember/object';
 import {equal} from '@ember/object/computed';
 import AdminMode from 'percy-web/lib/admin-mode';
 
-import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/models/version-control-integration';
+import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/lib/integration-types';
 
 import {INTEGRATION_TYPES as INTEGRATIONS_LOOKUP} from 'percy-web/lib/integration-types';
 
