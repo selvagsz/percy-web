@@ -70,9 +70,14 @@
       toggle=true
     }}
 
-    <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
-      <strong>Reminder:</strong> SSL verification warning needs text but needs to be a warning here so warning warning warning warning warning warning warning warning.
-    </div>
+    {{#unless changeset.sslVerificationEnabled}}
+      <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+        <strong>Warning:</strong>
+        With SSL verification disabled, we will not verify the validity of the
+        certificate presented by your host. This could compromise the security
+        of your data. Disabling certificate verification is not recommended.
+      </div>
+    {{/unless}}
   </div>
   <div class="flex justify-end">
     {{#link-to "organization.project.settings" model.project}}

@@ -26,7 +26,7 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
 
   actions: {
     webhookConfigUpdated() {
-      this.get('flashMessages').success('u did it :) 🦄');
+      this.get('flashMessages').success('Successfully created webhook');
       window.scrollTo(0, 0);
     },
   },

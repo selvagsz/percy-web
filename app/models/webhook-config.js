@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import utils from 'percy-web/lib/utils';
 
 export default DS.Model.extend({
   project: DS.belongsTo('project', {async: false}),
@@ -11,7 +12,9 @@ export default DS.Model.extend({
   }),
   deliveryEnabled: DS.attr('boolean', {defaultValue: true}),
   sslVerificationEnabled: DS.attr('boolean', {defaultValue: true}),
-  authToken: DS.attr(),
-  createdAt: DS.attr('date'),
-  updatedAt: DS.attr('date'),
+  authToken: DS.attr({
+    defaultValue() {
+      return utils.generateRandomToken();
+    },
+  }),
 });
