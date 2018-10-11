@@ -25,4 +25,12 @@
       </div>
     </label>
   {{/each-in}}
+
+  {{#if fieldErrors}}
+    <ul class="Form-errors">
+      {{#each (get fieldErrors "validation") as |message|}}
+        <li>{{message}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
 </fieldset>
