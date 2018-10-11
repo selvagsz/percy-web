@@ -4,6 +4,7 @@ import ResetScrollMixin from 'percy-web/mixins/reset-scroll';
 import {hash} from 'rsvp';
 import {inject as service} from '@ember/service';
 import {filterBy} from '@ember/object/computed';
+import utils from 'percy-web/lib/utils';
 
 export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   flashMessages: service(),
@@ -24,6 +25,16 @@ export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
       let projectSlug = project.get('slug');
       let organizationSlug = project.get('organization.slug');
       this.transitionTo('organization.project.index', organizationSlug, projectSlug);
+    },
+
+    deleteWebhookConfig(webhookConfig, confirmationMessage) {
+      if (confirmationMessage && !utils.confirmMessage(confirmationMessage)) {
+        return;
+      }
+
+      return webhookConfig.destroyRecord().then(() => {
+        this.get('flashMessages').success('Successfully deleted webhook');
+      });
     },
 
     removeProjectBrowserTargetForFamily(familyToRemove, project) {

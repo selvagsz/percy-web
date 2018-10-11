@@ -88,9 +88,20 @@
                     </div>
                   {{/unless}}
                 </div>
-                {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
-                  <button type="button" name="button" class="btn btn-secondary">Edit Settings</button>
-                {{/link-to}}
+                <div>
+                  {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      {{action "deleteWebhookConfig" webhookConfig "Are you sure you want to delete this webhook?"}}
+                    >
+                      Delete
+                    </button>
+                  {{/link-to}}
+                  {{#link-to "organization.project.webhooks.webhook-config" webhookConfig.id}}
+                    <button type="button" class="btn btn-secondary">Edit Settings</button>
+                  {{/link-to}}
+                </div>
               </div>
             </div>
           {{/each}}
