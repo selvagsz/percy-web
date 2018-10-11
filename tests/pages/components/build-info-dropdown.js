@@ -1,4 +1,5 @@
-import {create, clickable, isPresent, text} from 'ember-cli-page-object';
+import {create, isPresent, text} from 'ember-cli-page-object';
+import clickDropdownTrigger from 'percy-web/tests/pages/helpers/click-basic-dropdown-trigger';
 
 const SELECTORS = {
   ADMIN_DETAILS: '[data-test-build-info-admin-details]',
@@ -7,14 +8,20 @@ const SELECTORS = {
 };
 
 export const BuildInfoDropdown = {
-  toggleBuildInfoDropdown: clickable(SELECTORS.BUILD_INFO_DROPDOWN_TOGGLE),
-
-  isAdminDetailsPresent: isPresent(SELECTORS.ADMIN_DETAILS),
-
-  pullRequestLabel: {
-    scope: SELECTORS.PULL_REQUEST_LABEL,
-    text: text(),
+  toggleBuildInfoDropdown() {
+    // position dropdown near left side of screen
+    clickDropdownTrigger('', {top: '120px', left: '40px'});
   },
+
+  isAdminDetailsPresent: isPresent(SELECTORS.ADMIN_DETAILS, {
+    resetScope: true,
+    testContainer: '#ember-testing-container',
+  }),
+
+  pullRequestLabelText: text(SELECTORS.PULL_REQUEST_LABEL, {
+    resetScope: true,
+    testContainer: '#ember-testing-container',
+  }),
 };
 
 export default create(BuildInfoDropdown);

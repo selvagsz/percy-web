@@ -1,23 +1,16 @@
-<button {{action "toggleModal"}} data-test-build-info-dropdown-toggle class="build-info-toggle flex center btn-icon-only">
-  {{inline-svg 'build-info-icon'}}
-</button>
+{{#basic-dropdown horizontalPosition='auto-right' preventScroll=true as |dropdown|}}
 
-{{#if isShowingModal}}
-  {{#modal-dialog onClose="toggleModal"
-                  hasOverlay=false
-                  clickOutsideToClose=true
-                  translucentOverlay=true
-                  targetAttachment="bottom left"
-                  attachment="top left"
-                  tetherTarget=".build-info-toggle"
-                  containerClass="BuildInfoDropdown-modal rounded text-base"
-                  renderInPlace=renderInPlace
-                  build=build}}
+  {{#dropdown.trigger}}
+    <button data-test-build-info-dropdown-toggle class="flex center btn-icon-only">
+      {{inline-svg 'build-info-icon'}}
+    </button>
+  {{/dropdown.trigger}}
 
+  {{#dropdown.content class="BuildInfoDropdown-modal"}}
     {{build-state-badge build=build}}
 
-    <h3>{{build.buildTitle}}</h3>
-    <table>
+    <h3 class="mb-2 text-l font-bold">{{build.buildTitle}}</h3>
+    <table class="w-full">
       <tr>
         <td>Created</td>
         <td>{{build-started build=build}}</td>
@@ -46,7 +39,7 @@
               <a href="{{build.pullRequestHtmlUrl}}">{{build.pullRequestTitle}}</a>
             {{/if}}
             {{#if build.pullRequestNumber}}
-              <span class="BuildOverviewInfo-prNumber">
+              <span class="text-gray-400">
                 {{#if build.pullRequestTitle}}
                   #{{build.pullRequestNumber}}
                 {{else}}
@@ -59,7 +52,7 @@
       {{/if}}
 
       {{#if build.userAgent}}
-        <tr class="BuildInfoDropdown-fullWidthLabel">
+        <tr class="border-0">
           <td colspan="2">Environment</td>
         </tr>
         <tr class="BuildInfoDropdown-fullWidthValue">
@@ -69,21 +62,18 @@
     </table>
 
     {{#if build.commit}}
-      <hr/>
-      <h4>Head commit</h4>
+      <h4 class="mb-2 mt-4 font-bold">Head commit</h4>
       {{commit-table build=build commit=build.commit}}
     {{/if}}
 
     {{#if build.baseBuild.commit}}
-      <hr/>
-      <h4>Base commit</h4>
+      <h4 class="mb-2 mt-4 font-bold">Base commit</h4>
       {{commit-table build=build.baseBuild commit=build.baseBuild.commit}}
     {{/if}}
 
     {{#if (is-admin)}}
       <div data-test-build-info-admin-details>
-        <hr/>
-        <h4>Admin Info</h4>
+        <h4 class="mb-2 mt-4 font-bold">Admin Info</h4>
         <table>
           {{#each build.browsers as |browser|}}
             <tr>
@@ -94,5 +84,5 @@
         </table>
       </div>
     {{/if}}
-  {{/modal-dialog}}
-{{/if}}
+  {{/dropdown.content}}
+{{/basic-dropdown}}

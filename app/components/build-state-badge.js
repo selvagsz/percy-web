@@ -4,7 +4,7 @@ export default Component.extend({
   build: null,
   classes: null,
 
-  classNames: ['BuildStateBadge'],
+  classNames: ['BuildStateBadge', 'float-right'],
   classNameBindings: [
     'classes',
 

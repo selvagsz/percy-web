@@ -44,17 +44,18 @@ describe('Integration: BuildInfoDropdownComponent', function() {
   states.forEach(state => {
     let testTitle = state.join(' ');
 
-    it(`renders in state: ${testTitle}`, function() {
+    it(`renders in state: ${testTitle}`, async function() {
       let build = make.apply(this, ['build'].concat(state));
       this.set('build', build);
 
       this.render(hbs`{{build-info-dropdown build=build isShowingModal=true renderInPlace=true}}`);
+      await BuildInfoDropdown.toggleBuildInfoDropdown();
 
       percySnapshot(this.test);
     });
   });
 
-  it('hides admin info if user is not admin', function() {
+  it('hides admin info if user is not admin', async function() {
     const build = make('build', 'finished');
     this.set('build', build);
 
@@ -63,13 +64,14 @@ describe('Integration: BuildInfoDropdownComponent', function() {
       isShowingModal=true
       renderInPlace=true
     }}`);
+    await BuildInfoDropdown.toggleBuildInfoDropdown();
 
     expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(false);
 
     percySnapshot(this.test);
   });
 
-  it('shows admin info if user is an admin', function() {
+  it('shows admin info if user is an admin', async function() {
     const build = make('build', 'finished');
     this.set('build', build);
 
@@ -80,7 +82,7 @@ describe('Integration: BuildInfoDropdownComponent', function() {
        isShowingModal=true
        renderInPlace=true
      }}`);
-
+    await BuildInfoDropdown.toggleBuildInfoDropdown();
     expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(true);
 
     percySnapshot(this.test);
@@ -96,10 +98,11 @@ describe('Integration: BuildInfoDropdownComponent', function() {
         isShowingModal=true
         renderInPlace=true
       }}`);
+      BuildInfoDropdown.toggleBuildInfoDropdown();
     });
 
     it('has the correct pull request label', function() {
-      expect(BuildInfoDropdown.pullRequestLabel.text, 'pull request label is incorrect').to.equal(
+      expect(BuildInfoDropdown.pullRequestLabelText, 'pull request label is incorrect').to.equal(
         'Merge Request',
       );
       percySnapshot(this.test.fullTitle(), {widths: [450]});
@@ -116,10 +119,11 @@ describe('Integration: BuildInfoDropdownComponent', function() {
         isShowingModal=true
         renderInPlace=true
       }}`);
+      BuildInfoDropdown.toggleBuildInfoDropdown();
     });
 
     it('has the correct pull request label', function() {
-      expect(BuildInfoDropdown.pullRequestLabel.text, 'pull request label is incorrect').to.equal(
+      expect(BuildInfoDropdown.pullRequestLabelText, 'pull request label is incorrect').to.equal(
         'Pull Request',
       );
       percySnapshot(this.test.fullTitle(), {widths: [450]});

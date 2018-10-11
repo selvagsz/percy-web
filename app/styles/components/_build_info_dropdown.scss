@@ -10,40 +10,11 @@
   box-shadow: $modal-shadow;
   z-index: 1000000;
 
-  .BuildStateBadge {
-    float: right;
-  }
-
-  .BuildOverviewIcon {
-    display: none;
-  }
-
-  .BuildOverviewInfo-prNumber {
-    color: var(--dark-gray);
-  }
-
-  h3,
-  h4 {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-
-  h3 {
-    font-size: 22px;
-  }
-
   h4 {
     font-size: 18px;
   }
 
-  hr {
-    border: 0;
-  }
-
   table {
-    width: 100%;
-    margin-bottom: 0;
-
     code,
     pre {
       white-space: pre-wrap;
@@ -70,12 +41,6 @@
         td {
           border-bottom: 0;
         }
-      }
-    }
-
-    .BuildInfoDropdown-fullWidthLabel {
-      td {
-        border: 0;
       }
     }
 

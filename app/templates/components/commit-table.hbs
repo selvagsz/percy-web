@@ -7,7 +7,7 @@
         @
         <a data-test-commit-table-commit-url href="{{commitUrl}}">{{@commit.shaShort}}</a>
       {{else}}
-        {{build.branch}} @ {{commit.shaShort}}
+        <code>{{build.branch}}</code> @ <code>{{commit.shaShort}}</code>
       {{/if}}
     </td>
   </tr>
