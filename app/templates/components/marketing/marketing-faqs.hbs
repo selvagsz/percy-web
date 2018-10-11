@@ -3,7 +3,7 @@
     {{#each faqs as |faq|}}
       <div>
         <h4 class="mb-1 text-xl">{{faq.question}}</h4>
-        <p class="f4 text-gray-500">{{md-text text=faq.answer}}</p>
+        <p class="f4 text-gray-500">{{markdown-to-html faq.answer}}</p>
       </div>
     {{/each}}
   </div>

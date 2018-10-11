@@ -6,7 +6,6 @@
     "hint.css": "^2.5.0",
     "moment": "2.13.0",
     "moment-timezone": "0.5.4",
-    "remarkable": "^1.7.1",
     "Faker": "^4.1.0"
   },
   "devDependencies": {

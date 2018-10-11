@@ -6,7 +6,7 @@
       date=(moment-format changelogPost.date 'MMM D, YYYY')
     }}
       <h2>{{changelogPost.title}}</h2>
-      {{md-text text=changelogPost.content html=false typographer=false linkify=true}}
+      {{markdown-to-html changelogPost.content}}
       {{#if changelogPost.image}}
         <img src="{{changelogPost.image.file.url}}">
       {{/if}}

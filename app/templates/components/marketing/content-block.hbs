@@ -23,13 +23,13 @@
 
         {{#if block.subheader}}
           <div class="content-block-subheader text-gray-400 text-center mb-2 pt-2">
-            {{md-text text=block.subheader}}
+            {{markdown-to-html block.subheader}}
           </div>
         {{/if}}
 
         {{#if block.bodyText}}
           <div class="content-block-bodytext">
-            {{md-text text=block.bodyText}}
+            {{markdown-to-html block.bodyText}}
           </div>
         {{/if}}
 
@@ -72,7 +72,7 @@
 
             {{#if supportingText.bodyText}}
               <div class="content-block-supporting-text-body">
-                {{md-text text=supportingText.bodyText}}
+                {{markdown-to-html supportingText.bodyText}}
               </div>
             {{/if}}
           </div>
