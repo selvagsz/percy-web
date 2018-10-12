@@ -5,6 +5,7 @@ const SELECTORS = {
   ADMIN_DETAILS: '[data-test-build-info-admin-details]',
   BUILD_INFO_DROPDOWN_TOGGLE: '[data-test-build-info-dropdown-toggle]',
   PULL_REQUEST_LABEL: '[data-test-pull-request-label]',
+  BASE_BUILD: '.data-test-baseline-build-link',
 };
 
 export const BuildInfoDropdown = {
@@ -22,6 +23,10 @@ export const BuildInfoDropdown = {
     resetScope: true,
     testContainer: '#ember-testing-container',
   }),
+
+  clickBaseBuild() {
+    return click(SELECTORS.BASE_BUILD);
+  },
 };
 
 export default create(BuildInfoDropdown);

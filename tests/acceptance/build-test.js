@@ -281,16 +281,16 @@ describe('Acceptance: Build', function() {
     });
 
     await BuildPage.visitBuild(urlParams);
-    expect(BuildPage.snapshotList.isNoDiffsBatchVisible, 'one').to.equal(true);
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
 
     await BuildPage.clickToggleNoDiffsSection();
-    await BuildPage.clickProject();
-    await ProjectPage.builds(1).click();
-    expect(BuildPage.snapshotList.isNoDiffsBatchVisible, 'two').to.equal(true);
+    await BuildPage.toggleBuildInfoDropdown();
+    await BuildPage.buildInfoDropdown.clickBaseBuild();
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
 
     await BuildPage.snapshotList.clickToggleNoDiffsSection();
     expect(BuildPage.snapshots().count).to.equal(1);
-    expect(BuildPage.snapshots(0).isCollapsed, 'three').to.equal(true);
+    expect(BuildPage.snapshots(0).isCollapsed).to.equal(true);
   });
 
   it('toggles full view', async function() {
