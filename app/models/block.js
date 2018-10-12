@@ -20,7 +20,7 @@ export default Contentful.extend({
   hero: lookupContentfulModel('id', 'hero-block'),
   isHero: bool('hero'),
 
-  faqBlock: lookupContentfulModel('id', 'faq'),
+  faqBlock: lookupContentfulModel('id', 'faq-block'),
   isFaqBlock: bool('faqBlock'),
 
   profileBlock: lookupContentfulModel('id', 'profile-block'),
