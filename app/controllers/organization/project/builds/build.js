@@ -26,8 +26,8 @@ export default Controller.extend({
     // Get snapshots without making new request
     const buildSnapshotsWithDiffs = this.get('store')
       .peekAll('snapshot')
-      .filterBy('build.id', this.get('build.id'));
-
+      .filterBy('build.id', this.get('build.id'))
+      .filterBy('isChanged');
     const browsers = this.get('build.browsers');
 
     if (!browsers.length && this.get('raven.isRavenUsable')) {

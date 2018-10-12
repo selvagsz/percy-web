@@ -36,6 +36,7 @@ export default Route.extend({
     this._super(...arguments);
     controller.set('build', model.build);
     controller.set('isBuildApprovable', model.isUserMember);
+    controller.set('isUnchangedSnapshotsVisible', false);
   },
 
   _initializeSnapshotOrdering() {

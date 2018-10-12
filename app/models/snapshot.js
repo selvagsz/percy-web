@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import {equal} from '@ember/object/computed';
-import {mapBy, max, or} from '@ember/object/computed';
+import {mapBy, max, not, or} from '@ember/object/computed';
 
 export const SNAPSHOT_APPROVED_STATE = 'approved';
 export const SNAPSHOT_UNAPPROVED_STATE = 'unreviewed';
@@ -58,6 +58,7 @@ export default DS.Model.extend({
     SNAPSHOT_REVIEW_STATE_REASONS.AUTO_APPROVED_BRANCH,
   ),
   isUnchanged: equal('reviewStateReason', SNAPSHOT_REVIEW_STATE_REASONS.NO_DIFFS),
+  isChanged: not('isUnchanged'),
 
   // Is true for approved in build, approved by carry-forward, and auto-approved by branch.
   isApprovedWithChanges: or(

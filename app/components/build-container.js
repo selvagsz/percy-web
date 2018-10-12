@@ -5,12 +5,13 @@ import PollingMixin from 'percy-web/mixins/polling';
 import {inject as service} from '@ember/service';
 import {computed} from '@ember/object';
 import {snapshotsWithNoDiffForBrowser} from 'percy-web/lib/filtered-comparisons';
-import {task, timeout} from 'ember-concurrency';
+import {task} from 'ember-concurrency';
 
 export default Component.extend(PollingMixin, {
   classNames: ['BuildContainer'],
   classNameBindings: ['isHidingBuildContainer:BuildContainer--snapshotModalOpen'],
 
+  store: service(),
   build: null,
   isHidingBuildContainer: false,
   snapshotQuery: service(),
@@ -70,31 +71,17 @@ export default Component.extend(PollingMixin, {
 
   _getLoadedSnapshots() {
     // Get snapshots without making new request
-    return (
-      this.get('build')
-        .hasMany('snapshots')
-        .value() || []
-    );
+    return this.get('store')
+      .peekAll('snapshot')
+      .filterBy('build.id', this.get('build.id'));
   },
 
   isUnchangedSnapshotsLoading: readOnly('_toggleUnchangedSnapshotsVisible.isRunning'),
 
   _toggleUnchangedSnapshotsVisible: task(function*() {
-    const build = this.get('build');
     let loadedSnapshots = this._getLoadedSnapshots();
-    const allSnapshotsAreLoaded = loadedSnapshots.get('length') === build.get('totalSnapshots');
-
-    // Check if all snapshots for build are loaded
-    if (!allSnapshotsAreLoaded) {
-      // If they're not all loaded, get the rest.
-      yield this.get('snapshotQuery').getUnchangedSnapshots(this.get('build'));
-      loadedSnapshots = this._getLoadedSnapshots();
-    } else {
-      // If the cached snapshots are used, the loading spinner does not display because it
-      // completes this operation in the same run loop. So pause for half a second to
-      // give the user some indication we have processed their click.
-      yield timeout(500);
-    }
+    yield this.get('snapshotQuery').getUnchangedSnapshots(this.get('build'));
+    loadedSnapshots = this._getLoadedSnapshots();
 
     const alreadyLoadedSnapshotsWithNoDiff = yield snapshotsWithNoDiffForBrowser(
       loadedSnapshots,

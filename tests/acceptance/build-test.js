@@ -269,6 +269,28 @@ describe('Acceptance: Build', function() {
     await percySnapshot(this.test.fullTitle() + ' | shows expanded no diffs');
   });
 
+  it('resets visible snapshots between builds', async function() {
+    const baseBuild = server.create('build', {project});
+    build.update({baseBuild});
+
+    noDiffsSnapshot = server.create('snapshot', 'noDiffs', {
+      build: baseBuild,
+      name: 'No Diffs snapshot',
+    });
+
+    await BuildPage.visitBuild(urlParams);
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
+    await BuildPage.clickToggleNoDiffsSection();
+
+    await BuildPage.toggleBuildInfoDropdown();
+    await BuildPage.buildInfoDropdown.clickBaseBuild();
+    expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
+
+    await BuildPage.snapshotList.clickToggleNoDiffsSection();
+    expect(BuildPage.snapshots().count).to.equal(1);
+    expect(BuildPage.snapshots(0).isCollapsed).to.equal(true);
+  });
+
   it('toggles full view', async function() {
     await BuildPage.visitBuild(urlParams);
     await BuildPage.snapshots(0).header.clickToggleFullscreen();
