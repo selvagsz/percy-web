@@ -1,4 +1,9 @@
-{{#basic-dropdown horizontalPosition='auto-right' preventScroll=true as |dropdown|}}
+{{#basic-dropdown
+  horizontalPosition="auto-right"
+  preventScroll=true
+  verticalPosition="below"
+  as |dropdown|
+}}
 
   {{#dropdown.trigger}}
     <button data-test-build-info-dropdown-toggle class="flex center btn-icon-only">
@@ -21,7 +26,7 @@
       </tr>
       <tr>
         <td>Baseline build</td>
-        <td>{{build-comparison-info build=build}}</td>
+        <td>{{build-comparison-info build=build onLinkClick=(action dropdown.actions.close)}}</td>
       </tr>
 
       {{#if build.isFinished}}

@@ -1,5 +1,7 @@
 {{#if build.baseBuild}}
-  {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.baseBuild.id}}{{build.baseBuild.buildTitle}}{{/link-to}}
+  <div {{action onLinkClick}}>
+    {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.baseBuild.id}}{{build.baseBuild.buildTitle}}{{/link-to}}
+  </div>
 {{else}}
   {{#if build.isFinished}}
     No baseline to compare against
