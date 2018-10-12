@@ -20,6 +20,10 @@ describe('Integration: RepoIntegratorComponent', function() {
     setupFactoryGuy(this.container);
   });
 
+  // Something about ember-power-select is not tearing down the component correctly if it is
+  // still open when the test ends. Addding `clickTrigger` to the end of each test seems to fix
+  // this problem.
+
   describe('with a github integration', function() {
     beforeEach(function() {
       const project = make('project');
