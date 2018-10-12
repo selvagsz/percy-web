@@ -216,9 +216,11 @@ export default DS.Model.extend({
     return browsersUpgraded;
   }),
 
-  loadedSnapshots: computed(function() {
+  loadedSnapshots: computed('snapshots.@each.build', function() {
     // Get snapshots without making new request
-    return this.hasMany('snapshots').value() || [];
+    return this.get('store')
+      .peekAll('snapshot')
+      .filterBy('build.id', this.get('id'));
   }),
 
   // Returns Ember Object with a property for each browser for the build,
@@ -236,7 +238,6 @@ export default DS.Model.extend({
         }
         return acc;
       }, []);
-
       return countDiffsWithSnapshotsPerBrowser(unreviewedSnapshotsWithDiffs, this.get('browsers'));
     },
   ),
