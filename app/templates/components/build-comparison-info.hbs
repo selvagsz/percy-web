@@ -1,6 +1,6 @@
 {{#if build.baseBuild}}
   <div {{action onLinkClick}}>
-    {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.baseBuild.id class="data-test-baseline-build-link"}}{{build.baseBuild.buildTitle}}{{/link-to}}
+    {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.baseBuild.id}}{{build.baseBuild.buildTitle}}{{/link-to}}
   </div>
 {{else}}
   {{#if build.isFinished}}
