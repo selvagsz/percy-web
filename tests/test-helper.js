@@ -9,6 +9,6 @@ setResolver(resolver);
 loadEmberExam();
 
 mocha.setup({
-  timeout: 4000,
+  timeout: 10000,
   slow: 2000,
 });
