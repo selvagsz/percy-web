@@ -137,7 +137,7 @@ describe('Integration | Component | organizations/integrations/integration-item'
     });
   });
 
-  describe('as an unauthorized gitlab integration item', function() {
+  describe('with an unauthorized gitlab integration', function() {
     beforeEach(function() {
       const organization = make('organization', 'withUnauthorizedGitlabIntegration');
       this.set('organization', organization);
@@ -145,6 +145,23 @@ describe('Integration | Component | organizations/integrations/integration-item'
       this.render(hbs`{{organizations/integrations/integration-item
         integrationName="gitlab"
         integrationStatus="unauthorized"
+        organization=organization}}`);
+    });
+
+    it('has a badge to signify the integration is disabled', function() {
+      expect(IntegrationItem.hasDisabledBadge).to.equal(true);
+      percySnapshot(this.test);
+    });
+  });
+
+  describe('with an invalid gitlab self-managed hostname', function() {
+    beforeEach(function() {
+      const organization = make('organization', 'withInvalidHostnameGitlabSelfHostedIntegration');
+      this.set('organization', organization);
+
+      this.render(hbs`{{organizations/integrations/integration-item
+        integrationName="gitlab_self_hosted"
+        integrationStatus="invalid_hostname"
         organization=organization}}`);
     });
 

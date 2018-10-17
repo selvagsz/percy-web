@@ -42,8 +42,11 @@ FactoryGuy.define('version-control-integration', {
       isGitlabPersonalAccessTokenPresent: false,
       integrationType: GITLAB_SELF_HOSTED_INTEGRATION_TYPE,
     },
-    disabled: {
+    unauthorized: {
       state: 'unauthorized',
+    },
+    invalidHostname: {
+      state: 'invalid_hostname',
     },
   },
 });

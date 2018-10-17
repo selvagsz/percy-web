@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import {lookup} from 'percy-web/lib/computed/objectLookup';
 import {computed} from '@ember/object';
-import {equal} from '@ember/object/computed';
+import {equal, or} from '@ember/object/computed';
 import AdminMode from 'percy-web/lib/admin-mode';
 
 import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/lib/integration-types';
@@ -21,7 +21,9 @@ export default Component.extend({
   iconName: lookup('integrationName', INTEGRATIONS_LOOKUP, 'iconName'),
   betaLink: lookup('integrationName', INTEGRATIONS_LOOKUP, 'betaLink'),
   isGeneralAvailability: lookup('integrationName', INTEGRATIONS_LOOKUP, 'isGeneralAvailability'),
-  isIntegrationDisabled: equal('integrationStatus', 'unauthorized'),
+  isIntegrationUnauthorized: equal('integrationStatus', 'unauthorized'),
+  isIntegrationHostnameInvalid: equal('integrationStatus', 'invalid_hostname'),
+  isIntegrationDisabled: or('isIntegrationUnauthorized', 'isIntegrationHostnameInvalid'),
 
   isGHEnterprise: equal('integrationName', GITHUB_ENTERPRISE_INTEGRATION_TYPE),
 
