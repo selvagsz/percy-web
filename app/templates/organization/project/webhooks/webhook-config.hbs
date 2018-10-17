@@ -10,6 +10,118 @@
       {{/link-to}}
     </div>
 
+    <div class="bg-white rounded shadow-1 px-2 py-2 mb-2">
+      <h2 class="text-lg font-semibold mb-2">Recent Deliveries</h2>
+      <div class="mb-2 rounded border">
+        <div class="border-b p-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              {{status-badge statusText="200" class="mr-2" tagName=""}}
+              <div class="font-mono">
+                <div class="flex items-center mb-sm">
+                  <div class="leading-none">
+                    POST https://webhooks.com/whatever
+                  </div>
+                  {{label-tag labelText="ping" class="ml-1" tagName=""}}
+                </div>
+                <div class="leading-none text-gray-300">
+                  1efe42db-b4d7-4c74-9211-1996ab9420e2
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="text-right">
+                <div class="mb-sm leading-none">
+                  2018-09-14 09:34:59
+                </div>
+                <div class="leading-none text-gray-300">
+                  240ms
+                </div>
+              </div>
+              <button class="btn btn-square ml-2">
+                {{inline-svg "dropdown-icon"}}
+              </button>
+            </div>
+          </div>
+          <div class="mt-2">
+            <div class="flex justify-center">
+              <div class="btn-group mb-2">
+                <button class="btn is-active">
+                  Request
+                </button>
+                <button class="btn rounded">
+                  Request
+                </button>
+              </div>
+            </div>
+            {{#if false}}
+              <div class="rounded bg-yellow-000 border border-yellow-100 p-2 mb-2">
+                <strong>SSL verification failed:</strong> We couldn’t verify your host SSL certificate. <a href="#" class="font-semibold">See documentation</a> for more details.
+              </div>
+            {{/if}}
+            <div class="mb-1 font-semibold leading-none">
+              Headers
+            </div>
+            <div class="flex p-2 mb-2 rounded border bg-gray-000 font-mono">
+              <div class="mr-2 text-gray-400">
+                <div>Host</div>
+                <div>Content-Type</div>
+                <div>Content-Length</div>
+                <div>X-Percy-Delivery</div>
+                <div>X-Percy-Event</div>
+              </div>
+              <div class="flex-1">
+                <div>example.com</div>
+                <div>application/json</div>
+                <div>13</div>
+                <div>1efe42db-b4d7-4c74-9211-1996ab9420e2</div>
+                <div>ping</div>
+              </div>
+            </div>
+            <div class="mb-1 font-semibold leading-none">
+              Payload
+            </div>
+            <div class="p-2 rounded border bg-gray-000 font-mono">
+              json payload
+            </div>
+          </div>
+        </div>
+
+        <div class="p-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              {{status-badge statusText="200" class="mr-2" tagName=""}}
+              <div class="font-mono">
+                <div class="flex items-center mb-sm">
+                  <div class="leading-none">
+                    POST https://webhooks.com/whatever
+                  </div>
+                  {{label-tag labelText="ping" class="ml-1" tagName=""}}
+                </div>
+                <div class="leading-none text-gray-300">
+                  1efe42db-b4d7-4c74-9211-1996ab9420e2
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="text-right">
+                <div class="mb-sm leading-none">
+                  2018-09-14 09:34:59
+                </div>
+                <div class="leading-none text-gray-300">
+                  240ms
+                </div>
+              </div>
+              <button class="btn btn-square ml-2">
+                {{inline-svg "dropdown-icon"}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="bg-white rounded shadow-1 p-2 mb-2">
       {{forms/webhook-config-edit
         webhookConfig=model.webhookConfig

@@ -81,12 +81,10 @@
         {{#if model.webhookConfigs}}
           <div class="mb-2 rounded border">
             {{#each model.webhookConfigs as |webhookConfig|}}
-              <div class="p-2 border-b">
+              <div class="p-2 {{unless (eq webhookConfig model.webhookConfigs.lastObject) "border-b"}}">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center mr-2">
-                    <span>
-                      {{webhookConfig.status}}
-                    </span>
+                    {{status-dot status=webhookConfig.status class="mr-2" tagName=""}}
                     <div style="min-width: 0;" class="font-mono truncate {{if false 'opacity-25'}}">
                       {{webhookConfig.url}}
                     </div>
