@@ -26,10 +26,12 @@ export default Auth0UrlHash.extend({
 
       // replace the default code with duplicate code that adds query params for logging
       // this.get('session').invalidateAndLogout()
-      this.invalidate().then(() => {
-        this._clearThirdPartyUserContext();
-        utils.replaceWindowLocation('/api/auth/logout?inconsistent-auth-state=true');
-      });
+      this.get('session')
+        .invalidate()
+        .then(() => {
+          this.get('session')._clearThirdPartyUserContext();
+          utils.replaceWindowLocation('/api/auth/logout?inconsistent-auth-state=true');
+        });
 
       return reject();
     });
