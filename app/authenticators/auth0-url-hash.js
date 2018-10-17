@@ -1,6 +1,7 @@
 import Auth0UrlHash from 'ember-simple-auth-auth0/authenticators/auth0-url-hash';
 import {inject as service} from '@ember/service';
 import {reject} from 'rsvp';
+import utils from 'percy-web/lib/utils';
 
 export default Auth0UrlHash.extend({
   session: service(),
@@ -23,7 +24,13 @@ export default Auth0UrlHash.extend({
         {persistentReloads: 2},
       );
 
-      this.get('session').invalidateAndLogout();
+      // replace the default code with duplicate code that adds query params for logging
+      // this.get('session').invalidateAndLogout()
+      this.invalidate().then(() => {
+        this._clearThirdPartyUserContext();
+        utils.replaceWindowLocation('/api/auth/logout?inconsistent-auth-state=true');
+      });
+
       return reject();
     });
   },
