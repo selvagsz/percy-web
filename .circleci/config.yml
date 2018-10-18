@@ -54,7 +54,9 @@ jobs:
       - image: circleci/node:8
     working_directory: ~/
     steps:
-      - run: npm install -g @percy/agent
+      - attach_workspace:
+          at: .
+      - run: sudo npm install -g @percy/agent
       - run: percy finalize --all
 
 workflows:
