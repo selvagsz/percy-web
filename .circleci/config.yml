@@ -63,8 +63,9 @@ jobs:
           echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
           echo '--'
           echo $CIRCLECI
+          echo $CIRCLE_BUILD_NUM
           echo '--'
-          sudo npm install -g @percy/agent --allow-root
+          sudo npm install -g @percy/agent
           percy finalize --all
 
 workflows:
