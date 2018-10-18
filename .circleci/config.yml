@@ -54,7 +54,7 @@ jobs:
       - image: percyio/agent:latest
     steps:
       - run:
-          command: percy finalize --all
+          command: percy --version && percy finalize --all
 
 workflows:
   version: 2
