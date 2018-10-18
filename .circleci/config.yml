@@ -47,7 +47,7 @@ jobs:
       - run: echo 'export PATH=~/percy-web/node_modules/.bin:$PATH' >> $BASH_ENV
       - run:
           name: Run Tests
-          command: percy exec -- yarn test
+          command: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM percy exec -- yarn test
 
   finalize_percy:
     docker:
@@ -55,6 +55,7 @@ jobs:
     working_directory: ~/
     steps:
       - run: npm install @percy/agent
+      - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
       - run: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM percy finalize --all
 
 workflows:
@@ -69,5 +70,5 @@ workflows:
           requires:
             - install_dependencies
       - finalize_percy
-
-
+          requires:
+            - run_tests
