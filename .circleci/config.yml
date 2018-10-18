@@ -68,6 +68,6 @@ workflows:
       # - run_tests:
       #     requires:
       #       - install_dependencies
-      - finalize_percy:
+      - finalize_percy
           # requires:
           #   - run_tests
