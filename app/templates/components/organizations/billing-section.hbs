@@ -17,8 +17,8 @@
             {{inline-svg 'comparison-icon-lg' class="mr-2"}}
             <div>
               <div class="leading-none">
-                {{#if subscription.currentUsageStats.total}}
-                  {{format-number subscription.currentUsageStats.total}}
+                {{#if currentUsageStats.total}}
+                  {{format-number currentUsageStats.total}}
                 {{else}}
                   …
                 {{/if}}
@@ -39,14 +39,14 @@
             </span>
           </div>
         </div>
-        {{organizations/billing-usage-graph organization=organization}}
+        {{organizations/billing-usage-graph currentUsageStats=currentUsageStats}}
       </div>
 
       {{#unless (or organization.billingLocked organization.subscription.plan.isCustom)}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
           <h2 class="text-xl font-semibold mb-1">Current billing period</h2>
           <div class="rounded border py-2 bg-gray-000">
-            {{#if isCurrentUsageStatsLoading}}
+            {{#if (not currentUsageStats)}}
               <div class="flex justify-center px-2">
                 <figure class="svg-container">
                   {{inline-svg "loader-icon"}}
@@ -55,7 +55,7 @@
             {{else}}
               <div class="border-b pb-2 px-2 font-semibold">
                 <span class="text-2xl">
-                  {{format-currency subscription.currentUsageStats.currentCostDollars}}
+                  {{format-currency currentUsageStats.currentCostDollars}}
                 </span>
                 <span class="text-lg text-gray-300">
                   current estimated costs
@@ -63,7 +63,7 @@
               </div>
               <div class="flex items-center pt-2 px-2 font-semibold">
                 {{inline-svg "comparison-icon" class="mr-1"}}
-                <span class="text-base mr-sm">{{format-number subscription.currentUsageStats.total}}</span>
+                <span class="text-base mr-sm">{{format-number currentUsageStats.total}}</span>
                 <span class="text-gray-300">current snapshots</span> {{snapshot-explanation-tooltip}}
               </div>
             {{/if}}
