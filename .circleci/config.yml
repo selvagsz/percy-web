@@ -54,19 +54,19 @@ jobs:
       - image: percyio/agent:latest
     steps:
       - run:
-          command: percy --version && percy finalize --all
+          command: percy finalize --all
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
-      # - checkout_code
-      # - install_dependencies:
-      #     requires:
-      #       - checkout_code
-      # - run_tests:
-      #     requires:
-      #       - install_dependencies
+      - checkout_code
+      - install_dependencies:
+          requires:
+            - checkout_code
+      - run_tests:
+          requires:
+            - install_dependencies
       - finalize_percy
-          # requires:
-          #   - run_tests
+          requires:
+            - run_tests
