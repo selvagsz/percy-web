@@ -54,16 +54,15 @@ jobs:
       - image: circleci/node:8
         environment:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          PERCY_PARALLEL_NONCE: $CIRCLE_BUILD_NUM
     working_directory: ~/
     steps:
-      - run: echo '--'
-      - run: echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
-      - run: echo $PERCY_PARALLEL_NONCE
-      - run: echo $CIRCLECI
-      - run: echo '--'
-      - run: sudo npm install -g @percy/agent
-      - run: percy finalize --all
+      command: |
+        echo '--'
+        echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+        echo $CIRCLECI
+        echo '--'
+        sudo npm install -g @percy/agent
+        percy finalize --all
 
 workflows:
   version: 2
