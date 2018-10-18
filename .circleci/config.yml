@@ -57,12 +57,12 @@ jobs:
           PERCY_PARALLEL_NONCE: $CIRCLE_BUILD_NUM
     working_directory: ~/
     steps:
-      - run: sudo npm install -g @percy/agent
       - run: echo '--'
       - run: echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
       - run: echo $PERCY_PARALLEL_NONCE
       - run: echo $CIRCLECI
       - run: echo '--'
+      - run: sudo npm install -g @percy/agent
       - run: percy finalize --all
 
 workflows:
