@@ -52,10 +52,11 @@ jobs:
   finalize_percy:
     docker:
       - image: circleci/node:8
+    working_directory: ~/
     steps:
       - run: npm install @percy/agent
       - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
-      - run: percy finalize --all
+      - run: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM percy finalize --all
 
 workflows:
   version: 2
