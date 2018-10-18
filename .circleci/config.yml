@@ -49,6 +49,12 @@ jobs:
           name: Run Tests
           command: percy exec -- yarn test
 
+  finalize_percy:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - run: yarn global add @percy/agent && percy finalize --all
+
 workflows:
   version: 2
   test_and_deploy:
@@ -60,5 +66,6 @@ workflows:
       - run_tests:
           requires:
             - install_dependencies
+      - finalize_percy
 
 
