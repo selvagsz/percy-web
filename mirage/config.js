@@ -5,6 +5,7 @@ export default function() {
   // this.logging = true;
 
   this.passthrough('http://api.amplitude.com');
+  this.passthrough('https://api.lever.co/v0/postings/percy');
 
   this.passthrough('https://preview.contentful.com/spaces/:space_id/environments/test/entries');
   this.passthrough('https://preview.contentful.com/spaces/:space_id/environments/test/entries/**');
