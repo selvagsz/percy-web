@@ -29,7 +29,7 @@ jobs:
             - v1-deps-
       - run:
           name: Yarn Install
-          command: yarn install --non-interactive
+          command: yarn global add bower && yarn install --non-interactive
       - save_cache:
           key: v1-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
