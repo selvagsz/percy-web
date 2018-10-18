@@ -56,14 +56,16 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
     working_directory: ~/
     steps:
-      - command: |
-        echo '--'
-        echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
-        echo '--'
-        echo $CIRCLECI
-        echo '--'
-        sudo npm install -g @percy/agent
-        percy finalize --all
+      - run:
+        name: Finalize all Percy builds
+        command: |
+          echo '--'
+          echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+          echo '--'
+          echo $CIRCLECI
+          echo '--'
+          sudo npm install -g @percy/agent
+          percy finalize --all
 
 workflows:
   version: 2
