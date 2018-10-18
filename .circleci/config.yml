@@ -54,8 +54,6 @@ jobs:
       - image: circleci/node:8
     working_directory: ~/
     steps:
-      - attach_workspace:
-          at: .
       - run: npm install @percy/agent
       - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
       - run: percy finalize --all
