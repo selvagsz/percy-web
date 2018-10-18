@@ -59,7 +59,7 @@ jobs:
       - run:
           command: |
             echo '-------'
-            ENV
+            env
             echo '-------'
             node -e "console.log(process.env)"
             echo '-------'
