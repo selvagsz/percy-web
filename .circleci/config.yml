@@ -57,15 +57,14 @@ jobs:
     working_directory: ~/
     steps:
       - run:
-        name: Finalize all Percy builds
-        command: |
-          echo '-------'
-          ENV
-          echo '-------'
-          node -e "console.log(process.env)"
-          echo '-------'
-          sudo npm install -g @percy/agent
-          percy finalize --all
+          command: |
+            echo '-------'
+            ENV
+            echo '-------'
+            node -e "console.log(process.env)"
+            echo '-------'
+            sudo npm install -g @percy/agent
+            percy finalize --all
 
 workflows:
   version: 2
