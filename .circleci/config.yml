@@ -55,7 +55,7 @@ jobs:
     working_directory: ~/
     steps:
       - run: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true sudo npm install -g @percy/agent
-      - run: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM percy finalize --all
+      - run: export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && percy finalize --all
 
 workflows:
   version: 2
