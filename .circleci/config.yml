@@ -59,12 +59,11 @@ jobs:
       - run:
         name: Finalize all Percy builds
         command: |
-          echo '--'
-          echo $PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
-          echo '--'
-          echo $CIRCLECI
-          echo $CIRCLE_BUILD_NUM
-          echo '--'
+          echo '-------'
+          ENV
+          echo '-------'
+          node -e "console.log(process.env)"
+          echo '-------'
           sudo npm install -g @percy/agent
           percy finalize --all
 
