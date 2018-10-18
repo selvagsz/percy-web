@@ -47,7 +47,7 @@ jobs:
       - run: echo 'export PATH=~/percy-web/node_modules/.bin:$PATH' >> $BASH_ENV
       - run:
           name: Run Tests
-          command: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM yarn test:parallel
+          command: yarn build-test && PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM yarn test:parallel
 
   finalize_percy:
     docker:
