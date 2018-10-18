@@ -52,7 +52,6 @@ jobs:
   finalize_percy:
     docker:
       - image: circleci/node:8
-    working_directory: ~/
     steps:
       - run: npm install @percy/agent
       - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
