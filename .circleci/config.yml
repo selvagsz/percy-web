@@ -52,6 +52,7 @@ jobs:
   finalize_percy:
     docker:
       - image: circleci/node:8
+    working_directory: ~/
     steps:
       - run: npm install -g @percy/agent
       - run: percy finalize --all
