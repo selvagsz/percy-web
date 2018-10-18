@@ -54,7 +54,7 @@ jobs:
       - image: percyio/percy-agent:latest
     steps:
       - run:
-          command: percy finalize --all
+          command: PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM percy finalize --all
 
 workflows:
   version: 2
