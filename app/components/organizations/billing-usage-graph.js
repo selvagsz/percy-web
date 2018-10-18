@@ -4,9 +4,9 @@ import {htmlSafe} from '@ember/string';
 
 export default Component.extend({
   tagName: '',
-  organization: null,
+  currentUsageStats: null,
 
-  _dayStats: computed.alias('organization.subscription.currentUsageStats.dayStatsFormatted'),
+  _dayStats: computed.alias('currentUsageStats.dayStatsFormatted'),
 
   dayStatsFormatted: computed('_dayStats', 'maxDailySnapshot', function() {
     const dayStats = this.get('_dayStats');

@@ -140,6 +140,8 @@ describe('Acceptance: Build', function() {
 
     it('looks correct when switching to other browser', async function() {
       await BuildPage.visitBuild(urlParams);
+      expect(BuildPage.browserSwitcher.chromeButton.diffCount).to.equal('3');
+      expect(BuildPage.browserSwitcher.firefoxButton.diffCount).to.equal('3');
       await percySnapshot(this.test.fullTitle() + ' before switching browsers');
       await BuildPage.browserSwitcher.switchBrowser();
       await percySnapshot(this.test.fullTitle() + ' after switching browsers');
@@ -280,8 +282,8 @@ describe('Acceptance: Build', function() {
 
     await BuildPage.visitBuild(urlParams);
     expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
-    await BuildPage.clickToggleNoDiffsSection();
 
+    await BuildPage.clickToggleNoDiffsSection();
     await BuildPage.toggleBuildInfoDropdown();
     await BuildPage.buildInfoDropdown.clickBaseBuild();
     expect(BuildPage.snapshotList.isNoDiffsBatchVisible).to.equal(true);
