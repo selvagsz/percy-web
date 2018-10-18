@@ -1,0 +1,3 @@
+.label-tag {
+  @apply px-1 rounded bg-gray-100 text-gray-400 text-sm font-mono lowercase;
+}
