@@ -56,7 +56,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: sudo npm install -g @percy/agent
+      - run: npm install @percy/agent
+      - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
       - run: percy finalize --all
 
 workflows:
