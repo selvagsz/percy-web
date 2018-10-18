@@ -52,6 +52,7 @@ jobs:
   finalize_percy:
     docker:
       - image: circleci/node:8
+    working_directory: ~/
     steps:
       - run: yarn global add @percy/agent
       - run: echo 'export PATH=~/node_modules/.bin:$PATH' >> $BASH_ENV
