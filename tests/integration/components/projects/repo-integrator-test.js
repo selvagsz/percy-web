@@ -20,6 +20,10 @@ describe('Integration: RepoIntegratorComponent', function() {
     setupFactoryGuy(this.container);
   });
 
+  // Something about ember-power-select is not tearing down the component correctly if it is
+  // still open when the test ends. Addding `clickTrigger` to the end of each test seems to fix
+  // this problem.
+
   describe('with a github integration', function() {
     beforeEach(function() {
       const project = make('project');
@@ -43,6 +47,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -69,6 +74,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -99,6 +105,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Managed');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -128,6 +135,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub Enterprise');
 
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -155,6 +163,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Managed');
       expect(RepoIntegrator.dropdown.groups(3).name).to.eq('GitHub Enterprise');
       percySnapshot(this.test.fullTitle());
+      clickTrigger();
     });
   });
 
@@ -205,6 +214,7 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: 20 minutes ago');
       percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
 
     it('refreshes the repo collection', async function() {
@@ -217,8 +227,8 @@ describe('Integration: RepoIntegratorComponent', function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.options.count).to.eq(expectedRepoCount);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: a minute ago');
-
       percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 });

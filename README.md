@@ -77,7 +77,7 @@ PERCY_TOKEN=... PERCY_BRANCH=local yarn test
 
 - Determine the [latest Ember release](https://github.com/ember-cli/ember-cli/releases/latest).
 
-- Read the [changelog](https://github.com/emberjs/ember.js/blob/master/CHANGELOG.md) to review changes between the source version and target version.  
+- Read the [changelog](https://github.com/emberjs/ember.js/blob/master/CHANGELOG.md) to review changes between the source version and target version.
 
 - View the [release notes](https://github.com/ember-cli/ember-cli/releases) for each version between the source and target.  If there are any unusual notes for an upgrade step, follow them.
 
@@ -87,6 +87,6 @@ PERCY_TOKEN=... PERCY_BRANCH=local yarn test
 
 - Run `yarn install`.
 
-- Run `yarn run test` and make sure all tests pass.  There might be deprecation warnings and breakages to fix.  
+- Run `yarn run test` and make sure all tests pass.  There might be deprecation warnings and breakages to fix.
 
 - After a CI build, ensure that the same number of screenshots have been taken, and that no unexpected visual diffs are present.

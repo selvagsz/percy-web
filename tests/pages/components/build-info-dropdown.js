@@ -1,4 +1,4 @@
-import {create, clickable, isPresent, text} from 'ember-cli-page-object';
+import {create, isPresent, text} from 'ember-cli-page-object';
 import clickDropdownTrigger from 'percy-web/tests/pages/helpers/click-basic-dropdown-trigger';
 
 const SELECTORS = {
@@ -24,7 +24,9 @@ export const BuildInfoDropdown = {
     testContainer: '#ember-testing-container',
   }),
 
-  clickBaseBuild: clickable(SELECTORS.BASE_BUILD),
+  clickBaseBuild() {
+    return click(SELECTORS.BASE_BUILD);
+  },
 };
 
 export default create(BuildInfoDropdown);
