@@ -39,14 +39,14 @@
             </span>
           </div>
         </div>
-        {{organizations/billing-usage-graph currentUsageStats=currentUsageStats}}
+        {{organizations/billing-usage-graph currentUsageStats=(await currentUsageStats) isUsageStatsLoading=getUsageStats.isRunning}}
       </div>
 
       {{#unless (or organization.billingLocked organization.subscription.plan.isCustom)}}
         <div class="bg-white rounded shadow-1 p-2 mb-2">
           <h2 class="text-xl font-semibold mb-1">Current billing period</h2>
           <div class="rounded border py-2 bg-gray-000">
-            {{#if (not currentUsageStats)}}
+            {{#if getUsageStats.isRunning}}
               <div class="flex justify-center px-2">
                 <figure class="svg-container">
                   {{inline-svg "loader-icon"}}

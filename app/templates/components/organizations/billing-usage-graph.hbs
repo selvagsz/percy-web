@@ -1,18 +1,26 @@
-<div class="bar-chart relative pb-2 mb-6">
-  {{#each yAxisIncrementMarks as |tick|}}
-    <div class="text-sm text-gray-200 font-bold border-b pb-sm pt-1 px-1">
-      {{format-number tick}}
-    </div>
-  {{/each}}
-
-  <div class="flex items-end absolute" style="top: 30px; right: 4px; bottom: 0; left: 72px;">
-    {{#each dayStatsFormatted as |stat|}}
-      <div class="bar-item relative flex items-end flex-1 h-full mr-sm {{if (eq (moment-format stat.date 'D') (moment-format (utc) 'D')) 'bar-item-today'}}"
-        data-label="{{moment-format stat.date 'D'}}">
-        <div class="bar w-full {{if (is-after stat.date [precision='days']) 'bg-gray-100 bar-future' 'bg-purple-600 hint--top hint--rounded hint--bounce'}}"
-          style={{stat.percentOfHeight}} aria-label="{{moment-format stat.date 'MMM Do'}}: {{format-number stat.count}}">
-        </div>
+{{#if isUsageStatsLoading}}
+  <div class="flex justify-center px-2">
+    <figure class="svg-container">
+      {{inline-svg "loader-icon"}}
+    </figure>
+  </div>
+{{else}}
+  <div class="bar-chart relative pb-2 mb-6">
+    {{#each yAxisIncrementMarks as |tick|}}
+      <div class="text-sm text-gray-200 font-bold border-b pb-sm pt-1 px-1">
+        {{format-number tick}}
       </div>
     {{/each}}
+
+    <div class="flex items-end absolute" style="top: 30px; right: 4px; bottom: 0; left: 72px;">
+      {{#each dayStatsFormatted as |stat|}}
+        <div class="bar-item relative flex items-end flex-1 h-full mr-sm {{if (eq (moment-format stat.date 'D') (moment-format (utc) 'D')) 'bar-item-today'}}"
+          data-label="{{moment-format stat.date 'D'}}">
+          <div class="bar w-full {{if (is-after stat.date [precision='days']) 'bg-gray-100 bar-future' 'bg-purple-600 hint--top hint--rounded hint--bounce'}}"
+            style={{stat.percentOfHeight}} aria-label="{{moment-format stat.date 'MMM Do'}}: {{format-number stat.count}}">
+          </div>
+        </div>
+      {{/each}}
+    </div>
   </div>
-</div>
+{{/if}}
