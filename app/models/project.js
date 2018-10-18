@@ -27,11 +27,6 @@ export default DS.Model.extend({
 
   projectBrowserTargets: DS.hasMany('projectBrowserTargets', {async: false}),
 
-  _lastBuild: computed('organization', 'slug', 'builds', function() {
-    return this.store.query('build', {project: this, page: {limit: 1}});
-  }),
-  lastBuild: computed.alias('_lastBuild.lastObject'),
-
   writeOnlyToken: computed('tokens', function() {
     return this.get('tokens').findBy('role', 'write_only');
   }),

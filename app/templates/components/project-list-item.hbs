@@ -1,0 +1,15 @@
+<li
+  class="flex items-center mb-2 {{if project.isDisabled 'opacity-25'}}"
+  {{action toggleSidebar}}
+>
+  <div class="status-indicator flex-no-shrink mr-2 is-{{dasherize recentBuild.state}} is-{{if recentBuild.isFinished (dasherize recentBuild.reviewState)}}"></div>
+
+  {{#link-to
+    "organization.project.index"
+    project.organization.slug
+    project.slug
+    class="font-semibold link-gray truncate"
+  }}
+    {{project.name}}
+  {{/link-to}}
+</li>
