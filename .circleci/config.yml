@@ -64,7 +64,7 @@ jobs:
           echo '--'
           echo $CIRCLECI
           echo '--'
-          sudo npm install -g @percy/agent
+          sudo npm install -g @percy/agent --allow-root
           percy finalize --all
 
 workflows:
