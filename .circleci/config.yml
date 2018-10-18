@@ -54,6 +54,8 @@ jobs:
       - image: circleci/node:8
     working_directory: ~/
     steps:
+      - run: export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - run: export PERCY_PARALLEL_NONCE=$CIRCLE_BUILD_NUM
       - run: sudo npm install -g @percy/agent
       - run: percy finalize --all
 
