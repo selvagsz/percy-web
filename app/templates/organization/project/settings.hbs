@@ -6,7 +6,7 @@
       <div>
         <h1 class="text-xl font-semibold mb-sm">Project Settings</h1>
         <p class="text-gray-400 md:w-3/4 mb-0">
-          These are the settings specific to the {{model.project.slug}} project. If you want to update settings for your entire organization, use the settings link in the header above. Not seeing the setting you were looking for? <strong><a href="#" {{action "showSupport"}}>Reach out</a></strong> and let us know!
+          These are the settings specific to the {{model.project.slug}} project. If you want to update settings for your entire organization, use the settings link in the header above. Not seeing the setting you were looking for? <strong><a href="#" {{action (route-action "showSupport")}} data-test-project-settings-show-support>Reach out</a></strong> and let us know!
         </p>
       </div>
       {{#link-to "organization.project.index" model.organization.slug model.project.slug classNames="btn btn-primary shadow-purple-lg mb-0"}}

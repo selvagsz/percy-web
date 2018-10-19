@@ -1,12 +1,12 @@
 import {setupComponentTest} from 'ember-mocha';
-import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
-import sinon from 'sinon';
 import {make} from 'ember-data-factory-guy';
 import BuildHeader from 'percy-web/tests/pages/components/build-header';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import sinon from 'sinon';
+import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
 
 describe('Integration: BuildHeader', function() {
   setupComponentTest('build-header', {
@@ -39,59 +39,46 @@ describe('Integration: BuildHeader', function() {
 
     it(`renders in state: ${testTitle}`, function() {
       const build = make.apply(this, ['build'].concat(state));
-      const showSupportStub = sinon.stub();
-      this.set('actions', {
-        showSupport: showSupportStub,
-      });
       this.setProperties({build});
 
       this.render(hbs`{{
         build-header
         build=build
-        showSupport=(action "showSupport")
         isBuildApprovable=true
       }}`);
       percySnapshot(this.test);
     });
   });
 
-  it('sends showSupport action when clicking "reach out" on timed out build', function() {
-    const build = make('build', 'withBaseBuild', 'failed', 'renderTimeout');
-    const showSupportStub = sinon.stub();
-    this.set('actions', {
-      showSupport: showSupportStub,
-    });
-    this.setProperties({
-      build,
-      showSupport: showSupportStub,
-    });
-    this.render(hbs`{{build-header
-      build=build
-      showSupport=(action "showSupport")
-      isBuildApprovable=true
-    }}`);
+  describe('showSupport actions', function() {
+    it('sends showSupport action when clicking "reach out" on timed out build', function() {
+      const showSupportStub = sinon.stub();
+      mockIntercomService(this, showSupportStub);
 
-    this.$('[data-test-build-overview-show-support]').click();
-    expect(showSupportStub).to.have.been.called; // eslint-disable-line
-  });
+      const build = make('build', 'withBaseBuild', 'failed', 'renderTimeout');
+      this.setProperties({build});
+      this.render(hbs`{{build-header
+        build=build
+        isBuildApprovable=true
+      }}`);
 
-  it('sends showSupport action when clicking "reach out" when missing parallel builds', function() {
-    const build = make('build', 'withBaseBuild', 'failed', 'missingParallelBuilds');
-    const showSupportStub = sinon.stub();
-    this.set('actions', {
-      showSupport: showSupportStub,
+      BuildHeader.clickShowSupport();
+      expect(showSupportStub).to.have.been.called;
     });
-    this.setProperties({
-      build,
-      showSupport: showSupportStub,
-    });
-    this.render(hbs`{{build-header
-      build=build
-      showSupport=(action "showSupport")
-      isBuildApprovable=true
-    }}`);
 
-    this.$('[data-test-build-overview-show-support]').click();
-    expect(showSupportStub).to.have.been.called; // eslint-disable-line
+    it('sends showSupport action when clicking "reach out" when missing parallel builds', function() { // eslint-disable-line
+      const showSupportStub = sinon.stub();
+      mockIntercomService(this, showSupportStub);
+
+      const build = make('build', 'withBaseBuild', 'failed', 'missingParallelBuilds');
+      this.setProperties({build});
+      this.render(hbs`{{build-header
+        build=build
+        isBuildApprovable=true
+      }}`);
+
+      BuildHeader.clickShowSupport();
+      expect(showSupportStub).to.have.been.called;
+    });
   });
 });

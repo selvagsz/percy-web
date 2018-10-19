@@ -37,7 +37,6 @@ describe('Integration: BuildContainer', function() {
         build=build
         createReview=stub
         pollRefresh=stub
-        showSupport=stub
         allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
       }}`);
     });
@@ -225,7 +224,6 @@ describe('Integration: BuildContainer', function() {
         build=build
         allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted
         createReview=stub
-        showSupport=stub
         analytics=analyticsStub
       }}`);
     });

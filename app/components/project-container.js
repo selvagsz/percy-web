@@ -35,8 +35,5 @@ export default Component.extend(PollingMixin, {
     refresh() {
       this._refresh();
     },
-    showSupport() {
-      this.sendAction('showSupport');
-    },
   },
 });

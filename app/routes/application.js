@@ -16,6 +16,7 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
   currentUser: alias('session.currentUser'),
   launchDarkly: service(),
   redirects: service(),
+  intercom: service(),
 
   beforeModel(transition) {
     this._super(...arguments);
@@ -91,7 +92,9 @@ export default Route.extend(ApplicationRouteMixin, EnsureStatefulLogin, {
 
   actions: {
     showSupport() {
-      window.Intercom('show');
+      // This is necessary for some controller templates and the error template, but otherwise,
+      // please import use the service locally.
+      this.get('intercom').showIntercom();
     },
 
     showLoginModal() {

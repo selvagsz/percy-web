@@ -1,4 +1,4 @@
-import {create, text, isPresent, attribute} from 'ember-cli-page-object';
+import {create, text, isPresent, attribute, clickable} from 'ember-cli-page-object';
 
 export const SELECTORS = {
   INSTALL_BUTTON: '.data-test-integration-button-install',
@@ -19,6 +19,8 @@ export const IntegrationItem = {
   hasEditButton: isPresent(SELECTORS.EDIT_BUTTON),
   hasContactButton: isPresent(SELECTORS.CONTACT_BUTTON),
   hasBetaBadge: isPresent(SELECTORS.BETA_BADGE),
+
+  clickContactButton: clickable(SELECTORS.CONTACT_BUTTON),
 };
 
 export default create(IntegrationItem);

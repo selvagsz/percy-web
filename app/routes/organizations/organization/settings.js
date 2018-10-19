@@ -1,8 +1,11 @@
 import {getOwner} from '@ember/application';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
+  intercom: service(),
+
   actions: {
     didTransition() {
       this._super.apply(this, arguments);
@@ -16,6 +19,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
       let router = getOwner(this).lookup('router:main');
       let destinationUrl = router.generate('organization', organization.get('slug'));
       window.location.href = destinationUrl;
+    },
+    showSupport() {
+      this.get('intercom').showIntercom();
     },
   },
 });

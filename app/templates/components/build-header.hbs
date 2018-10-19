@@ -85,7 +85,7 @@
       {{#if isParallelBuildError}}
       <div class="p-2 m-2 bg-gray-000 rounded border border-gray-100">
         <div class="font-semibold mb-1">Only {{parallelBuildsReceived}} of the {{parallelBuildsExpected}} parallelized build processes reported they were finished.</div>
-        Check your CI logs to see if there was an error in one of your build pipelines. Make sure your parallel builds are <a href="https://docs.percy.io/docs/parallel-test-suites" target="_blank">configured properly</a>. If you'd like help troubleshooting this, feel free to <a href="#" {{action showSupport}} data-test-build-overview-show-support>reach out</a> and we can help get this fixed.
+        Check your CI logs to see if there was an error in one of your build pipelines. Make sure your parallel builds are <a href="https://docs.percy.io/docs/parallel-test-suites" target="_blank">configured properly</a>. If you'd like help troubleshooting this, feel free to <a href="#" {{action "showSupport"}} data-test-build-overview-show-support>reach out</a> and we can help get this fixed.
       </div>
       {{else}}
         <div class="p-2 m-2 bg-gray-000 rounded border border-gray-100">
@@ -107,7 +107,7 @@
             {{pluralize failureDetails.failed_snapshots.length "snapshot"}} timed out: {{formattedFailedSnapshots}}.
           </div>
           <div>{{pluralize failureDetails.failed_snapshots.length "snapshot"}} in this build took too long to render even after multiple retries. This can happen in rare cases when a page loads an asset that takes too long and hangs the Percy renderer, or if a snapshot is triggering a browser dialog.
-          If you'd like help troubleshooting this, feel free to <a href="#" {{action showSupport}} data-test-build-overview-show-support>reach out</a> and we can help get this fixed.</div>
+          If you'd like help troubleshooting this, feel free to <a href="#" {{action "showSupport"}} data-test-build-overview-show-support>reach out</a> and we can help get this fixed.</div>
         {{/with}}
       </div>
     {{/if}}

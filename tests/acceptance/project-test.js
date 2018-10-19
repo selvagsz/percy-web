@@ -151,6 +151,17 @@ describe('Acceptance: Project', function() {
       expect(ProjectSettingsPage.isAutoApproveBranchesVisible).to.equal(true);
     });
 
+    it('shows support', async function() {
+      window.Intercom = sinon.stub();
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
+
+      ProjectSettingsPage.clickShowSupport();
+      expect(window.Intercom).to.have.been.called;
+    });
+
     describe('browser toggling', function() {
       let deleteStub;
       let createStub;

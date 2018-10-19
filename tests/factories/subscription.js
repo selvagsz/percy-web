@@ -13,5 +13,13 @@ FactoryGuy.define('subscription', {
     withBusinessPlan: {
       plan: FactoryGuy.belongsTo('plan', 'business'),
     },
+
+    withTrialPlan: {
+      plan: FactoryGuy.belongsTo('plan', 'trial'),
+    },
+
+    withCustomPlan: {
+      plan: FactoryGuy.belongsTo('plan', 'custom'),
+    },
   },
 });

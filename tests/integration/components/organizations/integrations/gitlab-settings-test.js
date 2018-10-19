@@ -7,6 +7,7 @@ import AdminMode from 'percy-web/lib/admin-mode';
 import GitlabSettings from 'percy-web/tests/pages/components/gitlab-settings';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import sinon from 'sinon';
+import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
 
 describe('Integration: GitlabSettings', function() {
   let isAdminModeEnabled;
@@ -139,6 +140,9 @@ describe('Integration: GitlabSettings', function() {
     });
 
     it('shows the firewall contact link', function() {
+      const showSupportStub = sinon.stub();
+      mockIntercomService(this, showSupportStub);
+
       expect(
         GitlabSettings.header.isFirewallNotePresent,
         'Firewall note should be present',
@@ -149,6 +153,9 @@ describe('Integration: GitlabSettings', function() {
       expect(GitlabSettings.header.isSupportLinkPresent, 'Support link is not present').to.equal(
         true,
       );
+
+      GitlabSettings.header.contactSupport();
+      expect(showSupportStub).to.have.been.called;
     });
 
     it('shows the settings form', function() {

@@ -3,7 +3,7 @@
   <section class="px-2 pt-3">
     <h1 class="text-xl font-semibold mb-sm">Configure {{capitalize model.name}}</h1>
     <p class="text-gray-400 w-3/4">
-      These are the settings for the whole Percy organization. If you want to update settings for individual projects, select that project on the left. Not seeing the setting you were looking for? <strong><a href="#" {{action "showSupport"}}>Reach out</a></strong> and let us know!
+      These are the settings for the whole Percy organization. If you want to update settings for individual projects, select that project on the left. Not seeing the setting you were looking for? <strong><a href="#" {{action (route-action "showSupport")}} data-test-org-settings-show-support>Reach out</a></strong> and let us know!
     </p>
 
     {{#organizations/require-role role="admin" organization=model}}

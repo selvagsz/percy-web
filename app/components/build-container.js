@@ -118,10 +118,6 @@ export default Component.extend(PollingMixin, {
       this.get('_toggleUnchangedSnapshotsVisible').perform();
     },
 
-    showSupport() {
-      this.sendAction('showSupport');
-    },
-
     toggleAllDiffs(options = {}) {
       this.toggleProperty('allDiffsShown');
 

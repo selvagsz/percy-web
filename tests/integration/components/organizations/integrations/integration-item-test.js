@@ -7,6 +7,8 @@ import hbs from 'htmlbars-inline-precompile';
 import IntegrationItem from 'percy-web/tests/pages/components/integration-item';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import AdminMode from 'percy-web/lib/admin-mode';
+import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
+import sinon from 'sinon';
 
 describe('Integration | Component | organizations/integrations/integration-item', function() {
   setupComponentTest('organizations/integrations/integration-item', {
@@ -116,8 +118,15 @@ describe('Integration | Component | organizations/integrations/integration-item'
     });
 
     it('shows the contact us button', function() {
+      const showSupportStub = sinon.stub();
+      mockIntercomService(this, showSupportStub);
+
       expect(IntegrationItem.hasContactButton).to.equal(true);
+
       percySnapshot(this.test);
+
+      IntegrationItem.clickContactButton();
+      expect(showSupportStub).to.have.been.called;
     });
   });
 

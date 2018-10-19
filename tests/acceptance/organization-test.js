@@ -6,6 +6,7 @@ import freezeMoment from '../helpers/freeze-moment';
 import AdminMode from 'percy-web/lib/admin-mode';
 import {beforeEach, afterEach} from 'mocha';
 import moment from 'moment';
+import sinon from 'sinon';
 
 describe('Acceptance: Organization', function() {
   setupAcceptance();
@@ -50,6 +51,22 @@ describe('Acceptance: Organization', function() {
       expect(find('[data-test-org-switcher-item]').length).to.equal(2);
 
       await percySnapshot(this.test.fullTitle() + ' | setup');
+    });
+
+    it('shows support on settings page', async function() {
+      window.Intercom = sinon.stub();
+      await visit(`/organizations/${this.organization.slug}/settings`);
+
+      await click('[data-test-org-settings-show-support]');
+      expect(window.Intercom).to.have.been.called;
+    });
+
+    it('shows support on user list page', async function() {
+      window.Intercom = sinon.stub();
+      await visit(`/organizations/${this.organization.slug}/users`);
+
+      await click('[data-test-users-show-support]');
+      expect(window.Intercom).to.have.been.called;
     });
   });
 

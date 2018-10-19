@@ -36,5 +36,17 @@ FactoryGuy.define('plan', {
       historyLimitTitle: '1 year history',
       isFree: false,
     },
+
+    custom: {
+      id: 'very-custom',
+      name: 'Custom Plan',
+      monthlyPrice: 9999999,
+      numDiffs: 9999999,
+      extraDiffPrice: 0.00001,
+      numTeamMembersTitle: '1000 team members',
+      numWorkersTitle: '10000 concurrent renderers',
+      historyLimitTitle: '1000 year history',
+      isFree: false,
+    },
   },
 });

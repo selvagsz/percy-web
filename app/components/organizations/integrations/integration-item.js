@@ -3,6 +3,7 @@ import {lookup} from 'percy-web/lib/computed/objectLookup';
 import {computed} from '@ember/object';
 import {equal, or} from '@ember/object/computed';
 import AdminMode from 'percy-web/lib/admin-mode';
+import {inject as service} from '@ember/service';
 
 import {GITHUB_ENTERPRISE_INTEGRATION_TYPE} from 'percy-web/lib/integration-types';
 
@@ -12,6 +13,8 @@ export default Component.extend({
   tagName: '',
   integrationName: null, // required
   integrationStatus: null,
+
+  intercom: service(),
 
   orgSlug: computed.readOnly('organization.slug'),
 
@@ -68,11 +71,11 @@ export default Component.extend({
   }),
 
   actions: {
-    openIntercom() {
+    showSupport() {
       const messageText =
         "Hi! I'd like to edit the details of our " + `${this.get('textName')} integration.`;
 
-      window.Intercom('showNewMessage', messageText);
+      this.get('intercom').showIntercom('showNewMessage', messageText);
     },
   },
 });

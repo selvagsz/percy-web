@@ -18,6 +18,7 @@ describe('ApplicationRoute', function() {
       'service:launch-darkly',
       'service:headTags',
       'service:redirects',
+      'service:intercom',
     ],
   });
 

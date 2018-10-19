@@ -3,10 +3,13 @@ import Component from '@ember/component';
 import {computed, get} from '@ember/object';
 import {alias, readOnly} from '@ember/object/computed';
 import {htmlSafe} from '@ember/string';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
   build: null,
   tagName: null,
+
+  intercom: service(),
 
   buildCompletionPercent: alias('build.buildCompletionPercent'),
 
@@ -29,4 +32,10 @@ export default Component.extend({
   formattedFailedSnapshots: computed('build.failureDetails', function() {
     return '"' + get(this, 'build.failureDetails').failed_snapshots.join('", "') + '"';
   }),
+
+  actions: {
+    showSupport() {
+      this.get('intercom').showIntercom();
+    },
+  },
 });

@@ -5,6 +5,7 @@ import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   flashMessages: service(),
+  intercom: service(),
   model() {
     const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
@@ -56,6 +57,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
           this.get('flashMessages').danger('Something went wrong. Please try again later');
         });
       this._callAnalytics('Browser Family Added', {browser_family_slug: familyToAdd.get('slug')});
+    },
+
+    showSupport() {
+      this.get('intercom').showIntercom();
     },
   },
 

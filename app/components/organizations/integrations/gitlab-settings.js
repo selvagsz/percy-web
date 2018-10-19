@@ -9,6 +9,7 @@ export default Component.extend({
 
   store: service(),
   session: service(),
+  intercom: service(),
 
   currentUser: alias('session.currentUser'),
   isNewRecord: computed('currentGitlabIntegration.dirtyType', function() {
@@ -19,12 +20,12 @@ export default Component.extend({
   }),
 
   actions: {
-    openIntercom() {
+    showSupport() {
       const messageText =
         "Hi! I'd like to run GitLab Self-Managed behind a firewall." +
         ' Do you have information for me on how to get started?';
 
-      window.Intercom('showNewMessage', messageText);
+      this.get('intercom').showIntercom('showNewMessage', messageText);
     },
   },
 });

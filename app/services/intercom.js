@@ -18,4 +18,14 @@ export default Service.extend({
       });
     }
   },
+
+  showIntercom(...args) {
+    if (window.Intercom) {
+      if (args.length) {
+        window.Intercom(...args);
+      } else {
+        window.Intercom('show');
+      }
+    }
+  },
 });

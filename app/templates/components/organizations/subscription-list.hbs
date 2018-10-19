@@ -3,7 +3,7 @@
     <strong>Trial ends {{moment-from-now subscription.trialEnd}}</strong>.
     <br>
     <br>
-    If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions during your trial!
+    If you're ready to sign up, you can choose a plan below at any time. Feel free to <a href="#" {{action "showSupport"}} data-test-create-subscription-support>reach out</a> with any questions during your trial!
   </div>
 {{/if}}
 <div class="bg-white rounded shadow-1 p-2 mb-2">
@@ -11,7 +11,7 @@
 
   {{#if plan.isFree}}
     <div class="Alert Alert--warning">
-      <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} snapshots. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions!
+      <strong>Your trial has expired.</strong> You're currently on the limited-use free plan, which provides {{subscriptionData.PLANS.[0].numWorkersTitle}} and {{subscriptionData.PLANS.[0].numDiffs}} snapshots. You can sign up for a plan below or feel free to <a href="#" {{action "showSupport"}} data-test-free-plan-support>reach out</a> with any questions!
     </div>
   {{/if}}
 
@@ -37,7 +37,7 @@
             </div>
             {{#unless plan.isTrial}}
               <div class="mt-2">
-                You are on a custom plan, feel free to <a href="#" {{action "showSupport"}}>reach out</a> with any questions.
+                You are on a custom plan, feel free to <a href="#" {{action "showSupport"}} data-test-custom-plan-support>reach out</a> with any questions.
               </div>
             {{/unless}}
           </div>
@@ -66,7 +66,7 @@
 
         <div style="max-width: 150px" class="flex-1 pr-2 flex items-start justify-end self-center">
           {{#if (eq "admin" organization.currentUserMembership.role)}}
-            <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{eq plan.id planData.id}} {{action "openIntercom"}} data-test-subscription-list-choose-enterprise>
+            <button href="#" class="btn btn-primary shadow-purple-lg mb-0" disabled={{eq plan.id planData.id}} {{action "showSupportTargeted"}} data-test-subscription-list-choose-enterprise>
               Contact Us
             </button>
           {{/if}}
@@ -78,5 +78,5 @@
 
 
 <div class="rounded border p-2 mb-2">
-  <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}}>reach out</a> with any questions.
+  <strong>Note:</strong> For more information, see the {{#link-to "pricing" class="font-semibold"}}Percy Pricing{{/link-to}} page. Feel free to <a class="font-semibold" href="#" {{action "showSupport"}} data-test-more-information-support>reach out</a> with any questions.
 </div>

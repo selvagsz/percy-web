@@ -51,8 +51,5 @@ export default Component.extend({
         },
       );
     },
-    showSupport() {
-      this.sendAction('showSupport');
-    },
   },
 });
