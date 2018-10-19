@@ -1,3 +1,3 @@
-import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
+import Route from '@ember/routing/route';
 
-export default MarketingPageBaseRoute.extend();
+export default Route.extend();

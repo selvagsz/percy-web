@@ -1,21 +1,10 @@
 {{title "Pricing"}}
-{{#if (variation "updated-marketing-site")}}
-  {{#marketing/marketing-header
-    logomark=heroBlock.logomark
-    class="pricing-header"
-  }}
-    {{marketing/hero-block content=heroBlock class="mb-9"}}
-  {{/marketing/marketing-header}}
-{{else}}
-  <header class="bg-gradient-pattern border-b border-purple-300 pb-9" style="margin-bottom: -144px">
-    {{fixed-top-header class="mb-9" isTransparentHeader=true}}
-    <div class="container container-sm mb-9 text-center">
-      <div class="mb-9">
-        <h1 class="text-4xl font-bold mb-3">Visual coverage that scales with your business</h1>
-      </div>
-    </div>
-  </header>
-{{/if}}
+{{#marketing/marketing-header
+  logomark=heroBlock.logomark
+  class="pricing-header"
+}}
+  {{marketing/hero-block content=heroBlock class="mb-9"}}
+{{/marketing/marketing-header}}
 
 <section class="{{if (not (is-test-env)) "animated-pricing-header"}} md:flex md:items-center container container-lg mb-8">
   <div class="flex-1 md:mr-1 mb-2 md:pt-3">
@@ -65,15 +54,9 @@
           <div class="font-semibold {{if (eq feature mediumCard.featureList.lastObject) "mb-9"}}">{{feature}}</div>
         {{/each}}
       </div>
-      {{#if (variation "updated-marketing-site")}}
-        {{#link-to 'schedule-demo'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
-        {{/link-to}}
-      {{else}}
-        {{#link-to 'enterprise'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
-        {{/link-to}}
-      {{/if}}
+      {{#link-to 'schedule-demo'}}
+        <button type="button" name="button" class="btn btn-md btn-scale btn-orange shadow-orange-lg w-full" data-test-medium-pricing-card-cta>{{mediumCard.callToAction}}</button>
+      {{/link-to}}
     </div>
   </div>
 
@@ -86,15 +69,9 @@
           <div class="font-semibold {{if (eq feature largeCard.featureList.lastObject) "mb-6"}}">{{feature}}</div>
         {{/each}}
       </div>
-      {{#if (variation "updated-marketing-site")}}
-        {{#link-to 'schedule-demo'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
-        {{/link-to}}
-      {{else}}
-        {{#link-to 'enterprise'}}
-          <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
-        {{/link-to}}
-      {{/if}}
+      {{#link-to 'schedule-demo'}}
+        <button type="button" name="button" class="btn btn-md btn-scale btn-purple shadow-purple-lg w-full" data-test-large-pricing-card-cta>{{largeCard.callToAction}}</button>
+      {{/link-to}}
     </div>
   </div>
 </section>

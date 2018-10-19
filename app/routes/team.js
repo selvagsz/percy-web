@@ -1,9 +1,9 @@
-import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
+import Route from '@ember/routing/route';
 import metaTagLookup from 'percy-web/lib/meta-tags';
 import $ from 'jquery';
 import {hash} from 'rsvp';
 
-export default MarketingPageBaseRoute.extend({
+export default Route.extend({
   headTags: metaTagLookup('team'),
 
   model() {

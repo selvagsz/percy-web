@@ -6,94 +6,49 @@ import 'ember-launch-darkly/test-support/helpers/with-variation';
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
     it('can visit /', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
-        await visit('/');
-        expect(currentPath()).to.equal('index');
-        await percySnapshot(`${this.test.fullTitle()} - new index`);
-      } else {
-        await visit('/');
-        expect(currentPath()).to.equal('index');
-        await percySnapshot(this.test.fullTitle());
-      }
+      await visit('/');
+      expect(currentPath()).to.equal('index');
+      await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /features', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
-        await visit('/features');
-        expect(currentPath()).to.equal('features');
-        await percySnapshot(this.test.fullTitle());
-      } else {
-        await visit('/features');
-        expect(currentPath()).to.equal('index');
-      }
+      await visit('/features');
+      expect(currentPath()).to.equal('features');
+      await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /how-it-works', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
-        await visit('/how-it-works');
-        expect(currentPath()).to.equal('how-it-works');
-        await percySnapshot(this.test.fullTitle());
-      } else {
-        await visit('/how-it-works');
-        expect(currentPath()).to.equal('index');
-      }
+      await visit('/how-it-works');
+      expect(currentPath()).to.equal('how-it-works');
+      await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /visual-testing', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
-        await visit('/visual-testing');
-        expect(currentPath()).to.equal('visual-testing');
-        await percySnapshot(this.test.fullTitle());
-      } else {
-        await visit('/visual-testing');
-        expect(currentPath()).to.equal('index');
-      }
+      await visit('/visual-testing');
+      expect(currentPath()).to.equal('visual-testing');
+      await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit enterprise', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); //eslint-disable-line
-        await visit('enterprise');
-        expect(currentPath()).to.equal('enterprise');
-        await percySnapshot(`${this.test.fullTitle()} - new enterprise`);
-      } else {
-        await visit('enterprise');
-        expect(currentPath()).to.equal('enterprise');
-        await percySnapshot(this.test.fullTitle());
-      }
+      await visit('enterprise');
+      expect(currentPath()).to.equal('enterprise');
+      await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /schedule-demo', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
-        await visit('/schedule-demo');
-        expect(currentPath()).to.equal('schedule-demo');
-        await percySnapshot(this.test);
-      } else {
-        await visit('/schedule-demo');
-        expect(currentPath()).to.equal('index');
-      }
+      await visit('/schedule-demo');
+      expect(currentPath()).to.equal('schedule-demo');
+      await percySnapshot(this.test);
     });
 
     it('can visit /pricing', async function() {
-      if (authenticated) {
-        withVariation('updated-marketing-site', true); //eslint-disable-line
-        await visit('pricing');
-        expect(currentPath()).to.equal('pricing');
-        await percySnapshot(`${this.test.fullTitle()} - new pricing`);
-      } else {
-        await visit('pricing');
-        expect(currentPath()).to.equal('pricing');
-        await percySnapshot(this.test.fullTitle());
-      }
+      await visit('pricing');
+      expect(currentPath()).to.equal('pricing');
+      await percySnapshot(this.test.fullTitle());
     });
+
     describe('pricing page', function() {
       beforeEach(async function() {
-        withVariation('updated-marketing-site', true); // eslint-disable-line
         await visit('/pricing');
       });
       it('can select startup plan', async function() {

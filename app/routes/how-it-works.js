@@ -1,14 +1,8 @@
-import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
+import Route from '@ember/routing/route';
 import metaTagLookup from 'percy-web/lib/meta-tags';
 
-export default MarketingPageBaseRoute.extend({
+export default Route.extend({
   headTags: metaTagLookup('howItWorks'),
-  beforeModel() {
-    if (!this.get('launchDarkly').variation('updated-marketing-site')) {
-      this.transitionTo('/');
-    }
-  },
-
   model() {
     return this.get('store').queryRecord('marketing-page', {
       'fields.pageName': 'HowItWorks',

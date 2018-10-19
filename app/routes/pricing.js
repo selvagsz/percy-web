@@ -1,8 +1,8 @@
-import MarketingPageBaseRoute from 'percy-web/routes/marketing-page-base';
+import Route from '@ember/routing/route';
 import {hash} from 'rsvp';
 import metaTagLookup from 'percy-web/lib/meta-tags';
 
-export default MarketingPageBaseRoute.extend({
+export default Route.extend({
   model() {
     return hash({
       heroBlock: this._getHeroBlock(),
