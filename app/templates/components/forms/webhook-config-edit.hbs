@@ -1,0 +1,104 @@
+<form action="javascript:;" class="mb-0">
+  <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center">
+      <div class="mr-2">
+        <figure class="svg-container">
+          {{inline-svg 'webhook-icon'}}
+        </figure>
+      </div>
+      <div style="min-width: 0;" class="font-mono truncate">
+        {{webhookConfig.url}}
+      </div>
+    </div>
+    <div>
+      {{form-fields/checkbox
+        testLabel='webhook-config-delivery-enabled'
+        property="deliveryEnabled"
+        changeset=changeset
+        title="Enabled"
+        validateProperty=(action "validateProperty" changeset "deliveryEnabled")
+        checkedValue=true
+        uncheckedValue=false
+        toggle=true
+      }}
+    </div>
+  </div>
+
+  <div class="p-2 bg-gray-000 rounded border mb-2">
+    {{form-fields/input
+      testLabel='webhook-config-url'
+      property="url"
+      title=labels.url.title
+      subtitle=labels.url.subtitle
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "url")
+    }}
+
+    {{form-fields/input
+      testLabel='webhook-config-description'
+      property="description"
+      title=labels.description.title
+      subtitle=labels.description.subtitle
+      hint="optional"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "description")
+    }}
+
+    {{form-fields/input
+      testLabel='webhook-config-auth-token'
+      property="authToken"
+      title=labels.authToken.title
+      subtitle=labels.authToken.subtitle
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "authToken")
+    }}
+
+    {{form-fields/checkbox-set
+      classes='webhook-config-subscribed-events'
+      property="subscribedEvents"
+      changeset=changeset
+      validateProperty=(action "validateProperty" changeset "subscribedEvents")
+      title=labels.subscribedEvents.title
+      subtitle=labels.subscribedEvents.subtitle
+      hint="choose at least one"
+      allValues=allValues
+    }}
+
+    {{form-fields/checkbox
+      testLabel='webhook-config-ssl-verification-enabled'
+      property="sslVerificationEnabled"
+      changeset=changeset
+      title=labels.sslVerificationEnabled.title
+      subtitle=labels.sslVerificationEnabled.subtitle
+      validateProperty=(action "validateProperty" changeset "sslVerificationEnabled")
+      checkedValue=true
+      uncheckedValue=false
+      toggle=true
+    }}
+
+    {{#unless changeset.sslVerificationEnabled}}
+      <div
+        class="rounded bg-yellow-000 border border-yellow-100 p-2"
+        data-test-ssl-warning
+      >
+        <strong>Warning:</strong>
+        With SSL verification disabled, we will not verify the validity of the
+        certificate presented by your host. This could compromise the security
+        of your data. Disabling certificate verification is not recommended.
+      </div>
+    {{/unless}}
+  </div>
+  <div class="flex justify-end">
+    {{#link-to "organization.project.settings" model.project.slug}}
+      <button type="button" class="btn btn-secondary">Back</button>
+    {{/link-to}}
+
+    {{form-fields/submit
+      classes='webhook-config-submit'
+      value=saveText
+      classes="btn btn-primary shadow-purple-lg mb-0 ml-1"
+      disabled=isSubmitDisabled
+      submit=(action "save")
+    }}
+  </div>
+</form>

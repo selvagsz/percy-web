@@ -1,0 +1,69 @@
+<div class="bg-white rounded shadow-1 p-2 mb-2" data-test-webhook-config-list>
+  <h2 class="text-xl font-semibold mb-1">Webhooks</h2>
+  <p class="text-gray-400 mb-2">
+    Create and configure webhooks to get notified when build events occur
+    on Percy. Use this to customize Percy for your workflow.
+    {{#unless filteredWebhookConfigs}}
+      Click "Add Webhook" below to get started.
+    {{/unless}}
+    <a href="https://docs.percy.io">Read the docs for more info.</a>
+  </p>
+
+  {{#if filteredWebhookConfigs}}
+    <div class="mb-2 rounded border">
+      {{#each filteredWebhookConfigs as |webhookConfig|}}
+        <div class="p-2 border-b" data-test-webhook-config-item>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center mr-2">
+              <div style="min-width: 0;"
+                class="font-mono truncate {{if false 'opacity-25'}}"
+                data-test-webhook-config-url
+              >
+                {{webhookConfig.url}}
+              </div>
+              {{#unless webhookConfig.deliveryEnabled}}
+                <div class="ml-1 px-1 rounded bg-gray-100 font-mono text-sm text-gray-500">
+                  disabled
+                </div>
+              {{/unless}}
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-danger"
+                {{action
+                  deleteWebhookConfig
+                  webhookConfig
+                  "Are you sure you want to delete this webhook?"
+                }}
+              >
+                Delete
+              </button>
+              {{#link-to
+                "organization.project.webhooks.webhook-config"
+                webhookConfig.id
+              }}
+                <button type="button" class="btn btn-secondary">
+                  Edit Settings
+                </button>
+              {{/link-to}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+
+  <div class="flex justify-end">
+    {{#link-to "organization.project.webhooks.webhook-config" "new"}}
+      <button
+        type="button"
+        name="button"
+        class="btn btn-primary shadow-purple-lg mb-0"
+        data-test-new-webhook-config
+      >
+        Add Webhook
+      </button>
+    {{/link-to}}
+  </div>
+</div>

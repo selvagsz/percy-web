@@ -93,4 +93,14 @@ export default {
     }
     return false;
   },
+
+  generateRandomToken(length = 32) {
+    let arr = new Uint8Array(length);
+
+    window.crypto.getRandomValues(arr);
+
+    return Array.from(arr, function(dec) {
+      return Math.floor(dec / 16).toString(16);
+    }).join('');
+  },
 };

@@ -5,7 +5,7 @@ const SELECTORS = {
   GITHUB_USER: '[data-test-setup-github-account]',
   GITHUB_CONNECT_BUTTON: '[data-test-setup-github-connect-button]',
   FORM_SUBMIT_BUTTON: '[data-test-form-submit-button]',
-  ORGANIZATION_INPUT: '[data-test-form-input]',
+  ORGANIZATION_INPUT: '[data-test-form-input=organization-name]',
 };
 
 export const NewOrganization = {

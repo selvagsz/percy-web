@@ -1,0 +1,27 @@
+{{fixed-top-header currentOrganization=model.organization}}
+
+{{#organizations/settings-nav-wrapper organization=model.organization}}
+  <section class="px-2 pt-3 pb-9">
+    <div class="flex items-start justify-between pb-3">
+      <h1 class="text-xl font-semibold mb-sm">Edit webhook</h1>
+
+      {{#link-to
+        "organization.project.settings"
+        model.organization.slug
+        model.project.slug
+        classNames="btn btn-secondary"
+      }}
+        Back to project settings
+      {{/link-to}}
+    </div>
+
+    <div class="bg-white rounded shadow-1 p-2 mb-2">
+      {{forms/webhook-config-edit
+        webhookConfig=model.webhookConfig
+        isSaving=isSaving
+        isSaveSuccessful=isSaveSuccessful
+        saveSuccess="webhookConfigUpdated"
+      }}
+    </div>
+  </section>
+{{/organizations/settings-nav-wrapper}}

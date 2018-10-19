@@ -1,0 +1,20 @@
+// stylelint-disable selector-max-compound-selectors
+// stylelint-disable selector-max-specificity
+
+.checkbox-toggle-slider > input {
+  display: none;
+
+  &:checked ~ .toggle-slider {
+    background-color: var(--green-500);
+    border-color: var(--green-600);
+
+    > .toggle-dot {
+      transform: translate3d(16px, 0, 0);
+    }
+  }
+}
+
+.toggle-slider,
+.toggle-dot {
+  transition: background 250ms, border-color 250ms, transform 250ms;
+}

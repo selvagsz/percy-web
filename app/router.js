@@ -100,6 +100,9 @@ Router.map(function() {
     // projects namespace. Org-level settings and such should go in the above "organizations" route.
     this.route('project', {path: '/:project_id'}, function() {
       this.route('settings');
+      this.route('webhooks', {}, function() {
+        this.route('webhook-config', {path: '/:webhook_config_id'});
+      });
       this.route('builds', {}, function() {
         this.route('build', {path: '/:build_id'}, function() {
           this.route('snapshot', {path: '/view/:snapshot_id/:width'});

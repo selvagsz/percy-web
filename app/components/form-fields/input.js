@@ -4,12 +4,15 @@ import Component from '@ember/component';
 export default Component.extend({
   changeset: null,
   title: null,
+  subtitle: null,
+  hint: null,
   property: null,
   type: 'text',
   autofocus: false,
   autocomplete: null,
   classes: null,
   disabled: false,
+  testLabel: null,
 
   classNames: ['FormFieldsInput'],
   classNameBindings: ['classes'],

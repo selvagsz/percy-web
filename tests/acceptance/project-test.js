@@ -5,6 +5,7 @@ import ProjectPage from 'percy-web/tests/pages/project-page';
 import ProjectSettingsPage from 'percy-web/tests/pages/project-settings-page';
 import sinon from 'sinon';
 import {beforeEach} from 'mocha';
+import 'ember-launch-darkly/test-support/helpers/with-variation';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -87,11 +88,13 @@ describe('Acceptance: Project', function() {
     let disabledProject;
     let versionControlIntegration;
     let repos;
+    let webhookConfig;
 
     setupSession(function(server) {
       organization = server.create('organization', 'withUser');
       versionControlIntegration = server.create('versionControlIntegration', 'github');
       repos = server.createList('repo', 3);
+      webhookConfig = server.create('webhookConfig');
       disabledProject = server.create('project', {
         name: 'Disabled Project',
         isEnabled: false,
@@ -153,6 +156,7 @@ describe('Acceptance: Project', function() {
 
     it('shows support', async function() {
       window.Intercom = sinon.stub();
+
       await ProjectSettingsPage.visitProjectSettings({
         orgSlug: organization.slug,
         projectSlug: enabledProject.slug,
@@ -160,6 +164,38 @@ describe('Acceptance: Project', function() {
 
       ProjectSettingsPage.clickShowSupport();
       expect(window.Intercom).to.have.been.called;
+    });
+
+    it('displays webhook configs', async function() {
+      withVariation('webhooks', true); // eslint-disable-line
+
+      enabledProject.update({webhookConfigs: [webhookConfig]});
+
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
+
+      await percySnapshot(this.test);
+
+      expect(ProjectSettingsPage.webhookConfigList.webhookConfigs(0).url).to.equal(
+        webhookConfig.url,
+      );
+    });
+
+    it('transitions to webhook config form', async function() {
+      withVariation('webhooks', true); // eslint-disable-line
+
+      await ProjectSettingsPage.visitProjectSettings({
+        orgSlug: organization.slug,
+        projectSlug: enabledProject.slug,
+      });
+
+      await ProjectSettingsPage.webhookConfigList.newWebhookConfig();
+
+      await percySnapshot(this.test);
+
+      expect(currentPath()).to.equal('organization.project.webhooks.webhook-config');
     });
 
     describe('browser toggling', function() {

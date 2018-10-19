@@ -66,6 +66,13 @@
           {{projects/diff-base-settings project=model.project}}
         {{/if}}
       </div>
+
+      {{#if (variation "webhooks")}}
+        {{projects/webhook-config-list
+          webhookConfigs=model.webhookConfigs
+          deleteWebhookConfig=(route-action "deleteWebhookConfig")
+        }}
+      {{/if}}
     {{/if}}
 
     <div class="bg-white rounded shadow-1 p-2 mb-2">
@@ -74,5 +81,3 @@
     </div>
   </section>
 {{/organizations/settings-nav-wrapper}}
-
-{{main-footer}}
