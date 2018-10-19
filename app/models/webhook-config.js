@@ -3,6 +3,7 @@ import utils from 'percy-web/lib/utils';
 
 export default DS.Model.extend({
   project: DS.belongsTo('project'),
+  webhookEvents: DS.hasMany('webhook-event', {async: false}),
   url: DS.attr(),
   description: DS.attr(),
   status: DS.attr(),
