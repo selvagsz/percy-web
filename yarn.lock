@@ -740,10 +740,10 @@
   resolved "https://registry.yarnpkg.com/@oclif/screen/-/screen-1.0.4.tgz#b740f68609dfae8aa71c3a6cab15d816407ba493"
   integrity sha512-60CHpq+eqnTxLZQ4PGHYNwUX572hgpMHGPtTWMjdTMsAvlm69lZV/4ly6O3sAYkomo4NggGcomrDpBe34rxUqw==
 
-"@percy/agent@0.0.45":
-  version "0.0.45"
-  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.0.45.tgz#72eeb4b94af7530de03bd63a498f1c58c38c2492"
-  integrity sha512-SHk1pqSUmN1D6uwjbDwHaW7mfXRPhQhd3moq94D/KSqWO6CGcigKO0GmdzWhtqMwnHAG6qla4WdMHl7H2FQEPQ==
+"@percy/agent@0.0.48":
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.0.48.tgz#9b60438d07633bfe1341cc956d35953f2ba29369"
+  integrity sha512-jVYuj1n+w8DpAnnBsiDHBg8W2Yx298pydgIrZYZ5XgUW3iEpMIcDEFRsMpkBTLQyl0Qzbmc1qMRSprYPhel7Xg==
   dependencies:
     "@oclif/command" "^1"
     "@oclif/config" "^1"
@@ -757,7 +757,7 @@
     colors "^1.3.2"
     cors "^2.8.4"
     express "^4.16.3"
-    percy-client "^3.0.0"
+    percy-client "^3.0.1"
     puppeteer "^1.7.0"
     retry-axios "^0.3.2"
     sinon "^6.1.5"
@@ -3529,10 +3529,15 @@ can-symlink@^1.0.0:
   dependencies:
     tmp "0.0.28"
 
-caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000890, caniuse-lite@^1.0.30000892:
+caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805, caniuse-lite@^1.0.30000890, caniuse-lite@^1.0.30000892:
   version "1.0.30000892"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000892.tgz#344d2b51ee3ff5977537da4aa449c90eec40b759"
   integrity sha512-X9rxMaWZNbJB5qjkDqPtNv/yfViTeUL6ILk0QJNxLV3OhKC5Acn5vxsuUvllR6B48mog8lmS+whwHq/QIYSL9w==
+
+caniuse-lite@^1.0.30000844:
+  version "1.0.30000893"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000893.tgz#284b20932bd41b93e21626975f2050cb01561986"
+  integrity sha512-kOddHcTEef+NgN/fs0zmX2brHTNATVOWMEIhlZHCuwQRtXobjSw9pAECc44Op4bTBcavRjkLaPrGomknH7+Jvg==
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -4802,10 +4807,15 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.79:
+electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.79:
   version "1.3.79"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.79.tgz#774718f06284a4bf8f578ac67e74508fe659f13a"
   integrity sha512-LQdY3j4PxuUl6xfxiFruTSlCniTrTrzAd8/HfsLEMi0PUpaQ0Iy+Pr4N4VllDYjs0Hyu2lkTbvzqlG+PX9NsNw==
+
+electron-to-chromium@^1.3.47:
+  version "1.3.80"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.80.tgz#e99ec7efe64c2c6a269d3885ff411ea88852fa53"
+  integrity sha512-WClidEWEUNx7OfwXehB0qaxCuetjbKjev2SmXWgybWPLKAThBiMTF/2Pd8GSUDtoGOavxVzdkKwfFAPRSWlkLw==
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -5809,9 +5819,9 @@ ember-page-title@^4.0.0:
 
 ember-percy@percy/ember-percy.git#agentified:
   version "1.4.1"
-  resolved "https://codeload.github.com/percy/ember-percy/tar.gz/577b6accc279069d5eb40f22d78d847dbf978bdd"
+  resolved "https://codeload.github.com/percy/ember-percy/tar.gz/856d57df1a98d0f5d9ec706f99962e3c44ddf2f1"
   dependencies:
-    "@percy/agent" "0.0.45"
+    "@percy/agent" "0.0.48"
     ember-cli-babel "^6.10.0"
 
 ember-power-select@^1.10.4:
@@ -10810,10 +10820,10 @@ pend@~1.2.0:
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
 
-percy-client@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/percy-client/-/percy-client-3.0.0.tgz#86289f8224817cf550c9b21aaf994b7fa16f291d"
-  integrity sha512-XpbcDChbq6wg6P8VTtiNxm5whJgaWpTgpq2yCKI1ScoX1uPxvzg//Sn5R8W2exyPLhuIrT2tvRKnOFIoufqDGA==
+percy-client@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/percy-client/-/percy-client-3.0.1.tgz#eaa2e530b5e4e10604c501fc7e472da416f04550"
+  integrity sha512-El0u/lnV2B4uCxcqH0mLkKJMt5QAaLksn5p/xApRup92rMdMZ+QYm/oSUQEpLrWQTIa/XkgTnZlddjZ7v50fgQ==
   dependencies:
     base64-js "^1.2.3"
     bluebird "^3.5.1"
