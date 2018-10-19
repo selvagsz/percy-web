@@ -1,4 +1,4 @@
-<div class="OrganizationsSwitcherNav-item mr-3" {{action "toggleSwitcher"}}>
+<div class="OrganizationsSwitcherNav-item mr-3" {{action "toggleSwitcher"}} data-test-toggle-org-switcher>
   {{#if currentOrganization}}
     {{currentOrganization.name}}
   {{else}}
@@ -17,12 +17,12 @@
     {{#link-to "organizations.new" classNames="Button Button--onDark Button--withLeftIcon"}}
       {{fa-icon "plus-circle fa--left"}} Create new organization
     {{/link-to}}
-    {{#if currentUser.organizations.isPending}}
+    {{#if isOrganizationsLoading}}
       {{loading-page}}
     {{else}}
       <ul>
-        {{#each currentUser.organizations as |org|}}
-          <li>
+        {{#each userOrganizations as |org|}}
+          <li data-test-org-switcher-item>
             {{#link-to "organization.index" org.slug classNames="OrganizationsSwitcherNav-item"}}
               {{org.name}}
             {{/link-to}}

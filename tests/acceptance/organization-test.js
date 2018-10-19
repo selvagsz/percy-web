@@ -32,16 +32,22 @@ describe('Acceptance: Organization', function() {
       await percySnapshot(this.test);
     });
 
-    it('can create new organization', async function() {
+    it('can create new organization and update org switcher', async function() {
       await visit(`/${this.organization.slug}`);
       await click('.OrganizationsSwitcherNav-item');
       await click('a:contains("Create new organization")');
       expect(currentPath()).to.equal('organizations.new');
 
+      await click('[data-test-toggle-org-switcher]');
+      expect(find('[data-test-org-switcher-item]').length).to.equal(1);
+
       await percySnapshot(this.test.fullTitle() + ' | new');
       await fillIn('.FormsOrganizationNew input[type=text]', 'New organization');
       await click('.FormsOrganizationNew [data-test-form-submit-button]');
       expect(currentPath()).to.equal('organization.index');
+
+      await click('[data-test-toggle-org-switcher]');
+      expect(find('[data-test-org-switcher-item]').length).to.equal(2);
 
       await percySnapshot(this.test.fullTitle() + ' | setup');
     });

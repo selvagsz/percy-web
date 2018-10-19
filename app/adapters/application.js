@@ -91,6 +91,11 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
       return utils.buildApiUrl('buildSnapshots', buildId);
     }
 
+    if (requestType === 'query' && modelName === 'organization' && query.user) {
+      delete query.user;
+      return utils.buildApiUrl('userOrganizations');
+    }
+
     // Customize buildURL for models where we want to use the slug as the ID in the API URL, but
     // keep the internal ID stable. TODO: remove this when Ember Data fully supports JSON-API
     // self links.

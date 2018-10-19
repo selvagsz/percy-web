@@ -52,6 +52,7 @@ module.exports = function(environment) {
         invites: '/api/v1/organizations/%@/invites',
         user: '/api/v1/user',
         userIdentity: '/api/v1/user/identities/%@',
+        userOrganizations: '/api/v1/user/organizations',
         emailVerifications: '/api/v1/email-verifications/%@',
         baseAsset: '/api/v1/snapshots/%@/assets/base.html',
         headAsset: '/api/v1/snapshots/%@/assets/head.html',

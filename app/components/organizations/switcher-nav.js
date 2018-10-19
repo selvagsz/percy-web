@@ -1,28 +1,31 @@
-import {alias} from '@ember/object/computed';
+import {readOnly} from '@ember/object/computed';
 import {inject as service} from '@ember/service';
 import Component from '@ember/component';
+import {task} from 'ember-concurrency';
 
 export default Component.extend({
-  classes: null,
+  classNames: ['OrganizationsSwitcherNav'],
+  store: service(),
+  session: service(),
 
   isExpanded: false,
 
-  store: service(),
-  session: service(),
-  currentUser: alias('session.currentUser'),
+  currentUser: readOnly('session.currentUser'),
+  isOrganizationsLoading: readOnly('_getUserOrganizations.isRunning'),
+  userOrganizations: null,
 
-  classNames: ['OrganizationsSwitcherNav'],
-  classNameBindings: ['classes'],
+  _getUserOrganizations: task(function*() {
+    const user = yield this.get('session').forceReloadUser();
+    const userOrganizations = yield this.get('store').query('organization', {user});
+    this.setProperties({userOrganizations});
+  }),
 
   actions: {
     toggleSwitcher() {
-      this.get('session')
-        .forceReloadUser()
-        .then(user => {
-          user.get('organizations');
-        });
+      this._getUserOrganizations.perform();
       this.toggleProperty('isExpanded');
     },
+
     hideSwitcher() {
       this.set('isExpanded', false);
     },
