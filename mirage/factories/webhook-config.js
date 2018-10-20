@@ -5,4 +5,5 @@ export default Factory.extend({
     return `https://example.com/${i}`;
   },
   subscribedEvents: ['ping'],
+  authToken: 'secret',
 });
