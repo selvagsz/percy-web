@@ -185,6 +185,7 @@ describe('Acceptance: Project', function() {
 
     it('transitions to webhook config form', async function() {
       withVariation('webhooks', true); // eslint-disable-line
+      window.crypto.getRandomValues = sinon.fake.returns(new Uint8Array(32));
 
       await ProjectSettingsPage.visitProjectSettings({
         orgSlug: organization.slug,
