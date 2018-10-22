@@ -4,6 +4,7 @@ import {resolve, reject} from 'rsvp';
 import {Promise as EmberPromise} from 'rsvp';
 import localStorageProxy from 'percy-web/lib/localstorage';
 import utils from 'percy-web/lib/utils';
+import AdminMode from 'percy-web/lib/admin-mode';
 
 export default SessionService.extend({
   store: service(),
@@ -67,6 +68,7 @@ export default SessionService.extend({
     this._clearSentry();
     this._clearAnalytics();
     this._clearIntercom();
+    AdminMode.clear();
   },
 
   _setupSentry(user) {
