@@ -58,6 +58,9 @@
       {{#each builds as |build|}}
         {{build-card build=build}}
       {{/each}}
+      {{#infinity-loader infinityModel=builds hideOnInfinity=true}}
+        {{loading-build-card}}
+      {{/infinity-loader}}
     </div>
   {{else}}
     <div class="container-full p-8">

@@ -303,6 +303,7 @@ describe('Acceptance: Project', function() {
       server.create('build', 'approvedWithNoDiffs', {project, createdAt: _timeAgo(2, 'minutes')});
       server.create('build', 'approvedAutoBranch', {project, createdAt: _timeAgo(3, 'minutes')});
       server.create('build', 'processing', {project, createdAt: _timeAgo(10, 'seconds')});
+
       this.project = project;
     });
 
@@ -310,6 +311,26 @@ describe('Acceptance: Project', function() {
       await ProjectPage.visitProject(urlParams);
       await percySnapshot(this.test);
       expect(currentPath()).to.equal('organization.project.index');
+    });
+
+    it('hides the loader when there are less than 50 builds', async function() {
+      await ProjectPage.visitProject(urlParams);
+
+      // expect infinity loader to be present but hidden
+      expect(ProjectPage.infinityLoader.isPresent).to.equal(true);
+      expect(ProjectPage.infinityLoader.isComplete).to.equal(true);
+      expect(ProjectPage.builds().count).to.equal(12);
+    });
+
+    it('shows the loader when there are more than 50 builds', async function() {
+      // 50 comes from BUILDS_PER_PAGE query limit
+      server.createList('build', 50, {project: this.project});
+
+      await ProjectPage.visitProject(urlParams);
+
+      // expect infinity loader to be present
+      expect(ProjectPage.infinityLoader.isPresent).to.equal(true);
+      expect(ProjectPage.builds().count).to.equal(50);
     });
 
     it('navigates to build page after clicking build', async function() {

@@ -1,5 +1,13 @@
-import {visitable, collection, clickable, create, isVisible} from 'ember-cli-page-object';
 import {BuildCard} from 'percy-web/tests/pages/components/build-card';
+import {
+  visitable,
+  collection,
+  clickable,
+  create,
+  isVisible,
+  isPresent,
+  hasClass,
+} from 'ember-cli-page-object';
 
 const SELECTORS = {
   PROJECT_CONTAINER: '[data-test-project-container]',
@@ -9,6 +17,7 @@ const SELECTORS = {
   QUICKSTART_BUTTON: '[data-test-quickstart-button]',
   NO_BUILDS_PANEL: '[data-test-status-panel]',
   PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
+  INFINITY_LOADER: '.infinity-loader', // only one possible per page
 };
 
 const ProjectPage = {
@@ -20,6 +29,12 @@ const ProjectPage = {
     itemScope: BuildCard.scope,
     item: BuildCard,
   }),
+
+  infinityLoader: {
+    scope: SELECTORS.INFINITY_LOADER,
+    isPresent: isPresent(),
+    isComplete: hasClass('reached-infinity'),
+  },
 
   repoLinked: {
     scope: SELECTORS.REPO_LINKED,

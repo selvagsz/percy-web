@@ -211,9 +211,16 @@ export default function() {
   });
 
   this.get('/projects/:organization_slug/:project_slug/builds', function(schema, request) {
+    let limitString = request.queryParams['page[limit]'] || '50';
+    let limit = parseInt(limitString);
+
     let fullSlug = `${request.params.organization_slug}/${request.params.project_slug}`;
     let project = schema.projects.findBy({fullSlug: fullSlug});
-    return schema.builds.where({projectId: project.id});
+
+    let projectBuilds = schema.builds.where({projectId: project.id});
+    let limitedProjectBuilds = projectBuilds.slice(0, limit);
+
+    return limitedProjectBuilds;
   });
 
   this.get('/invites/:id');
