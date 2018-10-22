@@ -6,7 +6,24 @@ defaults: &defaults
         JOBS: 2
   working_directory: ~/percy-web
 
-version: 2
+
+orbs:
+  percy:
+    executors:
+      default:
+        docker:
+          - image: percyio/agent:latest
+    commands:
+      finalize-all:
+        steps:
+          - run: percy finalize --all
+    jobs:
+      finalize_all:
+        executor: default
+        steps:
+          - finalize-all
+
+version: 2.1
 jobs:
   checkout_code:
     <<: *defaults
@@ -67,6 +84,6 @@ workflows:
       - run_tests:
           requires:
             - install_dependencies
-      - finalize_percy:
+      - percy/finalize_all:
           requires:
             - run_tests
