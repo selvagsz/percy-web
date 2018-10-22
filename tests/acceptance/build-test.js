@@ -8,6 +8,39 @@ import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_REVIEW_STATE_REASONS} from 'percy-web/
 import {BUILD_STATES} from 'percy-web/models/build';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 import {beforeEach} from 'mocha';
+import {currentRouteName} from '@ember/test-helpers';
+import {percySnapshot} from 'ember-percy';
+
+describe('Acceptance: Pending Build', function() {
+  freezeMoment('2018-05-22');
+  setupAcceptance();
+  let urlParams;
+
+  setupSession(function(server) {
+    let organization = server.create('organization', 'withUser');
+    let project = server.create('project', {name: 'pending build', organization});
+    let build = server.create('build', {
+      project,
+      createdAt: moment().subtract(2, 'minutes'),
+      state: 'pending',
+    });
+
+    urlParams = {
+      orgSlug: organization.slug,
+      projectSlug: project.slug,
+      buildId: build.id,
+    };
+  });
+
+  it('shows as pending', async function() {
+    await BuildPage.visitBuild(urlParams);
+    expect(currentRouteName()).to.equal('organization.project.builds.build.index');
+    await percySnapshot(this.test.fullTitle() + ' on the build page');
+    await BuildPage.toggleBuildInfoDropdown();
+    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
+  });
+});
+
 
 describe('Acceptance: Build', function() {
   freezeMoment('2018-05-22');
@@ -477,36 +510,6 @@ describe('Acceptance: Auto-Approved Branch Build', function() {
   });
 });
 
-describe('Acceptance: Pending Build', function() {
-  freezeMoment('2018-05-22');
-  setupAcceptance();
-  let urlParams;
-
-  setupSession(function(server) {
-    let organization = server.create('organization', 'withUser');
-    let project = server.create('project', {name: 'pending build', organization});
-    let build = server.create('build', {
-      project,
-      createdAt: moment().subtract(2, 'minutes'),
-      state: 'pending',
-    });
-
-    urlParams = {
-      orgSlug: organization.slug,
-      projectSlug: project.slug,
-      buildId: build.id,
-    };
-  });
-
-  it('shows as pending', async function() {
-    await BuildPage.visitBuild(urlParams);
-    expect(currentPath()).to.equal('organization.project.builds.build.index');
-
-    await percySnapshot(this.test.fullTitle() + ' on the build page');
-    await BuildPage.toggleBuildInfoDropdown();
-    await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
-  });
-});
 
 describe('Acceptance: Processing Build', function() {
   freezeMoment('2018-05-22');

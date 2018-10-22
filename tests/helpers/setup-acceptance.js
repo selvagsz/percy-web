@@ -4,6 +4,9 @@ import destroyApp from 'percy-web/tests/helpers/destroy-app';
 import seedFaker from './seed-faker';
 import {authenticateSession} from 'percy-web/tests/helpers/ember-simple-auth';
 import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
+import {setupApplicationTest} from 'ember-mocha';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import {getApplication} from '@ember/test-helpers';
 
 // Import mocha helpers so that they will be included for all tests.
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "it|describe" }]*/
@@ -13,19 +16,21 @@ import StubClient from 'ember-launch-darkly/test-support/helpers/launch-darkly-c
 
 export default function setupAcceptance({authenticate = true} = {}) {
   SetupLocalStorageSandbox();
+  setupApplicationTest();
+  setupMirage();
+
   beforeEach(function() {
-    this.application = startApp();
     window.localStorage.clear();
     seedFaker();
-    if (authenticate) {
-      authenticateSession(this.application);
-    }
-    this.application.__container__.registry.register('service:launch-darkly-client', StubClient);
+    // if (authenticate) {
+    //   authenticateSession(getApplication());
+    // }
+    this.owner.__container__.registry.register('service:launch-darkly-client', StubClient);
   });
 
   afterEach(function() {
-    destroyApp(this.application);
-    this.application = null;
+    // destroyApp(this.application);
+    // this.application = null;
   });
 }
 

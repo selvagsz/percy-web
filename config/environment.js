@@ -150,7 +150,7 @@ module.exports = function(environment) {
 
     // TODO: false is the default, but ember-mocha compatibility currently requires
     // this to be true.
-    ENV.APP.autoboot = true;
+    ENV.APP.autoboot = false;
 
     ENV.APP.rootElement = '#ember-testing';
     ENV['ember-tether'] = {bodyElementId: 'ember-testing'};
