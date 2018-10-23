@@ -3,10 +3,18 @@
   <p class="text-gray-400 w-3/4">
      Separate each email with a space or a new line. Invitations expire after one week.
   </p>
-  <div class="bg-white rounded shadow-1 p-2 mb-2">
-    <h2 class="text-xl font-semibold mb-1">New user info</h2>
-    {{#organizations/require-role role="admin" organization=model}}
-      {{forms/organization-invite organization=model}}
-    {{/organizations/require-role}}
-  </div>
+  <p>{{model.availableSeatsText}}</p>
+  {{log model.canInvite}}
+  {{#if model.canInvite}}
+    <div class="bg-white rounded shadow-1 p-2 mb-2">
+      <h2 class="text-xl font-semibold mb-1">New user info</h2>
+      {{#organizations/require-role role="admin" organization=model}}
+        {{forms/organization-invite organization=model}}
+      {{/organizations/require-role}}
+    </div>
+  {{else}}
+    <div>
+      You do not have any seats available. Please {{#link-to "organizations.organization.billing" model.slug class="py-1 link-gray font-semibold"}} upgrade your plan {{/link-to}} to add more users.
+    </div>
+  {{/if}}
 </section>

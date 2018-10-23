@@ -48,6 +48,7 @@
     "ember-cli-deprecation-workflow": "^1.0.0",
     "ember-cli-eslint": "5.0.0",
     "ember-cli-flash": "^1.6.1",
+    "ember-cli-gravatar": "^3.10.2",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "2.0.0",
     "ember-cli-inject-live-reload": "2.0.0",

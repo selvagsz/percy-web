@@ -11,6 +11,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return hash({
       organization,
       users: this.store.query('organization-user', {organization}),
+      invites: this.store.query('invite', {organization}),
     });
   },
 
@@ -18,6 +19,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     controller.setProperties({
       users: resolvedModel.users,
       organization: resolvedModel.organization,
+      invites: resolvedModel.invites,
     });
   },
 

@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {filterBy, alias, bool, mapBy, readOnly, uniq} from '@ember/object/computed';
+import {alias, bool, equal, filterBy, mapBy, readOnly, uniq} from '@ember/object/computed';
 import DS from 'ember-data';
 import {INTEGRATION_TYPES} from 'percy-web/lib/integration-types';
 
@@ -52,6 +52,20 @@ export default DS.Model.extend({
 
   organizationUsers: DS.hasMany('organization-user'),
 
+  seatLimit: DS.attr(),
+  seatsRemaining: DS.attr(),
+  // TODO: handle when seatsAvailable and userLimit are nil
+  canInvite: computed('seatsAvailable', function() {
+    return this.get('seatsAvailable') > 0;
+  }),
+  seatsUsed: DS.attr(),
+  availableSeatsText: computed('seatLimit', 'seatsUsed', function() {
+    //ui doesn't notice when this changes
+    const seatLimit = this.get('seatLimit');
+    const seatsUsed = this.get('seatsUsed');
+    return `You have used ${seatsUsed} of your ${seatLimit} available seats.`;
+  }),
+
   // These are GitHub repositories that the organization has access permissions to. These are not
   // useful on their own other than for listing. A repo must be linked to a project.
   repos: DS.hasMany('repo'),
@@ -89,6 +103,7 @@ export default DS.Model.extend({
       filter: 'current-user-only',
     });
   }),
+  currentUserIsAdmin: equal('currentUserMembership.role', 'admin'),
 
   githubRepos: filterBy('repos', 'source', 'github'),
   githubEnterpriseRepos: filterBy('repos', 'source', 'github_enterprise'),

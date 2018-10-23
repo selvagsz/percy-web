@@ -3,6 +3,7 @@
     <div>
       <h2 class="mr-2 mb-sm text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
       <p class="mb-0 leading-none">You’ve used {{users.length}} of NOT SURE seats available. If you need more, head to your billing page.</p>
+      <p>{{organization.availableSeatsText}}</p>
     </div>
     {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary"}}
       Invite new user
@@ -18,11 +19,10 @@
 
 <section class="bg-gray-pattern pb-9">
   <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">2 Pending invitations</div>
-  {{#each users as |organizationUser index|}}
-    {{#if (lte index 1)}}
-      {{organizations/user-card organizationUser=organizationUser}}
-    {{/if}}
-  {{/each}}
+  {{organizations/invites-list
+    invites=invites
+    organization=organization
+  }}
 
   <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">{{users.length}} Active members</div>
   {{#each users as |organizationUser|}}

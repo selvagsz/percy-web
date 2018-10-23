@@ -1,0 +1,8 @@
+<div class="rounded border">
+  {{#each invites as |invite|}}
+    {{organizations/invite-card
+      invite=invite
+      organization=organization
+    }}
+  {{/each}}
+</div>

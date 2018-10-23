@@ -12,15 +12,15 @@
       </LabelTag>
     </div>
     <div class="flex-1 leading-none text-gray-400">
-      Joined on date
+      {{organizationUser.createdAt}}
     </div>
     <div class="flex-2 flex justify-end">
       <div class="btn-toolbar">
-        {{#if (eq organizationUser.user.id currentUser.id)}}
+        {{#if isCurrentUser}}
           <PercyBtn>Leave organization</PercyBtn>
         {{else}}
-          <PercyBtn @disabled={{unless (eq "admin" organizationUser.organization.currentUserMembership.role) true}}>Make member</PercyBtn>
-          <PercyBtn @disabled={{unless (eq "admin" organizationUser.organization.currentUserMembership.role) true}}>Remove</PercyBtn>
+          <PercyBtn @disabled={{unless isAdmin true}}>Make member</PercyBtn>
+          <PercyBtn @disabled={{unless isAdmin true}}>Remove</PercyBtn>
         {{/if}}
       </div>
       {{!-- {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}} --}}

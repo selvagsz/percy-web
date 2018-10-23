@@ -1,0 +1,35 @@
+<div data-test-invite-card class="user-card border-b cursor-pointer">
+  <div class="p-2 flex items-center">
+    {{gravatar-image email=invite.email size=36}}
+    <div>
+      <div class="leading-none mb-sm font-semibold">
+        {{invite.email}}
+      </div>
+      <div class="leading-none text-gray-400 text-sm">
+        Expires: {{moment-format invite.expiresAt 'LLLL'}}
+      </div>
+      <div class="leading-none text-gray-400 text-sm">
+        Role: {{invite.roleTitle}}
+      </div>
+      <div>From User: {{invite.fromUser.name}}</div>
+      <div>Invited on: {{invite.createdAt}}</div>
+      {{#if isAdmin}}
+        {{#copy-button
+          class="btn-icon-only w-full flex justify-between items-center"
+          clipboardText=invite.inviteLink
+          success=(action "onCopyInviteUrlToClipboard")
+        }}
+          <span>Copy invite URL</span>
+          {{inline-svg "link-icon"}}
+        {{/copy-button}}
+      {{/if}}
+      {{#if isAdmin}}
+        <button type="button" class="btn btn-sm btn-alt"
+          {{action "cancelInvite"}}
+          data-test-invite-card-cancel-invite>
+          Cancel
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</div>
