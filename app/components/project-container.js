@@ -5,7 +5,7 @@ export default Component.extend(PollingMixin, {
   project: null,
   showQuickstart: false,
   tagName: 'main',
-  classNames: ['project-container flex-1 border-l'],
+  classNames: ['project-container flex-1 border-l pb-8'],
   attributeBindings: ['data-test-project-container'],
   'data-test-project-container': true,
 
