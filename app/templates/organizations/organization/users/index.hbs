@@ -7,7 +7,7 @@
   </p>
   <div class="bg-white rounded shadow-1 p-2 mb-2">
     <div class="flex justify-between items-center mb-2">
-      <h2 class="text-xl font-semibold mb-0">{{capitalize organization.name}} users</h2>
+      <h2 class="text-xl font-semibold mb-0">{{capitalize organization.name}} users ({{users.length}})</h2>
       {{#link-to "organizations.organization.users.invite" organization.slug classNames="btn btn-primary shadow-purple-lg mb-0"}}
         Invite New Users
       {{/link-to}}
