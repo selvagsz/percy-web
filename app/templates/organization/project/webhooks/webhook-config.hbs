@@ -4,7 +4,6 @@
   <section class="px-2 pt-3 pb-9">
     <div class="flex items-start justify-between pb-3">
       <h1 class="text-xl font-semibold mb-sm">Edit webhook</h1>
-
       {{#link-to
         "organization.project.settings"
         model.organization.slug
@@ -14,7 +13,6 @@
         Back to project settings
       {{/link-to}}
     </div>
-
     <div class="bg-white rounded shadow-1 p-2 mb-2">
       {{forms/webhook-config-edit
         webhookConfig=model.webhookConfig
@@ -23,5 +21,21 @@
         saveSuccess="webhookConfigUpdated"
       }}
     </div>
+
+    {{#if (await model.webhookConfig.webhookEvents)}}
+      <div class="bg-white rounded shadow-1 px-2 py-2 mb-2">
+        <h2 class="text-lg font-semibold mb-2">Recent Deliveries</h2>
+        <div class="mb-2 rounded border">
+          {{#each model.webhookConfig.webhookEvents as |webhookEvent|}}
+            <div class="{{unless (eq webhookEvent model.webhookConfig.webhookEvents.lastObject) "border-b"}}">
+              {{webhook-event
+                webhookEvent=webhookEvent
+                deliveryUrl=model.webhookConfig.url
+              }}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
   </section>
 {{/organizations/settings-nav-wrapper}}

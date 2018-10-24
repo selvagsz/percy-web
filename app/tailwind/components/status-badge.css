@@ -1,0 +1,3 @@
+.status-badge {
+  @apply px-1 rounded-full bg-green-500 text-white text-sm font-mono;
+}

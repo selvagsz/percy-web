@@ -1,14 +1,24 @@
 import DS from 'ember-data';
+import {computed} from '@ember/object';
+import {not} from '@ember/object/computed';
 
 export default DS.Model.extend({
   webhookConfig: DS.belongsTo('webhook-config'),
   event: DS.attr(),
-  request_headers: DS.attr(),
-  request_payload: DS.attr(),
-  response_headers: DS.attr(),
-  response_payload: DS.attr(),
-  response_status: DS.attr('number'),
-  response_time_ms: DS.attr('number'),
-  failure_reason: DS.attr(),
-  created_at: DS.attr('date'),
+  requestHeaders: DS.attr(),
+  requestPayload: DS.attr('string'),
+  responseHeaders: DS.attr(),
+  responsePayload: DS.attr(),
+  responseStatus: DS.attr('number'),
+  responseTimeMs: DS.attr('number'),
+  failureReason: DS.attr(),
+  createdAt: DS.attr('date'),
+
+  isSuccess: not('isFailure'),
+
+  isFailure: computed('failureReason', 'responseStatus', function() {
+    const status = this.get('responseStatus');
+
+    return this.get('failureReason') || !(status >= 200 && status < 300);
+  }),
 });

@@ -1,0 +1,19 @@
+<div class="mb-1 font-semibold leading-none">
+  {{title}} Headers
+</div>
+
+<div
+  class="flex p-2 mb-2 rounded border bg-gray-000 font-mono"
+  data-test-event-headers
+>
+  <div class="mr-2 text-gray-400">
+    {{#each-in headers as |name _value|}}
+      <div>{{name}}</div>
+    {{/each-in}}
+  </div>
+  <div class="flex-1">
+    {{#each-in headers as |_name value|}}
+      <div>{{value}}</div>
+    {{/each-in}}
+  </div>
+</div>

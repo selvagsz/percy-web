@@ -1,0 +1,10 @@
+<div
+  class="status-badge mr-2 {{unless success 'bg-red-500'}}"
+  data-test-status-badge
+>
+  {{#if statusText}}
+    {{statusText}}
+  {{else}}
+    err
+  {{/if}}
+</div>
