@@ -6,22 +6,8 @@ defaults: &defaults
         JOBS: 2
   working_directory: ~/percy-web
 
-
 orbs:
-  percy:
-    executors:
-      default:
-        docker:
-          - image: percyio/agent:latest
-    commands:
-      finalize-all:
-        steps:
-          - run: percy finalize --all
-    jobs:
-      finalize_all:
-        executor: default
-        steps:
-          - finalize-all
+  percy: percy/agent@dev:0.0.1
 
 version: 2.1
 jobs:
@@ -66,13 +52,6 @@ jobs:
           name: Run Tests
           command: yarn build-test && yarn test:parallel
 
-  finalize_percy:
-    docker:
-      - image: percyio/agent:latest
-    steps:
-      - run:
-          command: percy finalize --all
-
 workflows:
   version: 2
   test_and_deploy:
@@ -84,6 +63,6 @@ workflows:
       - run_tests:
           requires:
             - install_dependencies
-      - percy/finalize_all:
+      - percy/finalize-all:
           requires:
             - run_tests
