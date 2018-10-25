@@ -40,8 +40,6 @@ describe('Acceptance: Join', function() {
     await percySnapshot(this.test);
     await click('.InvitationHandler button:contains("Accept invitation")');
     expect(currentPath()).to.equal('organization.index');
-
-    expect(parseInt(Math.random(1) * 2)).to.equal(1);
     await percySnapshot(this.test.fullTitle() + ' | Into organization');
   });
 });
