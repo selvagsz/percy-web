@@ -7,7 +7,7 @@ defaults: &defaults
   working_directory: ~/percy-web
 
 orbs:
-  percy: percy/agent@dev:volatile
+  percy: percy/agent@dev:0.0.1
 
 version: 2.1
 jobs:
