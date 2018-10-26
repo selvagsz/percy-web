@@ -53,7 +53,6 @@ jobs:
           command: yarn build-test && yarn test:parallel
 
 workflows:
-  version: 2
   test_and_deploy:
     jobs:
       - checkout_code
@@ -63,6 +62,6 @@ workflows:
       - run_tests:
           requires:
             - install_dependencies
-      - percy/finalize-all:
+      - percy/finalize_all:
           requires:
             - run_tests
