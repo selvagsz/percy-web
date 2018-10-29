@@ -20,7 +20,7 @@
     "test": "ember test",
     "start-production-for-testing": "ember server --environment=production",
     "test:node_debug": "node debug node_modules/ember-cli/bin/ember test --server",
-    "test:parallel": "EMBER_ENV=test percy exec --network-idle-timeout 1000 -- ember exam --environment=test --path dist --split=4 --parallel",
+    "test:parallel": "EMBER_ENV=test percy exec --network-idle-timeout 750 -- ember exam --environment=test --path dist --split=4 --parallel",
     "test:server": "ember test --server"
   },
   "lint-staged": {
