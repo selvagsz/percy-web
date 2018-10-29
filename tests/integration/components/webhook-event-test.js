@@ -5,9 +5,11 @@ import {make} from 'ember-data-factory-guy';
 import {percySnapshot} from 'ember-percy';
 import WebhookEvent from 'percy-web/tests/pages/components/webhook-event';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
+import freezeMoment from 'percy-web/tests/helpers/freeze-moment';
 
 describe('Integration: WebhookEvent', function() {
   setupComponentTest('webhook-event', {integration: true});
+  freezeMoment('2017-05-22');
 
   const deliveryUrl = 'http://example.com';
 
@@ -25,7 +27,6 @@ describe('Integration: WebhookEvent', function() {
     this.set('webhookEvent', make('webhook-event'));
 
     percySnapshot(this.test.fullTitle());
-
     expect(WebhookEvent.id).to.equal('1');
     expect(WebhookEvent.deliveryUrl).to.equal(`POST ${deliveryUrl}`);
     expect(WebhookEvent.status).to.equal('200');

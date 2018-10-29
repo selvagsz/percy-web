@@ -1,4 +1,5 @@
 import FactoryGuy from 'ember-data-factory-guy';
+import moment from 'moment';
 
 FactoryGuy.define('webhook-event', {
   default: {
@@ -11,6 +12,6 @@ FactoryGuy.define('webhook-event', {
     responseStatus: 200,
     responseTimeMs: 150,
     failureReason: null,
-    createdAt: Date.now(),
+    createdAt: () => moment(),
   },
 });
