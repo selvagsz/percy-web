@@ -1,7 +1,6 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import {beforeEach} from 'mocha';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
-import 'ember-launch-darkly/test-support/helpers/with-variation';
 
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
@@ -110,7 +109,6 @@ describe('Acceptance: Marketing pages', function() {
     });
 
     it('opens dropdown when product is clicked on light background', async function() {
-      withVariation('updated-marketing-site', true); // eslint-disable-line
       await visit('/');
 
       await click('[data-test-responsive-nav-toggle]');
@@ -118,7 +116,6 @@ describe('Acceptance: Marketing pages', function() {
     });
 
     it('opens dropdown when product is clicked on dark background', async function() {
-      withVariation('updated-marketing-site', true); // eslint-disable-line
       await visit('enterprise');
 
       await click('[data-test-responsive-nav-toggle]');
