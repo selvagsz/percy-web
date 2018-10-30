@@ -1,7 +1,7 @@
 <div class="build-card cursor-pointer {{if build.isExpired 'opacity-50'}} is-{{dasherize build.state}} is-{{if build.isFinished (dasherize build.reviewState)}}" {{action "navigateToBuild"}} data-test-build-card>
   <div>
     <div style="margin-bottom: -6px;">
-      {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.id class="text-xl md:text-2xl font-mono"}}{{build.buildNumber}}{{/link-to}}
+      {{#link-to "organization.project.builds.build" build.project.organization.slug build.project.slug build.id class="text-xl md:text-2xl font-mono"}}{{build.buildNumber}}--{{build.project.slug}}--{{build.project.organization.slug}}{{/link-to}}
     </div>
     <div class="text-sm text-gray-400 font-semibold whitespace-no-wrap truncate">
       {{moment-from-now build.createdAt interval=60000}}

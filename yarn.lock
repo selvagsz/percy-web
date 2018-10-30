@@ -4969,7 +4969,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.1.2:
+ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.2, ember-cli-babel@~7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.1.2.tgz#543c64368d6138d12656db1143c02df1f2b0ee9c"
   integrity sha512-VEWn1jYlP0XYUNkMG4wHSpq4IPKO04lIuSwnH0elLwV3RcwbUstRExi3slmax+SjtlgjJTPMko8QvQ/Ul1/4rg==
@@ -5855,7 +5855,7 @@ ember-percy@percy/ember-percy.git#agentified:
   version "1.4.1"
   resolved "https://codeload.github.com/percy/ember-percy/tar.gz/856d57df1a98d0f5d9ec706f99962e3c44ddf2f1"
   dependencies:
-    "@percy/agent" "0.0.48"
+    "@percy/agent" "0.0.44"
     ember-cli-babel "^6.10.0"
 
 ember-power-select@^1.10.4:

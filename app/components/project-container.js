@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import PollingMixin from 'percy-web/mixins/polling';
+import {inject as service} from '@ember/service';
+import ExtendedInfinityModel from 'percy-web/lib/paginated-ember-infinity-model';
 
 export default Component.extend(PollingMixin, {
+  infinity: service(),
   project: null,
   showQuickstart: false,
   tagName: 'main',
@@ -14,14 +17,24 @@ export default Component.extend(PollingMixin, {
     this.get('project')
       .reload()
       .then(project => {
-        project
-          .get('builds')
-          .reload()
-          .then(() => {
-            if (!this.isDestroyed) {
-              this.set('isRefreshing', false);
-            }
-          });
+        this.infinity.model(
+          'build',
+          {
+            project: project,
+            perPage: 50,
+            perPageParam: 'page[limit]',
+            pageParam: null,
+          },
+          ExtendedInfinityModel,
+        );
+        // project
+        //   .get('builds')
+        //   .reload()
+        //   .then(() => {
+        //     if (!this.isDestroyed) {
+        //       this.set('isRefreshing', false);
+        //     }
+        //   });
       });
   },
 
