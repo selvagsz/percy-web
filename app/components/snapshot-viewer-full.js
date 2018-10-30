@@ -44,7 +44,7 @@ export default Component.extend({
   actions: {
     updateSelectedWidth(newWidth) {
       this.set('snapshotSelectedWidth', newWidth);
-      this.sendAction('transitionRouteToWidth', newWidth);
+      this.get('transitionRouteToWidth')(newWidth);
     },
 
     cycleComparisonMode(keyCode) {
@@ -54,7 +54,7 @@ export default Component.extend({
       let galleryIndex = this.get('galleryIndex');
       let newIndex =
         (((galleryIndex + directional) % galleryLength) + galleryLength) % galleryLength;
-      this.sendAction('updateComparisonMode', galleryMap[newIndex]);
+      this.get('updateComparisonMode')(galleryMap[newIndex]);
     },
   },
 

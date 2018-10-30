@@ -2,7 +2,7 @@
 {{build-container
   build=model.build
   isSnapshotsLoading=isSnapshotsLoading
-  openSnapshotFullModal='openSnapshotFullModal'
+  openSnapshotFullModal=(route-action 'openSnapshotFullModal')
   isHidingBuildContainer=isHidingBuildContainer
   createReview=(route-action "createReview")
   allChangedBrowserSnapshotsSorted=allChangedBrowserSnapshotsSorted

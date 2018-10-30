@@ -42,7 +42,7 @@ export default BaseFormComponent.extend(EnsureStatefulLogin, {
         })
           .done(() => {
             this.set('isSaveSuccessful', true);
-            this.sendAction('saveSuccess');
+            this.get('saveSuccess')();
           })
           .fail(response => {
             let errorData = response.responseJSON['errors'];

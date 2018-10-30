@@ -14,6 +14,6 @@ export default Component.extend({
     if (!this.get('comparison') || this.get('comparison.wasAdded')) {
       return;
     }
-    this.sendAction('cycleComparisonMode', 39);
+    this.get('cycleComparisonMode')(39);
   },
 });

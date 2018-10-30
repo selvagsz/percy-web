@@ -22,9 +22,9 @@
       </div>
       <div class="mb-2">
         {{#if session.isAuthenticated}}
-          {{goto-app data-test-index-goto-app=true}}
+          {{#link-to "default-org" class="btn btn-md py-1 px-4 btn-app-access text-white text-base cursor-pointer"}}Go to App{{/link-to}}
         {{else}}
-          {{login-button showLoginModal="showLoginModal"}}
+          {{#link-to "login" class="btn btn-md py-1 px-4 btn-app-access text-white text-base cursor-pointer"}}Sign In{{/link-to}}
         {{/if}}
       </div>
     </div>

@@ -9,7 +9,10 @@
     {{#organizations/require-role role="admin" organization=model}}
       <div class="bg-white rounded shadow-1 p-2">
         <h2 class="text-xl font-semibold mb-1">Organization Settings</h2>
-        {{forms/organization-edit organization=model saveSuccess="organizationUpdated"}}
+        {{forms/organization-edit
+          organization=model
+          saveSuccess=(route-action "organizationUpdated")
+        }}
       </div>
     {{/organizations/require-role}}
   </section>

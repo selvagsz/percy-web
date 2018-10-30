@@ -10,7 +10,9 @@ export default Component.extend({
   classNameBindings: ['classes'],
   actions: {
     cancelIntegrationRequest() {
-      this.sendAction('cancelIntegrationRequest');
+      if (this.get('cancelIntegrationRequest')) {
+        this.get('cancelIntegrationRequest')();
+      }
     },
   },
 });

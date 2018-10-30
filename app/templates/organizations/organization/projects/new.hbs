@@ -6,7 +6,7 @@
         <p class="text-gray-400">
           Projects are how we group related builds in Percy. Usually, you'll want to use the name of your repository or the name of your site.
         </p>
-        {{forms/project-new organization=model saveSuccess="projectCreated"}}
+        {{forms/project-new organization=model saveSuccess=(route-action "projectCreated")}}
       </section>
     </div>
   </div>

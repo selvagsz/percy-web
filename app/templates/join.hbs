@@ -1,6 +1,10 @@
 {{title "Join your team"}}
 {{fixed-top-header}}
 <div class="container container--forContent">
-  {{invitation-handler invitation=model inviteAccepted="inviteAccepted" logout="logout"}}
+  {{invitation-handler
+    invitation=model
+    inviteAccepted=(route-action "inviteAccepted")
+    logout=(route-action "logout")
+  }}
 </div>
 {{main-footer}}

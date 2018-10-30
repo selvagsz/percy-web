@@ -99,7 +99,7 @@ export default Component.extend(PollingMixin, {
 
   actions: {
     showSnapshotFullModalTriggered(snapshotId, snapshotSelectedWidth, activeBrowser) {
-      this.sendAction('openSnapshotFullModal', snapshotId, snapshotSelectedWidth, activeBrowser);
+      this.get('openSnapshotFullModal')(snapshotId, snapshotSelectedWidth, activeBrowser);
     },
 
     updateActiveBrowser(newBrowser) {

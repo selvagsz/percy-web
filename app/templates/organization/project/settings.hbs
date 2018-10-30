@@ -40,7 +40,7 @@
         <h2 class="text-xl font-semibold mb-1">Project Details</h2>
         {{forms/project-edit
           project=model.project
-          saveSuccess="projectUpdated"
+          saveSuccess=(route-action "projectUpdated")
         }}
       </div>
 

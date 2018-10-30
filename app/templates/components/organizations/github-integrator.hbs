@@ -4,7 +4,7 @@
   {{#if organization.githubIntegrationRequest}}
     {{organizations/github-integration
       organization=organization
-      cancelIntegrationRequest="cancelIntegrationRequest"
+      cancelIntegrationRequest=(action "cancelIntegrationRequest")
     }}
   {{else}}
     <p>

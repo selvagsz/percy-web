@@ -12,7 +12,7 @@ export default Component.extend({
   flashMessages: service(),
   actions: {
     logout() {
-      this.sendAction('logout');
+      this.get('logout')();
     },
     accept() {
       // Invitations are accepted with a PATCH request against the invite endpoint.
@@ -20,7 +20,7 @@ export default Component.extend({
         .save()
         .then(
           model => {
-            this.sendAction('inviteAccepted', model);
+            this.get('inviteAccepted')(model);
           },
           () => {
             this.get('flashMessages').danger(

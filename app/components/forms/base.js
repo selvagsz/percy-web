@@ -75,7 +75,7 @@ export default Component.extend({
         savingPromise
           .then(model => {
             // Bubble the successfully saved model upward, so the route can react to it.
-            this.sendAction('saveSuccess', model);
+            this.get('saveSuccess')(model);
             changeset.rollback();
           })
           .catch(() => {
