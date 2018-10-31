@@ -56,7 +56,7 @@
   {{#if builds}}
     <div class="build-list">
       {{#each builds as |build|}}
-        {{build-card build=build}}
+        {{build-card build=build project=project}}
       {{/each}}
       {{#infinity-loader infinityModel=builds hideOnInfinity=true}}
         {{loading-build-card}}
