@@ -1,0 +1,10 @@
+<div class="cursor-pointer text-blue-500" {{action (toggle "isErrorExpanded" this)}} data-test-error-toggle>
+  {{#if isErrorExpanded}}
+    Hide error
+  {{else}}
+    See error
+  {{/if}}
+</div>
+{{#if isErrorExpanded}}
+  <pre class="text-left mt-2 bg-gray-100 p-2 rounded whitespace-pre-wrap break-words">{{error.message}}</pre>
+{{/if}}

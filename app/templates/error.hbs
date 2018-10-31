@@ -1,27 +1,41 @@
 {{title "Error"}}
 {{fixed-top-header}}
-<div class="container container--fixedWidth container--forContent">
-  {{#if (eq model.errors.firstObject.status 'forbidden') }}
-    <h2>Forbidden</h2>
-    <p>You do not have access to this resource or the resource does not exist in Percy. Feel free to <a href="mailto:hello@percy.io" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.</p>
-    <p><strong>An administrator can send you an invite to join this organization.</strong></p>
-  {{else if (eq model.errors.firstObject.status 'not_found')}}
-    <h2>Not Found</h2>
-    <p>This resource was not found in Percy.</p>
-    <p>Feel free to <a href="mailto:hello@percy.io" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.</p>
-    <hr>
-    <strong>Error details:</strong>
-    <pre class="mt-2 u-text-small">{{model.message}}</pre>
+<div class="container-full container-vh bg-white-pattern flex items-center justify-center">
+  {{#if (is-substring-present model '403')}}
+
+    {{#status-panel
+      inlineSvgName="error-large-icon"
+      mainText="Forbidden"
+    }}
+      <p class="alt-p text-gray-400">
+        You do not have access to this resource or the resource does not exist in Percy. Feel free to <a href="#" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.
+      </p>
+      <p><strong>An administrator can send you an invite to join this organization.</strong></p>
+      {{error-toggle error=model}}
+    {{/status-panel}}
+  {{else if (is-substring-present model '404')}}
+
+    {{#status-panel
+      inlineSvgName="error-large-icon"
+      mainText="Not Found"
+      secondaryText="This resource was not found in Percy."
+    }}
+      <p class="alt-p text-gray-400">
+        Feel free to <a href="#" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.
+      </p>
+      {{error-toggle error=model}}
+    {{/status-panel}}
   {{else}}
-    <h2>Error</h2>
-    <p>
-      Something went wrong, sorry! This error has been reported and we will look into it.
-    </p>
-    <p>
-      Feel free to <a href="mailto:hello@percy.io" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.
-    </p>
-    <hr>
-    <strong>Error details:</strong>
-    <pre class="mt-2 u-text-small">{{model.message}}</pre>
+
+    {{#status-panel
+      inlineSvgName="error-large-icon"
+      mainText="Uh Oh ..."
+      secondaryText="Something went wrong, sorry! This error has been reported and we will look into it."
+    }}
+      <p class="alt-p text-gray-400">
+        Feel free to <a href="#" {{action "showSupport"}}>contact us</a> if you believe you have reached this in error.
+      </p>
+      {{error-toggle error=model}}
+    {{/status-panel}}
   {{/if}}
 </div>
