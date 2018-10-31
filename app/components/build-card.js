@@ -1,17 +1,26 @@
-import {getOwner} from '@ember/application';
 import Component from '@ember/component';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
+  router: service(),
+
   build: null,
   classes: null,
   tagName: '',
 
   actions: {
     navigateToBuild() {
-      // Send action directly up to application controller, so we don't have to delegate every
-      // time in the template.
-      let applicationController = getOwner(this).lookup('controller:application');
-      applicationController.send('navigateToBuild', this.get('build'));
+      const organizationSlug = this.get('project.organization.slug');
+      const projectSlug = this.get('project.slug');
+
+      // VERY IMPORTANT: pass the build id rather than the build object
+      // in order to always activate the model hook in org.project.builds.build route
+      this.get('router').transitionTo(
+        'organization.project.builds.build',
+        organizationSlug,
+        projectSlug,
+        this.get('build.id'),
+      );
     },
 
     stopPropagation(e) {
