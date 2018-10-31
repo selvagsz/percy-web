@@ -37,7 +37,7 @@ const FORM_FIELD_LABELS = {
   },
 
   sslVerificationEnabled: {
-    title: 'SSL certification verification',
+    title: 'SSL certificate verification',
     subtitle: 'Whether to verify the SSL certificate presented by the delivery host.',
   },
 };
