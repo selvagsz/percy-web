@@ -23,6 +23,8 @@ export const SnapshotViewerFull = {
   scope: SELECTORS.SNAPSHOT_VIEWER_FULL,
   header: SnapshotViewerHeader,
 
+  isVisible: isVisible('', {resetScope: true}),
+
   clickBaseComparisonMode: alias('header.clickBaseComparisonMode'),
   clickDiffComparisonMode: alias('header.clickDiffComparisonMode'),
   clickHeadComparisonMode: alias('header.clickHeadComparisonMode'),

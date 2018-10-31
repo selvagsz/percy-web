@@ -623,7 +623,7 @@
     ember-cli-babel "^6.16.0"
     ember-compatibility-helpers "^1.1.1"
 
-"@ember/test-helpers@^0.7.16", "@ember/test-helpers@^0.7.18":
+"@ember/test-helpers@^0.7.18":
   version "0.7.27"
   resolved "https://registry.yarnpkg.com/@ember/test-helpers/-/test-helpers-0.7.27.tgz#c622cabd0cbb95b34efc1e1b6274ab5a14edc138"
   integrity sha512-AQESk0FTFxRY6GyZ8PharR4SC7Fju0rXqNkfNYIntAjzefZ8xEqEM4iXDj5h7gAvfx/8dA69AQ9+p7ubc+KvJg==
@@ -5189,13 +5189,6 @@ ember-cli-mirage@^0.4.0:
     pretender "^1.6.1"
     route-recognizer "^0.2.3"
 
-ember-cli-mocha@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-mocha/-/ember-cli-mocha-0.15.0.tgz#483b25a2c631b2b1913344686f497a81ced669b6"
-  integrity sha1-SDslosYxsrGRM0Rob0l6gc7WabY=
-  dependencies:
-    ember-mocha "^0.13.0"
-
 ember-cli-moment-shim@^3.7.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.7.1.tgz#3ad691c5027c1f38a4890fe47d74b5224cc98e32"
@@ -5804,19 +5797,6 @@ ember-maybe-import-regenerator@^0.1.5:
     broccoli-merge-trees "^1.0.0"
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
-
-ember-mocha@^0.13.0:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/ember-mocha/-/ember-mocha-0.13.1.tgz#6c42d76fc7e5579a1ca8499621317b6cde7b4381"
-  integrity sha1-bELXb8flV5ocqEmWITF7bN57Q4E=
-  dependencies:
-    "@ember/test-helpers" "^0.7.16"
-    broccoli-funnel "^2.0.1"
-    broccoli-merge-trees "^2.0.0"
-    common-tags "^1.5.1"
-    ember-cli-babel "^6.6.0"
-    ember-cli-test-loader "^2.2.0"
-    mocha "^2.5.3"
 
 ember-mocha@^0.14.0:
   version "0.14.0"

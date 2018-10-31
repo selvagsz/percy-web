@@ -19,11 +19,13 @@ const SELECTORS = {
   PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
   INFINITY_LOADER: '.infinity-loader', // only one possible per page
   PUBLIC_PROJECT_ICON: '[data-test-public-project-icon]',
+  PROJECT_SETTINGS_ICON: '[data-test-settings-icon]',
 };
 
 const ProjectPage = {
   scope: SELECTORS.PROJECT_CONTAINER,
 
+  visitOrg: visitable('/:orgSlug'),
   visitProject: visitable('/:orgSlug/:projectSlug'),
 
   builds: collection({
@@ -61,7 +63,11 @@ const ProjectPage = {
   isNoBuildsPanelVisible: isVisible(SELECTORS.NO_BUILDS_PANEL),
   isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 
+<<<<<<< HEAD
   isPublicProjectIconVisible: isVisible(SELECTORS.PUBLIC_PROJECT_ICON),
+=======
+  clickProjectSettings: clickable(SELECTORS.PROJECT_SETTINGS_ICON),
+>>>>>>> all but one build tests work. Wrorking on organization test
 };
 
 export default create(ProjectPage);

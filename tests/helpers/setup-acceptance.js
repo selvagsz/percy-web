@@ -2,7 +2,8 @@ import Ember from 'ember';
 import startApp from 'percy-web/tests/helpers/start-app';
 import destroyApp from 'percy-web/tests/helpers/destroy-app';
 import seedFaker from './seed-faker';
-import {authenticateSession} from 'percy-web/tests/helpers/ember-simple-auth';
+import { currentSession, authenticateSession, invalidateSession} from 'ember-simple-auth/test-support';
+// import {authenticateSession} from 'percy-web/tests/helpers/ember-simple-auth';
 import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 import {setupApplicationTest} from 'ember-mocha';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -18,13 +19,12 @@ export default function setupAcceptance({authenticate = true} = {}) {
   SetupLocalStorageSandbox();
   setupApplicationTest();
   setupMirage();
-
   beforeEach(function() {
     window.localStorage.clear();
     seedFaker();
-    // if (authenticate) {
-    //   authenticateSession(getApplication());
-    // }
+    if (authenticate) {
+      authenticateSession();
+    }
     this.owner.__container__.registry.register('service:launch-darkly-client', StubClient);
   });
 

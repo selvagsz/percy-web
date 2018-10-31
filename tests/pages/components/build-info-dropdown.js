@@ -1,5 +1,6 @@
 import {create, isPresent, text} from 'ember-cli-page-object';
 import clickDropdownTrigger from 'percy-web/tests/pages/helpers/click-basic-dropdown-trigger';
+import {click} from '@ember/test-helpers';
 
 const SELECTORS = {
   ADMIN_DETAILS: '[data-test-build-info-admin-details]',
