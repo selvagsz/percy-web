@@ -1,4 +1,4 @@
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -16,17 +16,17 @@ const INFINITY_MODEL_STUB = {
 };
 
 describe('Integration: ProjectContainer', function() {
-  setupComponentTest('project-container', {
+  setupRenderingTest('project-container', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     ProjectPage.setContext(this);
   });
 
   describe('without a repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const builds = makeList('build', 1, {buildNumber: 1});
       const infinityBuilds = merge(builds, INFINITY_MODEL_STUB);
@@ -35,7 +35,7 @@ describe('Integration: ProjectContainer', function() {
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub, isSidebarVisible, toggleSidebar});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -45,8 +45,8 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('shows no logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows no logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
       expect(project.get('isRepoConnected')).to.equal(false);
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
@@ -55,7 +55,7 @@ describe('Integration: ProjectContainer', function() {
   });
 
   describe('with an empty repo source', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project', 'withRepo');
       const builds = makeList('build', 1, 'withRepo', 'hasPullRequest', {buildNumber: 1});
       const infinityBuilds = merge(builds, INFINITY_MODEL_STUB);
@@ -64,7 +64,7 @@ describe('Integration: ProjectContainer', function() {
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub, isSidebarVisible, toggleSidebar});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -74,8 +74,8 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('shows no logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows no logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
       expect(project.get('isRepoConnected')).to.equal(true);
       expect(project.get('isGithubRepo')).to.equal(false);
@@ -88,7 +88,7 @@ describe('Integration: ProjectContainer', function() {
   });
 
   describe('with a github repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project', 'withGithubRepo');
       const builds = makeList('build', 1, 'withGithubRepo', 'hasPullRequest', {buildNumber: 1});
       const infinityBuilds = merge(builds, INFINITY_MODEL_STUB);
@@ -97,7 +97,7 @@ describe('Integration: ProjectContainer', function() {
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub, isSidebarVisible, toggleSidebar});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -107,8 +107,8 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('shows the github logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the github logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
       expect(project.get('isRepoConnected')).to.equal(true);
       expect(project.get('isGithubRepo')).to.equal(true);
@@ -123,7 +123,7 @@ describe('Integration: ProjectContainer', function() {
   });
 
   describe('with a github enterprise repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project', 'withGithubEnterpriseRepo');
       const builds = makeList('build', 1, 'withGithubEnterpriseRepo', 'hasPullRequest', {
         buildNumber: 1,
@@ -134,7 +134,7 @@ describe('Integration: ProjectContainer', function() {
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub, isSidebarVisible, toggleSidebar});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -144,8 +144,8 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('shows the github logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the github logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
       expect(project.get('isRepoConnected')).to.equal(true);
       expect(project.get('isGithubRepo')).to.equal(false);
@@ -160,7 +160,7 @@ describe('Integration: ProjectContainer', function() {
   });
 
   describe('with a gitlab repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project', 'withGitlabRepo');
       const builds = makeList('build', 1, 'withGitlabRepo', 'hasPullRequest', {buildNumber: 1});
       const infinityBuilds = merge(builds, INFINITY_MODEL_STUB);
@@ -169,7 +169,7 @@ describe('Integration: ProjectContainer', function() {
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub, isSidebarVisible, toggleSidebar});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -179,8 +179,8 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('shows the gitlab logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the gitlab logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
       expect(project.get('isRepoConnected')).to.equal(true);
       expect(project.get('isGithubRepo')).to.equal(false);
@@ -195,14 +195,14 @@ describe('Integration: ProjectContainer', function() {
   });
 
   describe('when user is not member of org', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project', 'withGithubRepo');
       const builds = makeList('build', 1);
       const infinityBuilds = merge(builds, INFINITY_MODEL_STUB);
       const stub = sinon.stub();
       this.setProperties({project, infinityBuilds, stub});
 
-      this.render(hbs`{{project-container
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub
@@ -211,9 +211,9 @@ describe('Integration: ProjectContainer', function() {
       }}`);
     });
 
-    it('displays notice that build is public', function() {
+    it('displays notice that build is public', async function() {
       expect(ProjectPage.isPublicProjectNoticeVisible).to.equal(true);
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 });

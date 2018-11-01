@@ -1,5 +1,5 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import browserSwitcher from 'percy-web/tests/pages/components/browser-switcher';
 
 describe('Integration: BrowserSwitcher', function() {
-  setupComponentTest('browser-switcher', {
+  setupRenderingTest('browser-switcher', {
     integration: true,
   });
 
@@ -19,8 +19,8 @@ describe('Integration: BrowserSwitcher', function() {
     'chrome-id': ['difffoo'],
   };
 
-  beforeEach(function() {
-    setupFactoryGuy(this.container);
+  beforeEach(async function() {
+    setupFactoryGuy(this);
     browserSwitcher.setContext(this);
 
     const build = make('build');
@@ -37,7 +37,7 @@ describe('Integration: BrowserSwitcher', function() {
       updateActiveBrowser: updateActiveBrowserStub,
     });
 
-    this.render(hbs`{{browser-switcher
+    await this.render(hbs`{{browser-switcher
       browsers=browsers
       activeBrowser=activeBrowser
       updateActiveBrowser=updateActiveBrowser
@@ -53,8 +53,8 @@ describe('Integration: BrowserSwitcher', function() {
     expect(browserSwitcher.chromeButton.isActive).to.equal(true);
   });
 
-  it('calls updateActiveBrowser when button is clicked', function() {
-    browserSwitcher.switchBrowser();
+  it('calls updateActiveBrowser when button is clicked', async function() {
+    await browserSwitcher.switchBrowser();
     expect(updateActiveBrowserStub).to.have.been.calledWith(browsers[0]);
   });
 

@@ -7,7 +7,6 @@ export default function mockRepoRefresh(context, stub) {
     },
   });
 
-  context.register('service:intercom', intercomServiceStub);
-  context.inject.service('intercom', {as: 'intercomService'});
+  context.owner.register('service:intercom', intercomServiceStub, 'intercom');
   return stub;
 }

@@ -1,6 +1,6 @@
 /* jshint expr:true */
 /* eslint-disable no-unused-expressions */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -12,7 +12,7 @@ import SnapshotApprovalButton from 'percy-web/tests/pages/components/snapshot-ap
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: SnapshotApprovalButton', function() {
-  setupComponentTest('snapshot-approval-button', {
+  setupRenderingTest('snapshot-approval-button', {
     integration: true,
   });
 
@@ -20,7 +20,7 @@ describe('Integration: SnapshotApprovalButton', function() {
   let createReview;
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     SnapshotApprovalButton.setContext(this);
     snapshot = make('snapshot', 'withTwoBrowsers');
     createReview = sinon.stub().returns(resolve());
@@ -29,66 +29,66 @@ describe('Integration: SnapshotApprovalButton', function() {
     this.setProperties({snapshot, createReview, activeBrowser, hasDiffsInBrowser});
   });
 
-  it('displays correctly when snapshot is not approved and has diffs in active browser', function() {  // eslint-disable-line
-    this.render(hbs`{{snapshot-approval-button
+  it('displays correctly when snapshot is not approved and has diffs in active browser', async function() {  //eslint-disable-line
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       activeBrowser=activeBrowser
       hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
-  it('displays correctly when snapshot is not approved does not have diffs in active browser ', function() {  // eslint-disable-line
+  it('displays correctly when snapshot is not approved does not have diffs in active browser ', async function() {  //eslint-disable-line
     this.set('hasDiffsInBrowser', false);
-    this.render(hbs`{{snapshot-approval-button
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       activeBrowser=activeBrowser
       hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
 
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
-  it('displays correctly when snapshot is approved', function() {
-    this.render(hbs`{{snapshot-approval-button
+  it('displays correctly when snapshot is approved', async function() {
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       activeBrowser=activeBrowser
       hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
     this.set('snapshot.reviewState', 'approved');
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
-  it('calls createReview with correct args when clicked', function() {
-    this.render(hbs`{{snapshot-approval-button
+  it('calls createReview with correct args when clicked', async function() {
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
-    SnapshotApprovalButton.clickButton();
+    await SnapshotApprovalButton.clickButton();
 
     expect(createReview).to.have.been.calledWith([snapshot]);
   });
 
-  it('displays correctly when in loading state ', function() {
+  it('displays correctly when in loading state ', async function() {
     const deferred = defer();
     const createReview = sinon.stub().returns(deferred.promise);
     this.set('createReview', createReview);
-    this.render(hbs`{{snapshot-approval-button
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=(action createReview)
       hasDiffsInBrowser=hasDiffsInBrowser
     }}`);
-    SnapshotApprovalButton.clickButton();
+    await SnapshotApprovalButton.clickButton();
 
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
-  it('is enabled when isDisabled is false', function() {
-    this.render(hbs`{{snapshot-approval-button
+  it('is enabled when isDisabled is false', async function() {
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       activeBrowser=activeBrowser
@@ -96,12 +96,12 @@ describe('Integration: SnapshotApprovalButton', function() {
       isDisabled=false
     }}`);
     expect(SnapshotApprovalButton.isDisabled).to.equal(false);
-    SnapshotApprovalButton.clickButton();
+    await SnapshotApprovalButton.clickButton();
     expect(createReview).to.have.been.calledWith([snapshot]);
   });
 
-  it('is disabled when isDisabled is true', function() {
-    this.render(hbs`{{snapshot-approval-button
+  it('is disabled when isDisabled is true', async function() {
+    await this.render(hbs`{{snapshot-approval-button
       snapshot=snapshot
       createReview=createReview
       activeBrowser=activeBrowser
@@ -109,7 +109,7 @@ describe('Integration: SnapshotApprovalButton', function() {
       isDisabled=true
     }}`);
     expect(SnapshotApprovalButton.isDisabled).to.equal(true);
-    SnapshotApprovalButton.clickButton();
+    await SnapshotApprovalButton.clickButton();
     expect(createReview).to.not.have.been.called;
   });
 });

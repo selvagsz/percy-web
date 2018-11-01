@@ -1,11 +1,11 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import QuoteBlock from 'percy-web/tests/pages/components/marketing/customer-quote-block';
 import {percySnapshot} from 'ember-percy';
 
 describe('Integration: Marketing/CustomerQuoteBlock', function() {
-  setupComponentTest('marketing/customer-quote-block', {
+  setupRenderingTest('marketing/customer-quote-block', {
     integration: true,
   });
 
@@ -38,13 +38,13 @@ describe('Integration: Marketing/CustomerQuoteBlock', function() {
   });
 
   it('switches quotes when dot is clicked', async function() {
-    this.render(hbs`{{marketing/customer-quote-block
+    await this.render(hbs`{{marketing/customer-quote-block
       quoteBlock=quoteBlock
     }}`);
 
-    percySnapshot(`${this.test.fullTitle()} | slide 1`);
+    await percySnapshot(`${this.test.fullTitle()} | slide 1`);
     QuoteBlock.dots(1).click();
 
-    percySnapshot(`${this.test.fullTitle()} | slide 2`);
+    await percySnapshot(`${this.test.fullTitle()} | slide 2`);
   });
 });

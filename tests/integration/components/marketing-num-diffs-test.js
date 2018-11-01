@@ -1,15 +1,16 @@
 import {it, describe} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import {percySnapshot} from 'ember-percy';
+import {getRootElement} from '@ember/test-helpers';
 
 describe('Integration: MarketingNumDiffsComponent', function() {
-  setupComponentTest('marketing-num-diffs', {
+  setupRenderingTest('marketing-num-diffs', {
     integration: true,
   });
 
-  it('renders', function() {
-    this.render(hbs`{{marketing-num-diffs}}`);
-    percySnapshot(this.test.fullTitle(), this.$());
+  it('renders', async function() {
+    await this.render(hbs`{{marketing-num-diffs}}`);
+    await percySnapshot(this.test.fullTitle(), getRootElement());
   });
 });
