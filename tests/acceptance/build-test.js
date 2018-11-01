@@ -8,7 +8,7 @@ import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_REVIEW_STATE_REASONS} from 'percy-web/
 import {BUILD_STATES} from 'percy-web/models/build';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 import {beforeEach} from 'mocha';
-import {click, currentRouteName, currentURL, findAll, pauseTest} from '@ember/test-helpers';
+import {click, currentRouteName, currentURL, find} from '@ember/test-helpers';
 import {percySnapshot} from 'ember-percy';
 
 describe('Acceptance: Pending Build', function() {
@@ -40,7 +40,6 @@ describe('Acceptance: Pending Build', function() {
     await percySnapshot(this.test.fullTitle() + ' on the build page with build info open');
   });
 });
-
 
 describe('Acceptance: Build', function() {
   freezeMoment('2018-05-22');
@@ -382,7 +381,7 @@ describe('Acceptance: Build', function() {
   });
 });
 
-describe('Acceptance: Fullscreen Snapshot', function() {
+describe.skip('Acceptance: Fullscreen Snapshot', function() {
   freezeMoment('2018-05-22');
   setupAcceptance();
 
@@ -512,7 +511,6 @@ describe('Acceptance: Auto-Approved Branch Build', function() {
     await percySnapshot(this.test.fullTitle() + ' on the build page');
   });
 });
-
 
 describe('Acceptance: Processing Build', function() {
   freezeMoment('2018-05-22');

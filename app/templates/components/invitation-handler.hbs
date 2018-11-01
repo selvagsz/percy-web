@@ -9,7 +9,7 @@
     <h3>Join <strong>{{invitation.organization.name}}</strong> on Percy</h3>
 
     <p>
-      <button class="Button Button--primary" {{action "accept"}}>Accept invitation</button>
+      <button class="Button Button--primary" {{action "accept"}} data-test-accept-invitation>Accept invitation</button>
     </p>
     <p>
       Joining as <strong>{{currentUser.name}}</strong>. You can <a href="#" {{action "logout"}}>logout</a> and login as a different user.

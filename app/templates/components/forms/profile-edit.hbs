@@ -6,14 +6,14 @@
     title="Name"
     changeset=changeset
     validateProperty=(action "validateProperty" changeset "name")
-    data-test-profile-edit-name=true
+    testLabel="profile-edit-name"
   }}
   {{form-fields/input
     property="email"
     title="Email"
     changeset=changeset
     validateProperty=(action "validateProperty" changeset "email")
-    data-test-profile-edit-email=true
+    testLabel="profile-edit-email"
   }}
 
   {{#if user.unverifiedEmail}}

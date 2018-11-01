@@ -21,7 +21,7 @@ describe('Acceptance: EmailVerification', function() {
     await visit('/auth/verify-email?code=goodCode');
     await percySnapshot(this.test.fullTitle());
     await click('.test-verify-email-signin-link');
-    expect(currentRouteName()).to.equal('/login');
+    expect(currentRouteName()).to.equal('login');
   });
 
   it('shows page with email verification failure', async function() {

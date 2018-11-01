@@ -1,12 +1,9 @@
 import Ember from 'ember';
-import startApp from 'percy-web/tests/helpers/start-app';
 import seedFaker from './seed-faker';
-import { currentSession, authenticateSession, invalidateSession} from 'ember-simple-auth/test-support';
-// import {authenticateSession} from 'percy-web/tests/helpers/ember-simple-auth';
+import {authenticateSession} from 'ember-simple-auth/test-support';
 import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 import {setupApplicationTest} from 'ember-mocha';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import {getApplication, settled} from '@ember/test-helpers';
 
 // Import mocha helpers so that they will be included for all tests.
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "it|describe" }]*/
@@ -32,8 +29,8 @@ export default function setupAcceptance({authenticate = true} = {}) {
       server.shutdown();
     }
 
-    // destroyApp(this.application);
-    // this.application = null;
+    // destroyApp(this.owner);
+    // this.owner = null;
   });
 }
 

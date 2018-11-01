@@ -1,48 +1,50 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import {beforeEach} from 'mocha';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
+import {visit, currentRouteName, click} from '@ember/test-helpers';
+import {percySnapshot} from 'ember-percy';
 
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
     it('can visit /', async function() {
       await visit('/');
-      expect(currentPath()).to.equal('index');
+      expect(currentRouteName()).to.equal('index');
       await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /features', async function() {
       await visit('/features');
-      expect(currentPath()).to.equal('features');
+      expect(currentRouteName()).to.equal('features');
       await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /how-it-works', async function() {
       await visit('/how-it-works');
-      expect(currentPath()).to.equal('how-it-works');
+      expect(currentRouteName()).to.equal('how-it-works');
       await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /visual-testing', async function() {
       await visit('/visual-testing');
-      expect(currentPath()).to.equal('visual-testing');
+      expect(currentRouteName()).to.equal('visual-testing');
       await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit enterprise', async function() {
       await visit('enterprise');
-      expect(currentPath()).to.equal('enterprise');
+      expect(currentRouteName()).to.equal('enterprise');
       await percySnapshot(this.test.fullTitle());
     });
 
     it('can visit /schedule-demo', async function() {
       await visit('/schedule-demo');
-      expect(currentPath()).to.equal('schedule-demo');
+      expect(currentRouteName()).to.equal('schedule-demo');
       await percySnapshot(this.test);
     });
 
     it('can visit /pricing', async function() {
       await visit('pricing');
-      expect(currentPath()).to.equal('pricing');
+      expect(currentRouteName()).to.equal('pricing');
       await percySnapshot(this.test.fullTitle());
     });
 
@@ -51,51 +53,51 @@ describe('Acceptance: Marketing pages', function() {
         await visit('/pricing');
       });
       it('can select startup plan', async function() {
-        stubLockModal(this.application);
+        stubLockModal(this.owner);
         await click('.data-test-small-pricing-card-cta');
         const expectedPath = authenticated ? 'organizations.new' : 'login';
-        expect(currentPath()).to.equal(expectedPath);
+        expect(currentRouteName()).to.equal(expectedPath);
       });
       it('can select business plan', async function() {
         await click('[data-test-medium-pricing-card-cta]');
-        expect(currentPath()).to.equal('schedule-demo');
+        expect(currentRouteName()).to.equal('schedule-demo');
       });
       it('can select enterprise plan', async function() {
         await click('[data-test-large-pricing-card-cta]');
-        expect(currentPath()).to.equal('schedule-demo');
+        expect(currentRouteName()).to.equal('schedule-demo');
       });
       it('can select "Sign up for a free personal account."', async function() {
-        stubLockModal(this.application);
+        stubLockModal(this.owner);
         await click('.data-test-free-personal-account');
         const expectedPath = authenticated ? 'organizations.new' : 'login';
-        expect(currentPath()).to.equal(expectedPath);
+        expect(currentRouteName()).to.equal(expectedPath);
       });
     });
 
     it('can visit /team', async function() {
       await visit('/team');
-      expect(currentPath()).to.equal('team');
+      expect(currentRouteName()).to.equal('team');
       if (takeSnapshot) {
         await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /security', async function() {
       await visit('/security');
-      expect(currentPath()).to.equal('security');
+      expect(currentRouteName()).to.equal('security');
       if (takeSnapshot) {
         await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /terms', async function() {
       await visit('/terms');
-      expect(currentPath()).to.equal('terms');
+      expect(currentRouteName()).to.equal('terms');
       if (takeSnapshot) {
         await percySnapshot(this.test.fullTitle());
       }
     });
     it('can visit /privacy', async function() {
       await visit('/privacy');
-      expect(currentPath()).to.equal('privacy');
+      expect(currentRouteName()).to.equal('privacy');
       if (takeSnapshot) {
         await percySnapshot(this.test.fullTitle());
       }
