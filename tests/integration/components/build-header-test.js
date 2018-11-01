@@ -1,4 +1,4 @@
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
@@ -9,12 +9,12 @@ import sinon from 'sinon';
 import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
 
 describe('Integration: BuildHeader', function() {
-  setupComponentTest('build-header', {
+  setupRenderingTest('build-header', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     BuildHeader.setContext(this);
   });
 
@@ -37,47 +37,47 @@ describe('Integration: BuildHeader', function() {
   states.forEach(state => {
     const testTitle = state.join(' ');
 
-    it(`renders in state: ${testTitle}`, function() {
+    it(`renders in state: ${testTitle}`, async function() {
       const build = make.apply(this, ['build'].concat(state));
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         build-header
         build=build
         isBuildApprovable=true
       }}`);
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 
   describe('showSupport actions', function() {
-    it('sends showSupport action when clicking "reach out" on timed out build', function() {
+    it('sends showSupport action when clicking "reach out" on timed out build', async function() {
       const showSupportStub = sinon.stub();
       mockIntercomService(this, showSupportStub);
 
       const build = make('build', 'withBaseBuild', 'failed', 'renderTimeout');
       this.setProperties({build});
-      this.render(hbs`{{build-header
+      await this.render(hbs`{{build-header
         build=build
         isBuildApprovable=true
       }}`);
 
-      BuildHeader.clickShowSupport();
+      await BuildHeader.clickShowSupport();
       expect(showSupportStub).to.have.been.called;
     });
 
-    it('sends showSupport action when clicking "reach out" when missing parallel builds', function() { // eslint-disable-line
+    it('sends showSupport action when clicking "reach out" when missing parallel builds', async function() { // eslint-disable-line
       const showSupportStub = sinon.stub();
       mockIntercomService(this, showSupportStub);
 
       const build = make('build', 'withBaseBuild', 'failed', 'missingParallelBuilds');
       this.setProperties({build});
-      this.render(hbs`{{build-header
+      await this.render(hbs`{{build-header
         build=build
         isBuildApprovable=true
       }}`);
 
-      BuildHeader.clickShowSupport();
+      await BuildHeader.clickShowSupport();
       expect(showSupportStub).to.have.been.called;
     });
   });

@@ -17,7 +17,6 @@ export default function mockRepoRefresh(context, newRepos, newLastSyncedAt, stub
       return resolve(organization.get('repos'));
     },
   });
-  context.register('service:repoRefresh', repoRefreshServiceStub);
-  context.inject.service('repoRefresh', {as: 'repoRefresh'});
+  context.owner.register('service:repoRefresh', repoRefreshServiceStub, 'repoRefresh');
   return repoRefreshServiceStub;
 }
