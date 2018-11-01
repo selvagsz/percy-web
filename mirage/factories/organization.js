@@ -20,6 +20,12 @@ export default Factory.extend({
     },
   }),
 
+  withSponsoredSubscription: trait({
+    afterCreate(organization, server) {
+      server.create('subscription', 'withSponsoredPlan', {organization});
+    },
+  }),
+
   withUser: trait({
     afterCreate(organization, server) {
       let user = server.create('user', 'withGithubIdentity');

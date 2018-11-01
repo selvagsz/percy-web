@@ -216,4 +216,26 @@ describe('Integration: ProjectContainer', function() {
       percySnapshot(this.test);
     });
   });
+
+  describe('when a project is public', function() {
+    beforeEach(function() {
+      const project = make('project', 'public');
+      const stub = sinon.stub();
+      this.setProperties({
+        project,
+        stub,
+      });
+    });
+
+    it('shows public globe icon in header', function() {
+      this.render(hbs`{{project-container
+        project=project
+        builds=infinityBuilds
+        pollRefresh=stub
+        toggleSidebar=stub
+      }}`);
+
+      expect(ProjectPage.isPublicProjectIconVisible).to.equal(true);
+    });
+  });
 });

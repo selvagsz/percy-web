@@ -13,6 +13,7 @@ export default DS.Model.extend({
   autoApproveBranchFilter: DS.attr(),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
+  publiclyReadable: DS.attr('boolean'),
 
   // Repo will be set if this project is linked to a repository.
   repo: DS.belongsTo('repo', {async: false}),

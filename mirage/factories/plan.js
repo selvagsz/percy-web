@@ -10,6 +10,7 @@ export default Factory.extend({
   historyLimitDays: 7,
   isTrial: false,
   isFree: true,
+  type: 'trial',
 
   trial: trait({
     id: 'trial',
@@ -21,6 +22,7 @@ export default Factory.extend({
     overageUnitCost: 0.01,
     isTrial: true,
     isFree: false,
+    type: 'trial',
   }),
 
   standard: trait({
@@ -33,6 +35,7 @@ export default Factory.extend({
     overageUnitCost: 0.01,
     isTrial: false,
     isFree: false,
+    type: 'self_serve',
   }),
 
   custom: trait({
@@ -45,5 +48,19 @@ export default Factory.extend({
     overageUnitCost: 0.01,
     isTrial: false,
     isFree: false,
+    type: 'custom',
+  }),
+
+  sponsored: trait({
+    id: 'sponsored',
+    name: 'Sponsored plan',
+    workerLimit: 100,
+    usageIncluded: 1000,
+    historyLimitDays: 100,
+    allowOverages: false,
+    overageUnitCost: 0.01,
+    isTrial: false,
+    isFree: false,
+    type: 'sponsored',
   }),
 });

@@ -1,6 +1,6 @@
 import FactoryGuy from 'ember-data-factory-guy';
 import faker from 'faker';
-import {makeList} from 'ember-data-factory-guy';
+import {make, makeList} from 'ember-data-factory-guy';
 import moment from 'moment';
 
 FactoryGuy.define('organization', {
@@ -111,5 +111,6 @@ FactoryGuy.define('organization', {
     withGitlabSelfHostedRepos: {repos: () => makeList('repo', 3, 'gitlabSelfHosted')},
     withGithubEnterpriseRepos: {repos: () => makeList('repo', 3, 'githubEnterprise')},
     withProjects: {projects: () => makeList('project', 5)},
+    withSponsoredSubscription: {subscription: () => make('subscription', 'withSponsoredPlan')},
   },
 });

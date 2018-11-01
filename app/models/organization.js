@@ -1,5 +1,5 @@
 import {computed} from '@ember/object';
-import {filterBy, alias, bool, mapBy, uniq} from '@ember/object/computed';
+import {filterBy, alias, bool, mapBy, readOnly, uniq} from '@ember/object/computed';
 import DS from 'ember-data';
 import {INTEGRATION_TYPES} from 'percy-web/lib/integration-types';
 
@@ -125,4 +125,6 @@ export default DS.Model.extend({
       return groups;
     },
   ),
+
+  isSponsored: readOnly('subscription.plan.isSponsored'),
 });

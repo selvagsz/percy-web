@@ -1,4 +1,4 @@
-<header class="build-toolbar fixed pin-t w-screen z-3 flex justify-between items-center px-2 bg-gray-000 border-b">
+<header class="build-toolbar fixed pin-t w-screen z-3 flex justify-between items-center px-2 bg-gray-000 border-b" data-test-build-toolbar>
   <div class="flex items-center">
     {{#link-to "index"}}
       <figure class="svg-container mr-2">
@@ -8,7 +8,12 @@
     <div class="flex items-center bg-purple-300 text-sm rounded px-1 py-sm hide-on-mobile">
       {{#link-to "organization" organization class="font-mono text-purple-600 truncate truncate-target hide-on-tablet"}}{{organization.name}}{{/link-to}}
       <span class="font-semibold mx-sm hide-on-tablet">/</span>
-      {{#link-to "organization.project" organization.slug project class="font-mono text-purple-600 truncate truncate-target" data-test-build-toolbar-project-link=true}}{{project.name}}{{/link-to}}
+      {{#link-to "organization.project" organization.slug project class="font-mono text-purple-600 truncate truncate-target" data-test-build-toolbar-project-link=true}}
+        {{project.name}}
+      {{/link-to}}
+      {{#if organization.isSponsored}}
+        {{fa-icon data-test-build-public-project "globe" class="text-blue-200 ml-1"}}
+      {{/if}}
     </div>
   </div>
 

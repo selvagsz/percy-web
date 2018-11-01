@@ -10,9 +10,14 @@
           toggleSidebar=toggleSidebar
           isSidebarVisible=isSidebarVisible
         }}
+
+        {{#if project.publiclyReadable}}
+          {{fa-icon data-test-public-project-icon "globe" class="text-lg text-blue-200 mr-1"}}
+        {{/if}}
+
         <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
         {{#if project.isDisabled}}
-          <div class="label">disabled</div>
+          <div class="label mr-2">disabled</div>
         {{/if}}
         {{#if isUserMember}}
           {{#link-to "organization.project.settings" project.organization.slug project.slug class="mr-2" data-test-settings-icon=true}}

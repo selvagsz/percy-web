@@ -18,6 +18,7 @@ const SELECTORS = {
   NO_BUILDS_PANEL: '[data-test-status-panel]',
   PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
   INFINITY_LOADER: '.infinity-loader', // only one possible per page
+  PUBLIC_PROJECT_ICON: '[data-test-public-project-icon]',
 };
 
 const ProjectPage = {
@@ -59,6 +60,8 @@ const ProjectPage = {
 
   isNoBuildsPanelVisible: isVisible(SELECTORS.NO_BUILDS_PANEL),
   isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
+
+  isPublicProjectIconVisible: isVisible(SELECTORS.PUBLIC_PROJECT_ICON),
 };
 
 export default create(ProjectPage);

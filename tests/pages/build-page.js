@@ -5,11 +5,10 @@ import {alias} from 'ember-cli-page-object/macros';
 import {BuildApprovalButton} from 'percy-web/tests/pages/components/build-approval-button';
 import {BuildInfoDropdown} from 'percy-web/tests/pages/components/build-info-dropdown';
 import {BrowserSwitcher} from 'percy-web/tests/pages/components/browser-switcher';
+import {BuildToolbar} from 'percy-web/tests/pages/components/build-toolbar';
 
 const SELECTORS = {
   SHOW_SUPPORT_LINK: '[data-test-build-overview-show-support]',
-  TOGGLE_DIFFS_BUTTON: '[data-test-toggle-diffs-button]',
-  PROJECT_LINK: '[data-test-build-toolbar-project-link]',
   PUBLIC_BUILD_NOTICE: '[data-test-public-project-notice]',
 };
 
@@ -18,6 +17,8 @@ const BuildPage = {
   visitFullPageSnapshot: visitable(
     '/:orgSlug/:projectSlug/builds/:buildId/view/:snapshotId/:width',
   ),
+
+  buildToolbar: BuildToolbar,
 
   browserSwitcher: BrowserSwitcher,
   buildApprovalButton: BuildApprovalButton,
@@ -54,7 +55,11 @@ const BuildPage = {
     return `/${build.project.fullSlug}/builds/${build.id}?snapshot=${snapshot.id}`;
   },
 
-  clickProject: clickable(SELECTORS.PROJECT_LINK),
+  clickToggleDiffsButton: alias('buildToolbar.clickToggleDiffsButton'),
+  isDiffsVisibleForAllSnapshots: alias('snapshotList.isDiffsVisibleForAllSnapshots'),
+
+  clickProject: alias('buildToolbar.clickProject'),
+  isPublicProjectIconVisible: alias('buildToolbar.isPublicProjectIconVisible'),
 
   typeDownArrow: alias('snapshotList.typeDownArrow'),
   typeUpArrow: alias('snapshotList.typeUpArrow'),
@@ -64,9 +69,6 @@ const BuildPage = {
   isFullscreenModalVisible: isVisible(SELECTORS.SNAPSHOT_FULL_MODAL),
 
   clickShowSupportLink: clickable(SELECTORS.SHOW_SUPPORT_LINK),
-
-  clickToggleDiffsButton: clickable(SELECTORS.TOGGLE_DIFFS_BUTTON),
-  isDiffsVisibleForAllSnapshots: alias('snapshotList.isDiffsVisibleForAllSnapshots'),
 
   isPublicBuildNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 };

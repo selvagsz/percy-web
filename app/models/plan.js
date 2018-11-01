@@ -1,6 +1,9 @@
 import {computed} from '@ember/object';
+import {equal} from '@ember/object/computed';
 import {inject as service} from '@ember/service';
 import DS from 'ember-data';
+
+export const SPONSORED_TYPE = 'sponsored';
 
 export default DS.Model.extend({
   subscriptionData: service(),
@@ -15,9 +18,12 @@ export default DS.Model.extend({
   overageUnitCost: DS.attr('number'),
   isTrial: DS.attr('boolean'),
   isFree: DS.attr('boolean'),
+  type: DS.attr(),
 
   isCustom: computed('id', 'isTrial', function() {
     const isTrial = this.get('isTrial');
     return !isTrial && this.get('subscriptionData.PLAN_IDS').indexOf(this.get('id')) === -1;
   }),
+
+  isSponsored: equal('type', SPONSORED_TYPE),
 });

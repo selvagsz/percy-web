@@ -21,5 +21,8 @@ FactoryGuy.define('subscription', {
     withCustomPlan: {
       plan: FactoryGuy.belongsTo('plan', 'custom'),
     },
+    withSponsoredPlan: {
+      plan: FactoryGuy.belongsTo('plan', 'sponsored'),
+    },
   },
 });

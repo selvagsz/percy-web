@@ -25,6 +25,13 @@ describe('Acceptance: Project', function() {
 
       await percySnapshot(this.test.fullTitle() + ' | new project');
     });
+
+    it('shows public notice when org is sponsored', async function() {
+      const subscription = server.create('subscription', 'withSponsoredPlan');
+      this.organization.update({subscription});
+      await visit(`organizations/${this.organization.slug}/projects/new`);
+      await percySnapshot(this.test.fullTitle() + ' | new project');
+    });
   });
 
   describe('organization with admin user has no projects', function() {
@@ -257,6 +264,44 @@ describe('Acceptance: Project', function() {
         await percySnapshot(this.test);
 
         expect(createStub).to.have.been.calledWith(createData);
+      });
+    });
+
+    describe('updating project settings', function() {
+      it('sends correct data', async function() {
+        withVariation('public-project-switch', true); // eslint-disable-line
+
+        const stub = sinon.stub();
+        server.patch('/projects/:full_slug', function(schema, request) {
+          const fullSlug = decodeURIComponent(request.params.full_slug);
+          const attrs = this.normalizedRequestAttrs();
+          const project = schema.projects.findBy({fullSlug: fullSlug});
+          project.update(
+            Object.assign(attrs, {fullSlug: 'my_organization_that_i_love_and_cherish_0/new-slug'}),
+          );
+          stub(attrs);
+          server.create('project', attrs);
+          return project;
+        });
+
+        await ProjectSettingsPage.visitProjectSettings({
+          orgSlug: organization.slug,
+          projectSlug: enabledProject.slug,
+        });
+
+        await ProjectSettingsPage.projectEditForm.togglePublicCheckbox();
+        await ProjectSettingsPage.projectEditForm.fillInProjectName('new-name');
+        await ProjectSettingsPage.projectEditForm.fillInProjectSlug('new-slug');
+        await ProjectSettingsPage.projectEditForm.clickSave();
+
+        expect(stub).to.have.been.called;
+        expect(stub.args[0][0]).to.include({
+          name: 'new-name',
+          slug: 'new-slug',
+          publiclyReadable: true,
+        });
+
+        expect(currentPath()).to.equal('organization.project.index');
       });
     });
   });

@@ -1,16 +1,18 @@
-<form class="m-0" action="javascript:;" data-test-project-edit-form>
+<form class="Form m-0" action="javascript:;" data-test-project-edit-form>
   <div class="p-2 bg-gray-000 rounded border mb-2">
     {{form-fields/input
         property="name"
         title="Project name"
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "name")
+        testLabel="data-test-project-edit-name"
     }}
     {{form-fields/input
         property="slug"
         title="Slug"
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "slug")
+        testLabel="data-test-project-edit-slug"
     }}
     <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
       <strong>Reminder:</strong> The slug is used to identify this project in URLs and the Percy API. Old build URLs will break if the slug is changed.
@@ -27,11 +29,41 @@
       property="autoApproveBranchFilter"
       title="Branch filter pattern"
       changeset=changeset
+      testLabel="data-test-project-edit-autoapprove"
     }}
     <div class="rounded border p-2 mb-2">
       <strong>Note:</strong> Separate multiple branches with spaces. You can use <code>*</code> as a wildcard match. Example: <code>master staging-* release-*.*.*</code>
     </div>
   </div>
+  {{#if (variation "public-project-switch")}}
+    <h2 class="text-xl font-semibold mt-3 mb-sm">Viewable to the public?</h2>
+    <div class="p-2 bg-gray-000 rounded border mb-2">
+
+      <div class="{{if isPlanSponsored "hint hint--top hint--rounded"}}" aria-label={{if isPlanSponsored "This project's organization is sponsored, so the project must be public."}}>
+        {{form-fields/checkbox
+          property="publiclyReadable"
+          changeset=changeset
+          title="Is project publicly viewable?"
+          checkedValue=true
+          uncheckedValue=false
+          toggle=true
+          isDisabled=isPlanSponsored
+          testLabel="data-test-project-edit-public-checkbox"
+        }}
+      </div>
+
+      <div class="rounded border p-2">
+        <strong>Reminder:</strong> If enabled, this project is publicly viewable by members outside of this organization. <a href="https://docs.percy.io/v1/docs/public-projects">Learn more</a>.
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if errorMessage}}
+    <div class="Form-errors" data-test-project-edit-errors>
+      {{errorMessage}}
+    </div>
+  {{/if}}
+
   <div class="flex justify-end">
     {{form-fields/submit
       isSaving=isSaving

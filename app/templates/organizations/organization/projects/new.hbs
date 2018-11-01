@@ -4,8 +4,17 @@
       <section class="px-4">
         <h2 class="text-xl font-semibold mb-sm">Create a new project</h2>
         <p class="text-gray-400">
-          Projects are how we group related builds in Percy. Usually, you'll want to use the name of your repository or the name of your site.
+        Projects are how we group related builds in Percy. Usually, you'll want to use the name of your repository or the name of your site.
         </p>
+
+        {{#if model.isSponsored}}
+          <div class="rounded public-project-notice border border-blue-100 p-2 mb-2 flex items-center">
+            {{fa-icon "globe" class="fa-2x text-blue-200 mr-2"}}
+
+            <div><strong>Reminder:</strong> Your organization is on a sponsored plan, so all projects created for this organization will be public.</div>
+          </div>
+        {{/if}}
+
         {{forms/project-new organization=model saveSuccess=(route-action "projectCreated")}}
       </section>
     </div>

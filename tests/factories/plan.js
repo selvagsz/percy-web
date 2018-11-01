@@ -1,6 +1,7 @@
 import FactoryGuy from 'ember-data-factory-guy';
 
 FactoryGuy.define('plan', {
+  polymorphic: false,
   default: {
     id: 'free',
     name: 'Free plan',
@@ -11,6 +12,7 @@ FactoryGuy.define('plan', {
     historyLimitDays: 7,
     isTrial: false,
     isFree: true,
+    type: 'trial',
   },
   traits: {
     trial: {
@@ -23,6 +25,7 @@ FactoryGuy.define('plan', {
       overageUnitCost: 0.01,
       isTrial: true,
       isFree: false,
+      type: 'trial',
     },
 
     business: {
@@ -35,6 +38,7 @@ FactoryGuy.define('plan', {
       numWorkersTitle: '40 concurrent renderers',
       historyLimitTitle: '1 year history',
       isFree: false,
+      type: 'self_serve',
     },
 
     custom: {
@@ -47,6 +51,20 @@ FactoryGuy.define('plan', {
       numWorkersTitle: '10000 concurrent renderers',
       historyLimitTitle: '1000 year history',
       isFree: false,
+      type: 'enterprise',
+    },
+
+    sponsored: {
+      id: 'hella-sponsored',
+      name: 'Sponsored Plan',
+      monthlyPrice: 9999999,
+      numDiffs: 9999999,
+      extraDiffPrice: 0.00001,
+      numTeamMembersTitle: '1000 team members',
+      numWorkersTitle: '10000 concurrent renderers',
+      historyLimitTitle: '1000 year history',
+      isFree: false,
+      type: 'sponsored',
     },
   },
 });

@@ -37,4 +37,8 @@ export default Factory.extend({
   withCustomPlan: trait({
     plan: association('custom'),
   }),
+
+  withSponsoredPlan: trait({
+    plan: association('sponsored'),
+  }),
 });
