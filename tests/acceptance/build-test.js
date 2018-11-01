@@ -242,7 +242,6 @@ describe('Acceptance: Build', function() {
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(false);
 
     click('[data-test-build-toolbar-project-link]');
-    debugger;
     // await BuildPage.clickProject();
     await ProjectPage.builds(1).click();
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(true);

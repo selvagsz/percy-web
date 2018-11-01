@@ -1,10 +1,11 @@
-<form action="javascript:;" class="m-0">
+<form action="javascript:;" class="m-0" data-test-billing-edit-form>
   <div class="px-2 pt-2 bg-gray-000 rounded border mb-2">
     {{form-fields/input
       property="billingEmail"
       title="Billing email (for payment receipts)"
       changeset=changeset
       validateProperty=(action "validateProperty" changeset "billingEmail")
+      testLabel="billing-email"
     }}
   </div>
   <div class="flex justify-end">

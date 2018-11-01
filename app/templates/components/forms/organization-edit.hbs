@@ -1,10 +1,11 @@
-<form action="javascript:;" class="mb-0">
+<form action="javascript:;" class="mb-0" data-test-edit-org-form>
   <div class="p-2 bg-gray-000 rounded border mb-2">
     {{form-fields/input
         property="name"
         title="Organization name"
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "name")
+        testLabel="org-name"
     }}
 
     {{form-fields/input
@@ -12,6 +13,7 @@
         title="Slug"
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "slug")
+        testLabel='org-slug'
     }}
 
     <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
@@ -20,6 +22,6 @@
   </div>
 
   <div class="flex justify-end">
-    <input type="submit" class="btn btn-primary shadow-purple-lg mb-0" value="Save Settings" disabled={{disabled}} onclick={{action "save"}}>
+    <input type="submit" class="btn btn-primary shadow-purple-lg mb-0" value="Save Settings" disabled={{disabled}} onclick={{action "save"}} data-test-org-save-button>
   </div>
 </form>
