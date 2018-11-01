@@ -6,8 +6,7 @@ export default Component.extend({
   classes: null,
 
   currentIntegration: alias('organization.githubIntegration'),
-  classNames: ['OrganizationsGithubIntegration'],
-  classNameBindings: ['classes'],
+
   actions: {
     cancelIntegrationRequest() {
       if (this.get('cancelIntegrationRequest')) {

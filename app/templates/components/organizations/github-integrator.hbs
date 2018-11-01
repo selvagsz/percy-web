@@ -7,7 +7,7 @@
       cancelIntegrationRequest=(action "cancelIntegrationRequest")
     }}
   {{else}}
-    <p>
+    <div class="mb-2">
       <a
         data-test-github-app-install-button
         href="{{githubIntegrationUrl}}"
@@ -18,9 +18,10 @@
         {{fa-icon "github" classNames="fa--left"}}
         Install GitHub App
       </a>
-    </p>
-    <p>
-      <strong>Tip:</strong> GitHub requires that you have the "owner" role in an organization to add integrations.
-    </p>
+    </div>
+
+    <div class="rounded bg-yellow-000 border border-yellow-100 p-2">
+      <strong>Note:</strong> GitHub requires that you have the "owner" role in an organization to add integrations.
+    </div>
   {{/if}}
 {{/if}}

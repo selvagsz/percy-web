@@ -5,15 +5,15 @@ import config from 'percy-web/config/environment';
 import PollingMixin from 'percy-web/mixins/polling';
 
 export default Component.extend(PollingMixin, {
+  store: service(),
+
+  githubIntegrationUrl: config.APP.githubUrls.integration,
   organization: null,
   classes: null,
 
-  store: service(),
-
   currentIntegration: alias('organization.githubIntegration'),
-  githubIntegrationUrl: config.APP.githubUrls.integration,
-
   shouldPollForUpdates: alias('organization.githubIntegrationRequest'),
+
   pollRefresh() {
     this.get('organization')
       .reload()
@@ -28,8 +28,6 @@ export default Component.extend(PollingMixin, {
       });
   },
 
-  classNames: ['OrganizationsGithubIntegrator'],
-  classNameBindings: ['classes'],
   actions: {
     cancelIntegrationRequest() {
       let integrationRequest = this.get('organization.githubIntegrationRequest');
@@ -37,6 +35,7 @@ export default Component.extend(PollingMixin, {
       integrationRequest.destroyRecord();
       this.get('pollingTask').cancel();
     },
+
     triggerInstallation() {
       let url = this.get('githubIntegrationUrl');
       let organization = this.get('organization');

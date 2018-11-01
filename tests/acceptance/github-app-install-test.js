@@ -36,8 +36,6 @@ describe('Acceptance: GitHubAppInstall', function() {
     });
 
     it('shows "Install Github" button when github is not installed', async function() {
-      await GithubSettings.clickGithubAccess();
-
       expect(GithubSettings.isGithubAppInstallButtonVisible).to.equal(true);
 
       await percySnapshot(this.test);
@@ -60,8 +58,6 @@ describe('Acceptance: GitHubAppInstall', function() {
       await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
       expect(currentPath()).to.equal('organizations.organization.integrations.github');
 
-      await GithubSettings.clickGithubAccess();
-
       expect(GithubSettings.isGithubAppLoadingStateVisable).to.equal(true);
 
       await percySnapshot(this.test);
@@ -77,8 +73,6 @@ describe('Acceptance: GitHubAppInstall', function() {
     it('shows the installed state when the install is in successful', async function() {
       await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
       expect(currentPath()).to.equal('organizations.organization.integrations.github');
-
-      await GithubSettings.clickGithubAccess();
 
       expect(GithubSettings.isGithubAppSuccessStateVisable).to.equal(true);
 

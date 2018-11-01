@@ -1,73 +1,37 @@
-<section class="p-2">
+<section data-test-integration-header class="px-2 pt-3">
+  <div class="w-3/4 pb-3">
+    <h1 class="text-xl font-semibold mb-sm">Set up GitHub</h1>
+    <p class="text-gray-400">
+      The Percy GitHub app will automatically update the pull request summary if there are visual differences needing review, and will show which team member approved them. It will also help us provide smarter comparisons for you, by picking more relevant base builds. Check out the <strong>{{#link-to "docs.page" "integrations/github"}}Percy + GitHub{{/link-to}}</strong> docs to learn more.
+    </p>
+  </div>
+</section>
+
+<section class="px-2">
   <div class="bg-white rounded shadow-1 p-2 mb-2">
     <div class="flex items-center mb-2">
       {{inline-svg "github-icon-lg" class="mr-1"}}
       <h2 class="text-xl font-semibold m-0">GitHub Integration</h2>
     </div>
-    {{#if (not (await isEligibleForGithubIntegration))}}
-      <div>
-        To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}}connect your GitHub account{{/link-to}}.
+
+    {{#organizations/require-role role="admin" organization=organization}}
+      <div class="p-2 bg-gray-000 rounded border mb-2">
+        {{#if (not (await isEligibleForGithubIntegration))}}
+          To install the GitHub integration you first need to {{#link-to 'settings.connected-accounts'}} connect your GitHub account{{/link-to}}.
+        {{else}}
+          {{organizations/github-integrator organization=organization}}
+        {{/if}}
       </div>
-    {{else}}
-      <form action="javascript:;" class="Form">
-        <div class="p-2 bg-gray-000 rounded border mb-2">
-          <label>
-            <input
-              type="radio"
-              name="github-integration-setting"
-              value="no-access"
-              checked={{if (eq changeset.githubAuthMechanism "no-access") "checked"}}
-              {{action "changeSelection" preventDefault=false}}
-            >
-            <span class="label-body">No access</span>
-            <p>Some Percy features will not be available.</p>
-          </label>
+    {{/organizations/require-role}}
 
-          <label>
-            <input
-              data-test-github-app-access
-              type="radio"
-              name="github-integration-setting"
-              value="github-integration"
-              checked={{if (eq changeset.githubAuthMechanism "github-integration") "checked"}}
-              {{action "changeSelection" preventDefault=false}}
-            >
-            <span class="label-body">GitHub App</span>
-            <p>Shows visual change status in GitHub pull requests. Has customizable access control.</p>
-          </label>
-
-          {{#if (eq changeset.githubAuthMechanism "github-integration")}}
-            {{organizations/github-integrator organization=organization}}
-          {{/if}}
-
-          {{#if changeset.errors}}
-            <ul class="Form-errors">
-              {{#each changeset.errors as |error|}}
-                {{#each error.validation as |validation|}}
-                  <li>{{validation}}</li>
-                {{/each}}
-              {{/each}}
-            </ul>
-          {{/if}}
-        </div>
-        <div class="flex justify-end">
-          {{#link-to
-            'organizations.organization.integrations'
-            organization.slug
-            class="btn"
-          }}
-            Back
-          {{/link-to}}
-          {{form-fields/submit
-            isSaving=isSaving
-            isSaveSuccessful=isSaveSuccessful
-            value="Save"
-            disabled=disableSave
-            classes="btn btn-primary shadow-purple-lg m-0 ml-1"
-            submit=(action "saveSelection")
-          }}
-        </div>
-      </form>
-    {{/if}}
+    <div class="flex justify-end">
+      {{#link-to
+        'organizations.organization.integrations'
+        organization.slug
+        class="btn"
+      }}
+        Back
+      {{/link-to}}
+    </div>
   </div>
 </section>
