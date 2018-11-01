@@ -1,4 +1,4 @@
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
@@ -7,20 +7,20 @@ import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import CommitTable from 'percy-web/tests/pages/components/commit-table';
 
 describe('Integration: CommitTable', function() {
-  setupComponentTest('commit-table', {
+  setupRenderingTest('commit-table', {
     integration: true,
   });
 
   describe('with a github integration', function() {
     let build;
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       CommitTable.setContext(this);
 
       build = make('build', 'withGithubRepo');
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         commit-table
         build=build
         commit=build.commit
@@ -57,14 +57,14 @@ describe('Integration: CommitTable', function() {
 
   describe('with a github enterprise integration', function() {
     let build;
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       CommitTable.setContext(this);
 
       build = make('build', 'withGithubEnterpriseRepo');
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         commit-table
         build=build
         commit=build.commit
@@ -101,14 +101,14 @@ describe('Integration: CommitTable', function() {
 
   describe('with a gitlab integration', function() {
     let build;
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       CommitTable.setContext(this);
 
       build = make('build', 'withGitlabRepo');
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         commit-table
         build=build
         commit=build.commit
@@ -145,14 +145,14 @@ describe('Integration: CommitTable', function() {
 
   describe('with a gitlab self-hosted integration', function() {
     let build;
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       CommitTable.setContext(this);
 
       build = make('build', 'withGitlabSelfHostedRepo');
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         commit-table
         build=build
         commit=build.commit
@@ -189,14 +189,14 @@ describe('Integration: CommitTable', function() {
 
   describe('with a bitbucket integration', function() {
     let build;
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       CommitTable.setContext(this);
 
       build = make('build', 'withBitbucketRepo');
       this.setProperties({build});
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         commit-table
         build=build
         commit=build.commit
