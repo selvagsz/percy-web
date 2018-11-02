@@ -1,6 +1,6 @@
 /* jshint expr:true */
 /* eslint-disable no-unused-expressions */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import hbs from 'htmlbars-inline-precompile';
@@ -8,23 +8,22 @@ import {make, makeList} from 'ember-data-factory-guy';
 import sinon from 'sinon';
 import {percySnapshot} from 'ember-percy';
 import SnapshotList from 'percy-web/tests/pages/components/snapshot-list';
-import wait from 'ember-test-helpers/wait';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: SnapshotList', function() {
-  setupComponentTest('snapshot-list', {
+  setupRenderingTest('snapshot-list', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     SnapshotList.setContext(this);
   });
 
   describe('when shouldDeferRendering is true', function() {
     const numSnapshots = 10;
 
-    beforeEach(function() {
+    beforeEach(async function() {
       const stub = sinon.stub();
       const build = make('build', 'finished');
       const browser = make('browser');
@@ -40,7 +39,7 @@ describe('Integration: SnapshotList', function() {
         shouldDeferRendering: true,
       });
 
-      this.render(hbs`{{snapshot-list
+      await this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
         build=build
         createReview=stub
@@ -52,18 +51,18 @@ describe('Integration: SnapshotList', function() {
       }}`);
     });
 
-    it('renders snapshot header placeholder', function() {
+    it('renders snapshot header placeholder', async function() {
       expect(SnapshotList.snapshots().count).to.equal(numSnapshots);
       SnapshotList.snapshots().forEach(snapshot => {
         expect(snapshot.isLazyRenderHeaderVisible).to.equal(true);
       });
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 
   describe('keyboard nav behavior', function() {
     const numSnapshots = 3;
-    beforeEach(function() {
+    beforeEach(async function() {
       const stub = sinon.stub();
       const build = make('build', 'finished');
       const browser = make('browser');
@@ -81,7 +80,7 @@ describe('Integration: SnapshotList', function() {
         isUnchangedSnapshotsVisible: false,
       });
 
-      this.render(hbs`{{snapshot-list
+      await this.render(hbs`{{snapshot-list
         snapshotsChanged=snapshotsChanged
         build=build
         createReview=stub
@@ -95,7 +94,7 @@ describe('Integration: SnapshotList', function() {
       }}`);
     });
 
-    it('automatically expands collapsed snapshots if focused', function() {
+    it('automatically expands collapsed snapshots if focused', async function() {
       this.set('isUnchangedSnapshotsVisible', true);
 
       const firstNoDiffSnapshot = SnapshotList.snapshots(3);
@@ -103,16 +102,14 @@ describe('Integration: SnapshotList', function() {
       const thirdNoDiffSnapshot = SnapshotList.snapshots(5);
 
       // Manaully click the first snapshot.
-      firstNoDiffSnapshot.expandSnapshot();
-      wait();
+      await firstNoDiffSnapshot.expandSnapshot();
 
       // We clicked on the first snapshot, so it's comparisons should be visible
       expect(firstNoDiffSnapshot.isUnchangedComparisonsVisible).to.equal(true);
       expect(secondNoDiffSnapshot.isUnchangedComparisonsVisible).to.equal(false);
       expect(thirdNoDiffSnapshot.isUnchangedComparisonsVisible).to.equal(false);
       // Arrow to second snapshot.
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
 
       // We clicked on the first snapshot, so it's comparisons should always visible.
       // We arrowed to second snapshot so it's comparisons should be visible.
@@ -121,8 +118,7 @@ describe('Integration: SnapshotList', function() {
       expect(thirdNoDiffSnapshot.isUnchangedComparisonsVisible).to.equal(false);
 
       // Arrow to third-to-last snapshot.
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
 
       // We clicked on the first snapshot, so it's comparisons should always visible.
       // We previously arrowed to the second snapshot, so it's comparisons should stay visible.
@@ -132,52 +128,46 @@ describe('Integration: SnapshotList', function() {
       expect(thirdNoDiffSnapshot.isUnchangedComparisonsVisible, 'three').to.equal(true);
     });
 
-    it('focuses snapshots on arrow presses', function() {
+    it('focuses snapshots on arrow presses', async function() {
       const numRenderedSnapshots = SnapshotList.snapshots().count;
       expect(numRenderedSnapshots).to.equal(numSnapshots);
 
       // select first snapshot
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
 
       // select second snapshot
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(true);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
 
       // select first snapshot
-      SnapshotList.typeUpArrow();
-      wait();
+      await SnapshotList.typeUpArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
 
       // wrap around to select last snapshot
-      SnapshotList.typeUpArrow();
-      wait();
+      await SnapshotList.typeUpArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(true);
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
 
       // wrap around to select first snapshot
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(true);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
     });
 
-    it('does not send keyboard actions when isKeyboardNavEnabled is false', function() {
+    it('does not send keyboard actions when isKeyboardNavEnabled is false', async function() {
       const numRenderedSnapshots = SnapshotList.snapshots().count;
       this.set('isKeyboardNavEnabled', false);
-      SnapshotList.typeDownArrow();
-      wait();
+      await SnapshotList.typeDownArrow();
       expect(SnapshotList.snapshots(0).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(1).isFocused).to.equal(false);
       expect(SnapshotList.snapshots(numRenderedSnapshots - 1).isFocused).to.equal(false);
