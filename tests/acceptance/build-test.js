@@ -8,7 +8,7 @@ import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_REVIEW_STATE_REASONS} from 'percy-web/
 import {BUILD_STATES} from 'percy-web/models/build';
 import ProjectPage from 'percy-web/tests/pages/project-page';
 import {beforeEach} from 'mocha';
-import {click, currentRouteName, currentURL, find} from '@ember/test-helpers';
+import {currentRouteName, currentURL, findAll} from '@ember/test-helpers';
 import {percySnapshot} from 'ember-percy';
 
 describe('Acceptance: Pending Build', function() {
@@ -240,8 +240,7 @@ describe('Acceptance: Build', function() {
     await BuildPage.clickToggleDiffsButton();
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(false);
 
-    click('[data-test-build-toolbar-project-link]');
-    // await BuildPage.clickProject();
+    await BuildPage.clickProject();
     await ProjectPage.builds(1).click();
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(true);
   });
@@ -326,12 +325,10 @@ describe('Acceptance: Build', function() {
     expect(BuildPage.snapshots(0).isCollapsed).to.equal(true);
   });
 
-  it.skip('toggles full view', async function() {
+  it('toggles full view', async function() {
     await BuildPage.visitBuild(urlParams);
     await BuildPage.snapshots(0).header.clickToggleFullscreen();
     expect(currentRouteName()).to.equal('organization.project.builds.build.snapshot');
-    // This test fails even though the full screen modal is
-    // definitely visible inside the testing container :(
     expect(BuildPage.snapshotFullscreen.isVisible).to.equal(true);
 
     await BuildPage.snapshotFullscreen.header.clickToggleFullscreen();
@@ -381,7 +378,7 @@ describe('Acceptance: Build', function() {
   });
 });
 
-describe.skip('Acceptance: Fullscreen Snapshot', function() {
+describe('Acceptance: Fullscreen Snapshot', function() {
   freezeMoment('2018-05-22');
   setupAcceptance();
 
@@ -484,7 +481,7 @@ describe.skip('Acceptance: Fullscreen Snapshot', function() {
     urlParams.browser = 'not-a-real-browser';
     await BuildPage.visitFullPageSnapshot(urlParams);
     expect(currentURL()).to.include('browser=firefox');
-    expect(find('.flash-message.flash-message-danger')).to.have.length(1);
+    expect(findAll('.flash-message.flash-message-danger')).to.have.length(1);
   });
 });
 
