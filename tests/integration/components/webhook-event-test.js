@@ -1,5 +1,5 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
 import {percySnapshot} from 'ember-percy';
@@ -8,25 +8,25 @@ import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import freezeMoment from 'percy-web/tests/helpers/freeze-moment';
 
 describe('Integration: WebhookEvent', function() {
-  setupComponentTest('webhook-event', {integration: true});
+  setupRenderingTest('webhook-event', {integration: true});
   freezeMoment('2017-05-22');
 
   const deliveryUrl = 'http://example.com';
 
-  beforeEach(function() {
-    setupFactoryGuy(this.container);
+  beforeEach(async function() {
+    setupFactoryGuy(this);
     WebhookEvent.setContext(this);
     this.set('deliveryUrl', deliveryUrl);
-    this.render(hbs`{{webhook-event
+    await this.render(hbs`{{webhook-event
       webhookEvent=webhookEvent
       deliveryUrl=deliveryUrl
     }}`);
   });
 
-  it('displays webhook event data', function() {
+  it('displays webhook event data', async function() {
     this.set('webhookEvent', make('webhook-event'));
 
-    percySnapshot(this.test.fullTitle());
+    await percySnapshot(this.test.fullTitle());
     expect(WebhookEvent.id).to.equal('1');
     expect(WebhookEvent.deliveryUrl).to.equal(`POST ${deliveryUrl}`);
     expect(WebhookEvent.status).to.equal('200');
@@ -34,7 +34,7 @@ describe('Integration: WebhookEvent', function() {
   });
 
   context('when detail view is opened', function() {
-    it('displays request headers and payload', function() {
+    it('displays request headers and payload', async function() {
       this.set(
         'webhookEvent',
         make('webhook-event', {
@@ -43,9 +43,9 @@ describe('Integration: WebhookEvent', function() {
         }),
       );
 
-      WebhookEvent.toggleOpen();
+      await WebhookEvent.toggleOpen();
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
 
       expect(WebhookEvent.headers).to.match(/X-Request/);
       expect(WebhookEvent.payload).to.match(/request!!/);
@@ -53,7 +53,7 @@ describe('Integration: WebhookEvent', function() {
   });
 
   context('when response tab is opened', function() {
-    it('displays response headers and payload', function() {
+    it('displays response headers and payload', async function() {
       this.set(
         'webhookEvent',
         make('webhook-event', {
@@ -62,10 +62,10 @@ describe('Integration: WebhookEvent', function() {
         }),
       );
 
-      WebhookEvent.toggleOpen();
-      WebhookEvent.openResponseTab();
+      await WebhookEvent.toggleOpen();
+      await WebhookEvent.openResponseTab();
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
 
       expect(WebhookEvent.headers).to.match(/X-Response/);
       expect(WebhookEvent.payload).to.match(/response!!/);
@@ -73,7 +73,7 @@ describe('Integration: WebhookEvent', function() {
   });
 
   context('when http error', function() {
-    it('displays response code', function() {
+    it('displays response code', async function() {
       this.set(
         'webhookEvent',
         make('webhook-event', {
@@ -81,14 +81,14 @@ describe('Integration: WebhookEvent', function() {
         }),
       );
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
 
       expect(WebhookEvent.status).to.eq('404');
     });
   });
 
   context('when non-http error', function() {
-    it('displays meaningful error message', function() {
+    it('displays meaningful error message', async function() {
       this.set(
         'webhookEvent',
         make('webhook-event', {
@@ -96,9 +96,9 @@ describe('Integration: WebhookEvent', function() {
         }),
       );
 
-      WebhookEvent.toggleOpen();
+      await WebhookEvent.toggleOpen();
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
 
       expect(WebhookEvent.failureMessage).to.match(/unable to verify/);
     });
