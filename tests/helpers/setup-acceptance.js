@@ -4,6 +4,7 @@ import {authenticateSession} from 'ember-simple-auth/test-support';
 import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
 import {setupApplicationTest} from 'ember-mocha';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import mockStripeService from 'percy-web/tests/helpers/mock-stripe-service';
 
 // Import mocha helpers so that they will be included for all tests.
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "it|describe" }]*/
@@ -18,6 +19,7 @@ export default function setupAcceptance({authenticate = true} = {}) {
   beforeEach(function() {
     window.localStorage.clear();
     seedFaker();
+    mockStripeService(this);
     if (authenticate) {
       authenticateSession();
     }
@@ -28,9 +30,6 @@ export default function setupAcceptance({authenticate = true} = {}) {
     if (server !== undefined) {
       server.shutdown();
     }
-
-    // destroyApp(this.owner);
-    // this.owner = null;
   });
 }
 

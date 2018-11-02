@@ -56,7 +56,7 @@ describe('Acceptance: Publicly viewable projects', function() {
       await percySnapshot(this.test);
     });
 
-    it.skip('redirects to login if no project is returned', async function() {
+    it('redirects to login if no project is returned', async function() {
       // Imitate a 403 error when asking for this project/build by asking for a project/build
       // that doesn't exist
       await BuildPage.visitBuild({

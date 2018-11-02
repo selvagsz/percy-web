@@ -6,9 +6,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   stripe: service('stripev3'),
 
   beforeModel() {
-    if (!Ember.testing) {
-      return this.get('stripe').load();
-    }
+    return this.get('stripe').load();
   },
 
   // Important: this model loads extra includes, so it requires that we're always using .slug when
