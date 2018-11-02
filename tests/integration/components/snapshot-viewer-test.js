@@ -1,6 +1,6 @@
 /* jshint expr:true */
 /* eslint-disable no-unused-expressions */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -10,11 +10,10 @@ import sinon from 'sinon';
 import SnapshotViewerPO from 'percy-web/tests/pages/components/snapshot-viewer';
 import {resolve} from 'rsvp';
 import {SNAPSHOT_APPROVED_STATE, SNAPSHOT_UNAPPROVED_STATE} from 'percy-web/models/snapshot';
-import wait from 'ember-test-helpers/wait';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: SnapshotViewer', function() {
-  setupComponentTest('snapshot-viewer', {
+  setupRenderingTest('snapshot-viewer', {
     integration: true,
   });
 
@@ -24,7 +23,7 @@ describe('Integration: SnapshotViewer', function() {
   let createReviewStub;
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     SnapshotViewerPO.setContext(this);
 
     showSnapshotFullModalTriggeredStub = sinon.stub();
@@ -48,8 +47,8 @@ describe('Integration: SnapshotViewer', function() {
     });
   });
 
-  it('displays snapshot name', function() {
-    this.render(hbs`{{snapshot-viewer
+  it('displays snapshot name', async function() {
+    await this.render(hbs`{{snapshot-viewer
       snapshot=snapshot
       build=build
       showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -66,8 +65,8 @@ describe('Integration: SnapshotViewer', function() {
     );
   });
 
-  it('compares visually to previous screenshot', function() {
-    this.render(hbs`{{snapshot-viewer
+  it('compares visually to previous screenshot', async function() {
+    await this.render(hbs`{{snapshot-viewer
       snapshot=snapshot
       build=build
       showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -77,12 +76,12 @@ describe('Integration: SnapshotViewer', function() {
       isBuildApprovable=isBuildApprovable
     }}`);
 
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
   describe('comparison mode switcher', function() {
-    beforeEach(function() {
-      this.render(hbs`{{snapshot-viewer
+    beforeEach(async function() {
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -93,7 +92,7 @@ describe('Integration: SnapshotViewer', function() {
       }}`);
     });
 
-    it('does not display', function() {
+    it('does not display', async function() {
       expect(
         SnapshotViewerPO.header.isComparisonModeSwitcherVisible,
         'comparison mode switcher should not be visible',
@@ -102,16 +101,16 @@ describe('Integration: SnapshotViewer', function() {
   });
 
   describe('width switcher', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       // set the widest width comparison to have no diffs to have interesting test behavior.
       this.get('snapshot.comparisons')
         .findBy('width', 1024)
         .set('diffRatio', 0);
     });
 
-    it('shows widest width with diff as active by default when some comparisons have diffs', function() { // eslint-disable-line
+    it('shows widest width with diff as active by default when some comparisons have diffs', async function() { // eslint-disable-line
 
-      this.render(hbs`{{snapshot-viewer
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -125,11 +124,11 @@ describe('Integration: SnapshotViewer', function() {
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(1).isActive).to.equal(true);
     });
 
-    it('shows widest width with diff as active by default when no comparisons have diffs', function() { // eslint-disable-line
+    it('shows widest width with diff as active by default when no comparisons have diffs', async function() { // eslint-disable-line
       const snapshot = make('snapshot', 'withNoDiffs');
       this.set('snapshot', snapshot);
 
-      this.render(hbs`{{snapshot-viewer
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -144,8 +143,8 @@ describe('Integration: SnapshotViewer', function() {
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(2).isActive).to.equal(true);
     });
 
-    it('updates active button when clicked', function() {
-      this.render(hbs`{{snapshot-viewer
+    it('updates active button when clicked', async function() {
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -156,18 +155,18 @@ describe('Integration: SnapshotViewer', function() {
         isBuildApprovable=isBuildApprovable
       }}`);
 
-      SnapshotViewerPO.header.widthSwitcher.buttons(0).click();
+      await SnapshotViewerPO.header.widthSwitcher.buttons(0).click();
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(0).isActive).to.equal(true);
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(1).isActive).to.equal(false);
 
-      SnapshotViewerPO.header.clickDropdownToggle();
-      SnapshotViewerPO.header.clickToggleAllWidths();
-      SnapshotViewerPO.header.widthSwitcher.buttons(2).click();
+      await SnapshotViewerPO.header.clickDropdownToggle();
+      await SnapshotViewerPO.header.clickToggleAllWidths();
+      await SnapshotViewerPO.header.widthSwitcher.buttons(2).click();
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(0).isActive).to.equal(false);
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(1).isActive).to.equal(false);
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(2).isActive).to.equal(true);
 
-      SnapshotViewerPO.header.widthSwitcher.buttons(1).click();
+      await SnapshotViewerPO.header.widthSwitcher.buttons(1).click();
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(0).isActive).to.equal(false);
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(1).isActive).to.equal(true);
       expect(SnapshotViewerPO.header.widthSwitcher.buttons(2).isActive).to.equal(false);
@@ -175,8 +174,8 @@ describe('Integration: SnapshotViewer', function() {
   });
 
   describe('full screen toggle button', function() {
-    beforeEach(function() {
-      this.render(hbs`{{snapshot-viewer
+    beforeEach(async function() {
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -188,15 +187,15 @@ describe('Integration: SnapshotViewer', function() {
       }}`);
     });
 
-    it('displays', function() {
+    it('displays', async function() {
       expect(SnapshotViewerPO.header.isFullScreenToggleVisible).to.equal(true);
     });
 
-    it('sends closeSnapshotFullModal when toggle fullscreen button is clicked', function() {
+    it('sends closeSnapshotFullModal when toggle fullscreen button is clicked', async function() {
       const selectedWidth = snapshot.get('comparisons.firstObject.width');
       this.set('userSelectedWidth', selectedWidth);
 
-      SnapshotViewerPO.header.clickToggleFullscreen();
+      await SnapshotViewerPO.header.clickToggleFullscreen();
       expect(showSnapshotFullModalTriggeredStub).to.have.been.calledWith(
         this.get('snapshot.id'),
         selectedWidth,
@@ -205,10 +204,10 @@ describe('Integration: SnapshotViewer', function() {
   });
 
   describe('expand/collapse', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       this.set('activeSnapshotId', null);
 
-      this.render(hbs`{{snapshot-viewer
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -221,48 +220,43 @@ describe('Integration: SnapshotViewer', function() {
       }}`);
     });
 
-    it('is expanded by default when the snapshot is unapproved', function() {
+    it('is expanded by default when the snapshot is unapproved', async function() {
       this.set('snapshot.reviewState', SNAPSHOT_UNAPPROVED_STATE);
       expect(SnapshotViewerPO.isExpanded).to.equal(true);
     });
 
-    it('is collapsed by default when the snapshot is approved', function() {
+    it('is collapsed by default when the snapshot is approved', async function() {
       this.set('snapshot.reviewState', SNAPSHOT_APPROVED_STATE);
       expect(SnapshotViewerPO.isExpanded).to.equal(false);
     });
 
-    it('is expanded when build is approved', function() {
+    it('is expanded when build is approved', async function() {
       this.set('snapshot.reviewState', SNAPSHOT_APPROVED_STATE);
       this.set('build.isApproved', true);
 
       expect(SnapshotViewerPO.isExpanded).to.equal(true);
     });
 
-    it("is expanded when activeSnapshotId is equal to the snapshot's id", function() {
+    it("is expanded when activeSnapshotId is equal to the snapshot's id", async function() {
       this.set('snapshot.reviewState', SNAPSHOT_APPROVED_STATE);
       this.set('activeSnapshotId', snapshot.get('id'));
-      return wait(() => {
-        expect(SnapshotViewerPO.isExpanded).to.equal(true);
-      });
+      expect(SnapshotViewerPO.isExpanded).to.equal(true);
     });
 
-    it('expands when the snapshot is collapsed and a user clicks the header ', function() {
+    it('expands when the snapshot is collapsed and a user clicks the header ', async function() {
       this.set('snapshot.reviewState', SNAPSHOT_APPROVED_STATE);
 
-      SnapshotViewerPO.header.click();
-
-      return wait(() => {
-        expect(SnapshotViewerPO.isExpanded).to.equal(true);
-      });
+      await SnapshotViewerPO.header.click();
+      expect(SnapshotViewerPO.isExpanded).to.equal(true);
     });
   });
 
   describe('approve snapshot button', function() {
-    beforeEach(function() {
-      setupFactoryGuy(this.container);
+    beforeEach(async function() {
+      setupFactoryGuy(this);
       SnapshotViewerPO.setContext(this);
 
-      this.render(hbs`{{snapshot-viewer
+      await this.render(hbs`{{snapshot-viewer
         snapshot=snapshot
         build=build
         showSnapshotFullModalTriggered=showSnapshotFullModalTriggered
@@ -273,12 +267,12 @@ describe('Integration: SnapshotViewer', function() {
       }}`);
     });
 
-    it('sends createReview with correct arguments when approve button is clicked', function() {
-      SnapshotViewerPO.header.clickApprove();
+    it('sends createReview with correct arguments when approve button is clicked', async function() { //eslint-disable-line
+      await SnapshotViewerPO.header.clickApprove();
       expect(createReviewStub).to.have.been.calledWith([this.get('build.snapshots.firstObject')]);
     });
 
-    it('does not display when build is not finished', function() {
+    it('does not display when build is not finished', async function() {
       this.set('build.state', 'pending');
       expect(SnapshotViewerPO.header.snapshotApprovalButton.isVisible).to.equal(false);
     });
