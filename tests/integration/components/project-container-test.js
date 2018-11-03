@@ -227,8 +227,8 @@ describe('Integration: ProjectContainer', function() {
       });
     });
 
-    it('shows public globe icon in header', function() {
-      this.render(hbs`{{project-container
+    it('shows public globe icon in header', async function() {
+      await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
         pollRefresh=stub

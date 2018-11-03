@@ -271,7 +271,7 @@ describe('Acceptance: Project', function() {
 
     describe('updating project settings', function() {
       it('sends correct data', async function() {
-        withVariation('public-project-switch', true); // eslint-disable-line
+        withVariation(this.owner, 'public-project-switch', true); // eslint-disable-line
 
         const stub = sinon.stub();
         server.patch('/projects/:full_slug', function(schema, request) {
@@ -303,7 +303,7 @@ describe('Acceptance: Project', function() {
           publiclyReadable: true,
         });
 
-        expect(currentPath()).to.equal('organization.project.index');
+        expect(currentRouteName()).to.equal('organization.project.index');
       });
     });
   });
