@@ -63,11 +63,8 @@ const ProjectPage = {
   isNoBuildsPanelVisible: isVisible(SELECTORS.NO_BUILDS_PANEL),
   isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 
-<<<<<<< HEAD
   isPublicProjectIconVisible: isVisible(SELECTORS.PUBLIC_PROJECT_ICON),
-=======
   clickProjectSettings: clickable(SELECTORS.PROJECT_SETTINGS_ICON),
->>>>>>> all but one build tests work. Wrorking on organization test
 };
 
 export default create(ProjectPage);
