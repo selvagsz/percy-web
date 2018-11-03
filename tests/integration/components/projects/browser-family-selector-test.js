@@ -4,6 +4,8 @@ import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
 import sinon from 'sinon';
+import {settled} from '@ember/test-helpers';
+
 import BrowserFamilySelector from 'percy-web/tests/pages/components/projects/browser-family-selector'; // eslint-disable-line
 
 describe('Integration: BrowserFamilySelector', function() {
@@ -91,8 +93,10 @@ describe('Integration: BrowserFamilySelector', function() {
     });
   });
 
-  // These tests don't wait on the add/remove browser action to finish.
-  describe.skip('updating project browser families', function() {
+  // These tests don't wait on the add/remove browser action to finish. Not sure why, but
+  // `await settled()` seems to help...
+  // Perhaps this issue is helpful
+  describe('updating project browser families', function() {
     let project;
     let removeProjectBrowserTargetForFamilyStub;
     let addProjectBrowserTargetForFamilyStub;
@@ -141,7 +145,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickChrome();
-
+      await settled();
       expect(removeProjectBrowserTargetForFamilyStub).to.have.been.calledWith(
         chromeBrowserFamily,
         project,
@@ -162,7 +166,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickFirefox();
-
+      await settled();
       expect(addProjectBrowserTargetForFamilyStub).to.have.been.calledWith(
         firefoxBrowserFamily,
         project,
@@ -188,7 +192,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickFirefox();
-
+      await settled();
       expect(flashMessageService.info).to.have.been.calledWith(
         'A project must have at least one browser',
       );
