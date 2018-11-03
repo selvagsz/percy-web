@@ -3,18 +3,18 @@ import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
-import StripeMock from 'ember-stripe-elements/utils/stripe-mock';
 import BillingCardUpdater from 'percy-web/tests/pages/components/organizations/billing-card-updater'; // eslint-disable-line
+import mockStripeService from 'percy-web/tests/helpers/mock-stripe-service';
 
-describe.skip('Integration: BillingCardUpdater', function() {
+describe('Integration: BillingCardUpdater', function() {
   setupRenderingTest('organizations/billing-card-updater', {
     integration: true,
   });
 
   let organization;
   beforeEach(function() {
-    window.Stripe = StripeMock;
     setupFactoryGuy(this);
+    mockStripeService(this);
     BillingCardUpdater.setContext(this);
     organization = make('organization');
     this.setProperties({organization});

@@ -3,13 +3,13 @@ import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
-import StripeMock from 'ember-stripe-elements/utils/stripe-mock';
 import SubscriptionListItem from 'percy-web/tests/pages/components/organizations/subscription-list-item'; // eslint-disable-line
 import sinon from 'sinon';
 import stubServiceIntegration from 'percy-web/tests/helpers/stub-service-integration';
+import mockStripeService from 'percy-web/tests/helpers/mock-stripe-service';
 
 // Stripe is breaking this
-describe.skip('Integration: SubscriptionListItem', function() {
+describe('Integration: SubscriptionListItem', function() {
   setupRenderingTest('organizations/subscription-list-item', {
     integration: true,
   });
@@ -26,7 +26,7 @@ describe.skip('Integration: SubscriptionListItem', function() {
   };
 
   beforeEach(function() {
-    window.Stripe = StripeMock;
+    mockStripeService(this);
     setupFactoryGuy(this);
     SubscriptionListItem.setContext(this);
   });
