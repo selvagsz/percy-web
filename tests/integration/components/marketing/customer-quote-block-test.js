@@ -43,7 +43,7 @@ describe('Integration: Marketing/CustomerQuoteBlock', function() {
     }}`);
 
     await percySnapshot(`${this.test.fullTitle()} | slide 1`);
-    QuoteBlock.dots(1).click();
+    await QuoteBlock.dots(1).click();
 
     await percySnapshot(`${this.test.fullTitle()} | slide 2`);
   });
