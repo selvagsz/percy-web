@@ -5,6 +5,7 @@ import {not} from '@ember/object/computed';
 export default DS.Model.extend({
   webhookConfig: DS.belongsTo('webhook-config'),
   event: DS.attr(),
+  url: DS.attr(),
   requestHeaders: DS.attr(),
   requestPayload: DS.attr('string'),
   responseHeaders: DS.attr(),

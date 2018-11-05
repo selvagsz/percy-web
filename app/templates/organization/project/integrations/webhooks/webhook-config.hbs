@@ -28,10 +28,7 @@
         <div class="mb-2 rounded border">
           {{#each model.webhookConfig.webhookEvents as |webhookEvent|}}
             <div class="{{unless (eq webhookEvent model.webhookConfig.webhookEvents.lastObject) "border-b"}}">
-              {{webhook-event
-                webhookEvent=webhookEvent
-                deliveryUrl=model.webhookConfig.url
-              }}
+              {{webhook-event webhookEvent=webhookEvent}}
             </div>
           {{/each}}
         </div>

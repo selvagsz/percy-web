@@ -11,16 +11,10 @@ describe('Integration: WebhookEvent', function() {
   setupComponentTest('webhook-event', {integration: true});
   freezeMoment('2017-05-22');
 
-  const deliveryUrl = 'http://example.com';
-
   beforeEach(function() {
     setupFactoryGuy(this.container);
     WebhookEvent.setContext(this);
-    this.set('deliveryUrl', deliveryUrl);
-    this.render(hbs`{{webhook-event
-      webhookEvent=webhookEvent
-      deliveryUrl=deliveryUrl
-    }}`);
+    this.render(hbs`{{webhook-event webhookEvent=webhookEvent}}`);
   });
 
   it('displays webhook event data', function() {
@@ -28,7 +22,7 @@ describe('Integration: WebhookEvent', function() {
 
     percySnapshot(this.test.fullTitle());
     expect(WebhookEvent.id).to.equal('1');
-    expect(WebhookEvent.deliveryUrl).to.equal(`POST ${deliveryUrl}`);
+    expect(WebhookEvent.deliveryUrl).to.equal('POST https://percy.town/webhooks');
     expect(WebhookEvent.status).to.equal('200');
     expect(WebhookEvent.responseTime).to.equal('Delivered in 150ms');
   });
