@@ -25,7 +25,7 @@ export default DS.Model.extend({
 
   builds: DS.hasMany('build', {async: true}),
   tokens: DS.hasMany('token', {async: true}),
-  webhookConfigs: DS.hasMany('webhookConfig', {async: true}),
+  webhookConfigs: DS.hasMany('webhookConfig', {async: false}),
 
   projectBrowserTargets: DS.hasMany('projectBrowserTargets', {async: false}),
 

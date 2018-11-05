@@ -203,7 +203,7 @@ describe('Acceptance: Project', function() {
 
       await percySnapshot(this.test);
 
-      expect(currentPath()).to.equal('organization.project.webhooks.webhook-config');
+      expect(currentPath()).to.equal('organization.project.integrations.webhooks.webhook-config');
     });
 
     describe('browser toggling', function() {
