@@ -72,7 +72,7 @@
     "ember-exam": "^1.0.0",
     "ember-export-application-global": "^2.0.0",
     "ember-fakerjs": "^0.2.0",
-    "ember-fetch": "^5.1.0",
+    "ember-fetch": "6.0.0",
     "ember-font-awesome": "^3.1.1",
     "ember-in-viewport": "^3.1.0",
     "ember-infinity": "^1.2.3",
