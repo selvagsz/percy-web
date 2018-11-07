@@ -11,7 +11,7 @@ RUN chmod +x /etc/service/*/run
 # Setup the app directory and build the ember app.
 ADD package.json yarn.lock bower.json /app/src/
 WORKDIR /app/src/
-RUN yarn
+RUN yarn install --frozen-lockfile
 RUN bower install --allow-root
 # Setup the full app directory (do this after package install to speed up docker builds).
 ADD . /app/src/
