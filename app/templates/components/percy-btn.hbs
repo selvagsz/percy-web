@@ -1,0 +1,13 @@
+<button
+  type="{{if type type "button"}}"
+  name="button"
+  disabled={{disabled}}
+  class="
+    percy-btn
+    {{class}}
+    {{if primary-btn "percy-btn-primary"}}
+    {{if no-shadow "shadow-none"}}
+    {{if no-animate "animate-none"}}
+  ">
+  {{yield}}
+</button>

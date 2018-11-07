@@ -1,30 +1,39 @@
-<div data-test-user-card class="user-card border-b cursor-pointer">
-  <div class="p-2 flex items-center" {{action "toggleExpanded"}}>
-    {{user-avatar user=organizationUser.user linked=true class="mr-1"}}
-    <div>
-      <div class="leading-none mb-sm font-semibold">
+<div data-test-user-card class="user-card bg-white border-b">
+  <div class="px-4 py-3 flex items-center">
+    <div style="min-width: 200px" class="flex flex-1 items-center pr-2">
+      <UserAvatar @user={{organizationUser.user}} @class="flex-none mr-2" @tagName="" />
+      <div class="font-semibold truncate leading-none">
         {{organizationUser.user.name}}
       </div>
-      <div class="leading-none text-gray-400 text-sm">
+    </div>
+    <div style="min-width: 100px" class="flex-1 leading-none">
+      <LabelTag @primary-tag={{eq "Administrator" organizationUser.roleTitle}}>
         {{organizationUser.roleTitle}}
+      </LabelTag>
+    </div>
+    <div class="flex-1 leading-none text-gray-400">
+      Joined on date
+    </div>
+    <div class="flex-2 flex justify-end">
+      <div class="btn-toolbar">
+        {{#if (eq organizationUser.user.id currentUser.id)}}
+          <PercyBtn>Leave organization</PercyBtn>
+        {{else}}
+          <PercyBtn @disabled={{unless (eq "admin" organizationUser.organization.currentUserMembership.role) true}}>Make member</PercyBtn>
+          <PercyBtn @disabled={{unless (eq "admin" organizationUser.organization.currentUserMembership.role) true}}>Remove</PercyBtn>
+        {{/if}}
       </div>
+      {{!-- {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}} --}}
+        {{!-- Allow admin to do everything. --}}
+        {{!-- {{forms/organization-user-edit organizationUser=organizationUser}} --}}
+      {{!-- {{else if (eq organizationUser.user.id currentUser.id)}} --}}
+        {{!-- Allow member to view their own record. --}}
+        {{!-- {{forms/organization-user-edit organizationUser=organizationUser}} --}}
+      {{!-- {{else}} --}}
+        {{!-- <div class="Alert Alert--error"> --}}
+          {{!-- <strong>Editing users requires organization admin permissions.</strong> --}}
+        {{!-- </div> --}}
+      {{!-- {{/if}} --}}
     </div>
   </div>
-
-  {{#if isExpanded}}
-    <div class="px-2 pb-2">
-      {{!-- TODO: #billingadmins --}}
-      {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}}
-        {{!-- Allow admin to do everything. --}}
-        {{forms/organization-user-edit organizationUser=organizationUser}}
-      {{else if (eq organizationUser.user.id currentUser.id)}}
-        {{!-- Allow member to view their own record. --}}
-        {{forms/organization-user-edit organizationUser=organizationUser}}
-      {{else}}
-        <div class="Alert Alert--error">
-          <strong>Editing users requires organization admin permissions.</strong>
-        </div>
-      {{/if}}
-    </div>
-  {{/if}}
 </div>

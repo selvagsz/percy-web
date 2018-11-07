@@ -16,6 +16,7 @@
 export default {
   auto: 'auto',
     px: '1px',
+    xs: '2px',
     sm: '4px',
    '0': '0',
    '1': '8px',

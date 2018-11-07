@@ -1,3 +1,8 @@
-<div class="label-tag ml-1">
-  {{labelText}}
+<div
+  class="
+    label-tag
+    {{if primary-tag "label-tag-primary"}}
+    {{class}}
+  ">
+  {{yield}}
 </div>

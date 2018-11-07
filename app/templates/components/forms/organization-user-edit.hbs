@@ -1,4 +1,4 @@
-<form action="javascript:;">
+<form action="javascript:;" class="flex items-center">
   {{#unless isCurrentUser}}
     {{form-fields/checkbox
         property="role"
@@ -8,9 +8,6 @@
         changeset=changeset
         validateProperty=(action "validateProperty" changeset "role")
     }}
-    <p style="margin-top: calc(var(--spacing-1) * -1)" class="mb-2 text-gray-400">
-      Allow this user to edit organization details, billing information, and invite new members.
-    </p>
   {{/unless}}
   <div class="u-text-right">
     {{saving-indicator isSaving=isSaving isSaveSuccessful=isSaveSuccessful classes="u-pull-left"}}
@@ -20,12 +17,5 @@
       confirmationMessage="Are you sure? This user will lose all access to the organization."
       submit=(action "delete")
     }}
-    {{#unless isCurrentUser}}
-      {{form-fields/submit
-        value="Save"
-        classes="btn btn-primary shadow-purple-lg mb-0 ml-1"
-        submit=(action "save")
-      }}
-    {{/unless}}
   </div>
 </form>

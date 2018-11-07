@@ -1,3 +1,7 @@
 .label-tag {
-  @apply px-1 rounded bg-gray-100 text-gray-400 text-sm font-mono lowercase;
+  @apply inline-block px-1 py-sm rounded bg-gray-000 text-gray-400 text-xs leading-none font-mono lowercase;
+}
+
+.label-tag.label-tag-primary {
+  @apply bg-purple-200 text-purple-600;
 }
