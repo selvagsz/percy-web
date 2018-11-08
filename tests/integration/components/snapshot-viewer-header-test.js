@@ -1,5 +1,5 @@
 /* jshint expr:true */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {beforeEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
@@ -9,12 +9,12 @@ import sinon from 'sinon';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: SnapshotViewerHeader', function() {
-  setupComponentTest('snapshot-viewer-header', {
+  setupRenderingTest('snapshot-viewer-header', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     SnapshotViewerHeaderPO.setContext(this);
     this.set('browser', make('browser'));
   });
@@ -25,8 +25,8 @@ describe('Integration: SnapshotViewerHeader', function() {
       this.set('snapshot', make('snapshot'));
     });
 
-    it('shows dropdown toggle', function() {
-      this.render(hbs`{{snapshot-viewer-header
+    it('shows dropdown toggle', async function() {
+      await this.render(hbs`{{snapshot-viewer-header
         snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
@@ -37,8 +37,8 @@ describe('Integration: SnapshotViewerHeader', function() {
       expect(SnapshotViewerHeaderPO.isDropdownToggleVisible).to.equal(true);
     });
 
-    it('toggles dropdown pane when dropdown toggle is clicked', function() {
-      this.render(hbs`{{snapshot-viewer-header
+    it('toggles dropdown pane when dropdown toggle is clicked', async function() {
+      await this.render(hbs`{{snapshot-viewer-header
         snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
@@ -46,37 +46,37 @@ describe('Integration: SnapshotViewerHeader', function() {
       }}`);
 
       expect(SnapshotViewerHeaderPO.isDropdownPaneVisible).to.equal(false);
-      SnapshotViewerHeaderPO.clickDropdownToggle();
+      await SnapshotViewerHeaderPO.clickDropdownToggle();
       expect(SnapshotViewerHeaderPO.isDropdownPaneVisible).to.equal(true);
-      SnapshotViewerHeaderPO.clickDropdownToggle();
+      await SnapshotViewerHeaderPO.clickDropdownToggle();
       expect(SnapshotViewerHeaderPO.isDropdownPaneVisible).to.equal(false);
     });
 
-    it('shows copy url option', function() {
-      this.render(hbs`{{snapshot-viewer-header
+    it('shows copy url option', async function() {
+      await this.render(hbs`{{snapshot-viewer-header
         snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
         activeBrowser=browser
       }}`);
 
-      SnapshotViewerHeaderPO.clickDropdownToggle();
+      await SnapshotViewerHeaderPO.clickDropdownToggle();
       expect(SnapshotViewerHeaderPO.dropdownOptions(0).text).to.equal('Copy snapshot URL');
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
 
     describe('download HTML options', function() {
       let comparison;
       let baseSnapshot;
       let headSnapshot;
-      beforeEach(function() {
+      beforeEach(async function() {
         comparison = make('comparison');
         baseSnapshot = make('snapshot');
         headSnapshot = make('snapshot');
         this.set('comparison', comparison);
         this.set('snapshot', make('snapshot'));
 
-        this.render(hbs`{{snapshot-viewer-header
+        await this.render(hbs`{{snapshot-viewer-header
           snapshot=snapshot
           toggleViewMode=stub
           updateSelectedWidth=stub
@@ -85,22 +85,22 @@ describe('Integration: SnapshotViewerHeader', function() {
         }}`);
       });
 
-      it('shows download original and new source option', function() {
+      it('shows download original and new source option', async function() {
         this.set('comparison.headSnapshot', headSnapshot);
         this.set('comparison.baseSnapshot', baseSnapshot);
 
-        SnapshotViewerHeaderPO.clickDropdownToggle();
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.dropdownOptions(1).text).to.equal('Download original source');
         expect(SnapshotViewerHeaderPO.dropdownOptions(2).text).to.equal('Download new source');
-        percySnapshot(this.test);
+        await percySnapshot(this.test);
       });
 
-      it('shows download new source option', function() {
+      it('shows download new source option', async function() {
         this.set('comparison.headSnapshot', headSnapshot);
 
-        SnapshotViewerHeaderPO.clickDropdownToggle();
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.dropdownOptions(1).text).to.equal('Download new source');
-        percySnapshot(this.test);
+        await percySnapshot(this.test);
       });
     });
 
@@ -110,7 +110,7 @@ describe('Integration: SnapshotViewerHeader', function() {
       let headSnapshot;
 
       describe('When a snapshot comparison has a visual diff', function() {
-        beforeEach(function() {
+        beforeEach(async function() {
           comparison = make('comparison');
           baseSnapshot = make('snapshot');
           headSnapshot = make('snapshot');
@@ -119,7 +119,7 @@ describe('Integration: SnapshotViewerHeader', function() {
           this.set('comparison.baseSnapshot', baseSnapshot);
           this.set('comparison.headSnapshot', headSnapshot);
 
-          this.render(hbs`{{snapshot-viewer-header
+          await this.render(hbs`{{snapshot-viewer-header
             snapshot=snapshot
             toggleViewMode=stub
             updateSelectedWidth=stub
@@ -128,16 +128,16 @@ describe('Integration: SnapshotViewerHeader', function() {
           }}`);
         });
 
-        it('shows download source diff', function() {
-          SnapshotViewerHeaderPO.clickDropdownToggle();
+        it('shows download source diff', async function() {
+          await SnapshotViewerHeaderPO.clickDropdownToggle();
           expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
             .true;
-          percySnapshot(this.test);
+          await percySnapshot(this.test);
         });
       });
 
       describe('When a shapshot comparison has no visual diff', function() {
-        beforeEach(function() {
+        beforeEach(async function() {
           comparison = make('comparison');
           baseSnapshot = make('snapshot', 'withNoDiffs');
           headSnapshot = make('snapshot', 'withNoDiffs');
@@ -146,7 +146,7 @@ describe('Integration: SnapshotViewerHeader', function() {
           this.set('comparison.baseSnapshot', headSnapshot);
           this.set('comparison.headSnapshot', headSnapshot);
 
-          this.render(hbs`{{snapshot-viewer-header
+          await this.render(hbs`{{snapshot-viewer-header
             snapshot=snapshot
             toggleViewMode=stub
             updateSelectedWidth=stub
@@ -155,23 +155,23 @@ describe('Integration: SnapshotViewerHeader', function() {
           }}`);
         });
 
-        it('shows download source diff', function() {
-          SnapshotViewerHeaderPO.clickDropdownToggle();
+        it('shows download source diff', async function() {
+          await SnapshotViewerHeaderPO.clickDropdownToggle();
           expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
             .true;
-          percySnapshot(this.test);
+          await percySnapshot(this.test);
         });
       });
 
       describe('When a head snapshot has no base to compare', function() {
-        beforeEach(function() {
+        beforeEach(async function() {
           comparison = make('comparison');
           headSnapshot = make('snapshot');
           this.set('comparison', comparison);
           this.set('snapshot', headSnapshot);
           this.set('comparison.headSnapshot', headSnapshot);
 
-          this.render(hbs`{{snapshot-viewer-header
+          await this.render(hbs`{{snapshot-viewer-header
             snapshot=snapshot
             toggleViewMode=stub
             updateSelectedWidth=stub
@@ -180,11 +180,11 @@ describe('Integration: SnapshotViewerHeader', function() {
           }}`);
         });
 
-        it('does not show download source diff', function() {
-          SnapshotViewerHeaderPO.clickDropdownToggle();
+        it('does not show download source diff', async function() {
+          await SnapshotViewerHeaderPO.clickDropdownToggle();
           expect(SnapshotViewerHeaderPO.dropdownOptions().contains('Download source diff')).to.be
             .false;
-          percySnapshot(this.test);
+          await percySnapshot(this.test);
         });
       });
     });
@@ -192,11 +192,11 @@ describe('Integration: SnapshotViewerHeader', function() {
 
   describe('comparison width switcher', function() {
     describe('When all comparisons for a snapshot have diffs', function() {
-      beforeEach(function() {
+      beforeEach(async function() {
         const snapshot = make('snapshot', 'withComparisons');
         this.set('stub', sinon.stub());
         this.set('snapshot', snapshot);
-        this.render(hbs`{{snapshot-viewer-header
+        await this.render(hbs`{{snapshot-viewer-header
           snapshot=snapshot
           toggleViewMode=stub
           updateSelectedWidth=stub
@@ -221,8 +221,8 @@ describe('Integration: SnapshotViewerHeader', function() {
         });
       });
 
-      it('does not display toggle widths option in dropdown', function() {
-        SnapshotViewerHeaderPO.clickDropdownToggle();
+      it('does not display toggle widths option in dropdown', async function() {
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.isToggleWidthsOptionVisible).to.equal(false);
       });
     });
@@ -230,7 +230,7 @@ describe('Integration: SnapshotViewerHeader', function() {
     describe('When some comparisons for a snapshot have diffs', function() {
       let comparisonsWithDiffs;
 
-      beforeEach(function() {
+      beforeEach(async function() {
         const snapshot = make('snapshot', 'withComparisons');
         snapshot.get('comparisons.firstObject').set('diffRatio', 0);
 
@@ -238,7 +238,7 @@ describe('Integration: SnapshotViewerHeader', function() {
 
         this.set('stub', sinon.stub());
         this.set('snapshot', snapshot);
-        this.render(hbs`{{snapshot-viewer-header
+        await this.render(hbs`{{snapshot-viewer-header
           snapshot=snapshot
           toggleViewMode=stub
           updateSelectedWidth=stub
@@ -259,15 +259,15 @@ describe('Integration: SnapshotViewerHeader', function() {
         });
       });
 
-      it('does displays toggle widths option in dropdown', function() {
-        SnapshotViewerHeaderPO.clickDropdownToggle();
+      it('does displays toggle widths option in dropdown', async function() {
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.isToggleWidthsOptionVisible).to.equal(true);
-        percySnapshot(this.test);
+        await percySnapshot(this.test);
       });
 
-      it('shows all comparisons widths when toggle widths option is clicked', function() {
-        SnapshotViewerHeaderPO.clickDropdownToggle();
-        SnapshotViewerHeaderPO.clickToggleAllWidths();
+      it('shows all comparisons widths when toggle widths option is clicked', async function() {
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
+        await SnapshotViewerHeaderPO.clickToggleAllWidths();
         expect(SnapshotViewerHeaderPO.widthSwitcher.buttons().count).to.equal(3);
 
         SnapshotViewerHeaderPO.widthSwitcher.buttons().forEach((button, i) => {
@@ -281,12 +281,12 @@ describe('Integration: SnapshotViewerHeader', function() {
     });
 
     describe('When no comparisons for a snapshot have diffs', function() {
-      beforeEach(function() {
+      beforeEach(async function() {
         const snapshot = make('snapshot', 'withNoDiffs');
 
         this.set('stub', sinon.stub());
         this.set('snapshot', snapshot);
-        this.render(hbs`{{snapshot-viewer-header
+        await this.render(hbs`{{snapshot-viewer-header
           snapshot=snapshot
           toggleViewMode=stub
           updateSelectedWidth=stub
@@ -311,8 +311,8 @@ describe('Integration: SnapshotViewerHeader', function() {
         });
       });
 
-      it('does not display toggle widths option in dropdown', function() {
-        SnapshotViewerHeaderPO.clickDropdownToggle();
+      it('does not display toggle widths option in dropdown', async function() {
+        await SnapshotViewerHeaderPO.clickDropdownToggle();
         expect(SnapshotViewerHeaderPO.isToggleWidthsOptionVisible).to.equal(false);
       });
     });
@@ -336,10 +336,10 @@ describe('Integration: SnapshotViewerHeader', function() {
       });
     });
 
-    it('displays "No Changes in [browser]" when there are changes in a different browser', function() {  // eslint-disable-line
+    it('displays "No Changes in [browser]" when there are changes in a different browser', async function() {  // eslint-disable-line
       const browser = make('browser', 'chrome');
       this.set('browser', browser);
-      this.render(hbs`{{snapshot-viewer-header
+      await this.render(hbs`{{snapshot-viewer-header
         snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub
@@ -353,10 +353,10 @@ describe('Integration: SnapshotViewerHeader', function() {
       expect(SnapshotViewerHeaderPO.snapshotApprovalButton.isUnapproved).to.equal(false);
     });
 
-    it('displays "Approve" button when there are changes in the active browser', function() {
+    it('displays "Approve" button when there are changes in the active browser', async function() {
       const browser = make('browser');
       this.set('browser', browser);
-      this.render(hbs`{{snapshot-viewer-header
+      await this.render(hbs`{{snapshot-viewer-header
         snapshot=snapshot
         toggleViewMode=stub
         updateSelectedWidth=stub

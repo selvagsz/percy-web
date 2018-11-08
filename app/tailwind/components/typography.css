@@ -1,0 +1,4 @@
+p {
+  @apply mt-0 mb-2;
+  @apply text-gray-500 text-base leading-tight;
+}

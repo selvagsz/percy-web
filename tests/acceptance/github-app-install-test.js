@@ -1,6 +1,8 @@
 import setupAcceptance, {setupSession} from 'percy-web/tests/helpers/setup-acceptance';
 import GithubSettings from 'percy-web/tests/pages/components/github-settings';
 import {beforeEach} from 'mocha';
+import {percySnapshot} from 'ember-percy';
+import {currentRouteName} from '@ember/test-helpers';
 
 describe('Acceptance: GitHubAppInstall', function() {
   setupAcceptance();
@@ -13,7 +15,7 @@ describe('Acceptance: GitHubAppInstall', function() {
 
     it('instructs a user to link a github account before installing the app', async function() {
       await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
-      expect(currentPath()).to.equal('organizations.organization.integrations.github');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.github');
 
       await percySnapshot(this.test);
     });
@@ -25,12 +27,12 @@ describe('Acceptance: GitHubAppInstall', function() {
       organization = server.create('organization', 'withAdminGithubUser');
     });
 
-    beforeEach(function() {
-      GithubSettings.visitGithubSettings({orgSlug: organization.slug});
+    beforeEach(async function() {
+      await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
     });
 
     it('shows GitHub integration installation page', async function() {
-      expect(currentPath()).to.equal('organizations.organization.integrations.github');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.github');
 
       await percySnapshot(this.test);
     });
@@ -56,7 +58,7 @@ describe('Acceptance: GitHubAppInstall', function() {
 
     it('shows the loading state when the install is in progress', async function() {
       await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
-      expect(currentPath()).to.equal('organizations.organization.integrations.github');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.github');
 
       expect(GithubSettings.isGithubAppLoadingStateVisable).to.equal(true);
 
@@ -72,7 +74,7 @@ describe('Acceptance: GitHubAppInstall', function() {
 
     it('shows the installed state when the install is in successful', async function() {
       await GithubSettings.visitGithubSettings({orgSlug: organization.slug});
-      expect(currentPath()).to.equal('organizations.organization.integrations.github');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.github');
 
       expect(GithubSettings.isGithubAppSuccessStateVisable).to.equal(true);
 

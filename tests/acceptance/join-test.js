@@ -2,6 +2,8 @@ import setupAcceptance, {
   setupSession,
   renderAdapterErrorsAsPage,
 } from '../helpers/setup-acceptance';
+import {percySnapshot} from 'ember-percy';
+import {visit, click, currentRouteName} from '@ember/test-helpers';
 
 describe('Acceptance: Join', function() {
   setupAcceptance();
@@ -20,7 +22,7 @@ describe('Acceptance: Join', function() {
 
   it('expired rejected', async function() {
     await visit('/join/expired-code');
-    expect(currentPath()).to.equal('join');
+    expect(currentRouteName()).to.equal('join');
 
     await percySnapshot(this.test);
   });
@@ -28,18 +30,18 @@ describe('Acceptance: Join', function() {
   it('invalid rejected', async function() {
     await renderAdapterErrorsAsPage(async () => {
       await visit('/join/invalid-code');
-      expect(currentPath()).to.equal('error');
+      expect(currentRouteName()).to.equal('error');
       await percySnapshot(this.test);
     });
   });
 
   it('valid accepted', async function() {
     await visit('/join/valid-code');
-    expect(currentPath()).to.equal('join');
+    expect(currentRouteName()).to.equal('join');
 
     await percySnapshot(this.test);
-    await click('.InvitationHandler button:contains("Accept invitation")');
-    expect(currentPath()).to.equal('organization.index');
+    await click('[data-test-accept-invitation]');
+    expect(currentRouteName()).to.equal('organization.index');
 
     await percySnapshot(this.test.fullTitle() + ' | Into organization');
   });

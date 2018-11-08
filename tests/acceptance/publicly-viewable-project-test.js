@@ -3,6 +3,8 @@ import BuildPage from 'percy-web/tests/pages/build-page';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
 import SnapshotViewerFull from 'percy-web/tests/pages/components/snapshot-viewer-full';
 import ProjectPage from 'percy-web/tests/pages/project-page';
+import {visit, currentRouteName} from '@ember/test-helpers';
+import {percySnapshot} from 'ember-percy';
 
 describe('Acceptance: Publicly viewable projects', function() {
   describe('when user is not logged in', function() {
@@ -13,7 +15,7 @@ describe('Acceptance: Publicly viewable projects', function() {
     let build;
 
     setupSession(function(server) {
-      stubLockModal(this.application);
+      stubLockModal(this.owner);
       this.loginUser = false;
 
       organization = server.create('organization');
@@ -28,7 +30,7 @@ describe('Acceptance: Publicly viewable projects', function() {
         buildId: build.id,
       });
 
-      expect(currentPath()).to.equal('organization.project.builds.build.index');
+      expect(currentRouteName()).to.equal('organization.project.builds.build.index');
       expect(
         BuildPage.snapshots(0).header.snapshotApprovalButton.isDisabled,
         'button should be disabled',
@@ -49,7 +51,7 @@ describe('Acceptance: Publicly viewable projects', function() {
         projectSlug: projectWithNoBuilds.slug,
       });
 
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
       expect(ProjectPage.isNoBuildsPanelVisible).to.equal(true);
       await percySnapshot(this.test);
     });
@@ -63,7 +65,7 @@ describe('Acceptance: Publicly viewable projects', function() {
         buildId: 'not-a-public-build',
       });
 
-      expect(currentPath()).to.equal('login');
+      expect(currentRouteName()).to.equal('login');
     });
   });
 
@@ -101,7 +103,7 @@ describe('Acceptance: Publicly viewable projects', function() {
             projectSlug: projectWithNoBuilds.slug,
           });
 
-          expect(currentPath()).to.equal('organization.project.index');
+          expect(currentRouteName()).to.equal('organization.project.index');
           expect(ProjectPage.isNoBuildsPanelVisible).to.equal(false);
           await percySnapshot(this.test);
         });
@@ -113,7 +115,7 @@ describe('Acceptance: Publicly viewable projects', function() {
             buildId: userBuild.id,
           });
 
-          expect(currentPath()).to.equal('organization.project.builds.build.index');
+          expect(currentRouteName()).to.equal('organization.project.builds.build.index');
           expect(
             BuildPage.snapshots(0).header.snapshotApprovalButton.isDisabled,
             'build page button should be enabled',
@@ -136,7 +138,7 @@ describe('Acceptance: Publicly viewable projects', function() {
             projectSlug: projectWithNoBuilds.slug,
           });
 
-          expect(currentPath()).to.equal('organization.project.index');
+          expect(currentRouteName()).to.equal('organization.project.index');
           expect(ProjectPage.isNoBuildsPanelVisible).to.equal(true);
           await percySnapshot(this.test);
         });
@@ -147,7 +149,7 @@ describe('Acceptance: Publicly viewable projects', function() {
             projectSlug: project.slug,
             buildId: build.id,
           });
-          expect(currentPath()).to.equal('organization.project.builds.build.index');
+          expect(currentRouteName()).to.equal('organization.project.builds.build.index');
           expect(
             BuildPage.snapshots(0).header.snapshotApprovalButton.isDisabled,
             'build screen buttons are disabled',
@@ -170,7 +172,7 @@ describe('Acceptance: Publicly viewable projects', function() {
         buildId: 123,
       });
 
-      expect(currentPath()).to.equal('error');
+      expect(currentRouteName()).to.equal('error');
       percySnapshot(this.test);
     });
   });
@@ -183,7 +185,7 @@ describe('Acceptance: Publicly viewable organizations', function() {
     let publicOrganization;
 
     setupSession(function(server) {
-      stubLockModal(this.application);
+      stubLockModal(this.owner);
       this.loginUser = false;
 
       publicOrganization = server.create('organization');
@@ -193,13 +195,13 @@ describe('Acceptance: Publicly viewable organizations', function() {
 
     it('shows organization page with projects when org request returns an org', async function() {
       await visit(`/${publicOrganization.slug}`);
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
       percySnapshot(this.test);
     });
 
     it('redirects to login when organization request returns an error', async function() {
       await visit('/org-that-api-will-not-disclose');
-      expect(currentPath()).to.equal('login');
+      expect(currentRouteName()).to.equal('login');
     });
   });
 
@@ -220,7 +222,7 @@ describe('Acceptance: Publicly viewable organizations', function() {
 
     it('shows organization page when org request returns an org', async function() {
       await visit(`/${userOrganization.slug}`);
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
       percySnapshot(this.test);
     });
 
@@ -228,7 +230,7 @@ describe('Acceptance: Publicly viewable organizations', function() {
       const badOrgSlug = 'org-that-api-will-not-disclose';
       await visit(`/${badOrgSlug}`);
 
-      expect(currentPath()).to.equal('error');
+      expect(currentRouteName()).to.equal('error');
       percySnapshot(this.test);
     });
   });

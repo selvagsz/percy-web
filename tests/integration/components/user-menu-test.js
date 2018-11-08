@@ -1,32 +1,29 @@
 /* jshint expr:true */
-import {setupComponentTest} from 'ember-mocha';
-import {beforeEach, afterEach, it, describe} from 'mocha';
+import {setupRenderingTest} from 'ember-mocha';
+import {beforeEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
-import {startMirage} from 'percy-web/initializers/ember-cli-mirage';
+import {make} from 'ember-data-factory-guy';
+import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: UserMenuComponent', function() {
-  setupComponentTest('user-menu', {
+  setupRenderingTest('user-menu', {
     integration: true,
   });
 
   beforeEach(function() {
-    this.server = startMirage();
-    let user = server.create('user');
+    setupFactoryGuy(this);
+    const user = make('user');
     this.set('user', user);
   });
 
-  afterEach(function() {
-    this.server.shutdown();
+  it('renders', async function() {
+    await this.render(hbs`{{user-menu user=user}}`);
+    await percySnapshot(this.test);
   });
 
-  it('renders', function() {
-    this.render(hbs`{{user-menu user=user}}`);
-    percySnapshot(this.test);
-  });
-
-  it('toggles menu', function() {
-    this.render(hbs`{{user-menu user=user showMenu=true}}`);
-    percySnapshot(this.test.fullTitle() + ' | Menu is visible');
+  it('toggles menu', async function() {
+    await this.render(hbs`{{user-menu user=user showMenu=true}}`);
+    await percySnapshot(this.test.fullTitle() + ' | Menu is visible');
   });
 });

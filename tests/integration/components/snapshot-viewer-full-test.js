@@ -1,5 +1,5 @@
 /* jshint expr:true */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -11,7 +11,7 @@ import FullSnapshotPage from 'percy-web/tests/pages/components/snapshot-viewer-f
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: SnapshotViewerFull', function() {
-  setupComponentTest('snapshot-viewer-full', {
+  setupRenderingTest('snapshot-viewer-full', {
     integration: true,
   });
 
@@ -23,8 +23,8 @@ describe('Integration: SnapshotViewerFull', function() {
   let build;
   const snapshotTitle = 'Awesome snapshot title';
 
-  beforeEach(function() {
-    setupFactoryGuy(this.container);
+  beforeEach(async function() {
+    setupFactoryGuy(this);
     FullSnapshotPage.setContext(this);
 
     build = make('build', 'finished');
@@ -58,7 +58,7 @@ describe('Integration: SnapshotViewerFull', function() {
       stub: sinon.stub(),
     });
 
-    this.render(hbs`{{snapshot-viewer-full
+    await this.render(hbs`{{snapshot-viewer-full
       snapshot=snapshot
       snapshotSelectedWidth=snapshotSelectedWidth
       comparisonMode=comparisonMode
@@ -87,22 +87,22 @@ describe('Integration: SnapshotViewerFull', function() {
       ).to.equal(true);
     });
 
-    it('sends updateComparisonMode action when comparison switcher is clicked', function() {
-      FullSnapshotPage.header.clickBaseComparisonMode();
+    it('sends updateComparisonMode action when comparison switcher is clicked', async function() {
+      await FullSnapshotPage.header.clickBaseComparisonMode();
       expect(updateComparisonModeStub).to.have.been.calledWith('base');
 
-      FullSnapshotPage.header.clickDiffComparisonMode();
+      await FullSnapshotPage.header.clickDiffComparisonMode();
       expect(updateComparisonModeStub).to.have.been.calledWith('diff');
 
-      FullSnapshotPage.header.clickHeadComparisonMode();
+      await FullSnapshotPage.header.clickHeadComparisonMode();
       expect(updateComparisonModeStub).to.have.been.calledWith('head');
     });
 
-    it('shows "New" button when snapshot is new', function() {
+    it('shows "New" button when snapshot is new', async function() {
       this.set('snapshot', addedSnapshot);
 
       expect(FullSnapshotPage.isNewComparisonModeButtonVisible).to.equal(true);
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 
@@ -120,25 +120,25 @@ describe('Integration: SnapshotViewerFull', function() {
       expect(FullSnapshotPage.header.widthSwitcher.buttons(2).isActive).to.equal(false);
     });
 
-    it('updates active button when clicked', function() {
-      FullSnapshotPage.header.widthSwitcher.buttons(0).click();
+    it('updates active button when clicked', async function() {
+      await FullSnapshotPage.header.widthSwitcher.buttons(0).click();
       expect(FullSnapshotPage.header.widthSwitcher.buttons(0).isActive).to.equal(true);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(1).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(2).isActive).to.equal(false);
-      FullSnapshotPage.header.widthSwitcher.buttons(2).click();
+      await FullSnapshotPage.header.widthSwitcher.buttons(2).click();
       expect(FullSnapshotPage.header.widthSwitcher.buttons(0).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(1).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(2).isActive).to.equal(true);
 
-      FullSnapshotPage.header.widthSwitcher.buttons(1).click();
+      await FullSnapshotPage.header.widthSwitcher.buttons(1).click();
       expect(FullSnapshotPage.header.widthSwitcher.buttons(0).isActive).to.equal(false);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(1).isActive).to.equal(true);
       expect(FullSnapshotPage.header.widthSwitcher.buttons(2).isActive).to.equal(false);
     });
   });
 
-  it('compares visually to previous screenshot', function() {
-    percySnapshot(this.test);
+  it('compares visually to previous screenshot', async function() {
+    await percySnapshot(this.test);
   });
 
   describe('full screen toggle button', function() {
@@ -146,15 +146,15 @@ describe('Integration: SnapshotViewerFull', function() {
       expect(FullSnapshotPage.header.isFullScreenToggleVisible).to.equal(true);
     });
 
-    it('sends closeSnapshotFullModal when toggle fullscreen button is clicked', function() {
-      FullSnapshotPage.header.clickToggleFullscreen();
+    it('sends closeSnapshotFullModal when toggle fullscreen button is clicked', async function() {
+      await FullSnapshotPage.header.clickToggleFullscreen();
       expect(closeSnapshotFullModalStub).to.have.been.called;
     });
   });
 
   describe('approve snapshot button', function() {
-    it('sends createReview with correct arguments when approve button is clicked', function() {
-      FullSnapshotPage.header.clickApprove();
+    it('sends createReview with correct arguments when approve button is clicked', async function() { //eslint-disable-line
+      await FullSnapshotPage.header.clickApprove();
       expect(createReviewStub).to.have.been.calledWith([snapshot]);
     });
 

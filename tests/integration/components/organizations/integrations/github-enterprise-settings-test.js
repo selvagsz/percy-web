@@ -1,18 +1,18 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {make} from 'ember-data-factory-guy';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import GithubEnterpriseSettings from 'percy-web/tests/pages/components/github-enterprise-settings';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
-describe('Integration: Github Enterprise Settings', function() {
-  setupComponentTest('github-enterprise-settings', {
+describe('Integration: GithubEnterpriseSettings', function() {
+  setupRenderingTest('github-enterprise-settings', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     GithubEnterpriseSettings.setContext(this);
   });
 
@@ -24,16 +24,15 @@ describe('Integration: Github Enterprise Settings', function() {
       this.setProperties({user, organization});
     });
 
-    it('renders', function() {
+    it('renders', async function() {
       const isIntegrated = this.get('organization.isGithubEnterpriseIntegrated');
       expect(isIntegrated).to.equal(true);
-      this.render(hbs`{{
+      await this.render(hbs`{{
         organizations/integrations/github-enterprise-settings
         currentUser=user
         organization=organization
       }}`);
-      expect(this.$()).to.have.length(1);
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 });

@@ -1,4 +1,4 @@
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -8,21 +8,21 @@ import BuildCard from 'percy-web/tests/pages/components/build-card';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: BuildCard', function() {
-  setupComponentTest('build-card', {
+  setupRenderingTest('build-card', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     BuildCard.setContext(this);
   });
 
   describe('with an empty repo source', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withRepo', 'hasPullRequest', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
@@ -34,8 +34,8 @@ describe('Integration: BuildCard', function() {
       ).to.equal('http://example.com/pull/123');
     });
 
-    it('shows no logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows no logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(BuildCard.sourceCodeMetadata.githubLogo.isVisible, 'github logo is visible').to.equal(
         false,
       );
@@ -46,26 +46,26 @@ describe('Integration: BuildCard', function() {
   });
 
   describe('with a build with a long commit message', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGithubRepo', 'withLongHeadCommitMessage', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
 
-    it('renders correctly', function() {
-      percySnapshot(this.test.fullTitle());
+    it('renders correctly', async function() {
+      await percySnapshot(this.test.fullTitle());
     });
   });
 
   describe('with a github repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGithubRepo', 'hasPullRequest', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
@@ -77,8 +77,8 @@ describe('Integration: BuildCard', function() {
       ).to.equal('http://example.com/pull/123');
     });
 
-    it('shows the github logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the github logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(
         BuildCard.sourceCodeMetadata.githubLogo.isVisible,
         'github logo is not visible',
@@ -90,12 +90,12 @@ describe('Integration: BuildCard', function() {
   });
 
   describe('with a github enterprise repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGithubEnterpriseRepo', 'hasPullRequest', {buildNumber: 1});
 
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
@@ -107,8 +107,8 @@ describe('Integration: BuildCard', function() {
       ).to.equal('http://example.com/pull/123');
     });
 
-    it('shows the github logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the github logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(
         BuildCard.sourceCodeMetadata.githubLogo.isVisible,
         'github logo is not visible',
@@ -120,12 +120,12 @@ describe('Integration: BuildCard', function() {
   });
 
   describe('with a gitlab repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGitlabRepo', 'hasPullRequest', {buildNumber: 1});
 
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
@@ -137,8 +137,8 @@ describe('Integration: BuildCard', function() {
       ).to.equal('http://example.com/pull/123');
     });
 
-    it('shows the gitlab logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the gitlab logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(
         BuildCard.sourceCodeMetadata.gitlabLogo.isVisible,
         'gitlab logo is not visible',
@@ -150,11 +150,11 @@ describe('Integration: BuildCard', function() {
   });
 
   describe('with a gitlab self-hosted repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGitlabSelfHostedRepo', 'hasMergeRequest', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-card
+      await this.render(hbs`{{build-card
         build=build
       }}`);
     });
@@ -166,8 +166,8 @@ describe('Integration: BuildCard', function() {
       ).to.equal('http://example.com/merge_requests/123');
     });
 
-    it('shows the gitlab logo', function() {
-      percySnapshot(this.test.fullTitle());
+    it('shows the gitlab logo', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(
         BuildCard.sourceCodeMetadata.gitlabLogo.isVisible,
         'gitlab logo is not visible',

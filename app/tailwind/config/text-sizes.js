@@ -21,7 +21,7 @@ export default {
   '2xs': '8px',
      xs: '10px',
      sm: '12px',
-   base: '16px',
+   base: '14px',
      lg: '18px',
      xl: '20px',
   '2xl': '24px',

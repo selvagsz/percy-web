@@ -1,5 +1,5 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import {percySnapshot} from 'ember-percy';
 import {make, makeList} from 'ember-data-factory-guy';
@@ -11,13 +11,13 @@ import moment from 'moment';
 import sinon from 'sinon';
 
 describe.skip('Integration: RepoIntegratorComponent', function() {
-  setupComponentTest('repo-integrator', {
+  setupRenderingTest('repo-integrator', {
     integration: true,
   });
 
-  beforeEach(function() {
+  beforeEach(async function() {
     RepoIntegrator.setContext(this);
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
   });
 
   // Something about ember-power-select is not tearing down the component correctly if it is
@@ -25,61 +25,61 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
   // this problem.
 
   describe('with a github integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make('organization', 'withGithubIntegration', 'withGithubRepos');
       project.set('organization', organization);
 
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('renders powerselect closed', function() {
+    it('renders powerselect closed', async function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('renders powerselect open', function() {
-      clickTrigger();
+    it('renders powerselect open', async function() {
+      await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
 
-      percySnapshot(this.test.fullTitle());
-      clickTrigger();
+      await percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 
   describe('with a gitlab integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make('organization', 'withGitlabIntegration', 'withGitlabRepos');
       project.set('organization', organization);
 
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('renders powerselect closed', function() {
+    it('renders powerselect closed', async function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('renders powerselect open', function() {
-      clickTrigger();
+    it('renders powerselect open', async function() {
+      await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab');
 
-      percySnapshot(this.test.fullTitle());
-      clickTrigger();
+      await percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 
   describe('with a gitlab self-hosted integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make(
         'organization',
@@ -90,27 +90,27 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
 
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('renders powerselect closed', function() {
+    it('renders powerselect closed', async function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('renders powerselect open', function() {
-      clickTrigger();
+    it('renders powerselect open', async function() {
+      await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitLab Self-Managed');
 
-      percySnapshot(this.test.fullTitle());
-      clickTrigger();
+      await percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 
   describe('with a github enterprise integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make(
         'organization',
@@ -120,56 +120,56 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
       project.set('organization', organization);
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('renders powerselect closed', function() {
+    it('renders powerselect closed', async function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('renders powerselect open', function() {
-      clickTrigger();
+    it('renders powerselect open', async function() {
+      await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub Enterprise');
 
-      percySnapshot(this.test.fullTitle());
-      clickTrigger();
+      await percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 
   describe('with multiple integrations', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make('organization', 'withMultipleIntegrations');
       project.set('organization', organization);
       this.setProperties({project});
       repoRefreshServiceStub(this, null, null);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('renders powerselect closed', function() {
+    it('renders powerselect closed', async function() {
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(false);
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('renders powerselect open', function() {
-      clickTrigger();
+    it('renders powerselect open', async function() {
+      await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.groups(0).name).to.eq('GitHub');
       expect(RepoIntegrator.dropdown.groups(1).name).to.eq('GitLab');
       expect(RepoIntegrator.dropdown.groups(2).name).to.eq('GitLab Self-Managed');
       expect(RepoIntegrator.dropdown.groups(3).name).to.eq('GitHub Enterprise');
-      percySnapshot(this.test.fullTitle());
-      clickTrigger();
+      await percySnapshot(this.test.fullTitle());
+      await clickTrigger();
     });
   });
 
   describe('with no integrations', function() {
     let freshReposStub;
-    beforeEach(function() {
+    beforeEach(async function() {
       const project = make('project');
       const organization = make('organization', {lastSyncedAt: undefined});
       project.set('organization', organization);
@@ -179,15 +179,15 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
       freshReposStub = sinon.stub();
       repoRefreshServiceStub(this, null, null, freshReposStub);
 
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
     });
 
-    it('displays no integrations message', function() {
+    it('displays no integrations message', async function() {
       expect(RepoIntegrator.isNoIntegrationsMessageVisible).to.equal(true);
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('does not call getFreshRepos', function() {
+    it('does not call getFreshRepos', async function() {
       expect(freshReposStub).to.not.have.been.called;
     });
   });
@@ -197,7 +197,7 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
     let organization;
     let oldRepos;
     let oldUpdatedAt;
-    beforeEach(function() {
+    beforeEach(async function() {
       project = make('project');
       organization = make('organization', 'withMultipleIntegrations', 'withStaleRepoData');
 
@@ -209,11 +209,11 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
       oldRepos = organization.get('repos');
       oldUpdatedAt = organization.get('lastSyncedAt');
       repoRefreshServiceStub(this, oldRepos, oldUpdatedAt);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
       await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: 20 minutes ago');
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
       await clickTrigger();
     });
 
@@ -222,12 +222,12 @@ describe.skip('Integration: RepoIntegratorComponent', function() {
       const newRepos = makeList('repo', expectedRepoCount, 'githubEnterprise');
       const newUpdatedAt = moment().subtract(1, 'minutes');
       repoRefreshServiceStub(this, newRepos, newUpdatedAt);
-      this.render(hbs`{{projects/repo-integrator project=project}}`);
+      await this.render(hbs`{{projects/repo-integrator project=project}}`);
       await clickTrigger();
       expect(RepoIntegrator.dropdown.isSelectorOpen).to.eq(true);
       expect(RepoIntegrator.dropdown.options.count).to.eq(expectedRepoCount);
       expect(RepoIntegrator.repoFreshness.message).to.eq('Last updated: a minute ago');
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
       await clickTrigger();
     });
   });

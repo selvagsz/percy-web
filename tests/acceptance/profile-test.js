@@ -1,5 +1,6 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import UserSettingsPageObject from '../pages/user-settings-page';
+import {percySnapshot} from 'ember-percy';
 
 describe('Acceptance: User Settings', function() {
   setupAcceptance();
@@ -9,15 +10,15 @@ describe('Acceptance: User Settings', function() {
     server.create('identity', 'githubIdentity', {user});
   });
 
-  it('displays profile info page', function() {
-    UserSettingsPageObject.visitUserSettingsPage();
+  it('displays profile info page', async function() {
+    await UserSettingsPageObject.visitUserSettingsPage();
 
-    percySnapshot(this.test.fullTitle() + ' before submitting');
+    await percySnapshot(this.test.fullTitle() + ' before submitting');
 
-    UserSettingsPageObject.profileForm
+    await UserSettingsPageObject.profileForm
       .fillInName('Tyrion Targaryen')
       .fillInEmail('tyrion@motherofdragons.biz')
       .submitForm();
-    percySnapshot(this.test.fullTitle() + ' after submitting');
+    await percySnapshot(this.test.fullTitle() + ' after submitting');
   });
 });

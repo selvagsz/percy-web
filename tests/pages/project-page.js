@@ -19,11 +19,13 @@ const SELECTORS = {
   PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
   INFINITY_LOADER: '.infinity-loader', // only one possible per page
   PUBLIC_PROJECT_ICON: '[data-test-public-project-icon]',
+  PROJECT_SETTINGS_ICON: '[data-test-settings-icon]',
 };
 
 const ProjectPage = {
   scope: SELECTORS.PROJECT_CONTAINER,
 
+  visitOrg: visitable('/:orgSlug'),
   visitProject: visitable('/:orgSlug/:projectSlug'),
 
   builds: collection({
@@ -62,6 +64,7 @@ const ProjectPage = {
   isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
 
   isPublicProjectIconVisible: isVisible(SELECTORS.PUBLIC_PROJECT_ICON),
+  clickProjectSettings: clickable(SELECTORS.PROJECT_SETTINGS_ICON),
 };
 
 export default create(ProjectPage);
