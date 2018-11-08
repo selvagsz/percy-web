@@ -2,8 +2,6 @@ import sinon from 'sinon';
 
 // using ember-simple-auth-auth0 test helper as a template:
 // stub a required thing on the auth0 service, which _is_ available from the registry.
-// You must pass in the application context
-// (in most tests this will look like `stubLockModal(this.application)`)
 export default function stubLockModal(application) {
   const {__container__: container} = application;
   const auth0 = container.lookup('service:auth0');

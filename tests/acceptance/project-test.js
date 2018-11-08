@@ -5,7 +5,9 @@ import ProjectPage from 'percy-web/tests/pages/project-page';
 import ProjectSettingsPage from 'percy-web/tests/pages/project-settings-page';
 import sinon from 'sinon';
 import {beforeEach} from 'mocha';
-import 'ember-launch-darkly/test-support/helpers/with-variation';
+import {withVariation} from 'ember-launch-darkly/test-support/helpers/with-variation';
+import {percySnapshot} from 'ember-percy';
+import {click, visit, currentRouteName} from '@ember/test-helpers';
 
 describe('Acceptance: Project', function() {
   setupAcceptance();
@@ -17,11 +19,11 @@ describe('Acceptance: Project', function() {
 
     it('can create', async function() {
       await visit(`/${this.organization.slug}`);
-      expect(currentPath()).to.equal('organization.index');
+      expect(currentRouteName()).to.equal('organization.index');
       await percySnapshot(this.test.fullTitle() + ' | index');
 
-      await click('a:contains("Create your first project")');
-      expect(currentPath()).to.equal('organizations.organization.projects.new');
+      await click('.data-test-create-first-project');
+      expect(currentRouteName()).to.equal('organizations.organization.projects.new');
 
       await percySnapshot(this.test.fullTitle() + ' | new project');
     });
@@ -41,24 +43,24 @@ describe('Acceptance: Project', function() {
 
     it('shows admin specific links', async function() {
       await visit(`/${this.organization.slug}`);
-      expect(currentPath()).to.equal('organization.index');
+      expect(currentRouteName()).to.equal('organization.index');
       await percySnapshot(this.test.fullTitle() + ' | index | admin mode');
     });
 
     it('links to invite team members page', async function() {
       await visit(`/${this.organization.slug}`);
-      expect(currentPath()).to.equal('organization.index');
+      expect(currentRouteName()).to.equal('organization.index');
 
-      await click('a:contains("invite team members")');
-      expect(currentPath()).to.equal('organizations.organization.users.invite');
+      await click('.data-test-invite-team-members');
+      expect(currentRouteName()).to.equal('organizations.organization.users.invite');
     });
 
     it('links to install github intergration page', async function() {
       await visit(`/${this.organization.slug}`);
-      expect(currentPath()).to.equal('organization.index');
+      expect(currentRouteName()).to.equal('organization.index');
 
-      await click('a:contains("GitHub")');
-      expect(currentPath()).to.equal('organizations.organization.integrations.github');
+      await click('.data-test-install-github');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.github');
     });
   });
 
@@ -81,7 +83,7 @@ describe('Acceptance: Project', function() {
 
     it('shows environment variables and demo project instructions', async function() {
       await ProjectPage.visitProject(urlParams);
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
 
       await percySnapshot(this.test);
       await ProjectPage.clickQuickstartButton();
@@ -119,7 +121,7 @@ describe('Acceptance: Project', function() {
         projectSlug: disabledProject.slug,
       });
 
-      expect(currentPath()).to.equal('organization.project.settings');
+      expect(currentRouteName()).to.equal('organization.project.settings');
       expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
       expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
       expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
@@ -133,7 +135,7 @@ describe('Acceptance: Project', function() {
         projectSlug: enabledProject.slug,
       });
 
-      expect(currentPath()).to.equal('organization.project.settings');
+      expect(currentRouteName()).to.equal('organization.project.settings');
       expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
       expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
       expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
@@ -174,7 +176,7 @@ describe('Acceptance: Project', function() {
     });
 
     it('displays webhook configs', async function() {
-      withVariation('webhooks', true); // eslint-disable-line
+      withVariation(this.owner, 'webhooks', true); // eslint-disable-line
 
       enabledProject.update({webhookConfigs: [webhookConfig]});
 
@@ -191,7 +193,7 @@ describe('Acceptance: Project', function() {
     });
 
     it('transitions to webhook config form', async function() {
-      withVariation('webhooks', true); // eslint-disable-line
+      withVariation(this.owner, 'webhooks', true); // eslint-disable-line
       window.crypto.getRandomValues = sinon.fake.returns(new Uint8Array(32));
 
       await ProjectSettingsPage.visitProjectSettings({
@@ -203,7 +205,9 @@ describe('Acceptance: Project', function() {
 
       await percySnapshot(this.test);
 
-      expect(currentPath()).to.equal('organization.project.integrations.webhooks.webhook-config');
+      expect(currentRouteName()).to.equal(
+        'organization.project.integrations.webhooks.webhook-config',
+      );
     });
 
     describe('browser toggling', function() {
@@ -269,7 +273,7 @@ describe('Acceptance: Project', function() {
 
     describe('updating project settings', function() {
       it('sends correct data', async function() {
-        withVariation('public-project-switch', true); // eslint-disable-line
+        withVariation(this.owner, 'public-project-switch', true); // eslint-disable-line
 
         const stub = sinon.stub();
         server.patch('/projects/:full_slug', function(schema, request) {
@@ -301,7 +305,7 @@ describe('Acceptance: Project', function() {
           publiclyReadable: true,
         });
 
-        expect(currentPath()).to.equal('organization.project.index');
+        expect(currentRouteName()).to.equal('organization.project.index');
       });
     });
   });
@@ -356,7 +360,7 @@ describe('Acceptance: Project', function() {
     it('shows builds on index', async function() {
       await ProjectPage.visitProject(urlParams);
       await percySnapshot(this.test);
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
     });
 
     it('hides the loader when there are less than 50 builds', async function() {
@@ -381,10 +385,10 @@ describe('Acceptance: Project', function() {
 
     it('navigates to build page after clicking build', async function() {
       await ProjectPage.visitProject(urlParams);
-      expect(currentPath()).to.equal('organization.project.index');
+      expect(currentRouteName()).to.equal('organization.project.index');
 
       await ProjectPage.finishedBuilds[0].click();
-      expect(currentPath()).to.equal('organization.project.builds.build.index');
+      expect(currentRouteName()).to.equal('organization.project.builds.build.index');
 
       await percySnapshot(this.test.fullTitle());
     });

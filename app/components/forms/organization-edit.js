@@ -6,9 +6,6 @@ export default BaseFormComponent.extend({
   organization: null,
   classes: null,
 
-  classNames: ['FormsOrganizationEdit', 'Form'],
-  classNameBindings: ['classes'],
-
   model: alias('organization'),
   validator: OrganizationEditValidations,
 });

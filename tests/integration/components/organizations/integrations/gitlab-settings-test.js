@@ -1,5 +1,5 @@
-import {it, describe, beforeEach, afterEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {it, describe, beforeEach} from 'mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import {percySnapshot} from 'ember-percy';
 import {make} from 'ember-data-factory-guy';
@@ -10,26 +10,20 @@ import sinon from 'sinon';
 import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
 
 describe('Integration: GitlabSettings', function() {
-  let isAdminModeEnabled;
-  setupComponentTest('gitlab-settings', {
+  setupRenderingTest('gitlab-settings', {
     integration: true,
   });
 
   beforeEach(function() {
-    isAdminModeEnabled = this.get('isAdminEnabled');
     AdminMode.setAdminMode();
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     GitlabSettings.setContext(this);
     const routeHelperStub = sinon.stub();
     this.set('actions', {redirectToIntegrationsIndex: routeHelperStub});
   });
 
-  afterEach(function() {
-    this.set('isAdminEnabled', isAdminModeEnabled);
-  });
-
   describe('with a gitlab integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user');
       const organization = make('organization', 'withGitlabIntegration');
       const gitlabIntegration = organization.get('gitlabIntegration');
@@ -37,7 +31,7 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-      this.render(hbs`{{
+      await this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
@@ -45,7 +39,7 @@ describe('Integration: GitlabSettings', function() {
       }}`);
     });
 
-    it('shows the settings form', function() {
+    it('shows the settings form', async function() {
       expect(GitlabSettings.isPersonalAccessTokenFieldVisible).to.eq(true);
       expect(GitlabSettings.integrationSettings.personalAccessTokenField.inputPlaceholder).to.equal(
         '••••••••••••••••••••',
@@ -60,15 +54,15 @@ describe('Integration: GitlabSettings', function() {
         'Gitlab Host field is visible when it should be hidden',
       );
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('validates the personal access token field', function() {
-      GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
-      percySnapshot(this.test.fullTitle());
+    it('validates the personal access token field', async function() {
+      await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('does not show the firewall contact link', function() {
+    it('does not show the firewall contact link', async function() {
       expect(
         GitlabSettings.header.isFirewallNotePresent,
         'Firewall note should not be present',
@@ -81,7 +75,7 @@ describe('Integration: GitlabSettings', function() {
   });
 
   describe('without an existing gitlab integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user');
       const organization = make('organization', 'withNewGitlabIntegration');
       const gitlabIntegration = organization.get('gitlabIntegration');
@@ -92,7 +86,7 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-      this.render(hbs`{{
+      await this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
@@ -100,7 +94,7 @@ describe('Integration: GitlabSettings', function() {
       }}`);
     });
 
-    it('shows the settings form', function() {
+    it('shows the settings form', async function() {
       expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,
@@ -118,12 +112,12 @@ describe('Integration: GitlabSettings', function() {
         false,
         'Gitlab Host field is visible when it should be hidden',
       );
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
   });
 
   describe('with a gitlab self-hosted integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user');
       const organization = make('organization', 'withGitlabSelfHostedIntegration');
       const gitlabIntegration = organization.get('gitlabSelfHostedIntegration');
@@ -131,7 +125,7 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-      this.render(hbs`{{
+      await this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
@@ -139,7 +133,7 @@ describe('Integration: GitlabSettings', function() {
       }}`);
     });
 
-    it('shows the firewall contact link', function() {
+    it('shows the firewall contact link', async function() {
       const showSupportStub = sinon.stub();
       mockIntercomService(this, showSupportStub);
 
@@ -154,11 +148,11 @@ describe('Integration: GitlabSettings', function() {
         true,
       );
 
-      GitlabSettings.header.contactSupport();
+      await GitlabSettings.header.contactSupport();
       expect(showSupportStub).to.have.been.called;
     });
 
-    it('shows the settings form', function() {
+    it('shows the settings form', async function() {
       expect(GitlabSettings.isGitlabHostFieldVisible).to.equal(
         true,
         'Gitlab Host field not visible',
@@ -175,29 +169,29 @@ describe('Integration: GitlabSettings', function() {
         'Personal access token not installed',
       );
 
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('validates the gitlab personal access token field correctly', function() {
+    it('validates the gitlab personal access token field correctly', async function() {
       expect(GitlabSettings.isGitlabHostFieldVisible, 'Host field is not visible').to.eq(true);
-      GitlabSettings.integrationSettings.gitlabHostField.fillIn('httpd://gitlab.percy.io');
-      percySnapshot(this.test.fullTitle());
+      await GitlabSettings.integrationSettings.gitlabHostField.fillIn('httpd://gitlab.percy.io');
+      await percySnapshot(this.test.fullTitle());
     });
 
-    it('validates the gitlab host field correctly', function() {
+    it('validates the gitlab host field correctly', async function() {
       expect(GitlabSettings.isGitlabHostFieldVisible, 'Host field is not visible').to.eq(true);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,
         'Personal access token field not visible',
       ).to.eq(true);
-      GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
-      GitlabSettings.integrationSettings.gitlabHostField.fillIn('httpd://gitlab.percy.io');
-      percySnapshot(this.test.fullTitle());
+      await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn('wrong');
+      await GitlabSettings.integrationSettings.gitlabHostField.fillIn('httpd://gitlab.percy.io');
+      await percySnapshot(this.test.fullTitle());
     });
   });
 
   describe('without an existing self-hosted gitlab integration', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user');
       const organization = make('organization', 'withNewGitlabSelfHostedIntegration');
       const gitlabIntegration = organization.get('gitlabSelfHostedIntegration');
@@ -208,7 +202,7 @@ describe('Integration: GitlabSettings', function() {
       organization.set('_filteredOrganizationUsers', [organizationUser]);
       user.set('organizations', [organization]);
       this.setProperties({user, organization, gitlabIntegration});
-      this.render(hbs`{{
+      await this.render(hbs`{{
         organizations/integrations/gitlab-settings
         currentUser=user
         organization=organization
@@ -216,7 +210,7 @@ describe('Integration: GitlabSettings', function() {
       }}`);
     });
 
-    it('shows the settings form', function() {
+    it('shows the settings form', async function() {
       expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
       expect(
         GitlabSettings.isPersonalAccessTokenFieldVisible,
@@ -227,7 +221,7 @@ describe('Integration: GitlabSettings', function() {
         'A personal access token has already been installed',
       );
       expect(GitlabSettings.isGitlabHostFieldVisible, 'Host field is not visible').to.eq(true);
-      percySnapshot(this.test.fullTitle());
+      await percySnapshot(this.test.fullTitle());
     });
   });
 });

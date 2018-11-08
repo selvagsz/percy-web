@@ -1,6 +1,6 @@
 /* jshint expr:true */
-import {setupComponentTest} from 'ember-mocha';
-import {beforeEach, afterEach, it, describe} from 'mocha';
+import {setupRenderingTest} from 'ember-mocha';
+import {beforeEach, it, describe} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make} from 'ember-data-factory-guy';
@@ -9,20 +9,14 @@ import BuildInfoDropdown from 'percy-web/tests/pages/components/build-info-dropd
 import AdminMode from 'percy-web/lib/admin-mode';
 
 describe('Integration: BuildInfoDropdownComponent', function() {
-  let isAdminModeEnabled;
-  setupComponentTest('build-info-dropdown', {
+  setupRenderingTest('build-info-dropdown', {
     integration: true,
   });
 
   beforeEach(function() {
-    isAdminModeEnabled = this.get('isAdminEnabled');
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     BuildInfoDropdown.setContext(this);
     AdminMode.clear();
-  });
-
-  afterEach(function() {
-    this.set('isAdminEnabled', isAdminModeEnabled);
   });
 
   let states = [
@@ -48,10 +42,14 @@ describe('Integration: BuildInfoDropdownComponent', function() {
       let build = make.apply(this, ['build'].concat(state));
       this.set('build', build);
 
-      this.render(hbs`{{build-info-dropdown build=build isShowingModal=true renderInPlace=true}}`);
+      await this.render(hbs`{{build-info-dropdown
+        build=build
+        isShowingModal=true
+        renderInPlace=true
+      }}`);
       await BuildInfoDropdown.toggleBuildInfoDropdown();
 
-      percySnapshot(this.test);
+      await percySnapshot(this.test);
     });
   });
 
@@ -59,7 +57,7 @@ describe('Integration: BuildInfoDropdownComponent', function() {
     const build = make('build', 'finished');
     this.set('build', build);
 
-    this.render(hbs`{{build-info-dropdown
+    await this.render(hbs`{{build-info-dropdown
       build=build
       isShowingModal=true
       renderInPlace=true
@@ -68,7 +66,7 @@ describe('Integration: BuildInfoDropdownComponent', function() {
 
     expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(false);
 
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
   it('shows admin info if user is an admin', async function() {
@@ -77,7 +75,7 @@ describe('Integration: BuildInfoDropdownComponent', function() {
 
     AdminMode.setAdminMode();
 
-    this.render(hbs`{{build-info-dropdown
+    await this.render(hbs`{{build-info-dropdown
        build=build
        isShowingModal=true
        renderInPlace=true
@@ -85,48 +83,48 @@ describe('Integration: BuildInfoDropdownComponent', function() {
     await BuildInfoDropdown.toggleBuildInfoDropdown();
     expect(BuildInfoDropdown.isAdminDetailsPresent).to.equal(true);
 
-    percySnapshot(this.test);
+    await percySnapshot(this.test);
   });
 
   describe('with a gitlab self-hosted repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGitlabSelfHostedRepo', 'hasMergeRequest', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-info-dropdown
+      await this.render(hbs`{{build-info-dropdown
         build=build
         isShowingModal=true
         renderInPlace=true
       }}`);
-      BuildInfoDropdown.toggleBuildInfoDropdown();
+      await BuildInfoDropdown.toggleBuildInfoDropdown();
     });
 
-    it('has the correct pull request label', function() {
+    it('has the correct pull request label', async function() {
       expect(BuildInfoDropdown.pullRequestLabelText, 'pull request label is incorrect').to.equal(
         'Merge Request',
       );
-      percySnapshot(this.test.fullTitle(), {widths: [450]});
+      await percySnapshot(this.test.fullTitle(), {widths: [450]});
     });
   });
 
   describe('with a github repo', function() {
-    beforeEach(function() {
+    beforeEach(async function() {
       const build = make('build', 'withGithubRepo', 'hasPullRequest', {buildNumber: 1});
       this.setProperties({build});
 
-      this.render(hbs`{{build-info-dropdown
+      await this.render(hbs`{{build-info-dropdown
         build=build
         isShowingModal=true
         renderInPlace=true
       }}`);
-      BuildInfoDropdown.toggleBuildInfoDropdown();
+      await BuildInfoDropdown.toggleBuildInfoDropdown();
     });
 
-    it('has the correct pull request label', function() {
+    it('has the correct pull request label', async function() {
       expect(BuildInfoDropdown.pullRequestLabelText, 'pull request label is incorrect').to.equal(
         'Pull Request',
       );
-      percySnapshot(this.test.fullTitle(), {widths: [450]});
+      await percySnapshot(this.test.fullTitle(), {widths: [450]});
     });
   });
 });

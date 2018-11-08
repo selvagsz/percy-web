@@ -1,4 +1,6 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
+import {percySnapshot} from 'ember-percy';
+import {visit, currentRouteName} from '@ember/test-helpers';
 
 describe('Acceptance: GitHub App Setup', function() {
   setupAcceptance();
@@ -15,14 +17,14 @@ describe('Acceptance: GitHub App Setup', function() {
 
   it('shows GitHub integration processing page', async function() {
     await visit('/setup/github-app?installation_id=123');
-    expect(currentPath()).to.equal('setup.github-app');
+    expect(currentRouteName()).to.equal('setup.github-app');
 
     await percySnapshot(this.test);
   });
 
   it('redirects to organization page when the installation_id is present', async function() {
     await visit(`/setup/github-app?installation_id=${githubInstallationId}`);
-    expect(currentPath()).to.equal('organization.index');
+    expect(currentRouteName()).to.equal('organization.index');
   });
 
   context('with a project', function() {
@@ -31,7 +33,7 @@ describe('Acceptance: GitHub App Setup', function() {
     });
     it('redirects to settings when the installation_id and project present', async function() {
       await visit(`/setup/github-app?installation_id=${githubInstallationId}`);
-      expect(currentPath()).to.equal('organizations.organization.integrations.index');
+      expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
     });
   });
 });

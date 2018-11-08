@@ -4,7 +4,7 @@
 <div class="Card Card--extraPadded u-text-center">
   <h3>Welcome <strong>{{model.name}}</strong>!</h3>
   <p>
-    {{#link-to "organizations.organization.projects.new" model.slug classNames="btn btn-primary shadow-purple-lg"}}
+    {{#link-to "organizations.organization.projects.new" model.slug classNames="btn btn-primary shadow-purple-lg data-test-create-first-project"}}
       Create your first project
     {{/link-to}}
   </p>
@@ -13,7 +13,7 @@
   </p>
   {{!-- TODO: #billingadmins --}}
   {{#if (eq "admin" model.currentUserMembership.role)}}
-    <p>You can also {{#link-to "organizations.organization.users.invite" model.slug}}invite team members{{/link-to}} or {{#link-to "organizations.organization.integrations.github" model.slug}}install the GitHub integration{{/link-to}}.</p>
+    <p>You can also {{#link-to "organizations.organization.users.invite" model.slug class="data-test-invite-team-members"}}invite team members{{/link-to}} or {{#link-to "organizations.organization.integrations.github" model.slug class="data-test-install-github"}}install the GitHub integration{{/link-to}}.</p>
   {{/if}}
 </div>
 

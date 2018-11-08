@@ -1,14 +1,15 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
 import sinon from 'sinon';
+import {settled} from '@ember/test-helpers';
+
 import BrowserFamilySelector from 'percy-web/tests/pages/components/projects/browser-family-selector'; // eslint-disable-line
-import {getOwner} from '@ember/application';
 
 describe('Integration: BrowserFamilySelector', function() {
-  setupComponentTest('projects/browser-family-selector', {
+  setupRenderingTest('projects/browser-family-selector', {
     integration: true,
   });
 
@@ -18,7 +19,7 @@ describe('Integration: BrowserFamilySelector', function() {
 
   describe('browser active behavior', function() {
     beforeEach(function() {
-      setupFactoryGuy(this.container);
+      setupFactoryGuy(this);
       BrowserFamilySelector.setContext(this);
 
       const firefoxBrowserFamily = make('browser-family');
@@ -37,13 +38,13 @@ describe('Integration: BrowserFamilySelector', function() {
       });
     });
 
-    it('shows chrome as selected when project has chrome browser_target', function() {
+    it('shows chrome as selected when project has chrome browser_target', async function() {
       make('project-browser-target', {
         project,
         browserTarget: chromeBrowserTarget,
       });
 
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=stub
@@ -54,13 +55,13 @@ describe('Integration: BrowserFamilySelector', function() {
       expect(BrowserFamilySelector.firefoxButton.isActive).to.equal(false);
     });
 
-    it('shows firefox as selected when project has firefox browser target', function() {
+    it('shows firefox as selected when project has firefox browser target', async function() {
       make('project-browser-target', {
         project,
         browserTarget: firefoxBrowserTarget,
       });
 
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=stub
@@ -71,7 +72,7 @@ describe('Integration: BrowserFamilySelector', function() {
       expect(BrowserFamilySelector.firefoxButton.isActive).to.equal(true);
     });
 
-    it('shows both browsers as selected when project has both browser targets', function() {
+    it('shows both browsers as selected when project has both browser targets', async function() {
       make('project-browser-target', {
         project,
         browserTarget: chromeBrowserTarget,
@@ -80,7 +81,7 @@ describe('Integration: BrowserFamilySelector', function() {
         project,
         browserTarget: firefoxBrowserTarget,
       });
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=stub
@@ -92,6 +93,9 @@ describe('Integration: BrowserFamilySelector', function() {
     });
   });
 
+  // These tests don't wait on the add/remove browser action to finish. Not sure why, but
+  // `await settled()` seems to help...
+  // Perhaps this issue is helpful: https://github.com/emberjs/ember-test-helpers/issues/339
   describe('updating project browser families', function() {
     let project;
     let removeProjectBrowserTargetForFamilyStub;
@@ -102,7 +106,7 @@ describe('Integration: BrowserFamilySelector', function() {
     let firefoxBrowserFamily;
 
     beforeEach(function() {
-      setupFactoryGuy(this.container);
+      setupFactoryGuy(this);
       BrowserFamilySelector.setContext(this);
 
       firefoxBrowserFamily = make('browser-family');
@@ -133,7 +137,7 @@ describe('Integration: BrowserFamilySelector', function() {
         browserTarget: firefoxBrowserTarget,
       });
 
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=removeProjectBrowserTargetForFamilyStub
@@ -141,7 +145,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickChrome();
-
+      await settled();
       expect(removeProjectBrowserTargetForFamilyStub).to.have.been.calledWith(
         chromeBrowserFamily,
         project,
@@ -154,7 +158,7 @@ describe('Integration: BrowserFamilySelector', function() {
         browserTarget: chromeBrowserTarget,
       });
 
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=removeProjectBrowserTargetForFamilyStub
@@ -162,7 +166,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickFirefox();
-
+      await settled();
       expect(addProjectBrowserTargetForFamilyStub).to.have.been.calledWith(
         firefoxBrowserFamily,
         project,
@@ -170,7 +174,7 @@ describe('Integration: BrowserFamilySelector', function() {
     });
 
     it('shows a flash message when trying to remove the last browser family', async function() {
-      const flashMessageService = getOwner(this)
+      const flashMessageService = this.owner
         .lookup('service:flash-messages')
         .registerTypes(['info']);
       sinon.stub(flashMessageService, 'info');
@@ -180,7 +184,7 @@ describe('Integration: BrowserFamilySelector', function() {
         browserTarget: firefoxBrowserTarget,
       });
 
-      this.render(hbs`{{projects/browser-family-selector
+      await this.render(hbs`{{projects/browser-family-selector
         allBrowserFamilies=allBrowserFamilies
         project=project
         removeProjectBrowserTargetForFamily=removeProjectBrowserTargetForFamilyStub
@@ -188,7 +192,7 @@ describe('Integration: BrowserFamilySelector', function() {
       }}`);
 
       await BrowserFamilySelector.clickFirefox();
-
+      await settled();
       expect(flashMessageService.info).to.have.been.calledWith(
         'A project must have at least one browser',
       );

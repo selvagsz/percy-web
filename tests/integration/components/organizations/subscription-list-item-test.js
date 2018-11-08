@@ -1,15 +1,16 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
-import StripeMock from 'ember-stripe-elements/utils/stripe-mock';
 import SubscriptionListItem from 'percy-web/tests/pages/components/organizations/subscription-list-item'; // eslint-disable-line
 import sinon from 'sinon';
 import stubServiceIntegration from 'percy-web/tests/helpers/stub-service-integration';
+import mockStripeService from 'percy-web/tests/helpers/mock-stripe-service';
 
+// Stripe is breaking this
 describe('Integration: SubscriptionListItem', function() {
-  setupComponentTest('organizations/subscription-list-item', {
+  setupRenderingTest('organizations/subscription-list-item', {
     integration: true,
   });
 
@@ -25,8 +26,8 @@ describe('Integration: SubscriptionListItem', function() {
   };
 
   beforeEach(function() {
-    window.Stripe = StripeMock;
-    setupFactoryGuy(this.container);
+    mockStripeService(this);
+    setupFactoryGuy(this);
     SubscriptionListItem.setContext(this);
   });
 
@@ -45,8 +46,8 @@ describe('Integration: SubscriptionListItem', function() {
     });
 
     describe('Button text', function() {
-      beforeEach(function() {
-        this.render(hbs`{{organizations/subscription-list-item
+      beforeEach(async function() {
+        await this.render(hbs`{{organizations/subscription-list-item
           planData=planData
           organization=organization
           isActivePlan=isActivePlan
@@ -67,8 +68,8 @@ describe('Integration: SubscriptionListItem', function() {
     });
 
     describe('interacting with button', function() {
-      it('Select plan button is disabled when isActivePlan is true', function() {
-        this.render(hbs`{{organizations/subscription-list-item
+      it('Select plan button is disabled when isActivePlan is true', async function() {
+        await this.render(hbs`{{organizations/subscription-list-item
           planData=planData
           organization=organization
           isActivePlan=true
@@ -77,8 +78,8 @@ describe('Integration: SubscriptionListItem', function() {
         expect(SubscriptionListItem.isSelectPlanButtonDisabled).to.equal(true);
       });
 
-      it('Select plan button is enabled when isActivePlan is false', function() {
-        this.render(hbs`{{organizations/subscription-list-item
+      it('Select plan button is enabled when isActivePlan is false', async function() {
+        await this.render(hbs`{{organizations/subscription-list-item
           planData=planData
           organization=organization
           isActivePlan=false
@@ -88,8 +89,8 @@ describe('Integration: SubscriptionListItem', function() {
       });
 
       describe('when org is not a customer', function() {
-        beforeEach(function() {
-          this.render(hbs`{{organizations/subscription-list-item
+        beforeEach(async function() {
+          await this.render(hbs`{{organizations/subscription-list-item
             planData=planData
             organization=organization
             isActivePlan=false
@@ -107,7 +108,7 @@ describe('Integration: SubscriptionListItem', function() {
 
       describe('when org is a customer', function() {
         let changeSubscriptionStub;
-        beforeEach(function() {
+        beforeEach(async function() {
           changeSubscriptionStub = sinon.stub();
           stubServiceIntegration(this, 'subscriptions', 'subscriptionService', {
             changeSubscription: changeSubscriptionStub,
@@ -117,7 +118,7 @@ describe('Integration: SubscriptionListItem', function() {
           organization.set('subscription', subscription);
           this.set('organization', organization);
 
-          this.render(hbs`{{organizations/subscription-list-item
+          await this.render(hbs`{{organizations/subscription-list-item
             planData=planData
             organization=organization
             isActivePlan=false

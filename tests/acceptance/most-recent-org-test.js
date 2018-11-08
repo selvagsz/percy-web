@@ -2,19 +2,20 @@ import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
 import localStorageProxy from 'percy-web/lib/localstorage';
 import SetupLocalStorageSandbox from 'percy-web/tests/helpers/setup-localstorage-sandbox';
+import {visit, currentRouteName, currentURL} from '@ember/test-helpers';
 
 describe('Acceptance: Most recent org', function() {
   describe('when user is not logged in', function() {
     setupAcceptance({authenticate: false});
 
     setupSession(function() {
-      stubLockModal(this.application);
+      stubLockModal(this.owner);
       this.loginUser = false;
     });
 
     it('redirects to login', async function() {
       await visit('/most-recent-org');
-      expect(currentPath()).to.equal('login');
+      expect(currentRouteName()).to.equal('login');
     });
   });
 
@@ -37,7 +38,7 @@ describe('Acceptance: Most recent org', function() {
       it("redirects to user's most recent org", async function() {
         localStorageProxy.set('lastOrganizationSlug', otherOrganization.slug);
         await visit('/most-recent-org');
-        expect(currentPath()).to.equal('organization.index');
+        expect(currentRouteName()).to.equal('organization.index');
         expect(currentURL()).to.include(otherOrganization.slug);
       });
     });
@@ -49,7 +50,7 @@ describe('Acceptance: Most recent org', function() {
 
       it('redirects to organizations.new', async function() {
         await visit('/most-recent-org');
-        expect(currentPath()).to.equal('organizations.new');
+        expect(currentRouteName()).to.equal('organizations.new');
       });
     });
   });

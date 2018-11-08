@@ -5,6 +5,8 @@ import sinon from 'sinon';
 import utils from 'percy-web/lib/utils';
 import {afterEach} from 'mocha';
 import AdminMode from 'percy-web/lib/admin-mode';
+import {percySnapshot} from 'ember-percy';
+import {currentRouteName} from '@ember/test-helpers';
 
 describe('Acceptance: GitLab Integration Settings', function() {
   setupAcceptance();
@@ -27,7 +29,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('does not show gitlab settings', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, integrationType));
-        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.gitlab');
         expect(GitlabSettings.isFormHidden, 'Expected integration to be hidden').to.equal(true);
         expect(GitlabSettings.integrationText).to.equal(
           'This feature requires organization admin permissions.',
@@ -44,7 +46,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('does not show gitlab self-hosted settings', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
         expect(GitlabSettings.isFormHidden, 'Expected integration to be hidden').to.equal(true);
@@ -65,7 +67,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
     describe('without an existing gitlab integration', function() {
       it('allows the integration to be installed', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
-        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.gitlab');
 
         await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
           'xxxxxxxxxxxxxxxxxxxx',
@@ -83,7 +85,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('allows editing gitlab settings', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
-        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.gitlab');
 
         await GitlabSettings.integrationSettings.personalAccessTokenField.fillIn(
           'xxxxxxxxxxxxxxxxxxxx',
@@ -92,15 +94,15 @@ describe('Acceptance: GitLab Integration Settings', function() {
         expect(GitlabSettings.isErrorPresent).to.equal(false, 'There were errors with the form');
         await percySnapshot(this.test.fullTitle());
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
       });
 
       it('can return to the index page', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab'));
-        expect(currentPath()).to.equal('organizations.organization.integrations.gitlab');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.gitlab');
 
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
       });
     });
 
@@ -122,7 +124,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
         ).to.equal('••••••••••••••••••••', 'Personal access token not installed');
 
         await GitlabSettings.delete();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
 
         await percySnapshot(this.test.fullTitle());
       });
@@ -137,7 +139,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
       it('allows the integration to be installed', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
 
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
 
@@ -167,7 +169,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('allows editing settings', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
 
@@ -181,7 +183,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
         await percySnapshot(this.test.fullTitle());
 
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
       });
     });
 
@@ -203,7 +205,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('allows deleting the integration', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
         expect(GitlabSettings.isDeleteButtonDisabled, 'Delete button is disabled').to.eq(false);
@@ -212,7 +214,7 @@ describe('Acceptance: GitLab Integration Settings', function() {
           'Gitlab Host field is not visible',
         );
         await GitlabSettings.delete();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
         expect(
           IntegrationsIndexPage.gitlabSelfHostedIntegration.hasInstallButton,
           'Install button is mising',
@@ -234,12 +236,12 @@ describe('Acceptance: GitLab Integration Settings', function() {
 
       it('can return to the index page', async function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
 
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
       });
     });
 
@@ -254,22 +256,22 @@ describe('Acceptance: GitLab Integration Settings', function() {
         await GitlabSettings.visitSettings(urlParams(organization, 'gitlab-self-hosted'));
         let previouslyWasAdmin = AdminMode.isAdmin();
         AdminMode.setAdminMode();
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
 
         expect(GitlabSettings.integrationName).to.equal('GitLab Self-Managed Integration');
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
 
         await IntegrationsIndexPage.gitlabIntegration.install();
         expect(GitlabSettings.integrationName).to.equal('GitLab Integration');
 
         await GitlabSettings.integrationSettings.toolbar.back();
-        expect(currentPath()).to.equal('organizations.organization.integrations.index');
+        expect(currentRouteName()).to.equal('organizations.organization.integrations.index');
 
         await IntegrationsIndexPage.gitlabSelfHostedIntegration.install();
-        expect(currentPath()).to.equal(
+        expect(currentRouteName()).to.equal(
           'organizations.organization.integrations.gitlab-self-hosted',
         );
         expect(GitlabSettings.integrationName).to.equal('GitLab Self-Managed Integration');

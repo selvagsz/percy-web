@@ -1,5 +1,5 @@
 import {it, describe, beforeEach} from 'mocha';
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {make} from 'ember-data-factory-guy';
@@ -8,25 +8,25 @@ import sinon from 'sinon';
 import mockIntercomService from 'percy-web/tests/helpers/mock-intercom-service';
 
 describe('Integration: SubscriptionList', function() {
-  setupComponentTest('organizations/subscription-list', {
+  setupRenderingTest('organizations/subscription-list', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     SubscriptionList.setContext(this);
   });
 
-  function testShowSupportCalled(context, organization, actionName) {
+  async function testShowSupportCalled(context, organization, actionName) {
     context.setProperties({organization});
-    context.render(hbs`{{organizations/subscription-list
+    await context.render(hbs`{{organizations/subscription-list
       organization=organization
     }}`);
 
     const showSupportStub = sinon.stub();
     mockIntercomService(context, showSupportStub);
 
-    SubscriptionList[actionName]();
+    await SubscriptionList[actionName]();
     expect(showSupportStub).to.have.been.called;
   }
 

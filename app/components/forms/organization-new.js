@@ -6,10 +6,6 @@ export default BaseFormComponent.extend({
   validator: OrganizationNewValidations,
   marketplaceListingPlanId: null,
   needsGithubIdentity: false,
-  classes: null,
-
-  classNames: ['FormsOrganizationNew', 'Form'],
-  classNameBindings: ['classes'],
 
   isInputFocused: computed.not('needsGithubIdentity'),
   isSubmitDisabled: computed.or('changeset.isInvalid', 'changeset.isPristine'),

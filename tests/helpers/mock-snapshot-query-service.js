@@ -7,7 +7,7 @@ export default function mockSnapshotQueryFetches(context, snapshotsUnchanged, sn
     getUnchangedSnapshots: sinon.stub().returns(resolve(snapshotsUnchanged)),
     getChangedSnapshots: sinon.stub().returns(resolve(snapshotsChanged)),
   });
-  context.register('service:snapshotQuery', snapshotQueryServiceStub);
-  context.inject.service('snapshotQuery', {as: 'snapshotQueryService'});
+
+  context.owner.register('service:snapshotQuery', snapshotQueryServiceStub, 'snapshotQuery');
   return snapshotQueryServiceStub;
 }

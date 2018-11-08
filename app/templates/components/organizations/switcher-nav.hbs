@@ -14,7 +14,7 @@
   <div class="PageClickOverlay" {{action "hideSwitcher"}}></div>
   <div class="OrganizationsSwitcherNav-arrow">{{fa-icon "caret-up"}}</div>
   <div class="OrganizationsSwitcherNav-switcher" {{action "hideSwitcher"}}>
-    {{#link-to "organizations.new" classNames="Button Button--onDark Button--withLeftIcon"}}
+    {{#link-to data-test-new-org "organizations.new" classNames="Button Button--onDark Button--withLeftIcon"}}
       {{fa-icon "plus-circle fa--left"}} Create new organization
     {{/link-to}}
     {{#if isOrganizationsLoading}}

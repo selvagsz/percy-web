@@ -20,6 +20,8 @@ const SELECTORS = {
 };
 
 export const SnapshotViewerFull = {
+  // something about ember-modal-dialog requires the test container to be explicitly set.
+  testContainer: '#ember-testing-container',
   scope: SELECTORS.SNAPSHOT_VIEWER_FULL,
   header: SnapshotViewerHeader,
 

@@ -8,6 +8,6 @@ export default function handleOptionallyAuthenticatedFetchError(e, currentUser, 
     throw errorString.includes('401') ? {errors: [{status: 'forbidden'}]} : new Error(e);
   } else {
     // If there's no user, maybe the logged in user has access to the project.
-    return router.transitionTo('login');
+    router.transitionTo('login');
   }
 }

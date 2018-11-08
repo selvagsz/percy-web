@@ -1,6 +1,6 @@
 /* jshint expr:true */
 /* eslint-disable no-unused-expressions */
-import {setupComponentTest} from 'ember-mocha';
+import {setupRenderingTest} from 'ember-mocha';
 import {expect} from 'chai';
 import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
@@ -11,12 +11,12 @@ import CAPPageObject from 'percy-web/tests/pages/components/connected-accounts-p
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 
 describe('Integration: ConnectedAccountsPanel', function() {
-  setupComponentTest('connected-accounts-panel', {
+  setupRenderingTest('connected-accounts-panel', {
     integration: true,
   });
 
   beforeEach(function() {
-    setupFactoryGuy(this.container);
+    setupFactoryGuy(this);
     CAPPageObject.setContext(this);
   });
 
@@ -24,7 +24,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
     let deleteStub;
     let addStub;
     let identity;
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user', {name: 'fardeedoo'});
       identity = make('identity', 'githubProvider', {user});
       deleteStub = sinon.stub();
@@ -36,7 +36,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
         addIdentity: addStub,
       });
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         connected-accounts-panel
         identities=identities
         deleteIdentity=(action "deleteIdentity")
@@ -44,15 +44,15 @@ describe('Integration: ConnectedAccountsPanel', function() {
       }}`);
     });
 
-    it('displays correctly', function() {
-      percySnapshot(this.test.fullTitle());
+    it('displays correctly', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(CAPPageObject.isDeleteGithubIdentityVisible).to.equal(false);
       expect(CAPPageObject.isAddAuth0IdentityVisible).to.equal(true);
       expect(CAPPageObject.isAddGithubIdentityVisible).to.equal(false);
     });
 
-    it('calls addIdentity action when add button is clicked', function() {
-      CAPPageObject.clickAddAuth0Identity();
+    it('calls addIdentity action when add button is clicked', async function() {
+      await CAPPageObject.clickAddAuth0Identity();
       expect(addStub).to.have.been.calledWith('auth0');
     });
   });
@@ -60,7 +60,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
   describe('when a user has only an email/password identity', function() {
     let deleteStub;
     let addStub;
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user', {name: 'fardeedoo'});
       const identity = make('identity', 'auth0Provider', {user});
       deleteStub = sinon.stub();
@@ -72,7 +72,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
         addIdentity: addStub,
       });
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         connected-accounts-panel
         identities=identities
         deleteIdentity=(action "deleteIdentity")
@@ -80,15 +80,15 @@ describe('Integration: ConnectedAccountsPanel', function() {
       }}`);
     });
 
-    it('displays correctly', function() {
-      percySnapshot(this.test.fullTitle());
+    it('displays correctly', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(CAPPageObject.isDeleteAuth0IdentityVisible).to.equal(false);
       expect(CAPPageObject.isAddAuth0IdentityVisible).to.equal(false);
       expect(CAPPageObject.isAddGithubIdentityVisible).to.equal(true);
     });
 
-    it('calls addIdentity action when add button is clicked', function() {
-      CAPPageObject.clickAddGithubIdentity();
+    it('calls addIdentity action when add button is clicked', async function() {
+      await CAPPageObject.clickAddGithubIdentity();
       expect(addStub).to.have.been.calledWith('github');
     });
   });
@@ -97,7 +97,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
     let deleteStub;
     let auth0Identity;
 
-    beforeEach(function() {
+    beforeEach(async function() {
       const user = make('user', {name: 'fardeedoo'});
       auth0Identity = make('identity', 'auth0Provider', {user});
       const githubIdentity = make('identity', 'githubProvider', {user});
@@ -110,7 +110,7 @@ describe('Integration: ConnectedAccountsPanel', function() {
         addIdentity: addStub,
       });
 
-      this.render(hbs`{{
+      await this.render(hbs`{{
         connected-accounts-panel
         identities=identities
         deleteIdentity=(action "deleteIdentity")
@@ -118,16 +118,16 @@ describe('Integration: ConnectedAccountsPanel', function() {
       }}`);
     });
 
-    it('displays correctly', function() {
-      percySnapshot(this.test.fullTitle());
+    it('displays correctly', async function() {
+      await percySnapshot(this.test.fullTitle());
       expect(CAPPageObject.isDeleteAuth0IdentityVisible).to.equal(true);
       expect(CAPPageObject.isDeleteGithubIdentityVisible).to.equal(true);
       expect(CAPPageObject.isAddAuth0IdentityVisible).to.equal(false);
       expect(CAPPageObject.isAddGithubIdentityVisible).to.equal(false);
     });
 
-    it('calls delete action when delete button is clicked', function() {
-      CAPPageObject.clickDeleteAuth0Identity();
+    it('calls delete action when delete button is clicked', async function() {
+      await CAPPageObject.clickDeleteAuth0Identity();
       expect(deleteStub).to.have.been.calledWith(auth0Identity.get('id'));
     });
   });
