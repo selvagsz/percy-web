@@ -1,16 +1,16 @@
 <div class="sticky pin-t bg-white border-b z-1">
   <div class="flex flex-wrap justify-between items-center py-3 px-4">
     <div>
-      <h2 class="m-0 mr-2 text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
-      <p class="mb-0">You’ve used {{users.length}} of NOT SURE seats available. If you need more, head to your billing page.</p>
+      <h2 class="mr-2 mb-sm text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
+      <p class="mb-0 leading-none">You’ve used {{users.length}} of NOT SURE seats available. If you need more, head to your billing page.</p>
     </div>
     {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary"}}
       Invite new user
     {{/link-to}}
   </div>
   <div class="flex px-4 mb-sm">
-    <div class="flex-1 text-sm text-gray-300 font-semibold">Name</div>
-    <div class="flex-1 text-sm text-gray-300 font-semibold">Role</div>
+    <div style="min-width: 200px" class="flex-1 text-sm text-gray-300 font-semibold">Name</div>
+    <div style="min-width: 100px" class="flex-1 text-sm text-gray-300 font-semibold">Role</div>
     <div class="flex-1 text-sm text-gray-300 font-semibold">Joined on</div>
     <div class="flex-2 text-sm text-gray-300 font-semibold">Actions</div>
   </div>

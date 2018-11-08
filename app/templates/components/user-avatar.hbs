@@ -1,5 +1,7 @@
-{{#if (or showPlaceholder (not user))}}
-  <img src="images/placeholder-avatar.jpg">
-{{else}}
-  <img src="{{user.avatarUrl}}">
-{{/if}}
+<div style="width: 40px; height: 40px;" class="rounded-full overflow-hidden {{class}}">
+  {{#if (or showPlaceholder (not user))}}
+    <img src="images/placeholder-avatar.jpg">
+  {{else}}
+    <img src="{{@user.avatarUrl}}">
+  {{/if}}
+</div>

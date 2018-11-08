@@ -7,10 +7,12 @@
       }}
       <div class="font-mono">
         <div class="flex items-center mb-sm">
-          <div class="leading-none" data-test-delivery-url>
+          <div class="leading-none mr-1" data-test-delivery-url>
             POST {{webhookEvent.url}}
           </div>
-          {{label-tag labelText=webhookEvent.event}}
+          <LabelTag>
+            {{webhookEvent.event}}
+          </LabelTag>
         </div>
         <div class="leading-none text-gray-300" data-test-id>
           {{webhookEvent.id}}
