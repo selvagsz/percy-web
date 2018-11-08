@@ -1,3 +1,7 @@
+.shadow-none {
+  box-shadow: none !important;
+}
+
 .shadow-purple-600 {
   box-shadow: 0 0 8px rgba(158, 102, 191, 0.2);
 }

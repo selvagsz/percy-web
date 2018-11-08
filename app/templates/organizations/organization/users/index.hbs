@@ -1,20 +1,31 @@
-<section class="px-2 pt-3">
-  <h1 class="text-xl font-semibold mb-sm">Users</h1>
-  <p class="text-gray-400 w-3/4">
-    These are the settings for the whole Percy organization. If you want to update settings for individual projects, select that
-    project on the left. Not seeing the setting you were looking for?
-    <a class="font-semibold" href="#" {{action (route-action "showSupport")}} data-test-users-show-support>Reach out</a> and let us know!
-  </p>
-  <div class="bg-white rounded shadow-1 p-2 mb-2">
-    <div class="flex justify-between items-center mb-2">
-      <h2 class="text-xl font-semibold mb-0">{{capitalize organization.name}} users ({{users.length}})</h2>
-      {{#link-to "organizations.organization.users.invite" organization.slug classNames="btn btn-primary shadow-purple-lg mb-0"}}
-        Invite New Users
-      {{/link-to}}
+<div class="sticky pin-t bg-white border-b z-1">
+  <div class="flex flex-wrap justify-between items-center py-3 px-4">
+    <div>
+      <h2 class="m-0 mr-2 text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
+      <p class="mb-0">You’ve used {{users.length}} of NOT SURE seats available. If you need more, head to your billing page.</p>
     </div>
-    {{organizations/users-list
-      organization=organization
-      organizationUsers=users
-    }}
+    {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary"}}
+      Invite new user
+    {{/link-to}}
   </div>
+  <div class="flex px-4 mb-sm">
+    <div class="flex-1 text-sm text-gray-300 font-semibold">Name</div>
+    <div class="flex-1 text-sm text-gray-300 font-semibold">Role</div>
+    <div class="flex-1 text-sm text-gray-300 font-semibold">Joined on</div>
+    <div class="flex-2 text-sm text-gray-300 font-semibold">Actions</div>
+  </div>
+</div>
+
+<section class="bg-gray-pattern pb-9">
+  <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">2 Pending invitations</div>
+  {{#each users as |organizationUser index|}}
+    {{#if (lte index 1)}}
+      {{organizations/user-card organizationUser=organizationUser}}
+    {{/if}}
+  {{/each}}
+
+  <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">{{users.length}} Active members</div>
+  {{#each users as |organizationUser|}}
+    {{organizations/user-card organizationUser=organizationUser}}
+  {{/each}}
 </section>

@@ -8,11 +8,4 @@ export default Component.extend({
 
   session: service(),
   currentUser: alias('session.currentUser'),
-
-  isExpanded: false,
-  actions: {
-    toggleExpanded() {
-      this.toggleProperty('isExpanded');
-    },
-  },
 });

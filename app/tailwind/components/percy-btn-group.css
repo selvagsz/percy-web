@@ -4,7 +4,7 @@
 
 .percy-btn-group .btn,
 .percy-btn-group .percy-btn {
-  @apply bg-gray-000 text-gray-400 border-gray-100 shadow-none;
+  @apply bg-gray-000 text-gray-400 border-gray-100;
 }
 
 .percy-btn-group .btn:hover,
