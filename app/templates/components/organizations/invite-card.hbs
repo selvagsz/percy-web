@@ -1,35 +1,41 @@
-<div data-test-invite-card class="user-card border-b cursor-pointer">
-  <div class="p-2 flex items-center">
-    {{gravatar-image email=invite.email size=36}}
-    <div>
-      <div class="leading-none mb-sm font-semibold">
+<div data-test-user-card class="user-card bg-white border-b">
+  <div class="px-4 py-3 flex items-center">
+    <div style="min-width: 200px" class="flex flex-1 items-center pr-2">
+      {{!-- This section is messy and needs some love--}}
+      <div style="width: 40px; height: 40px;" class="rounded-full overflow-hidden flex-none mr-2">
+        {{gravatar-image email=invite.email size=36}}
+      </div>
+      {{!-- --}}
+
+      <div class="font-semibold truncate leading-none">
         {{invite.email}}
       </div>
-      <div class="leading-none text-gray-400 text-sm">
-        Expires: {{moment-format invite.expiresAt 'LLLL'}}
-      </div>
-      <div class="leading-none text-gray-400 text-sm">
-        Role: {{invite.roleTitle}}
-      </div>
-      <div>From User: {{invite.fromUser.name}}</div>
-      <div>Invited on: {{invite.createdAt}}</div>
-      {{#if isAdmin}}
+    </div>
+    <div style="min-width: 100px" class="flex-1 leading-none">
+      <LabelTag @primary-tag={{eq "Administrator" invite.roleTitle}}>
+        {{invite.roleTitle}}
+      </LabelTag>
+    </div>
+    <div class="flex-1 leading-none text-gray-400">
+      <div>Invited on {{moment-format invite.createdAt 'MMMM d, Y'}}</div>
+      <div>By {{invite.fromUser.name}}</div>
+      <div><i>Expires {{moment-format invite.expiresAt 'MMMM d, Y'}}</i></div>
+    </div>
+    <div class="flex-2 flex justify-end">
+      <div class="btn-toolbar">
+        {{#percy-btn disabled=(unless isAdmin true)}}
+          <div>Resend invite</div>
+        {{/percy-btn}}
         {{#copy-button
-          class="btn-icon-only w-full flex justify-between items-center"
           clipboardText=invite.inviteLink
           success=(action "onCopyInviteUrlToClipboard")
         }}
-          <span>Copy invite URL</span>
-          {{inline-svg "link-icon"}}
+          <PercyBtn @disabled={{unless isAdmin true}}>Copy invite link</PercyBtn>
         {{/copy-button}}
-      {{/if}}
-      {{#if isAdmin}}
-        <button type="button" class="btn btn-sm btn-alt"
-          {{action "cancelInvite"}}
-          data-test-invite-card-cancel-invite>
+        {{#percy-btn disabled=(unless isAdmin true) onTap=(action "cancelInvite")}}
           Cancel
-        </button>
-      {{/if}}
+        {{/percy-btn}}
+      </div>
     </div>
   </div>
 </div>

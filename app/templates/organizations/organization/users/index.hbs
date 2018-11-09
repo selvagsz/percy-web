@@ -18,11 +18,13 @@
 </div>
 
 <section class="bg-gray-pattern pb-9">
-  <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">2 Pending invitations</div>
-  {{organizations/invites-list
-    invites=invites
-    organization=organization
-  }}
+  <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">{{invites.length}} Pending invitations</div>
+  {{#each invites as |invite|}}
+    {{organizations/invite-card
+      invite=invite
+      organization=organization
+    }}
+  {{/each}}
 
   <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">{{users.length}} Active members</div>
   {{#each users as |organizationUser|}}
