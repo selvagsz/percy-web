@@ -34,14 +34,14 @@
     Separate multiple branches with spaces. You can use <code>*</code> as a wildcard match. Example: <code>master staging-* release-*.*.*</code>
   </div>
   {{#if (variation "public-project-switch")}}
-    <h2 class="text-xl font-semibold mt-3 mb-sm">Allow public viewers?</h2>
+    <h2 class="text-xl font-semibold mt-3 mb-sm">Privacy</h2>
     <div class="p-2 bg-gray-000 rounded border mb-2">
 
       <div class="{{if isPlanSponsored "hint hint--top hint--rounded"}}" aria-label={{if isPlanSponsored "This project's organization is sponsored, so the project must be public."}}>
         {{form-fields/checkbox
           property="publiclyReadable"
           changeset=changeset
-          title="Is project publicly viewable?"
+          title="Allow public viewers?"
           checkedValue=true
           uncheckedValue=false
           toggle=true
