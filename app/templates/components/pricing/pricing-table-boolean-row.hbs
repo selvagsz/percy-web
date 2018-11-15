@@ -1,6 +1,6 @@
 <td class="font-semibold p-1 pl-2">{{rowTitle}}</td>
 <td class="text-center text-gray-500 p-1">
-  {{#if (eq (get plans.startupPlans.firstObject field) true)}}
+  {{#if isStartupPlansTruthy}}
     {{inline-svg "check-startup"}}
   {{else if (get plans.startupPlans.firstObject field)}}
     {{get plans.startupPlans.firstObject field}}
@@ -9,7 +9,7 @@
   {{/if}}
 </td>
 <td class="text-center text-gray-500 p-1">
-  {{#if (eq (get plans.businessPlan field) true)}}
+  {{#if isBusinessPlanTruthy}}
     {{inline-svg "check-business"}}
   {{else if (get plans.businessPlan field)}}
     {{get plans.businessPlan field}}
@@ -18,7 +18,7 @@
   {{/if}}
 </td>
 <td class="text-center text-gray-500 p-1">
-  {{#if (eq (get plans.enterprisePlan field) true)}}
+  {{#if isEnterprisePlanTruthy}}
     {{inline-svg "check-enterprise"}}
   {{else if (get plans.enterprisePlan field)}}
     {{get plans.enterprisePlan field}}
