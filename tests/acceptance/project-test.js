@@ -176,8 +176,6 @@ describe('Acceptance: Project', function() {
     });
 
     it('displays webhook configs', async function() {
-      withVariation(this.owner, 'webhooks', true); // eslint-disable-line
-
       enabledProject.update({webhookConfigs: [webhookConfig]});
 
       await ProjectSettingsPage.visitProjectSettings({
@@ -193,7 +191,6 @@ describe('Acceptance: Project', function() {
     });
 
     it('transitions to webhook config form', async function() {
-      withVariation(this.owner, 'webhooks', true); // eslint-disable-line
       window.crypto.getRandomValues = sinon.fake.returns(new Uint8Array(32));
 
       await ProjectSettingsPage.visitProjectSettings({

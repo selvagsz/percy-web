@@ -6,13 +6,6 @@ import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, ResetScrollMixin, {
   flashMessages: service(),
-  launchDarkly: service(),
-
-  beforeModel() {
-    if (!this.get('launchDarkly').variation('webhooks')) {
-      this.transitionTo('/');
-    }
-  },
 
   model(params) {
     const organization = this.modelFor('organization');
