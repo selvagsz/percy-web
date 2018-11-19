@@ -4,7 +4,7 @@ import {ROLE_ID_TO_TITLE} from './organization-user';
 
 export default DS.Model.extend({
   fromUser: DS.belongsTo('user', {async: false}),
-  // organization: DS.belongsTo('organization', {async: false}),
+  organization: DS.belongsTo('organization', {async: false}),
 
   createdAt: DS.attr(),
   email: DS.attr(),

@@ -1,7 +1,11 @@
 import Component from '@ember/component';
 import {alias} from '@ember/object/computed';
+import {computed} from '@ember/object';
 
 export default Component.extend({
+  defaultAvatar: computed(function() {
+    return `${window.location.origin}/images/placeholder-avatar.jpg`;
+  }),
   isAdmin: alias('organization.currentUserIsAdmin'),
 
   actions: {

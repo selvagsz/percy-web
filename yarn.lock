@@ -803,10 +803,10 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@percy/agent@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.1.2.tgz#13877b34c51360836e8d72b429bf5d52bf9c9440"
-  integrity sha512-s6QbUvSM7RHsRWZhtfEmAsTpGt4Yup6QHIiKaFLccP7bbqMO11nTpFvzsHeOZlBfGB/wMpSivkttzy5zuzdWkg==
+"@percy/agent@0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@percy/agent/-/agent-0.0.44.tgz#09735ff19c4215f58435958eef8b19ecbb904dd4"
+  integrity sha512-+gqyRI+OnBh9AFSWGWSV/9Xl+n9kWRcU73CPxFPOW5TCLgqz+0zWA5u1EJkWb+hgPHnmb4B3zRt01T6V/Odj/g==
   dependencies:
     "@oclif/command" "^1"
     "@oclif/config" "^1"
@@ -820,9 +820,8 @@
     colors "^1.3.2"
     cors "^2.8.4"
     express "^4.16.3"
-    js-yaml "^3.12.0"
-    percy-client "^3.0.1"
-    puppeteer "^1.10.0"
+    percy-client "^3.0.0"
+    puppeteer "^1.7.0"
     retry-axios "^0.3.2"
     sinon "^6.1.5"
     winston "^2.0.0"
@@ -2880,6 +2879,11 @@ blueimp-md5@2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.3.1.tgz#992a6737733b9da1edd641550dc3acab2e9cfc5a"
   integrity sha1-mSpnN3M7naHt1kFVDcOsqy6c/Fo=
+
+blueimp-md5@^2.7.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.10.0.tgz#02f0843921f90dca14f5b8920a38593201d6964d"
+  integrity sha512-EkNUOi7tpV68TqjpiUz9D9NcT8um2+qtgntmMbi5UKssVX2m/2PLqotcric0RE63pB3HPN/fjf3cKHN2ufGSUQ==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -5673,6 +5677,17 @@ ember-cli-get-component-path-option@^1.0.0:
   resolved "https://registry.yarnpkg.com/ember-cli-get-component-path-option/-/ember-cli-get-component-path-option-1.0.0.tgz#0d7b595559e2f9050abed804f1d8eff1b08bc771"
   integrity sha1-DXtZVVni+QUKvtgE8djv8bCLx3E=
 
+ember-cli-gravatar@^3.10.2:
+  version "3.10.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-gravatar/-/ember-cli-gravatar-3.10.2.tgz#31dc5e0acf142c41882582c129c58e889cb7c90c"
+  integrity sha512-gqXf8AB7mua78oEgcuqdub2XTfhz1Y9uOcQckBVY+ZDrk+gCYDELsf0gkCHRst4fPVa5MtqcJLmWKVfA3fdGNA==
+  dependencies:
+    blueimp-md5 "^2.7.0"
+    broccoli-funnel "^1.2.0"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.3.0"
+    ember-cli-htmlbars "^1.0.3"
+
 ember-cli-head@^0.4.0, ember-cli-head@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.4.1.tgz#28b7ee86439746640834b232a3b34ab1329f3cf3"
@@ -5703,7 +5718,7 @@ ember-cli-htmlbars-inline-precompile@^1.0.0, ember-cli-htmlbars-inline-precompil
     heimdalljs-logger "^0.1.9"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@^1.1.1:
+ember-cli-htmlbars@^1.0.3, ember-cli-htmlbars@^1.1.1:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-1.3.5.tgz#65be9678b274b5e7861d7f75c188780af7ef9d13"
   integrity sha512-Qur/anb0Vk57qmIhGLkSzl8X1QIMoae6pLa14MRQ8+YD2N5fNs3qdhEFf0SDBquPOH1QxQtraiNQvji47QBJyg==
@@ -6472,7 +6487,7 @@ ember-percy@percy/ember-percy.git#agentified:
   version "1.4.1"
   resolved "https://codeload.github.com/percy/ember-percy/tar.gz/a11a6d06e77b86fed95890c4199eb3da06777a00"
   dependencies:
-    "@percy/agent" "^0.1.2"
+    "@percy/agent" "0.0.44"
     ember-cli-babel "^6.10.0"
 
 ember-power-select@^1.10.4:
@@ -9926,6 +9941,7 @@ listr-silent-renderer@^1.1.1:
 listr-update-renderer@^0.4.0, "listr-update-renderer@https://github.com/okonet/listr-update-renderer/tarball/upgrade-log-update":
   version "0.4.0"
   resolved "https://github.com/okonet/listr-update-renderer/tarball/upgrade-log-update#06073fa93166277607a7814f4e1f83960081414c"
+  integrity sha1-NE2YDaLKLosUW6MFkI8yrj9MyKc=
   dependencies:
     chalk "^1.1.3"
     cli-truncate "^0.2.1"
@@ -12456,7 +12472,7 @@ pend@~1.2.0:
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
 
-percy-client@^3.0.1:
+percy-client@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/percy-client/-/percy-client-3.0.1.tgz#eaa2e530b5e4e10604c501fc7e472da416f04550"
   integrity sha512-El0u/lnV2B4uCxcqH0mLkKJMt5QAaLksn5p/xApRup92rMdMZ+QYm/oSUQEpLrWQTIa/XkgTnZlddjZ7v50fgQ==
@@ -13053,7 +13069,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@^1.10.0:
+puppeteer@^1.7.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.10.0.tgz#e3005f1251c2feae0e10c0f7a35afbcd56589ceb"
   integrity sha512-3i28X/ucX8t3eL4TZA60FLMOQNKqudFSOGDHr0cT7T4dE027CrcS885aAqjdxNybhMPliM5yImNsKJ6SQrPzhw==
