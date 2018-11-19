@@ -6,7 +6,6 @@ import {
   create,
   isVisible,
   isPresent,
-  hasClass,
 } from 'ember-cli-page-object';
 
 const SELECTORS = {
@@ -36,7 +35,6 @@ const ProjectPage = {
   infinityLoader: {
     scope: SELECTORS.INFINITY_LOADER,
     isPresent: isPresent(),
-    isComplete: hasClass('reached-infinity'),
   },
 
   repoLinked: {

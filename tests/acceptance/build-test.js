@@ -211,7 +211,7 @@ describe('Acceptance: Build', function() {
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(false);
 
     await BuildPage.clickProject();
-    await ProjectPage.builds(1).click();
+    await ProjectPage.builds(0).click();
     expect(BuildPage.isDiffsVisibleForAllSnapshots).to.equal(true);
   });
 

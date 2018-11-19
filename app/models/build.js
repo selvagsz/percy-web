@@ -12,6 +12,8 @@ export const BUILD_STATES = {
   EXPIRED: 'expired',
 };
 
+export const INFINITY_SCROLL_LIMIT = 50;
+
 const APPROVED_LABEL = 'Approved';
 const AUTO_APPROVED_BRANCH_LABEL = 'Auto-Approved';
 const EXPIRED_LABEL = 'Expired';

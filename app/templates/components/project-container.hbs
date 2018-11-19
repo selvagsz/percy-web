@@ -63,9 +63,11 @@
       {{#each builds as |build|}}
         {{build-card build=build project=project}}
       {{/each}}
-      {{#infinity-loader infinityModel=builds hideOnInfinity=true}}
-        {{loading-build-card}}
-      {{/infinity-loader}}
+      {{#if canLoadMore}}
+        {{#infinity-loader infinityModel=infinityBuilds}}
+          {{loading-build-card}}
+        {{/infinity-loader}}
+      {{/if}}
     </div>
   {{else}}
     <div class="container-full p-8">

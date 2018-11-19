@@ -103,4 +103,37 @@ export default {
       return Math.floor(dec / 16).toString(16);
     }).join('');
   },
+
+  /**
+   * Sort the builds for a project and make sure we only show the user
+   * build numbers that are continuous. Finding all the builds in the store
+   * sometimes includes random builds that have been returned from the api
+   * via the 'included' payload. We don't want to show these non-continuous
+   * builds to the user when they are looking at an ordered list of all
+   * their builds.
+   */
+  sortAndCleanBuilds(builds) {
+    // sort the builds in decending order
+    const sortedBuilds = builds.sortBy('buildNumber').reverse();
+
+    // make sure all the buildNumbers are continuous
+    let continuousBuilds = [];
+    for (let i = 0; i < sortedBuilds.length; i++) {
+      if (i === 0) {
+        continuousBuilds.push(sortedBuilds[i]);
+      } else if (this._isNextBuildNumberOneLess(sortedBuilds, i)) {
+        continuousBuilds.push(sortedBuilds[i]);
+      } else {
+        break;
+      }
+    }
+
+    return continuousBuilds;
+  },
+
+  _isNextBuildNumberOneLess(sortedBuilds, i) {
+    const currentBuildNumber = sortedBuilds[i].get('buildNumber');
+    const previousBuildNumber = sortedBuilds[i - 1].get('buildNumber');
+    return previousBuildNumber - currentBuildNumber === 1;
+  },
 };

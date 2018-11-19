@@ -5,7 +5,7 @@ import ExtendedInfinityModel from 'percy-web/lib/paginated-ember-infinity-model'
 import {inject as service} from '@ember/service';
 import {hash} from 'rsvp';
 
-const BUILDS_PER_PAGE = 50;
+import {INFINITY_SCROLL_LIMIT} from 'percy-web/models/build';
 
 export default Route.extend(ResetScrollMixin, {
   infinity: service(),
@@ -15,11 +15,11 @@ export default Route.extend(ResetScrollMixin, {
     const organization = this.modelFor('organization');
     const projects = this.store.query('project', {organization: organization});
     const sortedProjects = projects.then(projects => projects.sortBy('isDisabled', 'name'));
-    const builds = this.infinity.model(
+    const infinityBuilds = this.infinity.model(
       'build',
       {
         project: project,
-        perPage: BUILDS_PER_PAGE,
+        perPage: INFINITY_SCROLL_LIMIT,
         perPageParam: 'page[limit]',
         pageParam: null,
         countParam: 'cursor',
@@ -32,7 +32,7 @@ export default Route.extend(ResetScrollMixin, {
       organization,
       project,
       sortedProjects,
-      builds,
+      infinityBuilds,
       isUserMemberOfOrg,
     });
   },
@@ -48,11 +48,6 @@ export default Route.extend(ResetScrollMixin, {
         project_slug: project.get('slug'),
       };
       this.analytics.track('Project Viewed', organization, eventProperties);
-
-      // If transitioning back to this page after first load, background reload the builds.
-      if (project.get('builds').isFulfilled) {
-        project.get('builds').reload();
-      }
     },
   },
 });

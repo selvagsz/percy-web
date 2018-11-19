@@ -38,6 +38,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
@@ -48,6 +49,7 @@ describe('Integration: ProjectContainer', function() {
     it('shows no logo', async function() {
       await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
+      expect(ProjectPage.builds().count).to.equal(1);
       expect(project.get('isRepoConnected')).to.equal(false);
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
       expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(false);
@@ -67,6 +69,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
@@ -82,6 +85,7 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(false);
       expect(project.get('isGitlabRepo')).to.equal(false);
+      expect(ProjectPage.builds().count).to.equal(1);
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
       expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(false);
     });
@@ -100,6 +104,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
@@ -115,6 +120,7 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(true);
       expect(project.get('isGitlabRepo')).to.equal(false);
+      expect(ProjectPage.builds().count).to.equal(1);
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(true);
       expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is not visible').to.equal(
         false,
@@ -137,6 +143,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
@@ -152,6 +159,7 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(true);
       expect(project.get('isGithubRepoFamily')).to.equal(true);
       expect(project.get('isGitlabRepo')).to.equal(false);
+      expect(ProjectPage.builds().count).to.equal(1);
       expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is not visible').to.equal(
         true,
       );
@@ -172,6 +180,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         isSidebarVisible=isSidebarVisible
         toggleSidebar=toggleSidebar
@@ -187,6 +196,7 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(false);
       expect(project.get('isGitlabRepo')).to.equal(true);
+      expect(ProjectPage.builds().count).to.equal(1);
       expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is not visible').to.equal(
         true,
       );
@@ -205,6 +215,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         toggleSidebar=stub
         isUserMember=false
@@ -231,6 +242,7 @@ describe('Integration: ProjectContainer', function() {
       await this.render(hbs`{{project-container
         project=project
         builds=infinityBuilds
+        infinityBuilds=infinityBuilds
         pollRefresh=stub
         toggleSidebar=stub
       }}`);

@@ -64,7 +64,7 @@ describe('Acceptance: Project', function() {
     });
   });
 
-  describe('waiting for first snapshot', function() {
+  describe('waiting for first build', function() {
     let urlParams;
     setupSession(function(server) {
       let organization = server.create('organization', 'withUser');
@@ -88,6 +88,25 @@ describe('Acceptance: Project', function() {
       await percySnapshot(this.test);
       await ProjectPage.clickQuickstartButton();
       await percySnapshot(this.test.fullTitle() + ' | demo project instructions are visible');
+    });
+
+    it('polls for updates and updates the list when a build is created', async function() {
+      const url = `projects/${urlParams.orgSlug}/${urlParams.projectSlug}/builds`;
+      server.create('build', 'withSnapshots', {id: 'foo', project: this.project});
+
+      let hasVisitedBuildPage = false;
+      server.get(url, () => {
+        if (!hasVisitedBuildPage) {
+          hasVisitedBuildPage = true;
+          return {data: []};
+        } else {
+          return server.schema.builds.where({id: 'foo'});
+        }
+      });
+
+      await ProjectPage.visitProject(urlParams);
+
+      expect(ProjectPage.builds().count).to.equal(1);
     });
   });
 
@@ -332,24 +351,66 @@ describe('Acceptance: Project', function() {
         return moment().subtract(quantity, timeUnit);
       }
 
-      server.create('build', 'withSnapshots', {project, createdAt: _timeAgo(60, 'days')});
-      server.create('build', 'expired', {project, createdAt: _timeAgo(30, 'hours')});
-      server.create('build', 'failed', {project, createdAt: _timeAgo(3, 'hours')});
-      server.create('build', 'failedWithTimeout', {project, createdAt: _timeAgo(25, 'minutes')});
+      server.create('build', 'withSnapshots', {
+        project,
+        createdAt: _timeAgo(60, 'days'),
+        buildNumber: 1,
+      });
+      server.create('build', 'expired', {
+        project,
+        createdAt: _timeAgo(30, 'hours'),
+        buildNumber: 2,
+      });
+      server.create('build', 'failed', {
+        project,
+        createdAt: _timeAgo(3, 'hours'),
+        buildNumber: 3,
+      });
+      server.create('build', 'failedWithTimeout', {
+        project,
+        createdAt: _timeAgo(25, 'minutes'),
+        buildNumber: 4,
+      });
       server.create('build', 'failedWithNoSnapshots', {
         project,
         createdAt: _timeAgo(25, 'minutes'),
+        buildNumber: 5,
       });
       server.create('build', 'failedWithMissingResources', {
         project,
         createdAt: _timeAgo(15, 'minutes'),
+        buildNumber: 6,
       });
-      server.create('build', 'pending', {project, createdAt: _timeAgo(10, 'minutes')});
-      server.create('build', 'approved', {project, createdAt: _timeAgo(5, 'minutes')});
-      server.create('build', 'approvedPreviously', {project, createdAt: _timeAgo(4, 'minutes')});
-      server.create('build', 'approvedWithNoDiffs', {project, createdAt: _timeAgo(2, 'minutes')});
-      server.create('build', 'approvedAutoBranch', {project, createdAt: _timeAgo(3, 'minutes')});
-      server.create('build', 'processing', {project, createdAt: _timeAgo(10, 'seconds')});
+      server.create('build', 'pending', {
+        project,
+        createdAt: _timeAgo(10, 'minutes'),
+        buildNumber: 7,
+      });
+      server.create('build', 'approved', {
+        project,
+        createdAt: _timeAgo(5, 'minutes'),
+        buildNumber: 8,
+      });
+      server.create('build', 'approvedPreviously', {
+        project,
+        createdAt: _timeAgo(4, 'minutes'),
+        buildNumber: 9,
+      });
+      server.create('build', 'approvedWithNoDiffs', {
+        project,
+        createdAt: _timeAgo(2, 'minutes'),
+        buildNumber: 10,
+      });
+      server.create('build', 'approvedAutoBranch', {
+        project,
+        createdAt: _timeAgo(3, 'minutes'),
+        buildNumber: 11,
+      });
+      server.create('build', 'processing', {
+        project,
+        createdAt: _timeAgo(10, 'seconds'),
+        buildNumber: 12,
+      });
 
       this.project = project;
     });
@@ -363,28 +424,24 @@ describe('Acceptance: Project', function() {
     it('hides the loader when there are less than 50 builds', async function() {
       await ProjectPage.visitProject(urlParams);
 
-      // expect infinity loader to be present but hidden
-      expect(ProjectPage.infinityLoader.isPresent).to.equal(true);
-      expect(ProjectPage.infinityLoader.isComplete).to.equal(true);
+      expect(ProjectPage.infinityLoader.isPresent).to.equal(false);
       expect(ProjectPage.builds().count).to.equal(12);
     });
 
     it('shows the loader when there are more than 50 builds', async function() {
-      // 50 comes from BUILDS_PER_PAGE query limit
+      // 50 comes from INFINITY_SCROLL_LIMIT in the build model
       server.createList('build', 50, {project: this.project});
 
       await ProjectPage.visitProject(urlParams);
 
       // expect infinity loader to be present
       expect(ProjectPage.infinityLoader.isPresent).to.equal(true);
-      expect(ProjectPage.builds().count).to.equal(50);
     });
 
     it('navigates to build page after clicking build', async function() {
       await ProjectPage.visitProject(urlParams);
       expect(currentRouteName()).to.equal('organization.project.index');
-
-      await ProjectPage.finishedBuilds[0].click();
+      await ProjectPage.finishedBuilds[4].click();
       expect(currentRouteName()).to.equal('organization.project.builds.build.index');
 
       await percySnapshot(this.test.fullTitle());

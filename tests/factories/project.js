@@ -5,6 +5,7 @@ FactoryGuy.define('project', {
   default: {
     name: () => faker.commerce.productName(),
     publiclyReadable: false,
+    isEnabled: true,
   },
   traits: {
     withRepo: {repo: FactoryGuy.belongsTo('repo')},
