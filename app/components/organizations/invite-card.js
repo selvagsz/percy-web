@@ -24,7 +24,17 @@ export default Component.extend({
     // }
   }),
   isAdmin: alias('organization.currentUserIsAdmin'),
-
+  inviterName: computed(function() {
+    // this.get('invite.fromUser').then(
+    //   user => {
+    //     return user.get('name');
+    //   },
+    //   () => {
+    //     return 'goodbye';
+    //   },
+    // );
+    return 'meow';
+  }),
   actions: {
     onCopyInviteUrlToClipboard() {
       this.get('flashMessages').success('Invite URL was copied to your clipboard');

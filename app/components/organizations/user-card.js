@@ -29,7 +29,10 @@ export default Component.extend({
   actions: {
     removeUser() {
       const name = this.get('deleteTextName');
-      const conf = confirm(`Are you sure you want to remove ${name} from this organization?`);
+      const organization = this.get('organizationUser.organization.name');
+      const conf = confirm(
+        `Are you sure you want to remove ${name} from the ${organization} organization?`,
+      );
       if (!conf) {
         return;
       }
