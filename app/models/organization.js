@@ -63,7 +63,8 @@ export default DS.Model.extend({
     //ui doesn't notice when this changes
     const seatLimit = this.get('seatLimit');
     const seatsUsed = this.get('seatsUsed');
-    return `You have used ${seatsUsed} of your ${seatLimit} available seats.`;
+    return `You’ve used ${seatsUsed} of ${seatLimit} seats available.
+            If you need more, head to your billing page.`;
   }),
 
   // These are GitHub repositories that the organization has access permissions to. These are not

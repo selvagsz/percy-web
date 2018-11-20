@@ -7,33 +7,34 @@
       </div>
     </div>
     <div style="min-width: 100px" class="flex-1 leading-none">
-      <LabelTag @primary-tag={{eq "Administrator" organizationUser.roleTitle}}>
-        {{organizationUser.roleTitle}}
+      <LabelTag @primary-tag={{eq "Administrator" roleTitle}}>
+        {{roleTitle}}
       </LabelTag>
     </div>
     <div class="flex-1 leading-none text-gray-400">
-      {{organizationUser.createdAt}}
+      {{moment-format organizationUser.createdAt 'MMMM d, Y'}}
     </div>
     <div class="flex-2 flex justify-end">
       <div class="btn-toolbar">
         {{#if isCurrentUser}}
-          <PercyBtn>Leave organization</PercyBtn>
+          {{#percy-btn onTap=(action "removeUser")}}
+            Leave organization
+          {{/percy-btn}}
         {{else}}
-          <PercyBtn @disabled={{unless isAdmin true}}>Make member</PercyBtn>
-          <PercyBtn @disabled={{unless isAdmin true}}>Remove</PercyBtn>
+          {{#if (eq "member" role)}}
+            {{#percy-btn disabled=(unless isAdmin true)  onTap=(action "setRole" "admin")}}
+              Make Admin
+            {{/percy-btn}}
+          {{else}}
+            {{#percy-btn disabled=(unless isAdmin true)  onTap=(action "setRole" "member")}}
+              Make member
+            {{/percy-btn}}
+          {{/if}}
+          {{#percy-btn disabled=(unless isAdmin true)  onTap=(action "removeUser")}}
+            Remove
+          {{/percy-btn}}
         {{/if}}
       </div>
-      {{!-- {{#if (eq "admin" organizationUser.organization.currentUserMembership.role)}} --}}
-        {{!-- Allow admin to do everything. --}}
-        {{!-- {{forms/organization-user-edit organizationUser=organizationUser}} --}}
-      {{!-- {{else if (eq organizationUser.user.id currentUser.id)}} --}}
-        {{!-- Allow member to view their own record. --}}
-        {{!-- {{forms/organization-user-edit organizationUser=organizationUser}} --}}
-      {{!-- {{else}} --}}
-        {{!-- <div class="Alert Alert--error"> --}}
-          {{!-- <strong>Editing users requires organization admin permissions.</strong> --}}
-        {{!-- </div> --}}
-      {{!-- {{/if}} --}}
     </div>
   </div>
 </div>

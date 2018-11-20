@@ -2,8 +2,7 @@
   <div class="flex flex-wrap justify-between items-center py-3 px-4">
     <div>
       <h2 class="mr-2 mb-sm text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
-      <p class="mb-0 leading-none">You’ve used {{users.length}} of NOT SURE seats available. If you need more, head to your billing page.</p>
-      <p>{{organization.availableSeatsText}}</p>
+      <p class="mb-0 leading-none">{{organization.availableSeatsText}}</p>
     </div>
     {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary"}}
       Invite new user
