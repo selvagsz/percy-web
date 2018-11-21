@@ -12,6 +12,7 @@ export default DS.Model.extend({
   email: DS.attr(),
   expiresAt: DS.attr(),
   inviteLink: DS.attr(),
+  inviterName: readOnly('fromUser.name'),
   isExpired: DS.attr('boolean'),
   role: DS.attr(),
 
@@ -20,8 +21,4 @@ export default DS.Model.extend({
   roleTitle: computed('role', function() {
     return ROLE_ID_TO_TITLE[this.get('role')];
   }),
-  inviterName: readOnly('fromUser.name'),
-  // inviterName: computed('fromUser', function() {
-  //   return 'Scrooge McDuck';
-  // }),
 });

@@ -1,0 +1,12 @@
+<div class="sticky pin-t bg-white border-b z-1">
+  <div class="flex flex-wrap justify-between items-center py-3 px-4">
+    <div>
+      <h2 class="mr-2 mb-sm text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
+      <p class="mb-0 leading-none">{{organization.availableSeatsText}}</p>
+    </div>
+    {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary" disabled=(unless isAdmin true)}}
+      Invite new user
+    {{/link-to}}
+  </div>
+</div>
+{{log organization}}

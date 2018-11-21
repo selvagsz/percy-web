@@ -54,11 +54,12 @@ export default DS.Model.extend({
 
   seatLimit: DS.attr(),
   seatsRemaining: DS.attr(),
-  // TODO: handle when seatsAvailable and userLimit are nil
-  canInvite: computed('seatsAvailable', function() {
-    // return this.get('seatsAvailable') > 0;
-    return true;
+
+  canInvite: computed('seatsRemaining', function() {
+    // If seatsRemaining is null, this will always return false
+    return Number(this.get('seatsRemaining')) > 0;
   }),
+
   seatsUsed: DS.attr(),
   availableSeatsText: computed('seatLimit', 'seatsUsed', function() {
     //ui doesn't notice when this changes
