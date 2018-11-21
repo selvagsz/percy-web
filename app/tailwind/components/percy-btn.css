@@ -1,0 +1,53 @@
+/*
+  Just a normal, regular, good ol' button
+*/
+
+.percy-btn {
+  @apply inline-block;
+  @apply px-2 py-1;
+  @apply border border-gray-100;
+  @apply rounded;
+  @apply text-sm font-bold text-gray-400 leading-none;
+  @apply bg-white;
+  @apply h-10;
+  @apply no-underline;
+  @apply whitespace-no-wrap;
+  @apply select-none;
+  @apply trans;
+}
+
+.percy-btn:hover,
+.percy-btn:focus,
+.percy-btn:focus:active {
+  @apply text-gray-700;
+  @apply border-gray-100;
+  @apply bg-white;
+  @apply no-underline;
+}
+
+.percy-btn[disabled] {
+  @apply pointer-events-none;
+  @apply opacity-50;
+}
+
+/*
+  A nice, beautiful, Percy purp button.
+  percy-btn must be before percy-btn-primary in the element's class list
+*/
+
+.percy-btn-primary,
+.percy-btn-primary[disabled],
+.percy-btn-primary:hover,
+.percy-btn-primary:focus,
+.percy-btn-primary:focus:active {
+  @apply border border-transparent;
+  @apply text-white;
+  @apply bg-purple-600;
+  @apply shadow-y-lg-purple-600;
+}
+
+.percy-btn-primary:hover,
+.percy-btn-primary:focus,
+.percy-btn-primary:focus:active {
+  @apply animate-scale;
+}

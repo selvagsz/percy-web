@@ -2,3 +2,7 @@
   transform: rotate(180deg);
   transform-origin: center;
 }
+
+.animate-scale {
+  transform: scale(1.05) translate3d(0, 0, 0);
+}

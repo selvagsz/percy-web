@@ -11,30 +11,18 @@ export default Component.extend(PollingMixin, {
 
   project: null,
   showQuickstart: false,
+  shouldPollForUpdates: true,
+
+  POLLING_INTERVAL_SECONDS: 10,
+
   tagName: 'main',
-  classNames: ['project-container flex-1 border-l pb-8'],
+  classNames: ['project-container flex-1 pb-8 bg-gray-pattern border-l'],
   attributeBindings: ['data-test-project-container'],
   'data-test-project-container': true,
   buildsLimit: INFINITY_SCROLL_LIMIT,
 
   canLoadMore: computed.not('infinityBuilds.reachedInfinity'),
 
-  async _refresh() {
-    this.set('isRefreshing', true);
-    const project = await this.get('project').reload();
-    const buildCount = this.get('buildsLimit');
-
-    // reload the builds by querying the api with a limit, otherwise running
-    // builds.reload() here hits the api without a limit and returns 100 builds
-    await this.get('store').query('build', {project: project, 'page[limit]': buildCount});
-
-    if (!this.isDestroyed) {
-      this.set('isRefreshing', false);
-    }
-  },
-
-  shouldPollForUpdates: true,
-  POLLING_INTERVAL_SECONDS: 10,
   pollRefresh() {
     return this._refresh();
   },
@@ -53,5 +41,19 @@ export default Component.extend(PollingMixin, {
     refresh() {
       this._refresh();
     },
+  },
+
+  async _refresh() {
+    this.set('isRefreshing', true);
+    const project = await this.get('project').reload();
+    const buildCount = this.get('buildsLimit');
+
+    // reload the builds by querying the api with a limit, otherwise running
+    // builds.reload() here hits the api without a limit and returns 100 builds
+    await this.get('store').query('build', {project: project, 'page[limit]': buildCount});
+
+    if (!this.isDestroyed) {
+      this.set('isRefreshing', false);
+    }
   },
 });

@@ -84,10 +84,20 @@ describe('Acceptance: Project', function() {
     it('shows environment variables and demo project instructions', async function() {
       await ProjectPage.visitProject(urlParams);
       expect(currentRouteName()).to.equal('organization.project.index');
+      expect(ProjectPage.isGenericDocsButtonVisible).to.equal(true);
 
       await percySnapshot(this.test);
-      await ProjectPage.clickQuickstartButton();
-      await percySnapshot(this.test.fullTitle() + ' | demo project instructions are visible');
+
+      await ProjectPage.frameworks.objectAt(0).click();
+
+      expect(ProjectPage.isExampleProjectButtonVisible).to.equal(true);
+      expect(ProjectPage.isFrameworkDocsButtonVisible).to.equal(true);
+      await percySnapshot(this.test.fullTitle() + ' | framework links are visible');
+
+      await ProjectPage.lastFramework.click();
+
+      expect(ProjectPage.isSdkRequestFieldVisible).to.equal(true);
+      await percySnapshot(this.test.fullTitle() + ' | request SDK field is visible');
     });
 
     it('polls for updates and updates the list when a build is created', async function() {

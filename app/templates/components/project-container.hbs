@@ -70,45 +70,42 @@
       {{/if}}
     </div>
   {{else}}
-    <div class="container-full p-8">
-      {{#if project.isEnabled}}
-        {{#if isUserMember}}
-          <div class="Alert Alert--warning">
-            <strong>Waiting for first snapshot:</strong> complete setup below to generate first snapshot.
+    {{#if project.isEnabled}}
+      {{#if isUserMember}}
+        <div class="build-card-placeholder mb-2">
+          {{inline-svg "comparison-icon" class="mr-1"}}
+          <span class="font-semibold mr-sm">Waiting for your Percy build:</span> Use the resources below to setup Percy and generate your first snapshots.
+        </div>
+
+        <div class="px-2">
+          <div class="bg-white rounded shadow-1">
+            <div class="px-2 py-3 border-b">
+              {{resource-widget project=project}}
+            </div>
+            <div class="px-2 py-3 border-b">
+              <h2 class="text-xl font-semibold mb-sm">Percy Token</h2>
+              <p class="text-gray-400 mb-2">Configure your local or CI environment with PERCY-TOKEN. This is a project-specific write-only API key that only has access to create builds, snapshots, and upload resources to this project. It should be kept secret.</p>
+              {{projects/env-vars project=project}}
+            </div>
+            <div class="px-2 py-3">
+              <h2 class="text-xl font-semibold mb-sm">Repository Integrations</h2>
+              <p class="text-gray-400 mb-2">Connect your GitHub or GitLab repositories to add visual testing to pull/merge requests.</p>
+              <a href="https://docs.percy.io/docs#section-source-code-integrations" class="percy-btn" target="_blank">
+                See the docs
+              </a>
+            </div>
           </div>
-          <h5>Getting started</h5>
-          <p>Here's an overview of how to get started:</p>
-
-          <ol>
-          <li>Set the <code>PERCY_TOKEN</code> environment variable in your CI environment.</li>
-          <li>Integrate Percy's client library to take snapshots in your test suite.</li>
-          <li>Run your tests in CI or create a GitHub PR.</li>
-          </ol>
-
-          <p>
-            {{#link-to "docs.index" class="Button"}}View setup documentation{{/link-to}}
-          </p>
-
-          <h5>Project token</h5>
-          {{projects/env-vars project=project}}
-
-          <h5>Just want to see a demo?</h5>
-          <p>
-            {{quickstart-button showQuickstart=showQuickstart}}
-          </p>
-          {{#if showQuickstart}}
-            {{projects/quickstart-code project=project}}
-          {{/if}}
-        {{else}}
-          {{status-panel
-            inlineSvgName="refresh-icon"
-            mainText="This project doesn't have any builds yet."
-            secondaryText="The owners of this project are working hard to get some diffs ready for you to see!"
-          }}
-        {{/if}}
+        </div>
       {{else}}
-        <p>No builds yet, and this project is archived.</p>
+        {{status-panel
+          inlineSvgName="refresh-icon"
+          classes="mt-8"
+          mainText="This project doesn't have any builds yet."
+          secondaryText="The owners of this project are working hard to get some diffs ready for you to see!"
+        }}
       {{/if}}
-    </div>
+    {{else}}
+      <p>No builds yet, and this project is disabled.</p>
+    {{/if}}
   {{/if}}
 {{/if}}

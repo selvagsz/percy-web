@@ -33,7 +33,7 @@ module.exports = function(defaults) {
       prepend: '/static/',
     },
     svg: {
-      paths: ['public/images/icons', 'public/images/logos'],
+      paths: ['public/images/icons', 'public/images/logos', 'public/images/icons/tech'],
       optimize: false,
     },
     sourcemaps: {

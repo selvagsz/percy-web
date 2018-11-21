@@ -1,0 +1,20 @@
+.tech-card {
+  @apply w-24 h-24;
+  @apply flex justify-center items-center;
+  @apply border;
+  @apply rounded;
+  @apply font-semibold;
+  @apply cursor-pointer;
+  @apply trans;
+}
+
+.tech-card:hover {
+  @apply animate-scale;
+}
+
+.tech-card.is-selected {
+  @apply border-purple-600;
+  @apply bg-purple-200;
+  @apply shadow-purple-600;
+  @apply pointer-events-none;
+}

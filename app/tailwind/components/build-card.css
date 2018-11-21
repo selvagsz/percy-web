@@ -1,0 +1,6 @@
+.build-card-placeholder {
+  @apply flex justify-center items-center border-b px-4;
+  height: 98px;
+  background: url("/images/build-card-placeholder.jpg");
+  @apply bg-cover;
+}
