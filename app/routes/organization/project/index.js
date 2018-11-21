@@ -14,7 +14,6 @@ export default Route.extend(ResetScrollMixin, {
     const project = this.modelFor('organization.project');
     const organization = this.modelFor('organization');
     const projects = this.store.query('project', {organization: organization});
-    const sortedProjects = projects.then(projects => projects.sortBy('isDisabled', 'name'));
     const infinityBuilds = this.infinity.model(
       'build',
       {
@@ -31,7 +30,7 @@ export default Route.extend(ResetScrollMixin, {
     return hash({
       organization,
       project,
-      sortedProjects,
+      projects,
       infinityBuilds,
       isUserMemberOfOrg,
     });

@@ -16,6 +16,8 @@ export default Factory.extend({
     server.create('token', {project});
   },
 
+  isDisabled: trait({isEnabled: false}),
+
   withChrome: trait({
     afterCreate(project, server) {
       const chromeBrowserTarget = server.create('browserTarget', 'withChromeBrowserFamily');

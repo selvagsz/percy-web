@@ -5,6 +5,7 @@ const SELECTORS = {
   PROJECT_SIDENAV_LIST: '[data-test-sidenav-list-projects]',
   PROJECT_SIDENAV_ITEM: '[data-test-sidenav-list-item]',
   BILLING_LINK: '.data-test-sidenav-billing',
+  TOGGLE_ARCHIVED_PROJECTS: '[data-test-toggle-archived-projects]',
 };
 
 export const SettingsNavWrapper = {
@@ -18,6 +19,8 @@ export const SettingsNavWrapper = {
   }),
 
   clickBilling: clickable(SELECTORS.BILLING_LINK),
+
+  toggleArchivedProjects: clickable(SELECTORS.TOGGLE_ARCHIVED_PROJECTS),
 };
 
 export default create(SettingsNavWrapper);

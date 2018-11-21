@@ -18,15 +18,35 @@
     </section>
     <section>
       <ul class="list-reset pb-4 mb-0" data-test-sidenav-list-projects>
-        {{#each (sort-by "isDisabled" "name" organization.projects) as |project|}}
-          <li class="flex items-center mb-2 {{if project.isDisabled "opacity-25"}}" data-test-sidenav-list-item>
-            {{#link-to "organization.project.settings" organization.slug project.slug classNames="block px-4 link-gray font-semibold
-            truncate"}}
+        {{#each (sort-by "name" enabledProjects) as |project|}}
+          <li class="flex items-center mb-2" data-test-sidenav-list-item>
+            {{#link-to "organization.project.settings" organization.slug project.slug classNames="block px-4 link-gray font-semibold truncate"}}
               {{project.name}}
             {{/link-to}}
           </li>
         {{/each}}
-        <li class="px-4" data-test-sidenav-list-item>
+        {{#if archivedProjects}}
+          <li class="items-center mb-2">
+            <div class="flex items-center cursor-pointer px-4 font-semibold truncate opacity-25" {{action (toggle "isArchivedProjectsShowing" this)}} data-test-toggle-archived-projects>
+              <span class="mr-1">Archived Projects</span>
+              <figure class="svg-container trans-transform {{if isArchivedProjectsShowing "animate-rotate-180"}}">
+                {{inline-svg "dropdown-icon"}}
+              </figure>
+            </div>
+          </li>
+
+          {{#if isArchivedProjectsShowing}}
+            {{#each (sort-by "name" archivedProjects) as |archivedProject|}}
+              <li class="mb-2" data-test-sidenav-list-item>
+                {{#link-to "organization.project.settings" organization.slug archivedProject.slug classNames="block px-4 link-gray font-semibold truncate opacity-25"}}
+                  {{archivedProject.name}}
+                {{/link-to}}
+              </li>
+            {{/each}}
+          {{/if}}
+        {{/if}}
+
+        <li class="px-4">
           {{#link-to "organizations.organization.projects.new" organization.slug classNames="font-semibold"}}Create new project{{/link-to}}
         </li>
       </ul>

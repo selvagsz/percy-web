@@ -1,68 +1,35 @@
-import {BuildCard} from 'percy-web/tests/pages/components/build-card';
-import {
-  visitable,
-  collection,
-  clickable,
-  create,
-  isVisible,
-  isPresent,
-} from 'ember-cli-page-object';
+import {ProjectContainer} from 'percy-web/tests/pages/components/project-container';
+import {visitable, clickable, create} from 'ember-cli-page-object';
+import {alias} from 'ember-cli-page-object/macros';
 
 const SELECTORS = {
-  PROJECT_CONTAINER: '[data-test-project-container]',
-  REPO_LINKED: '[data-test-project-container-project-repo-linked]',
-  GITHUB_LOGO: 'svg[data-test-github-icon]',
-  GITLAB_LOGO: 'svg[data-test-gitlab-icon]',
-  QUICKSTART_BUTTON: '[data-test-quickstart-button]',
-  NO_BUILDS_PANEL: '[data-test-status-panel]',
-  PUBIC_PROJECT_NOTICE: '[data-test-public-project-notice]',
-  INFINITY_LOADER: '.infinity-loader', // only one possible per page
-  PUBLIC_PROJECT_ICON: '[data-test-public-project-icon]',
-  PROJECT_SETTINGS_ICON: '[data-test-settings-icon]',
+  PROJECT_PAGE: '[data-test-project-page]',
+  TOGGLE_PROJECT_SIDEBAR: '[data-test-toggle-project-sidebar]',
+  TOGGLE_ARCHIVED_PROJECTS: '[data-test-toggle-archived-projects]',
 };
 
 const ProjectPage = {
-  scope: SELECTORS.PROJECT_CONTAINER,
+  scope: SELECTORS.PROJECT_PAGE,
 
   visitOrg: visitable('/:orgSlug'),
   visitProject: visitable('/:orgSlug/:projectSlug'),
 
-  builds: collection({
-    itemScope: BuildCard.scope,
-    item: BuildCard,
-  }),
+  projectContainer: ProjectContainer,
 
-  infinityLoader: {
-    scope: SELECTORS.INFINITY_LOADER,
-    isPresent: isPresent(),
-  },
+  builds: alias('projectContainer.builds'),
+  finishedBuilds: alias('projectContainer.finishedBuilds'),
+  infinityLoader: alias('projectContainer.infinityLoader'),
 
-  repoLinked: {
-    scope: SELECTORS.REPO_LINKED,
-    githubLogo: {
-      scope: SELECTORS.GITHUB_LOGO,
-      isVisible: isVisible(),
-    },
-    gitlabLogo: {
-      scope: SELECTORS.GITLAB_LOGO,
-      isVisible: isVisible(),
-    },
-  },
+  clickQuickstartButton: alias('projectContainer.clickQuickstartButton'),
 
-  finishedBuilds: {
-    isDescriptor: true,
-    get() {
-      return this.builds().filter(build => !!build.isFinished);
-    },
-  },
+  isNoBuildsPanelVisible: alias('projectContainer.isNoBuildsPanelVisible'),
+  isPublicProjectNoticeVisible: alias('projectContainer.isPublicProjectNoticeVisible'),
 
-  clickQuickstartButton: clickable(SELECTORS.QUICKSTART_BUTTON),
+  isPublicProjectIconVisible: alias('projectContainer.isPublicProjectIconVisible'),
+  clickProjectSettings: alias('projectContainer.clickProjectSettings'),
 
-  isNoBuildsPanelVisible: isVisible(SELECTORS.NO_BUILDS_PANEL),
-  isPublicProjectNoticeVisible: isVisible(SELECTORS.PUBLIC_BUILD_NOTICE),
-
-  isPublicProjectIconVisible: isVisible(SELECTORS.PUBLIC_PROJECT_ICON),
-  clickProjectSettings: clickable(SELECTORS.PROJECT_SETTINGS_ICON),
+  toggleProjectSidebar: clickable(SELECTORS.TOGGLE_PROJECT_SIDEBAR),
+  toggleArchivedProjects: clickable(SELECTORS.TOGGLE_ARCHIVED_PROJECTS),
 };
 
 export default create(ProjectPage);

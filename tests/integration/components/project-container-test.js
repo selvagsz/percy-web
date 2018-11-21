@@ -4,7 +4,7 @@ import {it, describe, beforeEach} from 'mocha';
 import {percySnapshot} from 'ember-percy';
 import hbs from 'htmlbars-inline-precompile';
 import {make, makeList} from 'ember-data-factory-guy';
-import ProjectPage from 'percy-web/tests/pages/project-page';
+import ProjectContainer from 'percy-web/tests/pages/components/project-container';
 import sinon from 'sinon';
 import setupFactoryGuy from 'percy-web/tests/helpers/setup-factory-guy';
 import {merge} from '@ember/polyfills';
@@ -22,7 +22,7 @@ describe('Integration: ProjectContainer', function() {
 
   beforeEach(function() {
     setupFactoryGuy(this);
-    ProjectPage.setContext(this);
+    ProjectContainer.setContext(this);
   });
 
   describe('without a repo', function() {
@@ -49,10 +49,14 @@ describe('Integration: ProjectContainer', function() {
     it('shows no logo', async function() {
       await percySnapshot(this.test.fullTitle());
       const project = this.get('project');
-      expect(ProjectPage.builds().count).to.equal(1);
+      expect(ProjectContainer.builds().count).to.equal(1);
       expect(project.get('isRepoConnected')).to.equal(false);
-      expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
-      expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(false);
+      expect(ProjectContainer.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(
+        false,
+      );
+      expect(ProjectContainer.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(
+        false,
+      );
     });
   });
 
@@ -85,9 +89,13 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(false);
       expect(project.get('isGitlabRepo')).to.equal(false);
-      expect(ProjectPage.builds().count).to.equal(1);
-      expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
-      expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(false);
+      expect(ProjectContainer.builds().count).to.equal(1);
+      expect(ProjectContainer.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(
+        false,
+      );
+      expect(ProjectContainer.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(
+        false,
+      );
     });
   });
 
@@ -120,11 +128,14 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(true);
       expect(project.get('isGitlabRepo')).to.equal(false);
-      expect(ProjectPage.builds().count).to.equal(1);
-      expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(true);
-      expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is not visible').to.equal(
-        false,
+      expect(ProjectContainer.builds().count).to.equal(1);
+      expect(ProjectContainer.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(
+        true,
       );
+      expect(
+        ProjectContainer.repoLinked.gitlabLogo.isVisible,
+        'gitlab logo is not visible',
+      ).to.equal(false);
     });
   });
 
@@ -159,11 +170,14 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(true);
       expect(project.get('isGithubRepoFamily')).to.equal(true);
       expect(project.get('isGitlabRepo')).to.equal(false);
-      expect(ProjectPage.builds().count).to.equal(1);
-      expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is not visible').to.equal(
-        true,
+      expect(ProjectContainer.builds().count).to.equal(1);
+      expect(
+        ProjectContainer.repoLinked.githubLogo.isVisible,
+        'github logo is not visible',
+      ).to.equal(true);
+      expect(ProjectContainer.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(
+        false,
       );
-      expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is visible').to.equal(false);
     });
   });
 
@@ -196,11 +210,14 @@ describe('Integration: ProjectContainer', function() {
       expect(project.get('isGithubEnterpriseRepo')).to.equal(false);
       expect(project.get('isGithubRepoFamily')).to.equal(false);
       expect(project.get('isGitlabRepo')).to.equal(true);
-      expect(ProjectPage.builds().count).to.equal(1);
-      expect(ProjectPage.repoLinked.gitlabLogo.isVisible, 'gitlab logo is not visible').to.equal(
-        true,
+      expect(ProjectContainer.builds().count).to.equal(1);
+      expect(
+        ProjectContainer.repoLinked.gitlabLogo.isVisible,
+        'gitlab logo is not visible',
+      ).to.equal(true);
+      expect(ProjectContainer.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(
+        false,
       );
-      expect(ProjectPage.repoLinked.githubLogo.isVisible, 'github logo is visible').to.equal(false);
     });
   });
 
@@ -223,7 +240,7 @@ describe('Integration: ProjectContainer', function() {
     });
 
     it('displays notice that build is public', async function() {
-      expect(ProjectPage.isPublicProjectNoticeVisible).to.equal(true);
+      expect(ProjectContainer.isPublicProjectNoticeVisible).to.equal(true);
       await percySnapshot(this.test);
     });
   });
@@ -247,7 +264,7 @@ describe('Integration: ProjectContainer', function() {
         toggleSidebar=stub
       }}`);
 
-      expect(ProjectPage.isPublicProjectIconVisible).to.equal(true);
+      expect(ProjectContainer.isPublicProjectIconVisible).to.equal(true);
     });
   });
 });

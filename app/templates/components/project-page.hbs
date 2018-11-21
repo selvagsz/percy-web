@@ -1,13 +1,39 @@
-<section class="flex relative {{if isSidebarVisible 'sidebar-is-visible'}}">
+<section class="flex relative {{if isSidebarVisible 'sidebar-is-visible'}}" data-test-project-page>
   <aside class="project-list-sidebar h-screen overflow-y-scroll flex-no-shrink p-4 sticky pin-t">
     <ul class="list-reset mb-3">
-      {{#each sortedProjects as |project|}}
+      {{#each (sort-by "name" enabledProjects) as |project|}}
         {{project-list-item
           project=project
           toggleSidebar=(action "toggleSidebar")
         }}
       {{/each}}
+
+      {{#if archivedProjects}}
+        <li>
+          <div class="flex items-center cursor-pointer font-semibold truncate opacity-25 mb-2" {{action (toggle "isArchivedProjectsShowing" this)}} data-test-toggle-archived-projects>
+            <span class="mr-1">Archived Projects</span>
+            <figure class="svg-container trans-transform {{if isArchivedProjectsShowing "animate-rotate-180"}}">
+              {{inline-svg "dropdown-icon"}}
+            </figure>
+          </div>
+        </li>
+        {{#if isArchivedProjectsShowing}}
+          {{#each (sort-by "name" archivedProjects) as |archivedProject|}}
+            <li class="flex items-center mb-2 opacity-25">
+              {{#link-to
+                "organization.project.index"
+                archivedProject.organization.slug
+                archivedProject.slug
+                class="font-semibold link-gray truncate"
+              }}
+                {{archivedProject.name}}
+              {{/link-to}}
+            </li>
+          {{/each}}
+        {{/if}}
+      {{/if}}
     </ul>
+
     {{#if isUserMember}}
       {{#link-to "organizations.organization.projects.new" project.organization.slug classNames="btn btn-sm btn-alt w-full mb-2 text-center"}}
         New Project

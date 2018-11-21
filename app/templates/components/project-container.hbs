@@ -17,7 +17,7 @@
 
         <h2 class="m-0 mr-2 text-xl md:text-2xl font-normal">{{project.name}}</h2>
         {{#if project.isDisabled}}
-          <div class="label mr-2">disabled</div>
+          <div class="label mr-2">archived</div>
         {{/if}}
         {{#if isUserMember}}
           {{#link-to "organization.project.settings" project.organization.slug project.slug class="mr-2" data-test-settings-icon=true}}
@@ -107,7 +107,7 @@
           }}
         {{/if}}
       {{else}}
-        <p>No builds yet, and this project is disabled.</p>
+        <p>No builds yet, and this project is archived.</p>
       {{/if}}
     </div>
   {{/if}}

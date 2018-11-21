@@ -142,9 +142,8 @@ describe('Acceptance: Project', function() {
 
       expect(currentRouteName()).to.equal('organization.project.settings');
       expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
+      await ProjectSettingsPage.sideNav.toggleArchivedProjects();
       expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
-      expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
-
       await percySnapshot(this.test);
     });
 
@@ -156,8 +155,6 @@ describe('Acceptance: Project', function() {
 
       expect(currentRouteName()).to.equal('organization.project.settings');
       expect(ProjectSettingsPage.projectLinks(0).projectName).to.match(/Enabled Project/);
-      expect(ProjectSettingsPage.projectLinks(1).projectName).to.match(/Disabled Project/);
-      expect(ProjectSettingsPage.projectLinks(2).projectName).to.match(/Create new project/);
 
       await percySnapshot(this.test);
     });
@@ -445,6 +442,39 @@ describe('Acceptance: Project', function() {
       expect(currentRouteName()).to.equal('organization.project.builds.build.index');
 
       await percySnapshot(this.test.fullTitle());
+    });
+  });
+
+  describe('sidebar', function() {
+    freezeMoment('2018-05-22');
+
+    let urlParams;
+
+    setupSession(function(server) {
+      let organization = server.create('organization', 'withUser');
+      let project = server.create('project', {
+        name: 'enabled project',
+        organization,
+      });
+      server.create('project', 'isDisabled', {
+        name: 'disabled project',
+        organization,
+      });
+
+      urlParams = {
+        orgSlug: organization.slug,
+        projectSlug: project.slug,
+      };
+
+      server.create('build', 'withSnapshots', {project});
+    });
+
+    it('toggles disabled projects', async function() {
+      await ProjectPage.visitProject(urlParams);
+      await ProjectPage.toggleProjectSidebar();
+      await percySnapshot(this.test.fullTitle() + ' before archived toggle');
+      await ProjectPage.toggleArchivedProjects();
+      await percySnapshot(this.test.fullTitle() + ' after archived toggle');
     });
   });
 });

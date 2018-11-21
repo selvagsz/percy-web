@@ -1,6 +1,6 @@
 {{fixed-top-header currentOrganization=model.organization}}
 
-{{#organizations/settings-nav-wrapper organization=model.organization project=model.project projects=model.projects}}
+{{#organizations/settings-nav-wrapper organization=model.organization}}
   <section class="px-2 pt-3">
     <div class="flex items-start">
       <div>
@@ -15,7 +15,7 @@
     </div>
     {{#unless model.project.isEnabled}}
       <div class="Alert Alert--warning mt-2">
-        <strong>This project is disabled.</strong>
+        <strong>This project is archived.</strong>
       </div>
     {{/unless}}
   </section>
