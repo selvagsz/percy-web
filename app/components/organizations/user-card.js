@@ -13,7 +13,7 @@ export default Component.extend({
   isCurrentUser: computed('currentUser.id', 'organizationUser.user.id', function() {
     return this.get('currentUser.id') === this.get('organizationUser.user.id');
   }),
-  deleteTextName: computed(function() {
+  deleteNameText: computed(function() {
     if (this.get('isCurrentUser')) {
       return 'yourself';
     } else {
@@ -28,7 +28,7 @@ export default Component.extend({
   }),
   actions: {
     removeUser() {
-      const name = this.get('deleteTextName');
+      const name = this.get('deleteNameText');
       const organization = this.get('organizationUser.organization.name');
       const conf = confirm(
         `Are you sure you want to remove ${name} from the ${organization} organization?`,
