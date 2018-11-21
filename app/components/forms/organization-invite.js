@@ -1,9 +1,11 @@
 import {computed} from '@ember/object';
 import BaseFormComponent from './base';
+import {inject as service} from '@ember/service';
 
 export default BaseFormComponent.extend({
   organization: null,
   classes: null,
+  store: service(),
 
   classNames: ['FormsOrganizationInvite', 'Form'],
   classNameBindings: ['classes'],
@@ -30,6 +32,7 @@ export default BaseFormComponent.extend({
         () => {
           // Fully reset the model + changeset if saved successfully.
           this.set('model', this.newModel());
+          this.get('store').query('invite', {organization: this.get('organization')});
         },
         errors => {
           this.set('errorMessage', errors.errors[0].detail);

@@ -9,6 +9,7 @@
 
 <section class="bg-gray-pattern pb-9">
   <div class="px-4 pt-2 pb-sm text-sm text-gray-300 font-semibold border-b">{{invites.length}} Pending invitations</div>
+
   {{#each invites as |invite|}}
     {{organizations/invite-card
       invite=invite

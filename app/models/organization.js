@@ -18,6 +18,7 @@ export default DS.Model.extend({
   versionControlIntegrations: DS.hasMany('version-control-integrations', {
     async: false,
   }),
+  invites: DS.hasMany('invite'),
 
   githubIntegration: computed('versionControlIntegrations.@each.githubIntegrationId', function() {
     return this.get('versionControlIntegrations').findBy('isGithubIntegration');
