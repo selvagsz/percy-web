@@ -10,9 +10,8 @@
         {{/link-to}}
         to add more users.
       </p>
-
     </div>
-    {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary btn" disabled=(unless isAdmin true)}}
+    {{#link-to "organizations.organization.users.invite" organization.slug classNames="percy-btn percy-btn-primary" disabled=disableInviteButton}}
       Invite new user
     {{/link-to}}
   </div>

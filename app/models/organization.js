@@ -56,6 +56,7 @@ export default DS.Model.extend({
   seatLimit: DS.attr(),
   seatsRemaining: DS.attr(),
 
+  // when you remove seats, it's not recalculating this for the associated form
   canInvite: computed('seatsRemaining', function() {
     // If seatsRemaining is null, this will always return false
     return Number(this.get('seatsRemaining')) > 0;
