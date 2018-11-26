@@ -66,6 +66,7 @@ Router.map(function() {
   this.route('how-it-works');
   this.route('visual-testing');
   this.route('schedule-demo');
+  this.route('integrations');
   this.route('settings', function() {
     this.route('profile');
     this.route('connected-accounts');

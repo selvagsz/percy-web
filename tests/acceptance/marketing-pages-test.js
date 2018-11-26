@@ -31,6 +31,12 @@ describe('Acceptance: Marketing pages', function() {
       await percySnapshot(this.test.fullTitle());
     });
 
+    it('can visit /integrations', async function() {
+      await visit('/integrations');
+      expect(currentRouteName()).to.equal('integrations');
+      await percySnapshot(this.test.fullTitle());
+    });
+
     it('can visit enterprise', async function() {
       await visit('enterprise');
       expect(currentRouteName()).to.equal('enterprise');

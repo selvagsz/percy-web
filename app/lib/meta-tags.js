@@ -60,6 +60,12 @@ const headTags = {
       'Contact Percy with any questions about how visual testing works, to learn more about our visual testing plans, or to schedule a product demo.',
     ),
   ],
+  integrations: [
+    metaTitle('Seamless visual testing integrations | Percy'),
+    metaDescription(
+      'Percy is designed to easily integrate with your stack to get started with visual testing. Learn more about how Percy integrates with web apps, component libraries, test frameworks, CI/CD services, and source code managers.',
+    ),
+  ],
 };
 
 function metaDescription(content) {
