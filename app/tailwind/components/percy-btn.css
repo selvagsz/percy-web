@@ -25,7 +25,8 @@
   @apply no-underline;
 }
 
-.percy-btn[disabled] {
+.percy-btn[disabled],
+.percy-btn.disabled {
   @apply pointer-events-none;
   @apply opacity-50;
 }
