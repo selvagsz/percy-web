@@ -1,9 +1,28 @@
 import Route from '@ember/routing/route';
 import {hash} from 'rsvp';
 import metaTagLookup from 'percy-web/lib/meta-tags';
+import {inject as service} from '@ember/service';
+import {computed} from '@ember/object';
 
 export default Route.extend({
+  launchDarkly: service(),
+
+  shouldShowNewPage: computed(function() {
+    return this.get('launchDarkly').variation('updated-pricing-page');
+  }),
+
+  beforeModel() {
+    if (this.get('shouldShowNewPage')) {
+      this.set('templateName', 'new-pricing');
+    }
+  },
+
   model() {
+    const showNewPage = this.get('shouldShowNewPage');
+    return showNewPage ? this._getV2PricingData() : this._getV1PricingData();
+  },
+
+  _getV1PricingData() {
     return hash({
       heroBlock: this._getHeroBlock(),
       cardData: this._getPricingCardData(),
@@ -12,15 +31,25 @@ export default Route.extend({
     });
   },
 
-  setupController(controller, resolvedModel) {
-    controller.setProperties({
-      heroBlock: resolvedModel.heroBlock,
-      tableData: resolvedModel.tableData,
-      smallCard: resolvedModel.cardData.smallCard,
-      mediumCard: resolvedModel.cardData.mediumCard,
-      largeCard: resolvedModel.cardData.largeCard,
-      faqs: resolvedModel.faqData,
+  _getV2PricingData() {
+    return this.get('store').queryRecord('marketing-page', {
+      'fields.pageName': 'Pricing-v2',
     });
+  },
+
+  setupController(controller, resolvedModel) {
+    if (this.get('shouldShowNewPage')) {
+      controller.set('model', resolvedModel);
+    } else {
+      controller.setProperties({
+        heroBlock: resolvedModel.heroBlock,
+        tableData: resolvedModel.tableData,
+        smallCard: resolvedModel.cardData.smallCard,
+        mediumCard: resolvedModel.cardData.mediumCard,
+        largeCard: resolvedModel.cardData.largeCard,
+        faqs: resolvedModel.faqData,
+      });
+    }
   },
 
   headTags: metaTagLookup('pricing'),

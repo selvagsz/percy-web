@@ -1,0 +1,11 @@
+<section class="{{if (and cards.isFulfilled (not (is-test-env))) "animated-pricing-header"}} md:flex md:items-center container container-lg mb-8">
+  {{#if cards.isFulfilled}}
+    {{#each cards as |card|}}
+      {{marketing/pricing-card card=card}}
+    {{/each}}
+  {{else}}
+    <div class="w-full text-center">
+      {{fa-icon "fa-spinner fa-pulse"}}
+    </div>
+  {{/if}}
+</section>

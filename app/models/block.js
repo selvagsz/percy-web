@@ -25,6 +25,12 @@ export default Contentful.extend({
 
   profileBlock: lookupContentfulModel('id', 'profile-block'),
   isProfileBlock: bool('profileBlock'),
+
+  pricingCardBlock: lookupContentfulModel('id', 'pricing-card-block'),
+  isPricingCardBlock: bool('pricingCardBlock'),
+
+  pricingTableBlock: lookupContentfulModel('id', 'pricing-table'),
+  isPricingTableBlock: bool('pricingTableBlock'),
 });
 
 function lookupContentfulModel(idKey, modelName) {

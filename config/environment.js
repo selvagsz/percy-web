@@ -33,6 +33,7 @@ module.exports = function(environment) {
       localFeatureFlags: {
         webhooks: true,
         'public-project-switch': true,
+        'updated-pricing-page': true,
       },
     },
 

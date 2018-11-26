@@ -1,8 +1,9 @@
 import setupAcceptance, {setupSession} from '../helpers/setup-acceptance';
 import {beforeEach} from 'mocha';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
-import {visit, currentRouteName, click} from '@ember/test-helpers';
+import {visit, currentRouteName, click, findAll} from '@ember/test-helpers';
 import {percySnapshot} from 'ember-percy';
+import {withVariation} from 'ember-launch-darkly/test-support/helpers/with-variation';
 
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
@@ -43,34 +44,38 @@ describe('Acceptance: Marketing pages', function() {
     });
 
     it('can visit /pricing', async function() {
+      withVariation(this.owner, 'updated-pricing-page', false); // eslint-disable-line
+      await visit('pricing');
+      expect(currentRouteName()).to.equal('pricing');
+      await percySnapshot(this.test.fullTitle());
+    });
+
+    it('can visit new /pricing', async function() {
+      withVariation(this.owner, 'updated-pricing-page', true); // eslint-disable-line
       await visit('pricing');
       expect(currentRouteName()).to.equal('pricing');
       await percySnapshot(this.test.fullTitle());
     });
 
     describe('pricing page', function() {
+      let cardCtas;
       beforeEach(async function() {
         await visit('/pricing');
+        cardCtas = findAll('[data-test-pricing-card-cta]');
       });
       it('can select startup plan', async function() {
         stubLockModal(this.owner);
-        await click('.data-test-small-pricing-card-cta');
+        await click(cardCtas[0]);
         const expectedPath = authenticated ? 'organizations.new' : 'login';
         expect(currentRouteName()).to.equal(expectedPath);
       });
       it('can select business plan', async function() {
-        await click('[data-test-medium-pricing-card-cta]');
+        await click(cardCtas[1]);
         expect(currentRouteName()).to.equal('schedule-demo');
       });
       it('can select enterprise plan', async function() {
-        await click('[data-test-large-pricing-card-cta]');
+        await click(cardCtas[2]);
         expect(currentRouteName()).to.equal('schedule-demo');
-      });
-      it('can select "Sign up for a free personal account."', async function() {
-        stubLockModal(this.owner);
-        await click('.data-test-free-personal-account');
-        const expectedPath = authenticated ? 'organizations.new' : 'login';
-        expect(currentRouteName()).to.equal(expectedPath);
       });
     });
 

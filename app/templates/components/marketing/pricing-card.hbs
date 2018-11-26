@@ -1,0 +1,22 @@
+<div class="flex-1 md:mx-1 mb-2">
+  <div class="bg-white-gradient-pattern rounded p-2 shadow-purple-2">
+    <div class="pt-2 px-2">
+      <h3 class="font-semibold mb-0 text-xl {{textClasses}}">{{card.name}}</h3>
+      <p>{{card.subheader}}</p>
+      {{markdown-to-html markdown=card.mainContent tables=true class=(concat "pricing-card-content " spacingClass)}}
+    </div>
+    {{#if card.startingPrice}}
+      <div class="font-semibold text-gray-500 text-right">
+        {{markdown-to-html card.startingPrice}}
+      </div>
+    {{/if}}
+    <a href="{{card.ctaLink}}" class="btn btn-md btn-scale text-center w-full {{buttonClasses}}" data-test-pricing-card-cta>
+      {{card.cta}}
+    </a>
+  </div>
+  {{#if card.finePrint}}
+    <div class="text-gray-300 text-center text-sm">
+      {{card.finePrint}}
+    </div>
+  {{/if}}
+</div>

@@ -15,3 +15,50 @@
     background: var(--purple-100);
   }
 }
+
+.pricing-table-section-header {
+  td {
+    color: var(--purple-600);
+    background-color: var(--purple-200);
+  }
+}
+
+.pricing-table-markdown,
+.pricing-card-content {
+  p {
+    margin-bottom: 2px;
+  }
+}
+
+.pricing-card-content {
+  p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--gray-700);
+  }
+
+  table {
+    width: 100%;
+    padding-bottom: 24px;
+    font-weight: 600;
+  }
+
+  thead {
+    color: var(--gray-300);
+  }
+
+  th {
+    font-size: 12px;
+    text-align: right;
+  }
+
+  td:first-child {
+    text-align: left;
+  }
+
+  td {
+    text-align: right;
+
+  }
+}

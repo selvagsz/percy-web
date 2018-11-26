@@ -18,5 +18,9 @@
     {{marketing/logo-block logos=block.logoBlock.customerLogos}}
   {{else if block.isProfileBlock}}
     {{marketing/profile-block profiles=block.profileBlock.profiles}}
+  {{else if block.isPricingTableBlock}}
+    {{marketing/pricing-table table=block.pricingTableBlock}}
+  {{else if block.isPricingCardBlock}}
+    {{marketing/pricing-card-block cards=block.pricingCardBlock.pricingCards}}
   {{/if}}
 {{/each}}
