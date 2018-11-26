@@ -18,10 +18,6 @@
 
   {{#if showInviteForm}}
     <div class="px-4 mb-4">
-      <h2 class="text-lg font-semibold mb-sm">Invite users to {{capitalize organization.name}}</h2>
-      <p class="text-gray-400 w-3/4">
-         Separate each email with a space or a new line. Invitations expire after one week.
-      </p>
       {{#organizations/require-role role="admin" organization=organization}}
         {{forms/organization-invite organization=organization}}
       {{/organizations/require-role}}
@@ -33,9 +29,9 @@
   {{/if}}
 
   <div class="flex px-4 mb-sm">
-    <div style="min-width: 200px" class="flex-1 text-sm text-gray-300 font-semibold">Name</div>
+    <div style="min-width: 200px" class="flex-1 text-sm text-gray-300 font-semibold pr-2">Name</div>
     <div style="min-width: 100px" class="flex-1 text-sm text-gray-300 font-semibold">Role</div>
     <div class="flex-1 text-sm text-gray-300 font-semibold">Joined on</div>
-    <div class="flex-2 text-sm text-gray-300 font-semibold">Actions</div>
+    <div class="flex-1"></div>
   </div>
 </div>

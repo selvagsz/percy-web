@@ -14,7 +14,7 @@
     <div class="flex-1 leading-none text-gray-400">
       {{moment-format organizationUser.createdAt 'MMMM d, Y'}}
     </div>
-    <div class="user-card-actions opacity-0 flex-2 flex justify-end">
+    <div class="user-card-actions flex-1 opacity-0 flex justify-end">
       <div class=" btn-toolbar">
         {{#if isCurrentUser}}
           {{#percy-btn onTap=(action "removeUser")}}
