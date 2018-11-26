@@ -54,19 +54,13 @@ export default DS.Model.extend({
   organizationUsers: DS.hasMany('organization-user'),
 
   seatLimit: DS.attr(),
+  seatsUsed: DS.attr(),
   seatsRemaining: DS.attr(),
 
   // when you remove seats, it's not recalculating this for the associated form
   canInvite: computed('seatsRemaining', function() {
     // If seatsRemaining is null, this will always return false
     return Number(this.get('seatsRemaining')) > 0;
-  }),
-
-  seatsUsed: DS.attr(),
-  availableSeatsText: computed('seatLimit', 'seatsUsed', function() {
-    const seatLimit = this.get('seatLimit');
-    const seatsUsed = this.get('seatsUsed');
-    return `You’ve used ${seatsUsed} of ${seatLimit} seats available.`;
   }),
 
   // These are GitHub repositories that the organization has access permissions to. These are not

@@ -23,11 +23,16 @@
     {{/if}}
   </div>
 
-  {{form-fields/submit
-    value="Send Invites"
-    classes="btn btn-primary shadow-purple-lg mb-0"
-    isSaving=isSaving
-    isSaveSuccessful=isSaveSuccessful
-    submit=(action "save")
-  }}
+  <div class="flex justify-end">
+    {{#link-to "organizations.organization.users" organization.slug class="percy-btn"}}
+      Cancel
+    {{/link-to}}
+    {{form-fields/submit
+      value="Send Invites"
+      classes="btn btn-primary shadow-purple-lg mb-0 ml-1"
+      isSaving=isSaving
+      isSaveSuccessful=isSaveSuccessful
+      submit=(action "save")
+    }}
+  </div>
 </form>

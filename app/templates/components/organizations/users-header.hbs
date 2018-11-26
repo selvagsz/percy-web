@@ -3,12 +3,8 @@
     <div>
       <h2 class="mr-2 mb-sm text-xl md:text-2xl font-semibold leading-none">{{capitalize organization.name}} users</h2>
       <p class="mb-0 leading-none">
-        {{organization.availableSeatsText}}
-        Head to your
-        {{#link-to "organizations.organization.billing" organization.slug class="py-1 link-gray font-semibold"}}
-          Billing page
-        {{/link-to}}
-        to add more users.
+        You’ve used {{organization.seatsUsed}} of {{organization.seatLimit}} seats available.
+        Head to your {{#link-to "organizations.organization.billing" organization.slug class="py-1 font-semibold"}}Billing page{{/link-to}} to add more users.
       </p>
     </div>
     {{#link-to "organizations.organization.users.invite" organization.slug class="percy-btn percy-btn-primary" disabled=disableInviteButton}}
@@ -21,10 +17,6 @@
       {{#organizations/require-role role="admin" organization=organization}}
         {{forms/organization-invite organization=organization}}
       {{/organizations/require-role}}
-    </div>
-  {{else if isInvitePath}}
-    <div>
-      You do not have any seats available. Please {{#link-to "organizations.organization.billing" organization.slug class="py-1 link-gray font-semibold"}} upgrade your plan {{/link-to}} to add more users.
     </div>
   {{/if}}
 

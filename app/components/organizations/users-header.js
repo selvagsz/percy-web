@@ -5,7 +5,12 @@ export default Component.extend({
   disableInviteButton: computed('route', 'organization.currentUserIsAdmin', function() {
     const isAdmin = this.get('organization.currentUserIsAdmin');
     const onInvite = this.get('isInvitePath');
-    return onInvite || !isAdmin;
+    const noInvites = !this.get('organization.seatsRemaining');
+    if (noInvites) {
+      return true;
+    } else {
+      return onInvite || !isAdmin;
+    }
   }),
   showInviteForm: computed('isInvitePath', 'organization.currentUserIsAdmin', function() {
     const isAdmin = this.get('organization.currentUserIsAdmin');
