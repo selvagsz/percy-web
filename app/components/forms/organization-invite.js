@@ -5,6 +5,7 @@ import {inject as service} from '@ember/service';
 export default BaseFormComponent.extend({
   organization: null,
   classes: null,
+  router: service(),
   store: service(),
 
   classNames: ['FormsOrganizationInvite', 'Form'],
@@ -33,6 +34,7 @@ export default BaseFormComponent.extend({
           // Fully reset the model + changeset if saved successfully.
           this.set('model', this.newModel());
           this.get('store').query('invite', {organization: this.get('organization')});
+          this.get('router').transitionTo('organizations.organization.users');
         },
         errors => {
           this.set('errorMessage', errors.errors[0].detail);
