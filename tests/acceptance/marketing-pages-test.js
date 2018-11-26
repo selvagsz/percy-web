@@ -60,6 +60,7 @@ describe('Acceptance: Marketing pages', function() {
     describe('pricing page', function() {
       let cardCtas;
       beforeEach(async function() {
+        withVariation(this.owner, 'updated-pricing-page', true); // eslint-disable-line
         await visit('/pricing');
         cardCtas = findAll('[data-test-pricing-card-cta]');
       });

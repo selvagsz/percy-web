@@ -12,6 +12,10 @@ import {click, visit, currentRouteName} from '@ember/test-helpers';
 describe('Acceptance: Project', function() {
   setupAcceptance();
 
+  beforeEach(function() {
+    withVariation(this.owner, 'public-project-switch', true); // eslint-disable-line
+  });
+
   describe('organization has no projects', function() {
     setupSession(function(server) {
       this.organization = server.create('organization', 'withUser');
@@ -296,8 +300,6 @@ describe('Acceptance: Project', function() {
 
     describe('updating project settings', function() {
       it('sends correct data', async function() {
-        withVariation(this.owner, 'public-project-switch', true); // eslint-disable-line
-
         const stub = sinon.stub();
         server.patch('/projects/:full_slug', function(schema, request) {
           const fullSlug = decodeURIComponent(request.params.full_slug);

@@ -29,12 +29,6 @@ module.exports = function(environment) {
 
     launchDarkly: {
       clientSideId: '5b453a435b18c32c7440a5bd',
-      local: true,
-      localFeatureFlags: {
-        webhooks: true,
-        'public-project-switch': true,
-        'updated-pricing-page': true,
-      },
     },
 
     APP: {
@@ -139,6 +133,13 @@ module.exports = function(environment) {
     ENV['ember-simple-auth'].auth0.domain = 'login-dev.percy.io';
 
     ENV.contentful.usePreviewApi = true;
+
+    ENV.launchDarkly.local = true;
+    ENV.launchDarkly.localFeatureFlags = {
+      webhooks: true,
+      'public-project-switch': true,
+      'updated-pricing-page': true,
+    };
   }
 
   if (environment === 'test') {
