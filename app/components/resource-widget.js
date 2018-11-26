@@ -58,14 +58,14 @@ export default Component.extend({
       // reset the framework so other doesn't stay selected
       this.set('selectedFramework', null);
       this.set('selectedLanguage', languageKey);
-      this.get('analytics').track('New SDK Requested', organization, {languageKey});
+      this.get('analytics').track('Language Selected', organization, {languageKey});
     },
 
     selectFramework(frameworkKey) {
       const organization = this.get('organization');
 
       this.set('selectedFramework', frameworkKey);
-      this.get('analytics').track('New SDK Requested', organization, {frameworkKey});
+      this.get('analytics').track('Framework Selected', organization, {frameworkKey});
     },
 
     saveRequest() {
