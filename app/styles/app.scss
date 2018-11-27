@@ -48,7 +48,6 @@
 @import
   "header",
   "footer",
-  "marketing",
   "page_click_overlay",
   "code",
   "viewer",
@@ -56,9 +55,7 @@
 
 // Ember components.
 @import
-  "components/approval_button",
   "components/browser_switcher",
-  "components/badge",
   "components/browser_family_selector",
   "components/build_card",
   "components/build_comparison_info",
@@ -79,14 +76,11 @@
   "components/image_spacer",
   "components/label",
   "components/loading_page",
-  "components/marketing_num_diffs",
   "components/marketing/content_block",
   "components/marketing/customer_quote_block",
   "components/marketing/marketing_header",
   "components/marketing/hero_block",
   "components/menu_icon",
-  "components/mock_approval_flow",
-  "components/note",
   "components/organizations/billing_section",
   "components/organizations/github_settings",
   "components/organizations/github_integration",
@@ -101,7 +95,6 @@
   "components/sidenav",
   "components/status_indicator",
   "components/status_pill",
-  "components/supported_cis_image",
   "components/trial_bar",
   "components/user_avatar",
   "components/user_menu";
