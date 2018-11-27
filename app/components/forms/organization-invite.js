@@ -25,6 +25,9 @@ export default BaseFormComponent.extend({
   }),
   validator: null,
   actions: {
+    resetSaveButton() {
+      this.set('isSaveSuccessful', null);
+    },
     saving(promise) {
       this._super(...arguments);
 
