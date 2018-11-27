@@ -44,6 +44,7 @@ jobs:
 
   run_tests:
     <<: *defaults
+    parallelism: 2
     steps:
       - attach_workspace:
           at: .
@@ -60,7 +61,6 @@ workflows:
           requires:
             - checkout_code
       - run_tests:
-          parallelism: 2
           requires:
             - install_dependencies
       - percy/finalize_all:
