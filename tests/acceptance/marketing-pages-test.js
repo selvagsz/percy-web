@@ -3,7 +3,6 @@ import {beforeEach} from 'mocha';
 import stubLockModal from 'percy-web/tests/helpers/stub-lock-modal';
 import {visit, currentRouteName, click, findAll} from '@ember/test-helpers';
 import {percySnapshot} from 'ember-percy';
-import {withVariation} from 'ember-launch-darkly/test-support/helpers/with-variation';
 
 describe('Acceptance: Marketing pages', function() {
   function visitAllMarketingPages({authenticated = false, takeSnapshot = false}) {
@@ -50,14 +49,6 @@ describe('Acceptance: Marketing pages', function() {
     });
 
     it('can visit /pricing', async function() {
-      withVariation(this.owner, 'updated-pricing-page', false); // eslint-disable-line
-      await visit('pricing');
-      expect(currentRouteName()).to.equal('pricing');
-      await percySnapshot(this.test.fullTitle());
-    });
-
-    it('can visit new /pricing', async function() {
-      withVariation(this.owner, 'updated-pricing-page', true); // eslint-disable-line
       await visit('pricing');
       expect(currentRouteName()).to.equal('pricing');
       await percySnapshot(this.test.fullTitle());
@@ -66,7 +57,6 @@ describe('Acceptance: Marketing pages', function() {
     describe('pricing page', function() {
       let cardCtas;
       beforeEach(async function() {
-        withVariation(this.owner, 'updated-pricing-page', true); // eslint-disable-line
         await visit('/pricing');
         cardCtas = findAll('[data-test-pricing-card-cta]');
       });
