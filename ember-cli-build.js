@@ -48,7 +48,6 @@ module.exports = function(defaults) {
   app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'});
   app.import('bower_components/seedrandom/seedrandom.js');
   app.import('node_modules/siema/dist/siema.min.js');
-  app.import('node_modules/jquery/dist/jquery.js');
 
   var extraAssets;
   if (app.env === 'development' || app.env === 'test') {
