@@ -3,8 +3,8 @@
     {{#each block.caseStudies as |caseStudy|}}
       <a href="{{caseStudy.caseStudyLink}}" class="no-underline hover:no-underline cursor-pointer">
         <div class="text-center p-4 border border-gray-100 rounded shadow-purple-lg h-full">
-          <div class="pb-3">
-            <img src="{{caseStudy.logo.file.url}}" alt="{{customerLogo.logo.description}}">
+          <div class="pb-3" style="height: 65px;">
+            <img src="{{caseStudy.logo.file.url}}" alt="{{customerLogo.logo.description}}" class="h-full">
           </div>
           <div class="font-semibold text-lg mb-3 text-gray-600">
             {{caseStudy.caseStudyTitle}}
