@@ -66,6 +66,12 @@ const headTags = {
       'Percy is designed to easily integrate with your stack to get started with visual testing. Learn more about how Percy integrates with web apps, component libraries, test frameworks, CI/CD services, and source code managers.',
     ),
   ],
+  customers: [
+    metaTitle('Percy customers | Visual testing case studies'),
+    metaDescription(
+      'Learn why the most innovative teams have implemented automated visual testing. Percy helps teams reduce the risk of visual regressions and gain confidence on each deploy.',
+    ),
+  ],
 };
 
 function metaDescription(content) {

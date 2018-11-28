@@ -31,6 +31,9 @@ export default Contentful.extend({
 
   pricingTableBlock: lookupContentfulModel('id', 'pricing-table'),
   isPricingTableBlock: bool('pricingTableBlock'),
+
+  caseStudyBlock: lookupContentfulModel('id', 'case-study-block'),
+  isCaseStudyBlock: bool('caseStudyBlock'),
 });
 
 function lookupContentfulModel(idKey, modelName) {

@@ -1,0 +1,19 @@
+<section class="border-b border-purple-300 pb-6 pt-8">
+  <div class="container-md grid col-2 gap-6">
+    {{#each block.caseStudies as |caseStudy|}}
+      <a href="{{caseStudy.caseStudyLink}}" class="no-underline hover:no-underline cursor-pointer">
+        <div class="text-center p-4 border border-gray-100 rounded shadow-purple-lg h-full">
+          <div class="pb-3">
+            <img src="{{caseStudy.logo.file.url}}" alt="{{customerLogo.logo.description}}">
+          </div>
+          <div class="font-semibold text-lg mb-3 text-gray-600">
+            {{caseStudy.caseStudyTitle}}
+          </div>
+          <div class="font-semibold text-gray-300 uppercase tracking-wide">
+            {{caseStudy.industry}}
+          </div>
+        </div>
+      </a>
+    {{/each}}
+  </div>
+</section>

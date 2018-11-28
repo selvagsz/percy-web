@@ -22,5 +22,7 @@
     {{marketing/pricing-table table=block.pricingTableBlock}}
   {{else if block.isPricingCardBlock}}
     {{marketing/pricing-card-block cards=block.pricingCardBlock.pricingCards}}
+  {{else if block.isCaseStudyBlock}}
+    {{marketing/case-study-block block=block.caseStudyBlock}}
   {{/if}}
 {{/each}}
