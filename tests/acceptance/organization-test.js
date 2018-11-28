@@ -65,9 +65,17 @@ describe('Acceptance: Organization', function() {
       expect(window.Intercom).to.have.been.called;
     });
 
-    it('shows support on user list page', async function() {
+    it('shows support on users page', async function() {
       window.Intercom = sinon.stub();
       await visit(`/organizations/${this.organization.slug}/users`);
+
+      await click('[data-test-users-show-support]');
+      expect(window.Intercom).to.have.been.called;
+    });
+
+    it('shows support on invites page', async function() {
+      window.Intercom = sinon.stub();
+      await visit(`/organizations/${this.organization.slug}/users/invite`);
 
       await click('[data-test-users-show-support]');
       expect(window.Intercom).to.have.been.called;

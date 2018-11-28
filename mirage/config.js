@@ -236,6 +236,8 @@ export default function() {
     return invite;
   });
 
+  this.get('/organizations/:organization_slug/invites');
+
   this.get('/builds/:build_id/snapshots', function(schema, request) {
     const build = schema.builds.findBy({id: request.params.build_id});
     const queryParams = request.queryParams;

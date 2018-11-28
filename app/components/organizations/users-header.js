@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import {computed} from '@ember/object';
+import {inject as service} from '@ember/service';
 
 export default Component.extend({
+  intercom: service(),
+
   disableInviteButton: computed('route', 'organization.currentUserIsAdmin', function() {
     const isAdmin = this.get('organization.currentUserIsAdmin');
     const onInvite = this.get('isInvitePath');
@@ -18,4 +21,10 @@ export default Component.extend({
     const canInvite = this.get('organization.canInvite');
     return onInvite && isAdmin && canInvite;
   }),
+
+  actions: {
+    showSupport() {
+      this.get('intercom').showIntercom();
+    },
+  },
 });

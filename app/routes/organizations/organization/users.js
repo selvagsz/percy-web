@@ -1,11 +1,8 @@
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import {hash} from 'rsvp';
-import {inject as service} from '@ember/service';
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  intercom: service(),
-
   model() {
     const organization = this.modelFor('organizations.organization');
     return hash({
@@ -21,11 +18,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
       organization: resolvedModel.organization,
       invites: resolvedModel.invites,
     });
-  },
-
-  actions: {
-    showSupport() {
-      this.get('intercom').showIntercom();
-    },
   },
 });
